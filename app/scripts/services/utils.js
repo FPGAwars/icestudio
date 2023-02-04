@@ -55,38 +55,32 @@ angular.module('icestudio')
 
         } //-- Possible python executables in Windows
         else if (common.WIN32) {
-          possibleExecutables.push('C:\\Python310\\python.exe');
-          possibleExecutables.push('C:\\Python39\\python.exe');
-          possibleExecutables.push('C:\\Python38\\python.exe');
-          possibleExecutables.push('C:\\Python37\\python.exe');
           possibleExecutables.push('py.exe -3');
           possibleExecutables.push('python.exe');
 
+          possibleExecutables.push('C:\\Python315\\python.exe');
+          possibleExecutables.push('C:\\Python314\\python.exe');
+          possibleExecutables.push('C:\\Python313\\python.exe');
+          possibleExecutables.push('C:\\Python312\\python.exe');
+          possibleExecutables.push('C:\\Python311\\python.exe');
+          possibleExecutables.push('C:\\Python39\\python.exe');
+          possibleExecutables.push('C:\\Python38\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
         } //-- Python executables in Linux/Mac
         else {
+          let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
+          paths.forEach((base) => {
+            possibleExecutables.push(`${base}python3`);
+            possibleExecutables.push(`${base}python`);
+
+            for (let i = 7; i < 16; i++) {
+              possibleExecutables.push(`${base}python3.${i}`);
+            }
+          });
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-          possibleExecutables.push('/usr/bin/python3.10');
-          possibleExecutables.push('/usr/bin/python3.9');
-          possibleExecutables.push('/usr/bin/python3.8');
-          possibleExecutables.push('/usr/bin/python3.7');
-          possibleExecutables.push('/usr/bin/python3');
-          possibleExecutables.push('/usr/bin/python');
 
-          possibleExecutables.push('/usr/local/bin/python3.10');
-          possibleExecutables.push('/usr/local/bin/python3.9');
-          possibleExecutables.push('/usr/local/bin/python3.8');
-          possibleExecutables.push('/usr/local/bin/python3.7');
-          possibleExecutables.push('/usr/local/bin/python3');
-          possibleExecutables.push('/usr/local/bin/python');
-
-          possibleExecutables.push('python3.10');
-          possibleExecutables.push('python3.9');
-          possibleExecutables.push('python3.8');
-          possibleExecutables.push('python3.7');
-          possibleExecutables.push('python3');
-          possibleExecutables.push('python');
         }
 
         //-- Move through all the possible executables
@@ -117,15 +111,17 @@ angular.module('icestudio')
         const result = nodeChildProcess.execSync(executable);
 
         //-- Check the output. Return true if it is python3
-        return (result !== false && result !== null &&
-          (result.toString().indexOf('3.7') >= 0 ||
-            result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0 ||
-            result.toString().indexOf('3.10') >= 0));
+        if (result !== false && result !== null) {
+
+          const pythonVersion = /Python 3\.(\d+)\.(\d+)/g.exec(result.toString());
+          return (pythonVersion !== null && pythonVersion.length === 3 &&
+            parseInt(pythonVersion[1]) >= 7);
+        }
 
       } catch (e) {
-        return false;
+        console.error(e);
       }
+      return false;
     }
 
 
@@ -235,14 +231,14 @@ angular.module('icestudio')
           //-- Error executing the command
           //-- Show the error notification
           if (notifyerror) {
-            alertify.error('Error executting command ' + command, 30);
+            alertify.error('Error executing command ' + command, 30);
           }
 
           //-- Comand finished with errors. Call the callback function
           callback(true, output);
 
         } else {
-          //-- Command finished with NO errors. Cal lthe callback function
+          //-- Command finished with NO errors. Call the callback function
           callback(false, output);
         }
       });
@@ -347,7 +343,7 @@ angular.module('icestudio')
       const executable = coverPath(pipExec);
 
       //-- Get the pip parameters needed for installing apio
-      //-- The needed apio vesion is also added
+      //-- The needed apio version is also added
       const params = this.getApioParameters();
       console.log(pipExec, executable, params);
       //-- Run the pip command!
@@ -396,7 +392,7 @@ angular.module('icestudio')
       const params = "install -U " + apio + extraPackagesString +
         versionString;
 
-      console.log("--> DEBUG: Params paased to pip: " + params);
+      console.log("--> DEBUG: Params passed to pip: " + params);
 
       return params;
     };
@@ -426,7 +422,7 @@ angular.module('icestudio')
         process.env.ICESTUDIO_APIO :
         _package.apio.external;
 
-      //-- The is an alternative apio toolchain ready
+      //-- There is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
 
         if (!this.toolchainDisabled) {
@@ -871,7 +867,7 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     //-- Return a text in bold HTML
     //-- Input:
-    //--    * text: String to converto to Bold
+    //--    * text: String to convert to Bold
     //-- Returns:
     //--    * The HTML text in bold
     //-----------------------------------------------------------------------
@@ -890,13 +886,13 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     this.openDialog = function (inputID, callback) {
 
-      //-- Get the filechooser element (from the DOM)
+      //-- Get the file chooser element (from the DOM)
       let chooser = $(inputID);
 
-      //-- Reove any previously event attached
+      //-- Remove any previously event attached
       chooser.unbind('change');
 
-      //-- Atach a new callback function
+      //-- Attach a new callback function
       chooser.change(function () {
 
         //-- It is executed when the user has selected the file
@@ -913,7 +909,7 @@ angular.module('icestudio')
       });
 
       //-- Activate the File chooser! (The element is shown, it waits for
-      //-- the user to enter the file and the calblack is executed
+      //-- the user to enter the file, and the callback is executed)
       chooser.trigger('click');
     };
 
@@ -1143,7 +1139,7 @@ angular.module('icestudio')
                   });
                 }
               }
-              alertify.warning(message, 30);
+              alertify.warning(message, "30");
             });
           }
         } else {
@@ -1154,6 +1150,14 @@ angular.module('icestudio')
           }
         }
       });
+    };
+
+    this.duplicateSelected = function (selection, graph, callback) {
+      let cells = selectionToCells(selection, graph);
+      let content = this.cellsToProject(cells, graph);
+      if (callback && content) {
+        callback(content);
+      }
     };
 
     function selectionToCells(selection, graph) {

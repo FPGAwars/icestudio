@@ -15,15 +15,27 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: kr_ko.po\n"
 
-#: app/views/design.html:20
-msgid ": '}} {{'Unlock to edit block !"
+#: app/views/design.html:18
+msgid ""
+"<b>Read only</b><br>\n"
+"            Unlock to edit the block!"
 msgstr ""
 
-#: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:602
+#: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:633
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>플러그</b>와<b>를 다시 연결하세요</b>"
 
-#: app/views/menu.html:873
+#: app/views/design.html:34
+msgid ""
+"<b>WARNING!</b><br>\n"
+"        The changes made here will also be applied to all the\n"
+"        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
+"        you DO NOT want them to propagate, create a cloned block instead\n"
+"        using<br>\n"
+"        <b>Edit → Clone</b>."
+msgstr ""
+
+#: app/views/menu.html:891
 msgid "About Icestudio"
 msgstr "Icestudio에 대해"
 
@@ -31,11 +43,11 @@ msgstr "Icestudio에 대해"
 msgid "Acknowledgment"
 msgstr ""
 
-#: app/views/menu.html:708
+#: app/views/menu.html:726
 msgid "Add"
 msgstr "더하기"
 
-#: app/scripts/controllers/menu.js:1382
+#: app/scripts/controllers/menu.js:1401
 msgid "Add a block to start"
 msgstr "시작하기 위해 블럭 더하기"
 
@@ -47,24 +59,24 @@ msgstr "블럭으로 더하기"
 msgid "Address format"
 msgstr "주소 구성 방식 "
 
-#: app/scripts/services/tools.js:1807
+#: app/scripts/services/tools.js:1918
 msgid "All collections removed"
 msgstr "선택한 것들 모두 지우기"
 
-#: app/scripts/controllers/menu.js:1422
+#: app/scripts/controllers/menu.js:1441
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습니까? "
 
-#: app/scripts/services/tools.js:1389
+#: app/scripts/services/tools.js:1500
 #, fuzzy
 msgid "At least Python 3.7 is required"
 msgstr "파이썬 2.7이 필요합니다"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:638
 msgid "Author"
 msgstr "작가 "
 
-#: app/views/menu.html:753
+#: app/views/menu.html:771
 msgid "Basic"
 msgstr "기초 "
 
@@ -75,6 +87,10 @@ msgstr "바스크"
 #: app/scripts/services/forms.js:1781
 msgid "Binary"
 msgstr "2진수 "
+
+#: app/scripts/services/tools.js:159
+msgid "Bitstream not found: build your project first"
+msgstr ""
 
 #: app/scripts/services/blockforms.js:1082
 #: app/scripts/services/blockforms.js:1206
@@ -93,73 +109,70 @@ msgstr "블록 {{name}} 가져오기"
 msgid "Blocks"
 msgstr "블록들 "
 
-#: app/views/menu.html:508
+#: app/views/menu.html:526
 msgid "Board"
 msgstr "보드 "
 
-#: app/views/menu.html:367 app/views/menu.html:458
+#: app/views/menu.html:385 app/views/menu.html:476
 msgid "Board rules"
 msgstr "보드 규칙"
 
-#: app/scripts/controllers/menu.js:997
+#: app/scripts/controllers/menu.js:1016
 msgid "Board rules disabled"
 msgstr "보드 규칙이 지켜지지 않았습니다"
 
-#: app/scripts/controllers/menu.js:995
+#: app/scripts/controllers/menu.js:1014
 msgid "Board rules enabled"
 msgstr "보드 룰을 사용할 수 있습니다"
 
-#: app/scripts/services/tools.js:648
+#: app/scripts/services/tools.js:759
 msgid "Board {{name}} disconnected"
 msgstr "보드 {{name}} 연결불량 "
 
-#: app/scripts/services/tools.js:607 app/scripts/services/tools.js:633
+#: app/scripts/services/tools.js:718 app/scripts/services/tools.js:744
 msgid "Board {{name}} not available"
 msgstr "보드 {{name}} 불가능"
 
-#: app/scripts/services/tools.js:585
+#: app/scripts/services/tools.js:696
 msgid "Board {{name}} not connected"
 msgstr "보드 {{name}} 연결되지 않았음"
 
-#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1323
 msgid "Board {{name}} selected"
 msgstr "보드 {{name}} 선택됨 "
 
-#: app/scripts/services/tools.js:596 app/scripts/services/tools.js:626
+#: app/scripts/services/tools.js:707 app/scripts/services/tools.js:737
 msgid "Bootloader not active"
 msgstr "부트로더가 활성화되지 않음 "
 
-#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
-#: app/views/menu.html:607
+#: app/scripts/controllers/menu.js:1345 app/views/design.html:506
+#: app/views/menu.html:625
 msgid "Build"
 msgstr "만들기"
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1355
 msgid "Build done"
 msgstr "만들기 완료 "
-
-#: app/views/design.html:35
-msgid "CAUTION ! : Changes will also be applied in all the copied"
-msgstr ""
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "취소 "
 
 #: app/views/languages.html:92
-msgid "Catalan"
+#, fuzzy
+msgid "Catalonian"
 msgstr "카탈란어"
 
-#: app/views/design.html:264
+#: app/views/design.html:262
 #, fuzzy
 msgid "Change Color"
 msgstr "색깔을 선택하세요"
 
-#: app/scripts/services/tools.js:1344
+#: app/scripts/services/tools.js:1455
 msgid "Check Internet connection..."
 msgstr "인터넷 연결을 확인하세요."
 
-#: app/scripts/services/tools.js:1378
+#: app/scripts/services/tools.js:1489
 msgid "Check Python..."
 msgstr "파이썬을 확인하세요."
 
@@ -176,16 +189,16 @@ msgstr "색깔을 선택하세요"
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "여기를 클릭하여 <b> 새로운 버전을 다운받으세요. </b>"
 
-#: app/scripts/services/tools.js:1518
+#: app/scripts/services/tools.js:1629
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "여기를 클릭하여 <b>드라이버를 설정하세요.</b>"
 
-#: app/scripts/services/drivers.js:413 app/scripts/services/drivers.js:594
-#: app/scripts/services/drivers.js:613 app/scripts/services/tools.js:430
+#: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:539
 msgid "Click here to install it"
 msgstr "설치하려면 여기를 클릭하세요"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:956
 msgid "Click here to view"
 msgstr "확인하려면 여기를 클릭하세요"
 
@@ -197,63 +210,63 @@ msgstr "데이터 버스에는 클럭이 허용되지 않습니다"
 msgid "Clone"
 msgstr "복제 "
 
-#: app/scripts/controllers/menu.js:565 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:80
 msgid "Close"
 msgstr "닫기"
 
-#: app/views/design.html:324 app/views/menu.html:791
+#: app/views/design.html:314 app/views/menu.html:809
 msgid "Code"
 msgstr "코드"
 
-#: app/views/menu.html:541
+#: app/views/menu.html:559
 msgid "Collection"
 msgstr "컬렉션 "
 
-#: app/views/menu.html:465
+#: app/views/menu.html:483
 msgid "Collection info"
 msgstr "컬렉션 정보"
 
-#: app/scripts/controllers/menu.js:1213
+#: app/scripts/controllers/menu.js:1232
 msgid "Collection {{collection}} info not defined"
 msgstr "컬렉션 {{collection}} 정보가 정의되지 않았습니다"
 
-#: app/scripts/services/tools.js:1660
+#: app/scripts/services/tools.js:1771
 msgid "Collection {{name}} added"
 msgstr "컬렉션 {{name}} 추가"
 
-#: app/scripts/services/tools.js:1647
+#: app/scripts/services/tools.js:1758
 msgid "Collection {{name}} not replaced"
 msgstr "컬렉션 {{name}} 이 교체되지 않았음"
 
-#: app/scripts/services/tools.js:1798
+#: app/scripts/services/tools.js:1909
 msgid "Collection {{name}} removed"
 msgstr "컬렉션 {{name}}  삭제 "
 
-#: app/scripts/services/tools.js:1636
+#: app/scripts/services/tools.js:1747
 msgid "Collection {{name}} replaced"
 msgstr "컬렉션 {{name}}  교체"
 
-#: app/scripts/controllers/menu.js:1259
+#: app/scripts/controllers/menu.js:1278
 msgid "Collection {{name}} selected"
 msgstr "컬렉션 {{name}} 선택 "
 
-#: app/views/menu.html:700
+#: app/views/menu.html:718
 msgid "Collections"
 msgstr "컬렉션들 "
 
-#: app/scripts/controllers/menu.js:1229 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1248 app/views/menu.html:489
 msgid "Command output"
 msgstr "명령 출력"
 
-#: app/views/menu.html:864
+#: app/views/menu.html:882
 msgid "Community forum"
 msgstr "커뮤니티 포럼"
 
-#: app/scripts/services/tools.js:676
+#: app/scripts/services/tools.js:787
 msgid "Configuration not completed"
 msgstr "구성이 완료되지 않음"
 
-#: app/views/design.html:312 app/views/menu.html:783
+#: app/views/design.html:304 app/views/menu.html:801
 msgid "Constant"
 msgstr "정수"
 
@@ -270,11 +283,11 @@ msgstr "변환"
 msgid "Copy"
 msgstr "복사하기 "
 
-#: app/scripts/services/forms.js:400 app/views/design.html:137
+#: app/scripts/services/forms.js:400 app/views/design.html:136
 msgid "Coral"
 msgstr "코랄"
 
-#: app/scripts/services/tools.js:1408
+#: app/scripts/services/tools.js:1519
 msgid "Create virtualenv..."
 msgstr "virtualenv를 생성하기..."
 
@@ -291,25 +304,17 @@ msgstr "체코"
 msgid "Dark (default)"
 msgstr "기본값"
 
-#: app/scripts/services/forms.js:424
+#: app/scripts/services/forms.js:424 app/views/design.html:199
 #, fuzzy
 msgid "Dark Green"
 msgstr "암녹색"
 
-#: app/scripts/services/forms.js:406
+#: app/scripts/services/forms.js:406 app/views/design.html:150
 #, fuzzy
 msgid "Dark Orange"
 msgstr "다크오렌지"
 
-#: app/views/design.html:201
-msgid "DarkGreen"
-msgstr "암녹색"
-
-#: app/views/design.html:151
-msgid "DarkOrange"
-msgstr "다크오렌지"
-
-#: app/views/menu.html:452
+#: app/views/menu.html:470
 msgid "Datasheet"
 msgstr "데이터시트"
 
@@ -317,41 +322,45 @@ msgstr "데이터시트"
 msgid "Decimal"
 msgstr "10진수"
 
-#: app/scripts/services/forms.js:394 app/views/design.html:123
+#: app/scripts/services/forms.js:394 app/views/design.html:122
 #, fuzzy
 msgid "Deep Pink"
 msgstr "진분홍"
 
-#: app/scripts/services/forms.js:439 app/views/design.html:236
+#: app/scripts/services/forms.js:439 app/views/design.html:234
 #, fuzzy
 msgid "Deep Sky Blue"
 msgstr "진파랑"
 
-#: app/views/menu.html:550
+#: app/views/menu.html:568
 msgid "Default"
 msgstr "기본값"
 
-#: app/scripts/services/utils.js:641
+#: app/views/menu.html:296
+msgid "Delete"
+msgstr ""
+
+#: app/scripts/services/utils.js:637
 msgid "Description"
 msgstr "설명"
 
-#: app/views/menu.html:688
+#: app/views/menu.html:706
 msgid "Disable"
 msgstr "불가"
 
-#: app/scripts/controllers/menu.js:570
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr "응용 프로그램을 닫으시겠습니까?"
 
-#: app/scripts/controllers/menu.js:1405
+#: app/scripts/controllers/menu.js:1424
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} 컬렉션을 삭제하시겠습니까?"
 
-#: app/scripts/services/tools.js:1629
+#: app/scripts/services/tools.js:1740
 msgid "Do you want to replace it?"
 msgstr "교체하시겠습니까?"
 
-#: app/views/menu.html:845
+#: app/views/menu.html:863
 msgid "Documentation"
 msgstr "문ㅅ"
 
@@ -359,21 +368,26 @@ msgstr "문ㅅ"
 msgid "Don't display"
 msgstr "표시 안 함"
 
-#: app/views/menu.html:675
+#: app/views/menu.html:693
 msgid "Drivers"
 msgstr "드라이버"
 
 #: app/scripts/services/drivers.js:252 app/scripts/services/drivers.js:307
-#: app/scripts/services/drivers.js:447
+#: app/scripts/services/drivers.js:478
 msgid "Drivers disabled"
 msgstr "드라이버 오류"
 
 #: app/scripts/services/drivers.js:230 app/scripts/services/drivers.js:287
-#: app/scripts/services/drivers.js:431
+#: app/scripts/services/drivers.js:455
 msgid "Drivers enabled"
 msgstr "드라이버 가능"
 
-#: app/scripts/services/tools.js:694
+#: app/views/menu.html:287
+#, fuzzy
+msgid "Duplicate"
+msgstr "출력 라벨"
+
+#: app/scripts/services/tools.js:805
 msgid "Duplicated FPGA I/O ports"
 msgstr "복사된 FPGA I/O 포트"
 
@@ -390,11 +404,11 @@ msgstr "네덜란드어"
 msgid "Edit"
 msgstr "편집"
 
-#: app/scripts/services/tools.js:1608
+#: app/scripts/services/tools.js:1719
 msgid "Edit the collection name"
 msgstr "컬렉션 이름 편집"
 
-#: app/views/menu.html:681
+#: app/views/menu.html:699
 msgid "Enable"
 msgstr "가능"
 
@@ -427,15 +441,15 @@ msgstr "입력 포트 입력"
 msgid "Enter the python path"
 msgstr "외부 수집 경로 입력"
 
-#: app/scripts/controllers/menu.js:984
+#: app/scripts/controllers/menu.js:1003
 msgid "Enter the remote hostname user@host"
 msgstr "원격 호스트 이름 user@host를 입력하십시오"
 
-#: app/scripts/services/utils.js:845
+#: app/scripts/services/utils.js:841
 msgid "Error: {{error}}"
 msgstr "에러:{{error}}"
 
-#: app/scripts/services/tools.js:800
+#: app/scripts/services/tools.js:911
 msgid "Errors detected in the design"
 msgstr "디자인에서 에러가 발생하였습니다"
 
@@ -443,7 +457,7 @@ msgstr "디자인에서 에러가 발생하였습니다"
 msgid "Examples"
 msgstr "예시"
 
-#: app/scripts/services/tools.js:468
+#: app/scripts/services/tools.js:577
 msgid "Execute remote {{label}} ..."
 msgstr "원격 {{label}} 시행..."
 
@@ -451,29 +465,29 @@ msgstr "원격 {{label}} 시행..."
 msgid "Export"
 msgstr "추출하다"
 
-#: app/scripts/controllers/menu.js:393
+#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
 msgid "Export submodule"
 msgstr "서브모듈을 추출하기"
 
-#: app/views/menu.html:377
+#: app/views/menu.html:395
 msgid "External collections"
 msgstr "외부의 콜렉션들"
 
-#: app/scripts/controllers/menu.js:909
+#: app/scripts/controllers/menu.js:928
 msgid "External collections updated"
 msgstr "외부의 콜렉션들이 업데이트 되었습니다"
 
-#: app/views/menu.html:383
+#: app/views/menu.html:401
 #, fuzzy
 msgid "External plugins"
 msgstr "외부의 콜렉션들"
 
-#: app/scripts/controllers/menu.js:780
+#: app/scripts/controllers/menu.js:799
 #, fuzzy
 msgid "External plugins updated"
 msgstr "외부의 콜렉션들이 업데이트 되었습니다"
 
-#: app/scripts/services/tools.js:687
+#: app/scripts/services/tools.js:798
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O 포트가 정의되지 않음"
 
@@ -481,7 +495,7 @@ msgstr "FPGA I/O 포트가 정의되지 않음"
 msgid "FPGA pin"
 msgstr "FPGA 핀"
 
-#: app/views/menu.html:486
+#: app/views/menu.html:504
 msgid "FPGA resources"
 msgstr "FPGA 리소스들"
 
@@ -502,7 +516,7 @@ msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "{{file}} 파일이 프로젝트 경로에 이미 존재합니다. 교체하시겠습니까?"
 
-#: app/scripts/services/tools.js:324
+#: app/scripts/services/tools.js:433
 msgid "File {{file}} does not exist"
 msgstr "{{file}}이 존재하지 않음"
 
@@ -514,7 +528,7 @@ msgstr "{{file}}파일 가져오기"
 msgid "Find"
 msgstr ""
 
-#: app/views/menu.html:300
+#: app/views/menu.html:318
 msgid "Fit content"
 msgstr "콘텐츠 맞춤"
 
@@ -522,8 +536,8 @@ msgstr "콘텐츠 맞춤"
 msgid "French"
 msgstr "프랑스어"
 
-#: app/scripts/services/forms.js:385 app/views/design.html:173
-#: app/views/design.html:98
+#: app/scripts/services/forms.js:385 app/views/design.html:171
+#: app/views/design.html:97
 msgid "Fuchsia"
 msgstr "후치아"
 
@@ -535,7 +549,7 @@ msgstr "갈리시아어"
 msgid "German"
 msgstr "독일어"
 
-#: app/scripts/services/forms.js:409 app/views/design.html:158
+#: app/scripts/services/forms.js:409 app/views/design.html:157
 msgid "Gold"
 msgstr "황금"
 
@@ -543,16 +557,12 @@ msgstr "황금"
 msgid "Greek"
 msgstr "그리스어"
 
-#: app/scripts/services/forms.js:418
+#: app/scripts/services/forms.js:418 app/views/design.html:185
 #, fuzzy
 msgid "Green Yellow"
 msgstr "녹노랑"
 
-#: app/views/design.html:187
-msgid "GreenYellow"
-msgstr "녹노랑"
-
-#: app/views/menu.html:809
+#: app/views/menu.html:827
 msgid "Help"
 msgstr "도움"
 
@@ -565,34 +575,35 @@ msgstr "16진수의"
 msgid "Icestudio is part of"
 msgstr "Icestudio 시작"
 
-#: app/scripts/services/graph.js:1650
+#: app/scripts/services/graph.js:1659
+#, fuzzy
 msgid ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
-"board"
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
 msgstr "빈 IN/OUT 핀이 있는 경우, 이 보드에 동일한 핀이 없기 때문이다"
 
-#: app/scripts/services/utils.js:655
+#: app/scripts/services/utils.js:651
 msgid "Image"
 msgstr "사진"
 
-#: app/scripts/controllers/menu.js:2105
+#: app/scripts/controllers/menu.js:2125
 msgid "Image {{name}} saved"
 msgstr "사진 {{name}}이 저장되었음"
 
-#: app/scripts/services/forms.js:388 app/views/design.html:109
+#: app/scripts/services/forms.js:388 app/views/design.html:108
 #, fuzzy
 msgid "Indian Red"
 msgstr "인디안 빨강"
 
-#: app/views/design.html:330 app/views/menu.html:795
+#: app/views/design.html:319 app/views/menu.html:813
 msgid "Information"
 msgstr "정보"
 
-#: app/views/design.html:282 app/views/menu.html:760
+#: app/views/design.html:279 app/views/menu.html:778
 msgid "Input"
 msgstr "입력"
 
-#: app/views/design.html:294 app/views/menu.html:769
+#: app/views/design.html:289 app/views/menu.html:787
 msgid "Input label"
 msgstr "입력 라벨"
 
@@ -615,23 +626,23 @@ msgstr ""
 msgid "Input ports"
 msgstr "입력 포트 입력"
 
-#: app/views/menu.html:635
+#: app/views/menu.html:653
 #, fuzzy
 msgid "Install (Stable)"
 msgstr "설치"
 
-#: app/views/menu.html:656
+#: app/views/menu.html:674
 msgid "Install Development version"
 msgstr ""
 
-#: app/scripts/services/tools.js:1118
+#: app/scripts/services/tools.js:1229
 msgid ""
 "Install the <b>STABLE Toolchain</b>. This operation requires Internet "
 "connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 
-#: app/scripts/services/tools.js:1144
+#: app/scripts/services/tools.js:1255
 #, fuzzy
 msgid ""
 "Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
@@ -640,7 +651,7 @@ msgstr ""
 "툴체인 업데이트 예정입니다. 이 작업은 인터넷 연결이 필요합니다. 계속하시겠습"
 "니까?"
 
-#: app/scripts/services/tools.js:1166
+#: app/scripts/services/tools.js:1277
 #, fuzzy
 msgid ""
 "Install the LATEST STABLE toolchain. It will be downloaded. This operation "
@@ -649,32 +660,35 @@ msgstr ""
 "툴체인 업데이트 예정입니다. 이 작업은 인터넷 연결이 필요합니다. 계속하시겠습"
 "니까?"
 
-#: app/scripts/services/tools.js:1496
+#: app/scripts/services/tools.js:1607
 msgid "Installation completed"
 msgstr "설치 완료"
 
-#: app/scripts/services/tools.js:1274
+#: app/scripts/services/tools.js:1385
 #, fuzzy
 msgid "Installing"
 msgstr "설치"
 
-#: app/scripts/services/drivers.js:421 app/scripts/services/tools.js:1362
+#: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1473
 msgid "Internet connection required"
 msgstr "인터넷 연결 필요"
 
 #: app/scripts/services/graph.js:298
-msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>block already connected"
 msgstr "잘못된 <i>풀 업 </i> 연결: <br> 블록이 이미 연결됨"
 
 #: app/scripts/services/graph.js:312
-msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "잘못된 <i>풀 업 </i> 연결: <i>만 허용됨"
 
 #: app/scripts/services/graph.js:304
-msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+#, fuzzy
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "잘못된 블록 연결: <br><i>Pull up </i>가 이미 연결됨"
 
-#: app/scripts/services/tools.js:1673
+#: app/scripts/services/tools.js:1784
 msgid "Invalid collection {{name}}"
 msgstr "잘못된 컬렉션 {{name}}"
 
@@ -701,14 +715,14 @@ msgstr "이탈리아어"
 
 #: app/views/languages.html:110
 #, fuzzy
-msgid "Japanish"
+msgid "Japanese"
 msgstr "스페인어"
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr ""
 
-#: app/views/menu.html:310
+#: app/views/menu.html:328
 msgid "Label Finder"
 msgstr ""
 
@@ -717,7 +731,7 @@ msgstr ""
 msgid "Label updated"
 msgstr "블록 업데이트 "
 
-#: app/views/menu.html:341
+#: app/views/menu.html:359
 msgid "Language"
 msgstr "언어"
 
@@ -725,12 +739,12 @@ msgstr "언어"
 msgid "Light"
 msgstr ""
 
-#: app/scripts/services/forms.js:448 app/views/design.html:257
+#: app/scripts/services/forms.js:448 app/views/design.html:255
 #, fuzzy
 msgid "Light Gray"
 msgstr "밝은 바다 초록"
 
-#: app/scripts/services/forms.js:430 app/views/design.html:215
+#: app/scripts/services/forms.js:430 app/views/design.html:213
 #, fuzzy
 msgid "Light Sea Green"
 msgstr "밝은 바다 초록"
@@ -743,33 +757,29 @@ msgstr "로드"
 msgid "Local parameter"
 msgstr "지역 변수"
 
-#: app/views/menu.html:404
+#: app/views/menu.html:422
 #, fuzzy
 msgid "Logging enabled"
 msgstr "드라이버 가능"
 
-#: app/views/menu.html:413
+#: app/views/menu.html:431
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:722
+#: app/scripts/controllers/menu.js:741
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:959
+#: app/scripts/services/utils.js:955
 msgid "Maximum bus size: 96 bits"
 msgstr "최대 버스 크기: 96비트"
 
-#: app/scripts/services/forms.js:397
+#: app/scripts/services/forms.js:397 app/views/design.html:129
 #, fuzzy
 msgid "Medium Violet Red"
 msgstr "미디엄 바이올렛 레드"
 
-#: app/views/design.html:130
-msgid "MediumVioletRed"
-msgstr "미디엄 바이올렛 레드"
-
-#: app/views/design.html:318 app/views/menu.html:787
+#: app/views/design.html:309 app/views/menu.html:805
 msgid "Memory"
 msgstr "메모리"
 
@@ -778,7 +788,7 @@ msgstr "메모리"
 msgid "Memory blocks"
 msgstr "메모리 블록 입력"
 
-#: app/scripts/services/utils.js:639
+#: app/scripts/services/utils.js:635
 msgid "Name"
 msgstr "이름"
 
@@ -786,7 +796,7 @@ msgstr "이름"
 msgid "Name of the paired labels"
 msgstr ""
 
-#: app/scripts/services/forms.js:445 app/views/design.html:250
+#: app/scripts/services/forms.js:445 app/views/design.html:248
 msgid "Navy"
 msgstr "남색"
 
@@ -800,53 +810,49 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name:"
+msgid "New Name"
 msgstr "이름"
 
-#: app/scripts/controllers/menu.js:1433
+#: app/views/design.html:71
+msgid "Next"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:1452
 msgid "No collections stored"
 msgstr "저장된 컬렉션 없음"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "알겠습니다"
 
-#: app/scripts/services/forms.js:427
+#: app/scripts/services/forms.js:427 app/views/design.html:206
 #, fuzzy
 msgid "Olive Drab"
-msgstr "생기없는 올리브"
-
-#: app/views/design.html:208
-msgid "OliveDrab"
 msgstr "생기없는 올리브"
 
 #: app/views/menu.html:100
 msgid "Open"
 msgstr "열기"
 
-#: app/scripts/services/utils.js:696
+#: app/scripts/services/utils.js:692
 msgid "Open SVG"
 msgstr "SVG 열기"
 
-#: app/scripts/services/forms.js:403
+#: app/scripts/services/forms.js:403 app/views/design.html:143
 #, fuzzy
 msgid "Orange Red"
-msgstr "오렌지 레드"
-
-#: app/views/design.html:144
-msgid "OrangeRed"
 msgstr "오렌지 레드"
 
 #: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "원본 파일 {{file}} 이 존재하지 않습니다"
 
-#: app/views/design.html:288 app/views/menu.html:764
+#: app/views/design.html:284 app/views/menu.html:782
 msgid "Output"
 msgstr "출력"
 
-#: app/views/design.html:300 app/views/menu.html:773
+#: app/views/design.html:294 app/views/menu.html:791
 msgid "Output label"
 msgstr "출력 라벨"
 
@@ -865,7 +871,7 @@ msgstr "출력 라벨"
 msgid "Output ports"
 msgstr "출력 라벨"
 
-#: app/views/design.html:306 app/views/menu.html:778
+#: app/views/design.html:299 app/views/menu.html:796
 msgid "Paired labels"
 msgstr ""
 
@@ -873,24 +879,28 @@ msgstr ""
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: app/scripts/controllers/menu.js:731 app/scripts/controllers/menu.js:788
-#: app/scripts/controllers/menu.js:853 app/scripts/controllers/menu.js:917
+#: app/scripts/controllers/menu.js:750 app/scripts/controllers/menu.js:807
+#: app/scripts/controllers/menu.js:872 app/scripts/controllers/menu.js:936
 msgid "Path {{path}} does not exist"
 msgstr "경로 {{path}} 가 존재하지 않습니다"
 
-#: app/scripts/services/utils.js:1141
+#: app/scripts/services/utils.js:1137
 msgid "Please run: {{cmd}}"
 msgstr "작동: {{cmd}}"
 
-#: app/views/menu.html:334
+#: app/views/menu.html:352
 msgid "Preferences"
 msgstr "선호"
 
-#: app/views/menu.html:422
+#: app/views/design.html:68
+msgid "Prev."
+msgstr ""
+
+#: app/views/menu.html:440
 msgid "Project information"
 msgstr "프로젝트 정보"
 
-#: app/scripts/controllers/menu.js:935 app/scripts/controllers/menu.js:961
+#: app/scripts/controllers/menu.js:954 app/scripts/controllers/menu.js:980
 msgid "Project information updated"
 msgstr "프로젝트 정보가 업데이트되었습니다"
 
@@ -902,11 +912,11 @@ msgstr "프로젝트 {{name}}이 로드되었습니다"
 msgid "Project {{name}} saved"
 msgstr "프로젝트 {{name}}이 저장되었습니다"
 
-#: app/scripts/controllers/menu.js:845
+#: app/scripts/controllers/menu.js:864
 msgid "Python Environment updated"
 msgstr ""
 
-#: app/views/menu.html:389
+#: app/views/menu.html:407
 msgid "Python environment"
 msgstr ""
 
@@ -914,11 +924,7 @@ msgstr ""
 msgid "Quit"
 msgstr "끝내기"
 
-#: app/views/design.html:19
-msgid "Read only"
-msgstr "읽기 전용"
-
-#: app/scripts/services/forms.js:391 app/views/design.html:116
+#: app/scripts/services/forms.js:391 app/views/design.html:115
 msgid "Red"
 msgstr "빨강"
 
@@ -930,27 +936,27 @@ msgstr "다시하기"
 msgid "Release History WIKI"
 msgstr ""
 
-#: app/views/menu.html:715
+#: app/views/menu.html:733
 msgid "Reload"
 msgstr "다시로드하기"
 
-#: app/scripts/services/tools.js:869
+#: app/scripts/services/tools.js:980
 msgid "Remote host {{name}} not connected"
 msgstr "원격 호스트 {{name}}이 연결되지 않음"
 
-#: app/views/menu.html:395
+#: app/views/menu.html:413
 msgid "Remote hostname"
 msgstr "원격 호스트이름"
 
-#: app/views/menu.html:647 app/views/menu.html:722
+#: app/views/menu.html:665 app/views/menu.html:740
 msgid "Remove"
 msgstr "지우기"
 
-#: app/views/menu.html:738
+#: app/views/menu.html:756
 msgid "Remove all"
 msgstr "모두 지우기"
 
-#: app/views/design.html:267
+#: app/views/design.html:265
 msgid "Replace All"
 msgstr ""
 
@@ -958,11 +964,11 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:694
 msgid "Reset SVG"
 msgstr "SVG 재설정"
 
-#: app/scripts/services/forms.js:442 app/views/design.html:243
+#: app/scripts/services/forms.js:442 app/views/design.html:241
 #, fuzzy
 msgid "Royal Blue"
 msgstr "로얄 블루"
@@ -975,7 +981,7 @@ msgstr "러시아어"
 msgid "Save"
 msgstr "저장하다"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:693
 msgid "Save SVG"
 msgstr "SVG 저장"
 
@@ -987,11 +993,11 @@ msgstr "다른이름으로 저장하기"
 msgid "Save submodule"
 msgstr "서브모듈 저장"
 
-#: app/views/menu.html:502
+#: app/views/menu.html:520
 msgid "Select"
 msgstr "선택"
 
-#: app/views/menu.html:287
+#: app/views/menu.html:305
 msgid "Select all"
 msgstr "모두 선택"
 
@@ -1003,16 +1009,12 @@ msgstr "보드를 선택하세요"
 msgid "Show clock"
 msgstr "시계를 표시"
 
-#: app/scripts/services/forms.js:415
+#: app/scripts/services/forms.js:415 app/views/design.html:178
 #, fuzzy
 msgid "Slate Blue"
 msgstr "슬레이트 블루"
 
-#: app/views/design.html:180
-msgid "SlateBlue"
-msgstr "슬레이트 블루"
-
-#: app/views/menu.html:853
+#: app/views/menu.html:871
 msgid "Source code"
 msgstr "소스코드"
 
@@ -1020,43 +1022,40 @@ msgstr "소스코드"
 msgid "Spanish"
 msgstr "스페인어"
 
-#: app/scripts/services/forms.js:421
+#: app/scripts/services/forms.js:421 app/views/design.html:192
 #, fuzzy
 msgid "Spring Green"
 msgstr "봄 초록"
 
-#: app/views/design.html:194
-msgid "SpringGreen"
-msgstr "봄 초록"
-
-#: app/scripts/controllers/menu.js:1335
+#: app/scripts/controllers/menu.js:1354
 msgid "Start build"
 msgstr "빌드 시작"
 
-#: app/scripts/controllers/menu.js:1361
+#: app/scripts/controllers/menu.js:1380
 msgid "Start upload"
 msgstr "업로드 시작"
 
-#: app/scripts/controllers/menu.js:1312
+#: app/scripts/controllers/menu.js:1331
 msgid "Start verification"
 msgstr "검증 시작"
 
-#: app/scripts/services/forms.js:436 app/views/design.html:229
+#: app/scripts/services/forms.js:436 app/views/design.html:227
 #, fuzzy
 msgid "Steel Blue"
 msgstr "파란금속"
 
-#: app/scripts/services/tools.js:445
+#: app/scripts/services/tools.js:554
 msgid "Synchronize remote files ..."
 msgstr "원격 파일 동기화..."
 
-#: app/views/menu.html:477
+#: app/views/menu.html:495
 msgid "System Info"
 msgstr ""
 
 #: app/views/languages.html:62
-msgid "Taiwan"
-msgstr ""
+#, fuzzy
+msgid "Taiwanese"
+msgstr "중국"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1066,25 +1065,26 @@ msgstr "테스트벤치"
 msgid "Thank you very much!"
 msgstr ""
 
-#: app/scripts/services/tools.js:1622
+#: app/scripts/services/tools.js:1733
 msgid "The collection {{name}} already exists."
 msgstr "컬렉션 {{name}}이(가) 이미 존재합니다."
 
-#: app/scripts/controllers/menu.js:1284
+#: app/scripts/controllers/menu.js:1303
+#, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"the {{name}} board?"
 msgstr "현재 FPGA I/O 구성이 손실됩ㄴ다. {{name}}보드로 변경하시겠습니까?"
 
-#: app/scripts/services/tools.js:1184
+#: app/scripts/services/tools.js:1295
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "툴체인이 제거됩니다. 계속하시겠습니까?"
 
-#: app/scripts/services/tools.js:1842
+#: app/scripts/services/tools.js:1953
 msgid "There is a new nightly version available"
 msgstr "새로운 야간 버전이 출시되었다"
 
-#: app/scripts/services/tools.js:1834
+#: app/scripts/services/tools.js:1945
 msgid "There is a new stable version available"
 msgstr "새로운 안정한 버전이 출시되었다"
 
@@ -1107,9 +1107,10 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/graph.js:532
+#, fuzzy
 msgid ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"To enter \"edit mode\" in a deeper block, you need to finish first the "
+"current one by locking the padlock."
 msgstr ""
 "\"편집 모드\"의 깊은 블락에 들어가기위해서, 현재 \"편집모드\"를 키 락으로 잠"
 "가야 합니다"
@@ -1121,41 +1122,41 @@ msgstr "디자인을 보기위해서는, \"편집모드\"를 닫아야합니다.
 #: app/scripts/controllers/menu.js:349
 #, fuzzy
 msgid ""
-"To save your design you need to lock the keylock and               go to top "
-"level design.<br/><br/>If you want to export               this submodule to "
-"a file, execute \"Save as\" command to do it."
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
 msgstr ""
 "설계를 저장하려면 키록을 잠그고 최상위 설계로 이동하십시오.<br/><br/>이 하위 "
 "모듈을 파일로 내보내려면 \"다른 이름으로 저장\" 명령을 실행하여 파일을 내보내"
 "십시오."
 
-#: app/views/menu.html:320
+#: app/views/menu.html:338
 #, fuzzy
 msgid "Toolbox"
 msgstr "도구들"
 
-#: app/views/menu.html:627
+#: app/views/menu.html:645
 msgid "Toolchain"
 msgstr "툴체인"
 
-#: app/scripts/services/tools.js:1506
+#: app/scripts/services/tools.js:1617
 msgid "Toolchain installed"
 msgstr "툴체인이 설치됨"
 
-#: app/scripts/services/drivers.js:594 app/scripts/services/drivers.js:613
-#: app/scripts/services/tools.js:191 app/scripts/services/tools.js:371
+#: app/scripts/services/drivers.js:625 app/scripts/services/drivers.js:644
+#: app/scripts/services/tools.js:300 app/scripts/services/tools.js:480
 msgid "Toolchain not installed"
 msgstr "툴체인이 설치되지 않았음"
 
-#: app/scripts/services/tools.js:1202
+#: app/scripts/services/tools.js:1313
 msgid "Toolchain removed"
 msgstr "툴체인이 제거되었음"
 
-#: app/scripts/services/tools.js:414
+#: app/scripts/services/tools.js:523
 msgid "Toolchain version does not match"
 msgstr "Toolchain 버전이 일치하지 않음"
 
-#: app/views/menu.html:592
+#: app/views/menu.html:610
 msgid "Tools"
 msgstr "도구들"
 
@@ -1163,11 +1164,11 @@ msgstr "도구들"
 msgid "Turkish"
 msgstr ""
 
-#: app/scripts/services/forms.js:433 app/views/design.html:222
+#: app/scripts/services/forms.js:433 app/views/design.html:220
 msgid "Turquoise"
 msgstr "터키옥"
 
-#: app/views/menu.html:354
+#: app/views/menu.html:372
 msgid "UI theme"
 msgstr ""
 
@@ -1175,7 +1176,7 @@ msgstr ""
 msgid "Undo"
 msgstr "뒤로가기"
 
-#: app/scripts/services/tools.js:615
+#: app/scripts/services/tools.js:726
 msgid "Unknown board"
 msgstr "알 수 없는 보드"
 
@@ -1183,49 +1184,49 @@ msgstr "알 수 없는 보드"
 msgid "Unsupported project format {{version}}"
 msgstr "지원되지 않는 프로젝트 형식 {{version}}"
 
-#: app/scripts/app.js:206
+#: app/scripts/app.js:209
 msgid "Untitled"
 msgstr "제목이 없음"
 
-#: app/views/menu.html:639
+#: app/views/menu.html:657
 #, fuzzy
 msgid "Update (Latest stable)"
 msgstr "블럭 이름 업데이트"
 
-#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
-#: app/views/menu.html:615
+#: app/scripts/controllers/menu.js:1370 app/views/design.html:514
+#: app/views/menu.html:633
 msgid "Upload"
 msgstr "업로드"
 
-#: app/scripts/controllers/menu.js:1362
+#: app/scripts/controllers/menu.js:1381
 msgid "Upload done"
 msgstr "업로드 완료"
 
-#: app/scripts/controllers/menu.js:1313
+#: app/scripts/controllers/menu.js:1332
 msgid "Verification done"
 msgstr "검증 완료"
 
-#: app/views/design.html:510 app/views/menu.html:599
+#: app/views/design.html:498 app/views/menu.html:617
 msgid "Verify"
 msgstr "입증하다"
 
-#: app/scripts/services/utils.js:640 app/views/menu.html:832
+#: app/scripts/services/utils.js:636 app/views/menu.html:850
 msgid "Version"
 msgstr "버전"
 
-#: app/views/menu.html:826
+#: app/views/menu.html:844
 msgid "Version notes"
 msgstr "버전 노트"
 
-#: app/views/menu.html:434
+#: app/views/menu.html:452
 msgid "View"
 msgstr "보기"
 
-#: app/views/menu.html:819
+#: app/views/menu.html:837
 msgid "View license"
 msgstr "라이선스 보기"
 
-#: app/scripts/services/tools.js:806
+#: app/scripts/services/tools.js:917
 msgid "Warnings detected in the design"
 msgstr "설계에서 경고가 감지되었습니다"
 
@@ -1244,7 +1245,7 @@ msgstr "잘못된 블록 형식: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "잘못된 블럭 이름{{name}}"
 
-#: app/scripts/controllers/menu.js:1904
+#: app/scripts/controllers/menu.js:1924
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "잘못 된 포트 이름{{name}}"
@@ -1253,53 +1254,62 @@ msgstr "잘못 된 포트 이름{{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "잘못된 프로젝트 형식: {{name}}"
 
-#: app/scripts/services/tools.js:862
+#: app/scripts/services/tools.js:973
 msgid "Wrong remote hostname {{name}}"
 msgstr "잘못된 원격 호스트 이름 {{name}}"
 
-#: app/scripts/controllers/menu.js:1808
+#: app/scripts/controllers/menu.js:1828
 msgid "Wrong search name!"
 msgstr ""
 
-#: app/scripts/services/forms.js:412 app/views/design.html:166
+#: app/scripts/services/forms.js:412 app/views/design.html:164
 msgid "Yellow"
 msgstr "노란색"
 
-#: app/scripts/controllers/menu.js:394
+#: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, if you save it, you save only               the "
-"submodule (in this situation \"save as\" works like               \"export "
-"module\"), Do you like to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "서브모듈을 편집하는 중에 서브모듈만 저장하면(이 경우 \"추출 된 모듈\"과 같은 "
 "\"저장\"이 작동함), 계속하시겠습니까?"
 
+#: app/scripts/controllers/menu.js:396
+msgid ""
+"You are navigating into the design: if you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\""
+msgstr ""
+
 #: app/scripts/services/project.js:103
-msgid "You can load it as it is or convert it for the {{name}} board."
+#, fuzzy
+msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "그대로 로드하거나 {{name}}보드로 변환 할 수 있다."
 
-#: app/scripts/controllers/menu.js:1327
+#: app/scripts/controllers/menu.js:1346
+#, fuzzy
 msgid ""
-"You can only build at top-level design. Inside submodules you only can "
+"You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
 "최상위 레벨 디자인만을 빌드할 수 있습니다.서브모듈은 오직 입증만 <strong> 가"
 "능합니다"
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1371
+#, fuzzy
 msgid ""
-"You can only upload  your design at top-level design. Inside submodules you "
-"only can <strong>Verify</strong>"
+"You can only upload at the top-level design. Inside submodules, you can "
+"<strong>Verify</strong>"
 msgstr ""
-"최고 수준의 설계에서만 디자인을 업로드할 수 있습니다.하위 모듈 내부에서는 "
-"<strong>만 확인할 수 있음"
+"최상위 레벨 디자인만을 빌드할 수 있습니다.서브모듈은 오직 입증만 <strong> 가"
+"능합니다"
 
 #: app/views/version.html:23
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:574
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입니다"
 
@@ -1307,25 +1317,59 @@ msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입
 msgid "back"
 msgstr "뒤로가기"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1117
 msgid "{{app}} is required."
 msgstr "{{앱}}이 필요합니다."
 
-#: app/scripts/controllers/menu.js:1099
+#: app/scripts/controllers/menu.js:1118
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}}데이터시트가 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:1085
+#: app/scripts/controllers/menu.js:1104
 msgid "{{board}} pinout not defined"
 msgstr "{{board}}핀아웃이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:1125
+#: app/scripts/controllers/menu.js:1144
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 규칙이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:483 app/scripts/controllers/menu.js:516
+#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr "{{name}} 이 추출되었습니다"
+
+#~ msgid "SlateBlue"
+#~ msgstr "슬레이트 블루"
+
+#~ msgid "DarkGreen"
+#~ msgstr "암녹색"
+
+#~ msgid "DarkOrange"
+#~ msgstr "다크오렌지"
+
+#~ msgid "GreenYellow"
+#~ msgstr "녹노랑"
+
+#~ msgid "MediumVioletRed"
+#~ msgstr "미디엄 바이올렛 레드"
+
+#~ msgid "OliveDrab"
+#~ msgstr "생기없는 올리브"
+
+#~ msgid "OrangeRed"
+#~ msgstr "오렌지 레드"
+
+#~ msgid "SpringGreen"
+#~ msgstr "봄 초록"
+
+#~ msgid "Read only"
+#~ msgstr "읽기 전용"
+
+#~ msgid ""
+#~ "You can only upload  your design at top-level design. Inside submodules "
+#~ "you only can <strong>Verify</strong>"
+#~ msgstr ""
+#~ "최고 수준의 설계에서만 디자인을 업로드할 수 있습니다.하위 모듈 내부에서는 "
+#~ "<strong>만 확인할 수 있음"
 
 #~ msgid "Choose a color"
 #~ msgstr "색깔을 선택하세요"

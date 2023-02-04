@@ -21,5 +21,10 @@
         "styleHost":["css/host.css"],
         "scripts":["js/events.js","js/collectionManager.js"],
         "views":[]
+    },
+    "config":{
+        "fontSize":{"label": "Font size",
+                     "type": "integer",
+                     "default":12}
     }
 }

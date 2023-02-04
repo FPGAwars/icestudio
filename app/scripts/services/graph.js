@@ -295,13 +295,13 @@ angular.module('icestudio')
                             // Prevent to connect a pull-up if other blocks are connected
                             if ((cellViewT.model.get('pullup')) &&
                                 (cellViewS.model.id === link.get('source').id)) {
-                                warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
+                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>block already connected'));
                                 return false;
                             }
                             // Prevent to connect other blocks if a pull-up is connected
                             if ((linkIView.targetView.model.get('pullup')) &&
                                 (cellViewS.model.id === link.get('source').id)) {
-                                warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
+                                warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull-up</i> already connected'));
                                 return false;
                             }
                         }
@@ -309,7 +309,7 @@ angular.module('icestudio')
                         if (cellViewT.model.get('pullup')) {
                             let ret = (cellViewS.model.get('blockType') === blocks.BASIC_INPUT);
                             if (!ret) {
-                                warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
+                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed'));
                             }
                             return ret;
                         }
@@ -529,7 +529,7 @@ angular.module('icestudio')
                         else if (common.allDependencies[type]) {
                             if (typeof common.isEditingSubmodule !== 'undefined' &&
                                 common.isEditingSubmodule === true) {
-                                alertify.warning(gettextCatalog.getString('To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'));
+                                alertify.warning(gettextCatalog.getString('To enter "edit mode" in a deeper block, you need to finish first the current one by locking the padlock.'));
                                 return;
                             }
                             // Navigate inside generic blocks
@@ -1320,6 +1320,23 @@ angular.module('icestudio')
                 }
             };
 
+            this.duplicateSelected = function() {
+                if (hasSelection()) {
+                    utils.duplicateSelected(selection, graph, function (object) {
+                        if (object.version === common.VERSION) {
+                            self.appendDesign(object.design, object.dependencies);
+                        }
+                    });
+                }
+            };
+
+            this.removeSelected = function () {
+                if (hasSelection()) {
+                    graph.removeCells(selection.models);
+                    selectionView.cancelSelection();
+                    updateWiresOnObstacles();
+                }
+            };
 
             this.selectAll = function () {
                 disableSelected();
@@ -1335,14 +1352,6 @@ angular.module('icestudio')
             function hasSelection() {
                 return selection && selection.length > 0;
             }
-
-            this.removeSelected = function () {
-                if (hasSelection()) {
-                    graph.removeCells(selection.models);
-                    selectionView.cancelSelection();
-                    updateWiresOnObstacles();
-                }
-            };
 
             function disableSelected() {
                 if (hasSelection()) {
@@ -1647,7 +1656,7 @@ angular.module('icestudio')
                 });
 
                 if (isMigrated) {
-                    alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
+                    alertify.warning(gettextCatalog.getString("If you see blank IN/OUT pins, it is because equivalent pins do not exist on this board"));
                 }
 
 

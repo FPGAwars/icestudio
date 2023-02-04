@@ -100,7 +100,7 @@ angular.module('icestudio')
         });
         alertify.confirm(
           gettextCatalog.getString('This project is designed for the {{name}} board.', { name: utils.bold(projectBoard) }) + '<br>' +
-          gettextCatalog.getString('You can load it as it is or convert it for the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
+          gettextCatalog.getString('You can load it as it is or convert it to use the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
           function () {
             // Load
             setTimeout(function(){
@@ -687,10 +687,6 @@ angular.module('icestudio')
       }
       return block;
     }
-
-    this.removeSelected = function () {
-      graph.removeSelected();
-    };
 
     this.clear = function () {
       project = _default();

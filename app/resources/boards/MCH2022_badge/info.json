@@ -1,0 +1,12 @@
+{
+  "label": "MCH2022",
+  "datasheet": "https://badge.team/docs/badges/mch2022/",
+  "interface": "usb",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}

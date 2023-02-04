@@ -375,9 +375,35 @@ angular.module('icestudio')
     function disableDarwinDriversSerial() {
       disableDarwinDrivers();
     }
-    function returnBrewPath(){
-      const result = require('child_process').execSync('uname -a').toString().trim().toLowerCase();
-      return (result.indexOf('arm64')>0) ? 'arch -arm64 brew' : 'brew';
+    function returnBrewPath() {
+      const fs = require('fs');
+
+      const possibleBrewPaths = [
+        '/usr/local/bin/brew',
+        '/opt/homebrew/bin/brew'
+      ];
+
+      let brewPath = 'brew';
+      try {
+        for (let checkPath of possibleBrewPaths) {
+          if (fs.existsSync(checkPath)) {
+            brewPath = checkPath;
+            break;
+          }
+        }
+
+        if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
+          fs.appendFileSync(common.LOGFILE, 'Found homebrew in path: ' + brewPath + "\n");
+        }
+      } catch (error) {
+        if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
+          fs.appendFileSync(common.LOGFILE, 'Error detecting brew path:' + "\n");
+          fs.appendFileSync(common.LOGFILE, error + "\n");
+        }
+      }
+
+      const arch = nodeChildProcess.execSync('uname -a').toString().trim().toLowerCase();
+      return (arch.indexOf('arm64') > 0) ? 'arch -arm64 ' + brewPath : brewPath;
     }
 
     function enableDarwinDrivers(brewPackages, profileSetting) {
@@ -397,46 +423,51 @@ angular.module('icestudio')
         fs.appendFileSync(common.LOGFILE, 'BREW COMMANDS:::' + "\n");
         fs.appendFileSync(common.LOGFILE, JSON.stringify(brewCommands));
       }
-      
-      nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
-        if (typeof common.DEBUGMODE !== 'undefined' &&
-          common.DEBUGMODE === 1) {
-          const fs = require('fs');
-          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stderr + "\n");
 
-          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stdout + "\n");
-        }
-        if (error) {
-          if ((stderr.indexOf('brew: command not found') !== -1) ||
-            (stderr.indexOf('brew: No such file or directory') !== -1)) {
-            alertify.warning(gettextCatalog.getString('{{app}} is required.', { app: '<b>Homebrew</b>' }) + '<br>' +
-              '<u>' + gettextCatalog.getString('Click here to install it') + '</u>', 30)
-              .callback = function (isClicked) {
+      try {
+        nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
+          if (typeof common.DEBUGMODE !== 'undefined' &&
+            common.DEBUGMODE === 1) {
+            const fs = require('fs');
+            fs.appendFileSync(common.LOGFILE, 'STDERR ' + stderr + "\n");
+
+            fs.appendFileSync(common.LOGFILE, 'STDERR ' + stdout + "\n");
+          }
+          if (error) {
+            if ((stderr.indexOf('brew: command not found') !== -1) ||
+              (stderr.indexOf('brew: No such file or directory') !== -1)) {
+              alertify.warning(gettextCatalog.getString('{{app}} is required.', {app: '<b>Homebrew</b>'}) + '<br>' +
+                '<u>' + gettextCatalog.getString('Click here to install it') + '</u>', 30)
+                .callback = function (isClicked) {
                 if (isClicked) {
                   gui.Shell.openExternal('https://brew.sh');
                 }
               };
+            } else if (stderr.indexOf('Error: Failed to download') !== -1) {
+              alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+            } else {
+              alertify.error(stderr, 30);
+            }
+          } else {
+            if (profileSetting) {
+              profile.set(profileSetting, true);
+            }
+            alertify.success(gettextCatalog.getString('Drivers enabled'));
           }
-          else if (stderr.indexOf('Error: Failed to download') !== -1) {
-            alertify.error(gettextCatalog.getString('Internet connection required'), 30);
-          }
-          else {
-            alertify.error(stderr, 30);
-          }
+          utils.endBlockingTask();
+        });
+        if (typeof common.DEBUGMODE !== 'undefined' &&
+          common.DEBUGMODE === 1) {
+          const fs = require('fs');
+          fs.appendFileSync(common.LOGFILE, '/drivers.enableDarwinDrivers' + "\n");
         }
-        else {
-          if (profileSetting) {
-            profile.set(profileSetting, true);
-          }
-          alertify.success(gettextCatalog.getString('Drivers enabled'));
+      } catch (error) {
+        if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
+          const fs = require('fs');
+          fs.appendFileSync(common.LOGFILE, 'Error installing driver: ' + error + "\n");
         }
+        alertify.error('Error installing driver: ' + "\n" + error);
         utils.endBlockingTask();
-      });
-      if (typeof common.DEBUGMODE !== 'undefined' &&
-        common.DEBUGMODE === 1) {
-        const fs = require('fs');
-        fs.appendFileSync(common.LOGFILE, '/drivers.enableDarwinDrivers' + "\n");
-
       }
     }
 

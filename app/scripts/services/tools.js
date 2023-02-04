@@ -48,6 +48,7 @@ angular
       };
       this.toolchain = toolchain;
 
+      iceStudio.bus.events.subscribe('toolchain.upload.resolve', toolchainRunResolve);
       // Remove old build directory on start
       //-- TODO: Check if it can be removed, as now another
       //-- build dir is used
@@ -56,8 +57,10 @@ angular
       //-- Execute the apio verify command. It checks the syntax of the current
       //-- circuit
       this.verifyCode = function (startMessage, endMessage) {
+
+        let board = (common.selectedBoard.name === 'MCH2022_badge') ? 'iCE40-UP5K' : common.selectedBoard.name;
         return apioRun(
-          ["verify", "--board", common.selectedBoard.name],
+          ["verify", "--board", board],
           startMessage,
           endMessage
         );
@@ -65,8 +68,10 @@ angular
 
       //-- Execute the apio build command. It builds the current circuit
       this.buildCode = function (startMessage, endMessage) {
+        let board = (common.selectedBoard.name === 'MCH2022_badge') ? 'iCE40-UP5K' : common.selectedBoard.name;
+
         return apioRun(
-          ["build", "--board", common.selectedBoard.name],
+          ["build", "--board", board],
           startMessage,
           endMessage
         );
@@ -75,12 +80,116 @@ angular
       //-- Execute the apio upload command. It uploads the bitstream to the  
       //-- current board
       this.uploadCode = function (startMessage, endMessage) {
+
+        if (common.selectedBoard.name === 'MCH2022_badge') {
+          return toolchainRun(['upload'], startMessage, endMessage);
+        }
+
         return apioRun(
           ["upload", "--board", common.selectedBoard.name],
           startMessage,
           endMessage
         );
+
       };
+
+      //----------------------------------------------------------------
+      //-- Execute an external toolchain command: build, verify, upload
+      function toolchainRun(commands, startMessage, endMessage) {
+
+        return new Promise(function (resolve) {
+
+          //-- Variable for storing the verilog source code of 
+          //-- the current circuit
+          let sourceCode = "";
+
+          //-- The command can only be executed if there is no other
+          //-- command already running
+          if (!taskRunning) {
+
+            //-- Flag that there is a command running
+            taskRunning = true;
+
+            if (infoAlert) {
+              infoAlert.dismiss(false);
+            }
+
+            if (resultAlert) {
+              resultAlert.dismiss(false);
+            }
+            graph
+              .resetCodeErrors()
+              .then(function () {
+                utils.beginBlockingTask();
+                if (startMessage) {
+                  startAlert = alertify.message(startMessage, 100000);
+                }
+
+                return generateCode(commands);
+              })
+              .then(function (output) {
+                sourceCode = output.code;
+
+                return syncResources(output.code, output.internalResources);
+              })
+              .then(function () {
+                let hd = new IceHD();
+                let bitstream = hd.joinPath(common.BUILD_DIR, 'hardware.bin');
+
+                let uploader = hd.joinPath(common.DEFAULT_PLUGIN_DIR, 'mch2022-tools');
+                uploader = hd.joinPath(uploader, 'webusb_fpga');
+
+                let python = hd.joinPath(common.ENV_BIN_DIR, 'python3');
+
+
+                if (hd.isFile(bitstream)) {
+
+                  iceStudio.bus.events.publish('toolchain.upload',
+                    {
+                      cmd: commands,
+                      msg: { end: endMessage },
+                      bitstream: bitstream,
+                      uploader: uploader,
+                      python: python
+
+                    });
+                } else {
+
+                  alertify.error(
+                    gettextCatalog.getString("Bitstream not found: build your project first"),
+                    30
+                  );
+                  utils.endBlockingTask();
+                  restoreTask();
+                }
+              })
+              .catch(function (/* e */) {
+                // Error
+                utils.endBlockingTask();
+                restoreTask();
+              });
+          }
+          resolve();
+        });
+      }
+
+      function toolchainRunResolve(data) {
+        common.commandOutput = data.commandOutput;
+        $(document).trigger("commandOutputChanged", [
+          common.commandOutput
+        ]);
+        if (data.endMessage) {
+
+          resultAlert = alertify.success(
+            gettextCatalog.getString(data.endMessage)
+          );
+        }
+        utils.endBlockingTask();
+        restoreTask();
+
+      }
+      //----------------------------------------------------------------------------
+
 
 
       //----------------------------------------------------------------
@@ -338,12 +447,12 @@ angular
       //-- toolchain.apio global object
       //-- It is also checked if the version is correct (with the version given in the  
       //-- package.json package)
-      function checkToolchain(callback, notifyerror=true) {
+      function checkToolchain(callback, notifyerror = true) {
 
         iceConsole.log("===> tools.CHECKTOOLCHAIN");
         console.log("===> tools.CHECKTOOLCHAIN");
 
-       
+
         //-- Comand to Execute: apio --version
         //-- It returns the apio version
         //-- Ej:
@@ -377,7 +486,7 @@ angular
             }
           }
 
-           //-- Toolchain installed  
+          //-- Toolchain installed  
           else {
 
             console.log("  No Errors. Toolchain installed----");
@@ -426,8 +535,8 @@ angular
         }
         resultAlert = alertify.warning(
           message +
-            ".<br>" +
-            gettextCatalog.getString("Click here to install it"),
+          ".<br>" +
+          gettextCatalog.getString("Click here to install it"),
           100000
         );
         resultAlert.callback = function (isClicked) {
@@ -497,8 +606,8 @@ angular
 
       function shellEscape(arrayArgs) {
         return arrayArgs.map(function (c) {
-          if (c.indexOf("(") >= 0){
-             c = `"${c}"`;
+          if (c.indexOf("(") >= 0) {
+            c = `"${c}"`;
           }
           return c;
         });
@@ -516,6 +625,8 @@ angular
           }
 
           function _executeLocal() {
+
+
             var apio = utils.getApioExecutable();
 
             commands = shellEscape(commands);
@@ -566,7 +677,7 @@ angular
         var stderr = result.stderr;
 
         return new Promise(function (resolve, reject) {
-            
+
           var archName = common.selectedBoard.info.arch;
           if (_error || stderr) {
             // -- Process errors
@@ -881,66 +992,66 @@ angular
           } else {
             //-- Process output
             resolve();
-            
+
             if (stdout) {
-                // Show used resources in the FPGA
-                if (typeof common.FPGAResources.nextpnr === "undefined") {
+              // Show used resources in the FPGA
+              if (typeof common.FPGAResources.nextpnr === "undefined") {
                 common.FPGAResources.nextpnr = {
-                    Field0: { name: "-", used: "-",total: "-",percentage: "-"},                                                
-                    Field1: { name: "-", used: "-",total: "-",percentage: "-"},  
-                    Field2: { name: "-", used: "-",total: "-",percentage: "-"},                                                
-                    Field3: { name: "-", used: "-",total: "-",percentage: "-"},
-                  
-                    Field10: { name: "-", used: "-",total: "-",percentage: "-"},                                                
-                    Field11: { name: "-", used: "-",total: "-",percentage: "-"},  
-                    Field12: { name: "-", used: "-",total: "-",percentage: "-"},                                                
-                    Field13: { name: "-", used: "-",total: "-",percentage: "-"},
-                    BUILDT: { value: "-"},
-                    MF: {  value: 0 }
+                  Field0: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field1: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field2: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field3: { name: "-", used: "-", total: "-", percentage: "-" },
+
+                  Field10: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field11: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field12: { name: "-", used: "-", total: "-", percentage: "-" },
+                  Field13: { name: "-", used: "-", total: "-", percentage: "-" },
+                  BUILDT: { value: "-" },
+                  MF: { value: 0 }
 
                 };
               }
-                
-                if ("ecp5" === archName){
-                   // ecp5  resources
-                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/(LUT4)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
-                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(SLICE):\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
-                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/Total D(FF)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
-                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/(DP16KD):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3);
-                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/TRELLIS_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10);
-                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/(MULT18X18)D:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11);
-                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/EHX(PLL)L:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field12);
-                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/DDR(DLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field13);
-                     
-                }   
-                else {
-                    // ice40  resources
-                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
-                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
-                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2); 
-                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3); 
-                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10); 
-                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11); 
-                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field12); 
-                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field13);
-                          
-                }              
-                
+
+              if ("ecp5" === archName) {
+                // ecp5  resources
+                common.FPGAResources.nextpnr.Field0 = findValueNPNR(/(LUT4)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0);
+                common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(SLICE):\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1);
+                common.FPGAResources.nextpnr.Field2 = findValueNPNR(/Total D(FF)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
+                common.FPGAResources.nextpnr.Field3 = findValueNPNR(/(DP16KD):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3);
+                common.FPGAResources.nextpnr.Field10 = findValueNPNR(/TRELLIS_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10);
+                common.FPGAResources.nextpnr.Field11 = findValueNPNR(/(MULT18X18)D:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11);
+                common.FPGAResources.nextpnr.Field12 = findValueNPNR(/EHX(PLL)L:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field12);
+                common.FPGAResources.nextpnr.Field13 = findValueNPNR(/DDR(DLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field13);
+
+              }
+              else {
+                // ice40  resources
+                common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0);
+                common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1);
+                common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
+                common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3);
+                common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10);
+                common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11);
+                common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field12);
+                common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field13);
+
+              }
 
 
-            common.FPGAResources.nextpnr.MF = findMaxFreq(
+
+              common.FPGAResources.nextpnr.MF = findMaxFreq(
                 /Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g,
                 stdout,
                 common.FPGAResources.nextpnr.MF
-            );
-                                
-            common.FPGAResources.nextpnr.BUILDT = findTime(
+              );
+
+              common.FPGAResources.nextpnr.BUILDT = findTime(
                 /==(?:=)+..SUCCESS. Took ([\d\.]+) ([secmin]{3})/g,
                 stdout,
                 common.FPGAResources.nextpnr.MF.BUILDT
-            );
-              
-                        
+              );
+
+
               utils.rootScopeSafeApply();
             }
           }
@@ -949,28 +1060,28 @@ angular
 
       function findValueNPNR(pattern, output, previousValue) {
         var match = pattern.exec(output);
-        return match && match[1] && match[2] && match[3] && match[4] ? { 
-            name: match[1],
-            used: match[2],
-            total: match[3],
-            percentage: match[4]
+        return match && match[1] && match[2] && match[3] && match[4] ? {
+          name: match[1],
+          used: match[2],
+          total: match[3],
+          percentage: match[4]
         }
-         : previousValue;
-    }
+          : previousValue;
+      }
 
       function findMaxFreq(pattern, output, previousValue) {
         var match = pattern.exec(output);
         return match && match[1] ? {
-              value: match[1]
-            } : previousValue;
+          value: match[1]
+        } : previousValue;
       }
-      
+
       function findTime(pattern, output, previousValue) {
         var match = pattern.exec(output);
         return match && match[1] && match[2] ? {
-                 value: match[1],
-                 unit: match[2]    
-            } : previousValue;
+          value: match[1],
+          unit: match[2]
+        } : previousValue;
       }
 
       /*    function findValue(pattern, output, previousValue) {
@@ -1116,9 +1227,9 @@ angular
 
         alertify.confirm(
           gettextCatalog.getString(
-            "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection <br>" + 
-            "<p><b>NOTE:</b> You need to disconnect your VPN (if any) to allow the toolchain installation</p> " + 
-            "<p>Do you want to continue?</p>" 
+            "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection <br>" +
+            "<p><b>NOTE:</b> You need to disconnect your VPN (if any) to allow the toolchain installation</p> " +
+            "<p>Do you want to continue?</p>"
           ),
           function () {
             //-- Remove the toolchain for starting a fresh installation
@@ -1202,13 +1313,13 @@ angular
                 gettextCatalog.getString("Toolchain removed"),
                 2, //-- Notification removed after 2 seconds
 
-                function() {
+                function () {
                   //-- Stop the spinner
                   restoreStatus();
                   iceConsole.log("===> Toolchains removed");
                 });
             }, 100);
-            
+
           }
         );
       };
@@ -1271,8 +1382,8 @@ angular
         const content = [
           "<div>",
           '  <p id="progress-message">' +
-            gettextCatalog.getString("Installing " + utils.printApioVersion(version)) +
-            "</p>",
+          gettextCatalog.getString("Installing " + utils.printApioVersion(version)) +
+          "</p>",
           "  </br>",
           '  <div class="progress">',
           '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
@@ -1382,14 +1493,14 @@ angular
           callback();
 
         } //-- No python3 detected
-          else {
-            closeToolchainAlert();
-            restoreStatus();
-            resultAlert = alertify.error(
-              gettextCatalog.getString("At least Python 3.7 is required"),
-              30
-            );
-            callback(true);
+        else {
+          closeToolchainAlert();
+          restoreStatus();
+          resultAlert = alertify.error(
+            gettextCatalog.getString("At least Python 3.7 is required"),
+            30
+          );
+          callback(true);
         }
       }
 
@@ -1428,7 +1539,7 @@ angular
         //-- Perform the real installation
         utils.installOnlineApio(callback);
       }
-      
+
       //-------------------------------------------
       //-- Install the apio oss-cad-suite package
       //-- 
@@ -1499,12 +1610,12 @@ angular
 
             iceConsole.log(
               "****************** INSTALLATION COMPLETED! **************");
-            iceConsole.log("\n\n");  
+            iceConsole.log("\n\n");
 
             //-- Notification: Installed!
             alertify.success(
               gettextCatalog.getString("Toolchain installed"));
-              
+
             setupDriversAlert();
           }
 
@@ -1625,10 +1736,10 @@ angular
                               name: utils.bold(name)
                             }
                           ) +
-                            "<br>" +
-                            gettextCatalog.getString(
-                              "Do you want to replace it?"
-                            ),
+                          "<br>" +
+                          gettextCatalog.getString(
+                            "Do you want to replace it?"
+                          ),
                           function () {
                             utils.deleteFolderRecursive(destPath);
                             installCollection(collection, zipData);
@@ -1788,7 +1899,7 @@ angular
             utils.dirname(newPath),
             /*maintainEntryPath*/ false
           );
-        } catch (e) {}
+        } catch (e) { }
       }
 
       this.removeCollection = function (collection) {
@@ -1901,13 +2012,13 @@ angular
               ICEpm.run(ptarget);
               return false;
             });
-            
-        
+
+
 
           });
 
-          
-                 }
+
+        }
       };
     }
   );

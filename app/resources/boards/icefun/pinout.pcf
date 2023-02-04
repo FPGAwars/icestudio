@@ -21,7 +21,8 @@ set_io --warn-no-port key4  	A5
 #set_io --warn-no-port red 		P14
 #set_io --warn-no-port green  	N14
 #set_io --warn-no-port blue  	L14
-
+set_io --warn-no-port tx	    P4
+set_io --warn-no-port rx	    P5
 set_io --warn-no-port clk12MHz	P7
 
 #Breakouts per https://www.robot-electronics.co.uk/files/iceFUNdoc.pdf

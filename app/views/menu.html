@@ -16,8 +16,8 @@
 <div ng-controller="MenuCtrl">
 
   <div id="menu" 
-       ondragstart="() => {return false;}" 
-       ondrop="() => {return false;}">
+       ondragstart="{return false;}"
+       ondrop="{return false;}">
 
     <!-- File selector for loading .ice files in Icestudio -->
     <!-- It is normally hidden.                            -->
@@ -47,7 +47,7 @@
     <input id="input-export-blif" type="file" accept=".blif" class="hidden"  
            nwworkingdir="{{workingdir}}" nwsaveas="{{ project.name }}.blif"/>
     <input id="input-export-asc" type="file" accept=".asc" class="hidden"
-           nwworkingdir="{{workingdir}} "nwsaveas="{{ project.name }}.asc"/>
+           nwworkingdir="{{workingdir}}" nwsaveas="{{ project.name }}.asc"/>
     <input id="input-export-bin" type="file" accept=".bin" class="hidden"  
            nwworkingdir="{{workingdir}}" nwsaveas="{{ project.name }}.bin"/>
 
@@ -60,7 +60,7 @@
 
       <div class="collapse navbar-collapse">
 
-        <!-- Menus in the left side of the Menu bar: FILE, Edit, View,  
+        <!-- Menus on the left side of the Menu bar: FILE, Edit, View,
              Select, Tools and Help   -->
         <ul class="nav navbar-nav">
 
@@ -87,7 +87,7 @@
                 <a href ng-click="newProject()">
                     {{ 'New' | translate }}
 
-                    <!-- Add the shotcut tip to the right -->
+                    <!-- Add the shortcut tip to the right -->
                     <span class="shortcut">
                       {{ 'newProject' | shortcut }}
                     </span>
@@ -278,6 +278,24 @@
                   {{ 'Clone' | translate }}
                   <span class="shortcut">
                     {{ 'pasteAndCloneSelected' | shortcut }}
+                  </span></a>
+              </li>
+
+              <!-- Edit/Duplicate -->
+              <li>
+                <a href ng-click="duplicateSelected()">
+                  {{ 'Duplicate' | translate }}
+                  <span class="shortcut">
+                    {{ 'duplicateSelected' | shortcut }}
+                  </span></a>
+              </li>
+
+              <!-- Edit/Delete -->
+              <li>
+                <a href ng-click="removeSelected()">
+                  {{ 'Delete' | translate }}
+                  <span class="shortcut">
+                    {{ 'removeSelected' | shortcut }}
                   </span></a>
               </li>
 

@@ -32,7 +32,7 @@ angular
       shortcuts,
       gettextCatalog,
 
-      //-- Accesing _package object
+      //-- Accessing _package object
       //-- Defined in module app/scripts/factories/window.js
       _package
     ) 
@@ -73,7 +73,7 @@ angular
   //-----------------------------------
 
   //-- Get the Window object
-  //-- The nw object is globaly available. It contains all the
+  //-- The nw object is globally available. It contains all the
   //-- NWjs APIs
   //-- More information:
   //--  https://nwjs.readthedocs.io/en/latest/ 
@@ -144,7 +144,7 @@ angular
   //-------------------------------------------------------------------------
   //-- Read the arguments passed to the app
   //-- If no arguments, nothing is done (just a blank project)
-  //-- Currenty there is only one argument to pass: The filename of the 
+  //-- Currently, there is only one argument to pass: The filename of the
   //--   icestudio design to open
   //-------------------------------------------------------------------------
 
@@ -179,9 +179,9 @@ angular
     filepath = params["filepath"];
   }
   //-- No argument through url
-  //-- Check if there was an argument comming from the command line
-  //-- If there are arguments is because it has been start by doble
-  //-- cliking on an .ice file
+  //-- Check if there was an argument coming from the command line
+  //-- If there are arguments is because it has been start by double
+  //-- clicking on an .ice file
   else {
 
     //-- Read the arguments from nw API
@@ -224,7 +224,7 @@ angular
     let hasNewVersion =
        lastversionReview === false || lastversionReview < _package.version;
 
-    //-- Display the version notes, if the option is enable or
+    //-- Display the version notes, if the option is enabled or
     //-- if this is a newer version
     if (versionW === "yes" || hasNewVersion) {
       $scope.openVersionInfoWindow();
@@ -288,9 +288,9 @@ angular
   $scope.newProject = () => {
 
     //-- Create a new blank icestudio window
-    //-- A non-existant file is passed as a parameters
-    //-- It let us distinguis if the new window was created because of
-    //-- a new file or it was the first window opened
+    //-- A non-existent file is passed as a parameters
+    //-- It let us distinguish if the new window was created because of
+    //-- a new file, or it was the first window opened
     utils.newWindow("Untitled.ice");
   };
 
@@ -303,7 +303,7 @@ angular
   $scope.openProjectDialog = function () {
 
     //-- Open the file Dialog
-    //-- The selecter is passed as a parameter
+    //-- The selector is passed as a parameter
     //-- The html element is located in the menu.html file
     utils.openDialog("#input-open-project", function (filepath) {
 
@@ -341,15 +341,15 @@ angular
 
       $scope.saveProject = function () {
         if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
+          (typeof common.isEditingSubmodule !== "undefined" &&
+          common.isEditingSubmodule === true ) || graph.breadcrumbs.length>1
         ) {
           alertify.alert(
             gettextCatalog.getString("Save submodule"),
             gettextCatalog.getString(
-              'To save your design you need to lock the keylock and \
-              go to top level design.<br/><br/>If you want to export \
-              this submodule to a file, execute "Save as" command to do it.'
+              'To save your design you need to lock the padlock and \
+              go to the top-level design.<br/><br/>If you want to export \
+              this submodule to a file, use the "Save as" command.'
             ),
             function () { }
           );
@@ -385,16 +385,30 @@ angular
 
 
       $scope.saveProjectAs = function (localCallback) {
-        if (
+        if(  (  typeof common.isEditingSubmodule === "undefined" || (
+                typeof common.isEditingSubmodule !== "undefined" &&
+                 common.isEditingSubmodule === false)
+    
+               ) && graph.breadcrumbs.length>1){
+
+                alertify.alert(
+                  gettextCatalog.getString("Export submodule"),
+                  gettextCatalog.getString(
+                    'You are navigating into the design: if you want to save the entire design, you need to go back \
+                     to the top-level. If you want to export this module as new file, unlock the module and use "Save as"'
+                  ),
+                  function () { }
+                );
+        }else{
+                if (
           typeof common.isEditingSubmodule !== "undefined" &&
           common.isEditingSubmodule === true
         ) {
           alertify.confirm(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-              'You are editing a submodule, if you save it, you save only \
-              the submodule (in this situation "save as" works like \
-              "export module"), Do you like to continue?'
+                'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
+                module"). Do you want to continue?'
             ),
             function () {
               $scope.doSaveProjectAs(localCallback);
@@ -403,6 +417,7 @@ angular
           );
         } else {
           $scope.doSaveProjectAs(localCallback);
+        }
         }
       };
 
@@ -601,7 +616,7 @@ angular
       }
 
       //---------------------------------------------------------------------
-      //-- CALLBACK FUNCIONTS for the EDIT MENU
+      //-- CALLBACK FUNCTIONS for the EDIT MENU
       //---------------------------------------------------------------------
       $scope.undoGraph = function () {
         graph.undo();
@@ -641,6 +656,14 @@ angular
         }
       };
 
+      $scope.duplicateSelected = function () {
+        graph.duplicateSelected();
+      };
+
+      $scope.removeSelected = function () {
+        graph.removeSelected();
+      };
+
       $scope.selectAll = function () {
         checkGraph()
           .then(function () {
@@ -656,10 +679,6 @@ angular
       $scope.showToolBox = function() {
         showToolBox();
       };  
-
-      function removeSelected() {
-        project.removeSelected();
-      }
 
       $scope.fitContent = function () {
         graph.fitContent();
@@ -689,7 +708,7 @@ angular
           form.process(evt);
 
           //-- If there were errors, the form is not closed
-          //-- Return without clossing
+          //-- Return without closing
           if (evt.cancel) {
             return;
           } 
@@ -711,7 +730,7 @@ angular
             newLogfile.lastIndexOf(separator) + 1
           );
 
-          //-- If the file is valid..
+          //-- If the file is valid ...
           if (newLogfile === "" || hd.isValidPath(dirLFile)) {
 
             //-- Set the new file
@@ -822,7 +841,7 @@ angular
           let newPythonPath = form.values[0];
           let newPipPath = form.values[1];
 
-          //-- If there where no changes.. return
+          //-- If there where no changes ... return
           if ( newPythonPath === pythonEnv.python &&
                newPipPath === pythonEnv.pip) {
                  return;
@@ -885,7 +904,7 @@ angular
           //-- Read the new path
           let newExternalCollections = form.values[0];
 
-          //-- If there where no changes.. return
+          //-- If there where no changes ... return
           if (newExternalCollections === externalCollections) {
             return;
           }
@@ -1134,7 +1153,7 @@ angular
       // View/System Info Window
       //--
       $scope.showSystemInfo = function () {
-        //-- Write the iformation to the log file:
+        //-- Write the information to the log file:
         iceConsole.log("---------------------");
         iceConsole.log("  VIEW/System Info");
         iceConsole.log("--------------------");
@@ -1151,8 +1170,8 @@ angular
         iceConsole.log("\n\n");
 
         //-- Build the URL with all the parameters to pass to the window
-        //-- The encodeURIComponent() function the characteres so that the spaces and
-        //-- other special characteres can be place on the original URL
+        //-- The encodeURIComponent() function the characters so that the spaces and
+        //-- other special characters can be place on the original URL
         let URL =
           `resources/viewers/system/system.html?version=${common.ICESTUDIO_VERSION}` +
           `&base_dir=${encodeURIComponent(common.BASE_DIR)}---` +
@@ -1282,7 +1301,7 @@ angular
           if (!graph.isEmpty()) {
             alertify.confirm(
               gettextCatalog.getString(
-                "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?",
+                "The current FPGA I/O configuration will be lost. Do you want to change to the {{name}} board?",
                 {
                   name: utils.bold(board.info.label),
                 }
@@ -1325,7 +1344,7 @@ angular
           alertify.alert(
             gettextCatalog.getString("Build"),
             gettextCatalog.getString(
-              "You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>"
+              "You can only build at the top-level design. Inside submodules, you can <strong>Verify</strong>"
             ),
             function () { }
           );
@@ -1350,7 +1369,7 @@ angular
           alertify.alert(
             gettextCatalog.getString("Upload"),
             gettextCatalog.getString(
-              "You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>"
+              "You can only upload at the top-level design. Inside submodules, you can <strong>Verify</strong>"
             ),
             function () { }
           );
@@ -1499,7 +1518,7 @@ angular
           'who start this project and was the main developer from 2016/Jan/28 to 2019/Oct',
           "</p>",
           '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio">contributors</a></p>',
-          '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2022</p>',
+          '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="https://fpgawars.github.io">FPGAwars</a> 2016-2022</p>',
           '<img src="resources/images/fpgawars-logo.png">',
           "  </div>",
           "</div>",
@@ -1567,6 +1586,8 @@ angular
       shortcuts.method("copySelected", $scope.copySelected);
       shortcuts.method("pasteAndCloneSelected", $scope.pasteAndCloneSelected);
       shortcuts.method("pasteSelected", $scope.pasteSelected);
+      shortcuts.method("duplicateSelected", $scope.duplicateSelected);
+      shortcuts.method("removeSelected", $scope.removeSelected);
       shortcuts.method("selectAll", $scope.selectAll);
       shortcuts.method("fitContent", $scope.fitContent);
 
@@ -1587,10 +1608,9 @@ angular
       // -- Show Floating toolbox
       shortcuts.method("showToolBox", $scope.showToolBox);
 
-      shortcuts.method("removeSelected", removeSelected);
       shortcuts.method("back", function () {
         if (graph.isEnabled()) {
-          removeSelected();
+          graph.removeSelected();
         } else {
           console.log("--------> BACK!!!!");
           //-- When inside a block in non-edit mode
@@ -1798,7 +1818,7 @@ angular
           reName = new RegExp(parsedSearch.name, 'i'); // contains + case insensitive (less restrictive)
           if (optionCase === true && optionExact === false) { // contains + case sensitive
             reName = new RegExp (parsedSearch.name);
-          } else if (optionCase === false && optionExact === true) { // exact + case insensitive
+          } else if (optionCase === false && optionExact === true) { // exact + case-insensitive
             reName = new RegExp ("\\b"+parsedSearch.name+"\\b", 'i');
           } else if (optionCase === true && optionExact === true) { // exact + case sensitive (most restrictive)
             reName = new RegExp ("\\b"+parsedSearch.name+"\\b");
@@ -1921,7 +1941,7 @@ angular
         showToolBox();  // close toolbox 
       }); 
 
-      //-- dragabble toolbox 
+      //-- draggable toolbox
       $(document).on("mousedown", "#iceToolbox .title-bar", function () {
         mouseDownTB = true;
       });

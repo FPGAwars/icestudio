@@ -1,0 +1,64 @@
+# https://github.com/badgeteam/mch2022-firmware-ice40/blob/master/projects/_common/data/mch2022-proto4.pcf
+#
+# MCH2022 Badge - proto v4
+#
+
+
+# Oscillator input (12 MHz)
+set_io clk 35    # input
+set_frequency clk 12
+
+# UART (to RP2040)
+set_io -nowarn -pullup yes uart_tx      9 . # output
+set_io -nowarn -pullup yes uart_rx      6   # input
+
+# IRQ (to ESP32)
+set_io -nowarn -pullup yes irq_n       10
+
+# SPI Slave (to ESP32)
+set_io -nowarn -pullup no  spi_mosi    17  # input
+set_io -nowarn -pullup no  spi_miso    14  # output
+set_io -nowarn -pullup no  spi_clk     15  # input
+set_io -nowarn -pullup yes spi_cs_n    16  # input
+set_frequency spi_clk 80
+
+# PSRAM
+set_io -nowarn -pullup no  ram_io[0]   21
+set_io -nowarn -pullup no  ram_io[1]   13
+set_io -nowarn -pullup no  ram_io[2]   12
+set_io -nowarn -pullup no  ram_io[3]   20
+set_io -nowarn -pullup no  ram_clk     19  # output
+set_io -nowarn -pullup yes ram_cs_n    18  # output
+
+# LCD
+set_io -nowarn -pullup no  lcd_d[0]    26   # output
+set_io -nowarn -pullup no  lcd_d[1]    27  # output
+set_io -nowarn -pullup no  lcd_d[2]    31  # output
+set_io -nowarn -pullup no  lcd_d[3]    32  # output
+set_io -nowarn -pullup no  lcd_d[4]    34  # output
+set_io -nowarn -pullup no  lcd_d[5]    37  # output
+set_io -nowarn -pullup no  lcd_d[6]    38  # output
+set_io -nowarn -pullup no  lcd_d[7]    42  # output
+set_io -nowarn -pullup yes lcd_rs_     11  # output
+set_io -nowarn -pullup yes lcd_wr_n    23  # output
+set_io -nowarn -pullup yes lcd_cs_n    28  # output
+
+set_io -nowarn -pullup no  lcd_mode    43  # input
+set_io -nowarn -pullup no  lcd_rst_n   36  
+
+set_io -nowarn -pullup no  lcd_fmark   25  # input
+
+# PMOD
+set_io -nowarn -pullup no  pmod[0]     47  # PMOD1
+set_io -nowarn -pullup no  pmod[1]     48  # PMOD2
+set_io -nowarn -pullup no  pmod[2]      4  # PMOD3
+set_io -nowarn -pullup no  pmod[3]      2  # PMOD4
+set_io -nowarn -pullup no  pmod[4]     44  # PMOD7
+set_io -nowarn -pullup no  pmod[5]     45  # PMOD8
+set_io -nowarn -pullup no  pmod[6]      3  # PMOD9
+set_io -nowarn -pullup no  pmod[7]     46  # PMOD10
+
+# RGB driver
+set_io -nowarn             rgb[0]      39  # output
+set_io -nowarn             rgb[1]      40  # output
+set_io -nowarn             rgb[2]      41  # output

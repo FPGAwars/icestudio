@@ -55,7 +55,7 @@ angular.module('icestudio')
             'board': data.board || '',
             'boardRules': data.boardRules !== false,
             'collection': data.collection || '',
-            'language': data.language || '',
+            'language': data.language || 'en',
             'uiTheme': data.uiTheme || 'dark',
             'externalCollections': data.externalCollections || '',
             'externalPlugins': data.externalPlugins || '',

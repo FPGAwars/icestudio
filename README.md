@@ -4,7 +4,8 @@
 [![Build Status][build-image]][build-url]
 [![Build Mac][build-mac-image]][build-mac-url]  
 
-![Version][version-image]
+![Version (Stable)][version-image]
+![Version (WIP)][version-image-wip]  
 [![License][license-image]][license-url]  
 
 Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
@@ -86,34 +87,35 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ### Languages
 
-|  Language  | Translated strings                       |
-|:----------:|:----------------------------------------:|
-| English (en)   | ![Progress](http://progress-bar.dev/100) |
-| Spanish (en_ES)   | ![Progress](http://progress-bar.dev/100) |
-| Japanese (ja_JP)  | ![Progress](http://progress-bar.dev/79)  |
-| French (fr_FR)    | ![Progress](http://progress-bar.dev/78) |
-| Italian (it_IT)   | ![Progress](http://progress-bar.dev/77) |
-| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/77) |
-| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/73)  |
-| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/73) |
-| German (de_DE)    | ![Progress](http://progress-bar.dev/73)  |
-| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/73) |
-| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/73) |
-| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/73) |
-| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/73)  |
-| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/68)  |
-| Greek (el_GR)     | ![Progress](http://progress-bar.dev/63)  |
-| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/63)  |
-| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/63)  |
-
-
+|  Language  | Translated strings |
+|:----------:|:------------------:|
+| Spanish (es_ES) | ![Progress](http://progress-bar.dev/100) |
+| English (en) | ![Progress](http://progress-bar.dev/100) |
+| German (de_DE) | ![Progress](http://progress-bar.dev/86) |
+| Russian (ru_RU) | ![Progress](http://progress-bar.dev/75) |
+| Japanese (ja_JP) | ![Progress](http://progress-bar.dev/75) |
+| French (fr_FR) | ![Progress](http://progress-bar.dev/72) |
+| Taiwanese (zh_TW) | ![Progress](http://progress-bar.dev/71) |
+| Italian (it_IT) | ![Progress](http://progress-bar.dev/71) |
+| Chinese (zh_CN) | ![Progress](http://progress-bar.dev/67) |
+| Turkish (tr_TR) | ![Progress](http://progress-bar.dev/67) |
+| Korean (ko_KR) | ![Progress](http://progress-bar.dev/67) |
+| Basque (eu_ES) | ![Progress](http://progress-bar.dev/67) |
+| Czech (cs_CZ) | ![Progress](http://progress-bar.dev/67) |
+| Catalonian (ca_ES) | ![Progress](http://progress-bar.dev/65) |
+| Greek (el_GR) | ![Progress](http://progress-bar.dev/61) |
+| Dutch (nl_NL) | ![Progress](http://progress-bar.dev/60) |
+| Galician (gl_ES) | ![Progress](http://progress-bar.dev/60) |
 
 
 **Contribute!**
 
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
 
-*Developer note*: use `npm run gettext` to extract the labels from the code.
+*Developer note*: 
+  * use `grunt gettext` to extract the labels from the code and update the template file (`template.pot`)
+  * use `scripts/update_translations.sh` to update current existing `*.po` language files based on the template (before editing them)
+  * use `grunt compiletext` to regenerate `*.json` language files (these are what the IDE really need) to test them
 
 *Developer note*: use `export NWJS_BUILD_TYPE=sdk` after npm install to enable the chrome web console.
 
@@ -121,6 +123,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
+| 0.10   | [kanade-k-1228](https://github.com/kanade-k-1228), [vr2045](https://github.com/vr2045), [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan)   |
 | 0.9-1  | [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.9    | [Carlos Venegas Arrabé](https://github.com/cavearr), [mslider](https://github.com/mSlider), [Joaquim (jojo535275)](https://github.com/jojo535275),[Fernando Mosquera](https://github.com/benitoss), [TheSnowfield](https://github.com/TheSnowfield), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.8    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), [Ümit Solmaz](https://github.com/usnotv), [TinLethax](https://github.com/TiNredmc), [seanybaggins](https://github.com/seanybaggins), [mslider](https://github.com/mSlider), [Juan González (Obijuan)](https://github.com/Obijuan)  |
@@ -154,7 +157,8 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.9.2w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.10-blue.svg
+[version-image-wip]: https://img.shields.io/badge/version-v0.10.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 

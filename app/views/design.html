@@ -9,35 +9,35 @@
 
     <div class="info">
       &nbsp;{{ information.name }}&nbsp;
-      {{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' 
+      {{ information.version ? '-&nbsp;v' + information.version + '&nbsp;'
                              : '' }}
     </div>
 
     <div class="read-only">
         <div class="leftColumn"></div>
-        <div class="rightColumn">
-            <b>{{'Read only' | translate }}</b> 
-            {{': '}} {{'Unlock to edit block !' | translate }}
-        </div>   
+        <div class="rightColumn" translate>
+            <b>Read only</b><br>
+            Unlock to edit the block!
+        </div>
     </div>
 
     <a class="back-button" ng-click="breadcrumbsBack()">
-       &larr;&nbsp;{{'back' | translate }}&nbsp;
+       &larr;&nbsp;{{'back' | translate}}&nbsp;
     </a>
   </div>
-  
+
   <div class="banner-submodule hidden">
     <a class="edit-button" ng-click="editModeToggle($event)">
-      <img src="resources/images/lock.png" 
-            data-lock="resources/images/lock.png" 
+      <img src="resources/images/lock.png"
+            data-lock="resources/images/lock.png"
             data-unlock="resources/images/unlock.png">
-      <span class="tooltiptext">
-          {{'CAUTION ! : Changes will also be applied in all the copied'
-            | translate }}
-        <b>{{ information.name }}</b>
-            {{'blocks of the current .ice design. If you do not want ' + 
-              'a propagation of a change, make it inside a cloned block ' + 
-              '(instead of copied one)' | translate }} &nbsp;
+      <span class="tooltiptext" translate>
+        <b>WARNING!</b><br>
+        The changes made here will also be applied to all the
+        [<b>{{ information.name }}</b>] blocks in the current design. If
+        you DO NOT want them to propagate, create a cloned block instead
+        using<br>
+        <b>Edit → Clone</b>.
       </span>
     </a>
   </div>
@@ -62,209 +62,207 @@
     </input>
 
     <!-- Find button -->
-    <div class="lFinder-find">{{'Find'| translate}}</div>
+    <div class="lFinder-find" translate>Find</div>
 
     <!-- Previous button -->
-    <div class="lFinder-prev">Prev</div>
+    <div class="lFinder-prev" translate>Prev.</div>
 
     <!-- Next button -->
-    <div class="lFinder-next">Next</div>
-    
+    <div class="lFinder-next" translate>Next</div>
+
     <!-- Close button -->
     <div class="lFinder-close"></div>
-    
+
     <!-- Advanced menu -->
     <div class="lFinder-advanced">
 
       <!-- New name text entry -->
-      <span class="lFinder-name">{{'New Name:'| translate}}</span>
+      <span class="lFinder-name" translate>New Name</span>
       <input class="lFinder-name--field"></input>
 
       <!-- Replace one button -->
-      <div class="lFinder-replace--name">{{'Replace One'| translate}}</div>
+      <div class="lFinder-replace--name" translate>Replace One</div>
 
       <!-- New color Selector -->
-      <span class="lFinder-color">{{'New Color:'| translate}}</span>
+      <span class="lFinder-color" translate>New Color:</span>
 
       <!-- Color selector menu -->
       <div class="lFinder-color--dropdown">
 
         <!-- Default color option -->
         <div class="lf-dropdown-title">
-          <span class="lf-selected-color color-fuchsia" 
-                data-color="fuchsia" 
-                data-name="Fuchsia">
-          </span>
-          {{'Fuchsia' | translate }}
+          <span class="lf-selected-color color-fuchsia"
+            data-color="fuchsia"
+            data-name="Fuchsia"></span>
+          {{'Fuchsia' | translate}}
           <span class="lf-dropdown-icon"></span>
         </div>
 
         <!-- Available colors -->
         <div class="lf-dropdown-menu">
 
-          <div class="lf-dropdown-option" 
-            data-color="indianred" 
+          <div class="lf-dropdown-option"
+            data-color="indianred"
             data-name="Indian Red">
             <span class="lf-option-color color-indianred"></span>
-            {{'Indian Red' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="red" 
-            data-name="Red">
-            <span class="lf-option-color color-red"></span>
-            {{'Red' | translate }} 
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="deeppink" 
-            data-name="Deep Pink">
-            <span class="lf-option-color color-deeppink"></span>
-            {{'Deep Pink' | translate }} 
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="mediumvioletred"
-            data-name="MediumVioletRed">
-            <span class="lf-option-color color-mediumvioletred"></span>
-            {{'MediumVioletRed' | translate}}
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="coral"
-            data-name="Coral">
-            <span class="lf-option-color color-coral"></span>
-            {{'Coral' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="orangered"
-            data-name="OrangeRed">
-            <span class="lf-option-color color-orangered"></span>
-            {{'OrangeRed' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-            data-color="darkorange"
-            data-name="DarkOrange">
-            <span class="lf-option-color color-darkorange"></span>
-            {{'DarkOrange' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-               data-color="gold"
-               data-name="Gold">
-               <span class="lf-option-color color-gold"></span>
-               {{'Gold' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-               data-color="yellow"
-               data-name="Yellow">
-               <span class="lf-option-color color-yellow">
-               </span>
-               {{ 'Yellow' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-               data-color="fuchsia"
-               data-name="Fuchsia">
-               <span class="lf-option-color color-fuchsia"></span>
-               {{'Fuchsia' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-               data-color="slateblue"
-               data-name="SlateBlue">
-               <span class="lf-option-color color-slateblue"></span>
-               {{'SlateBlue' | translate }}
-          </div>
-
-          <div class="lf-dropdown-option" 
-               data-color="greenyellow"
-               data-name="GreenYellow">
-               <span class="lf-option-color color-greenyellow"></span>
-               {{ 'GreenYellow' | translate }}
+            {{'Indian Red' | translate}}
           </div>
 
           <div class="lf-dropdown-option"
-               data-color="springgreen"
-               data-name="SpringGreen">
-               <span class="lf-option-color color-springgreen"></span>
-               {{ 'SpringGreen' | translate }}
+            data-color="red"
+            data-name="Red">
+            <span class="lf-option-color color-red"></span>
+            {{'Red' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="darkgreen"
-               data-name="DarkGreen">
-               <span class="lf-option-color color-darkgreen"></span>
-               {{'DarkGreen' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="deeppink"
+            data-name="Deep Pink">
+            <span class="lf-option-color color-deeppink"></span>
+            {{'Deep Pink' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="olivedrab"
-               data-name="OliveDrab">
-               <span class="lf-option-color color-olivedrab"></span>
-               {{'OliveDrab' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="mediumvioletred"
+            data-name="MediumVioletRed">
+            <span class="lf-option-color color-mediumvioletred"></span>
+            {{'Medium Violet Red' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="lightseagreen"
-               data-name="LightSeaGreen">
-               <span class="lf-option-color color-lightseagreen"></span>
-               {{'Light Sea Green' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="coral"
+            data-name="Coral">
+            <span class="lf-option-color color-coral"></span>
+            {{'Coral' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="turquoise"
-               data-name="Turquoise">
-               <span class="lf-option-color color-turquoise"></span>
-               {{ 'Turquoise' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="orangered"
+            data-name="OrangeRed">
+            <span class="lf-option-color color-orangered"></span>
+            {{'Orange Red' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="steelblue"
-               data-name="SteelBlue">
-               <span class="lf-option-color color-steelblue"></span>
-               {{ 'Steel Blue' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="darkorange"
+            data-name="DarkOrange">
+            <span class="lf-option-color color-darkorange"></span>
+            {{'Dark Orange' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="deepskyblue"
-               data-name="DeepSkyBlue">
-               <span class="lf-option-color color-deepskyblue"></span>
-               {{ 'Deep Sky Blue' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="gold"
+            data-name="Gold">
+            <span class="lf-option-color color-gold"></span>
+            {{'Gold' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="royalblue"
-               data-name="RoyalBlue">
-               <span class="lf-option-color color-royalblue"></span>
-               {{ 'Royal Blue' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="yellow"
+            data-name="Yellow">
+            <span class="lf-option-color color-yellow"></span>
+            {{'Yellow' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="navy"
-              data-name="Navy">
-              <span class="lf-option-color color-navy"></span>
-              {{ 'Navy' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="fuchsia"
+            data-name="Fuchsia">
+            <span class="lf-option-color color-fuchsia"></span>
+            {{'Fuchsia' | translate}}
           </div>
 
-          <div class="lf-dropdown-option" 
-               data-color="lightgray"
-               data-name="LightGray">
-               <span class="lf-option-color color-lightgray"></span>
-               {{ 'Light Gray' | translate }}
+          <div class="lf-dropdown-option"
+            data-color="slateblue"
+            data-name="SlateBlue">
+            <span class="lf-option-color color-slateblue"></span>
+            {{'Slate Blue' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="greenyellow"
+            data-name="GreenYellow">
+            <span class="lf-option-color color-greenyellow"></span>
+            {{'Green Yellow' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="springgreen"
+            data-name="SpringGreen">
+            <span class="lf-option-color color-springgreen"></span>
+            {{'Spring Green' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="darkgreen"
+            data-name="DarkGreen">
+            <span class="lf-option-color color-darkgreen"></span>
+            {{'Dark Green' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="olivedrab"
+            data-name="OliveDrab">
+            <span class="lf-option-color color-olivedrab"></span>
+            {{'Olive Drab' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="lightseagreen"
+            data-name="LightSeaGreen">
+            <span class="lf-option-color color-lightseagreen"></span>
+            {{'Light Sea Green' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="turquoise"
+            data-name="Turquoise">
+            <span class="lf-option-color color-turquoise"></span>
+            {{'Turquoise' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="steelblue"
+            data-name="SteelBlue">
+            <span class="lf-option-color color-steelblue"></span>
+            {{'Steel Blue' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="deepskyblue"
+            data-name="DeepSkyBlue">
+            <span class="lf-option-color color-deepskyblue"></span>
+            {{'Deep Sky Blue' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="royalblue"
+            data-name="RoyalBlue">
+            <span class="lf-option-color color-royalblue"></span>
+            {{'Royal Blue' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="navy"
+            data-name="Navy">
+            <span class="lf-option-color color-navy"></span>
+            {{'Navy' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option"
+            data-color="lightgray"
+            data-name="LightGray">
+            <span class="lf-option-color color-lightgray"></span>
+            {{'Light Gray' | translate}}
           </div>
 
         </div>
       </div>
 
       <!-- Color change button -->
-      <div class="lFinder-change--color">{{'Change Color'| translate}}</div>
+      <div class="lFinder-change--color" translate>Change Color</div>
 
       <!-- Replace all button -->
-      <div class="lFinder-replace--all">{{'Replace All'| translate}}</div>
+      <div class="lFinder-replace--all" translate>Replace All</div>
     </div>
   </div>
 
@@ -276,58 +274,49 @@
     <div class="title-bar">Basic Toolbox</div>
     <div class="closeToolbox-button"></div>
       <li>
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="input">
-           <div class="marker marker-blue"></div>
-           {{ 'Input' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="input">
+          <div class="marker marker-blue"></div>
+          {{'Input' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="output">
-           <div class="marker marker-blue"></div>
-           {{ 'Output' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="output">
+          <div class="marker marker-blue"></div>
+          {{'Output' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="labelInput">
-           <div class="marker marker-fuchsia"></div>
-           {{ 'Input label' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="labelInput">
+          <div class="marker marker-fuchsia"></div>
+          {{'Input label' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="labelOutput">
-           <div class="marker marker-fuchsia"></div>
-           {{ 'Output label' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="labelOutput">
+          <div class="marker marker-fuchsia"></div>
+          {{'Output label' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="labelPaired">
-           <div class="marker marker-fuchsia"></div>
-           {{ 'Paired labels' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="labelPaired">
+          <div class="marker marker-fuchsia"></div>
+          {{'Paired labels' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="constant">
-           <div class="marker marker-orange"></div>
-           {{ 'Constant' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="constant">
+          <div class="marker marker-orange"></div>
+           {{'Constant' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="memory">
-           <div class="marker marker-orange"></div>
-           {{ 'Memory' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="memory">
+          <div class="marker marker-orange"></div>
+          {{'Memory' | translate}}
         </a
         >
-        <a href="" class="iceToolbox--item js-shortcut--action" 
-           data-item="code">
-           <div class="marker marker-blue"></div>
-           {{ 'Code' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="code">
+          <div class="marker marker-blue"></div>
+          {{'Code' | translate}}
         </a>
 
-        <a href="" class="iceToolbox--item js-shortcut--action"
-           data-item="information">
-           <div class="marker marker-gray"></div>
-           {{ 'Information' | translate }}
+        <a href="" class="iceToolbox--item js-shortcut--action" data-item="information">
+          <div class="marker marker-gray"></div>
+          {{'Information' | translate}}
         </a>
       </li>
     </ul>
@@ -348,13 +337,12 @@
 
       <!-- Show the design name and the path to the current sub-block -->
       <ol class="breadcrumb">
-        <li ng-repeat="item in graph.breadcrumbs" 
-            ng-class="{active: $last}" 
+        <li ng-repeat="item in graph.breadcrumbs"
+            ng-class="{active: $last}"
             ng-switch="$last">
-            <span ng-switch-when="true">{{ item.name }}</span>
-            <a href ng-click="breadcrumbsNavitate(item)" 
-                    ng-switch-default>{{ item.name }}
-            </a>
+          <span ng-switch-when="true">{{ item.name }}</span>
+          <a href ng-click="breadcrumbsNavitate(item)"
+                    ng-switch-default>{{ item.name }}</a>
         </li>
       </ol>
     </div>
@@ -363,139 +351,139 @@
     <div class="board-container">
 
       <!-- FPGA resources Information -->
-      <div class="fpga-resources" 
-           ng-show="common.selectedBoard && 
+      <div class="fpga-resources"
+           ng-show="common.selectedBoard &&
                     topModule && profile.data.showFPGAResources">
         <div>
-          <!-- 3 next fields with percentage precision higher than 
+          <!-- 3 next fields with percentage precision higher than
                the nextpnr one -->
           <span>
             {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
-               ? ('-') 
-               : (common.FPGAResources.nextpnr.Field0.name + ' : ' + 
+               ? ('-')
+               : (common.FPGAResources.nextpnr.Field0.name + ' : ' +
                   common.FPGAResources.nextpnr.Field0.used + ' / ' +
-                  common.FPGAResources.nextpnr.Field0.total +' ( ' + 
+                  common.FPGAResources.nextpnr.Field0.total +' ( ' +
                   (common.FPGAResources.nextpnr.Field0.used /
                    common.FPGAResources.nextpnr.Field0.total*100).toFixed(1) +
-                   '%)') 
+                   '%)')
             }}
           </span>
-        
+
           <span>
             {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
-              ? ('-') 
+              ? ('-')
               : (common.FPGAResources.nextpnr.Field1.name + ' : ' +
                   common.FPGAResources.nextpnr.Field1.used + ' / ' +
                   common.FPGAResources.nextpnr.Field1.total + ' ( ' +
                   (common.FPGAResources.nextpnr.Field1.used /
                   common.FPGAResources.nextpnr.Field1.total*100).toFixed(1) +
-                  '%)') 
-            }}
-          </span>
-        
-          <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
-              : (common.FPGAResources.nextpnr.Field2.name + 
-                  '&nbsp;:&nbsp;&nbsp;' + 
-                  common.FPGAResources.nextpnr.Field2.used + 
-                  '&nbsp;/' + 
-                  common.FPGAResources.nextpnr.Field2.total + 
-                  '&nbsp;&nbsp;(&nbsp;' + 
-                  (common.FPGAResources.nextpnr.Field2.used /
-                  common.FPGAResources.nextpnr.Field2.total*100).toFixed(1) + 
                   '%)')
             }}
           </span>
-        
+
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
+              : (common.FPGAResources.nextpnr.Field2.name +
+                  '&nbsp;:&nbsp;&nbsp;' +
+                  common.FPGAResources.nextpnr.Field2.used +
+                  '&nbsp;/' +
+                  common.FPGAResources.nextpnr.Field2.total +
+                  '&nbsp;&nbsp;(&nbsp;' +
+                  (common.FPGAResources.nextpnr.Field2.used /
+                  common.FPGAResources.nextpnr.Field2.total*100).toFixed(1) +
+                  '%)')
+            }}
+          </span>
+
           <!-- 3 next fields with percentage precision from nextpnr -->
           <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
-              : (common.FPGAResources.nextpnr.Field3.name + 
-                  '&nbsp;:&nbsp;&nbsp;' + 
-                  common.FPGAResources.nextpnr.Field3.used + 
-                  '&nbsp;/' + 
-                  common.FPGAResources.nextpnr.Field3.total + 
-                  '&nbsp;&nbsp;(&nbsp;' + 
-                  common.FPGAResources.nextpnr.Field3.percentage + 
-                  '%)') 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
+              : (common.FPGAResources.nextpnr.Field3.name +
+                  '&nbsp;:&nbsp;&nbsp;' +
+                  common.FPGAResources.nextpnr.Field3.used +
+                  '&nbsp;/' +
+                  common.FPGAResources.nextpnr.Field3.total +
+                  '&nbsp;&nbsp;(&nbsp;' +
+                  common.FPGAResources.nextpnr.Field3.percentage +
+                  '%)')
             }}
           </span>
 
         </div>
-        
-        <div>         
+
+        <div>
           <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
-              : (common.FPGAResources.nextpnr.Field10.name + 
-              ' : ' + 
-              common.FPGAResources.nextpnr.Field10.used + 
-              ' / ' + 
-              common.FPGAResources.nextpnr.Field10.total + 
-              ' ( ' + 
-              common.FPGAResources.nextpnr.Field10.percentage 
-              +'%)') 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
+              : (common.FPGAResources.nextpnr.Field10.name +
+              ' : ' +
+              common.FPGAResources.nextpnr.Field10.used +
+              ' / ' +
+              common.FPGAResources.nextpnr.Field10.total +
+              ' ( ' +
+              common.FPGAResources.nextpnr.Field10.percentage
+              +'%)')
             }}
           </span>
-        
+
           <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
-              : (common.FPGAResources.nextpnr.Field11.name + 
-                ' : ' + 
-                common.FPGAResources.nextpnr.Field11.used + 
-                ' / ' + 
-                common.FPGAResources.nextpnr.Field11.total + 
-                ' ( ' + 
-                common.FPGAResources.nextpnr.Field11.percentage + 
-                '%)') 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
+              : (common.FPGAResources.nextpnr.Field11.name +
+                ' : ' +
+                common.FPGAResources.nextpnr.Field11.used +
+                ' / ' +
+                common.FPGAResources.nextpnr.Field11.total +
+                ' ( ' +
+                common.FPGAResources.nextpnr.Field11.percentage +
+                '%)')
             }}
           </span>
-        
+
           <!-- 2 next fields with no percentage -->
-        
+
           <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
-              : (common.FPGAResources.nextpnr.Field12.name + 
-                 ' : ' + 
-                 common.FPGAResources.nextpnr.Field12.used + 
-                 ' / ' + 
-                 common.FPGAResources.nextpnr.Field12.total) 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
+              : (common.FPGAResources.nextpnr.Field12.name +
+                 ' : ' +
+                 common.FPGAResources.nextpnr.Field12.used +
+                 ' / ' +
+                 common.FPGAResources.nextpnr.Field12.total)
             }}
           </span>
-        
+
           <span>
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? ('-') 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-')
               : (common.FPGAResources.nextpnr.Field13.name +
-                 '&nbsp;:&nbsp;&nbsp;' + 
+                 '&nbsp;:&nbsp;&nbsp;' +
                  common.FPGAResources.nextpnr.Field13.used&nbsp;&nbsp; +
                  '/' + &nbsp;&nbsp;common.FPGAResources.nextpnr.Field13.total)
             }}
           </span>
-        
-        
+
+
           <span>
             MaxFreq.:&nbsp;&nbsp;
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-               ? '-' 
-               : (common.FPGAResources.nextpnr.MF.value+'&nbsp;MHz') 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+               ? '-'
+               : (common.FPGAResources.nextpnr.MF.value+'&nbsp;MHz')
             }}
           </span>
-        
+
           <span>
             BuildTime&nbsp;:&nbsp;&nbsp;
-            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
-              ? '-' 
-              : (common.FPGAResources.nextpnr.BUILDT.value + 
-                 '&nbsp;' + 
-                 common.FPGAResources.nextpnr.BUILDT.unit ) 
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? '-'
+              : (common.FPGAResources.nextpnr.BUILDT.value +
+                 '&nbsp;' +
+                 common.FPGAResources.nextpnr.BUILDT.unit )
             }}
           </span>
-        
+
         </div>
       </div>
 
@@ -506,28 +494,28 @@
       <div class="shortcut-toolbox">
 
         <!-- Verify button -->
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
-           uib-tooltip="{{ 'Verify' | translate }}" 
-           tooltip-append-to-body="true" 
+        <a href="" class="shortcut-toolbox--item js-shortcut--action"
+           uib-tooltip="{{'Verify' | translate}}"
+           tooltip-append-to-body="true"
            data-item="verify" >
-           <i class="icon--verify"></i>
+          <i class="icon--verify"></i>
         </a>
 
         <!-- Build button -->
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
-           uib-tooltip="{{ 'Build' | translate }}" 
-           tooltip-append-to-body="true" 
+        <a href="" class="shortcut-toolbox--item js-shortcut--action"
+           uib-tooltip="{{'Build' | translate}}"
+           tooltip-append-to-body="true"
            data-item="build">
-           <i class="icon--build"></i>
+          <i class="icon--build"></i>
         </a>
 
         <!-- Upload button -->
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
-           uib-tooltip="{{ 'Upload' | translate }}" 
-           tooltip-append-to-body="true" 
+        <a href="" class="shortcut-toolbox--item js-shortcut--action"
+           uib-tooltip="{{'Upload' | translate}}"
+           tooltip-append-to-body="true"
            data-item="upload">
-           <i class="icon--upload"></i>
-        </a>  
+          <i class="icon--upload"></i>
+        </a>
 
       </div>
     </div>
