@@ -96,7 +96,7 @@ module.exports = function (grunt) {
   //-- a stable release?
   //-- WIP = true --> Work in progress
   //-- WIP = false --> Stable release
-  const WIP = false;
+  const WIP = true;
   
   //-- ICestudio App dir
   const APPDIR = "app";
