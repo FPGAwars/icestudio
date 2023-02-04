@@ -27,14 +27,14 @@ msgstr "<b>Unplug</b> and <b>reconnect</b> the board"
 #: app/views/design.html:34
 msgid ""
 "<b>WARNING!</b><br>\n"
-"        The changes made here, will also be applied to all the\n"
+"        The changes made here will also be applied to all the\n"
 "        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
 "        you DO NOT want them to propagate, create a cloned block instead\n"
 "        using<br>\n"
 "        <b>Edit → Clone</b>."
 msgstr ""
 "<b>WARNING!</b><br>\n"
-"        The changes made here, will also be applied to all the\n"
+"        The changes made here will also be applied to all the\n"
 "        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
 "        you DO NOT want them to propagate, create a cloned block instead\n"
 "        using<br>\n"
@@ -52,7 +52,7 @@ msgstr "Acknowledgment"
 msgid "Add"
 msgstr "Add"
 
-#: app/scripts/controllers/menu.js:1402
+#: app/scripts/controllers/menu.js:1401
 msgid "Add a block to start"
 msgstr "Add a block to start"
 
@@ -68,7 +68,7 @@ msgstr "Address format"
 msgid "All collections removed"
 msgstr "All collections removed"
 
-#: app/scripts/controllers/menu.js:1442
+#: app/scripts/controllers/menu.js:1441
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "All stored collections will be lost. Do you want to continue?"
 
@@ -93,8 +93,8 @@ msgid "Binary"
 msgstr "Binary"
 
 #: app/scripts/services/tools.js:159
-msgid "Bitstream not found, build first your project"
-msgstr "Bitstream not found, build first your project"
+msgid "Bitstream not found: build your project first"
+msgstr "Bitstream not found: build your project first"
 
 #: app/scripts/services/blockforms.js:1082
 #: app/scripts/services/blockforms.js:1206
@@ -121,11 +121,11 @@ msgstr "Board"
 msgid "Board rules"
 msgstr "Board rules"
 
-#: app/scripts/controllers/menu.js:1017
+#: app/scripts/controllers/menu.js:1016
 msgid "Board rules disabled"
 msgstr "Board rules disabled"
 
-#: app/scripts/controllers/menu.js:1015
+#: app/scripts/controllers/menu.js:1014
 msgid "Board rules enabled"
 msgstr "Board rules enabled"
 
@@ -141,7 +141,7 @@ msgstr "Board {{name}} not available"
 msgid "Board {{name}} not connected"
 msgstr "Board {{name}} not connected"
 
-#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1324
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1323
 msgid "Board {{name}} selected"
 msgstr "Board {{name}} selected"
 
@@ -149,12 +149,12 @@ msgstr "Board {{name}} selected"
 msgid "Bootloader not active"
 msgstr "Bootloader not active"
 
-#: app/scripts/controllers/menu.js:1346 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1345 app/views/design.html:506
 #: app/views/menu.html:625
 msgid "Build"
 msgstr "Build"
 
-#: app/scripts/controllers/menu.js:1356
+#: app/scripts/controllers/menu.js:1355
 msgid "Build done"
 msgstr "Build done"
 
@@ -163,8 +163,8 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #: app/views/languages.html:92
-msgid "Catalan"
-msgstr "Catalan"
+msgid "Catalonian"
+msgstr "Catalonian"
 
 #: app/views/design.html:262
 msgid "Change Color"
@@ -199,7 +199,7 @@ msgstr "Click here to <b>setup the drivers</b>"
 msgid "Click here to install it"
 msgstr "Click here to install it"
 
-#: app/scripts/controllers/menu.js:957
+#: app/scripts/controllers/menu.js:956
 msgid "Click here to view"
 msgstr "Click here to view"
 
@@ -211,7 +211,7 @@ msgstr "Clock not allowed for data buses"
 msgid "Clone"
 msgstr "Clone"
 
-#: app/scripts/controllers/menu.js:581 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:80
 msgid "Close"
 msgstr "Close"
 
@@ -227,7 +227,7 @@ msgstr "Collection"
 msgid "Collection info"
 msgstr "Collection info"
 
-#: app/scripts/controllers/menu.js:1233
+#: app/scripts/controllers/menu.js:1232
 msgid "Collection {{collection}} info not defined"
 msgstr "Collection {{collection}} info not defined"
 
@@ -247,7 +247,7 @@ msgstr "Collection {{name}} removed"
 msgid "Collection {{name}} replaced"
 msgstr "Collection {{name}} replaced"
 
-#: app/scripts/controllers/menu.js:1279
+#: app/scripts/controllers/menu.js:1278
 msgid "Collection {{name}} selected"
 msgstr "Collection {{name}} selected"
 
@@ -255,7 +255,7 @@ msgstr "Collection {{name}} selected"
 msgid "Collections"
 msgstr "Collections"
 
-#: app/scripts/controllers/menu.js:1249 app/views/menu.html:489
+#: app/scripts/controllers/menu.js:1248 app/views/menu.html:489
 msgid "Command output"
 msgstr "Command output"
 
@@ -303,21 +303,13 @@ msgstr "Czech"
 msgid "Dark (default)"
 msgstr "Dark (default)"
 
-#: app/scripts/services/forms.js:424
+#: app/scripts/services/forms.js:424 app/views/design.html:199
 msgid "Dark Green"
 msgstr "Dark Green"
 
-#: app/scripts/services/forms.js:406
+#: app/scripts/services/forms.js:406 app/views/design.html:150
 msgid "Dark Orange"
 msgstr "Dark Orange"
-
-#: app/views/design.html:199
-msgid "DarkGreen"
-msgstr "DarkGreen"
-
-#: app/views/design.html:150
-msgid "DarkOrange"
-msgstr "DarkOrange"
 
 #: app/views/menu.html:470
 msgid "Datasheet"
@@ -351,11 +343,11 @@ msgstr "Description"
 msgid "Disable"
 msgstr "Disable"
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr "Do you want to close the application?"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1424
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Do you want to remove the {{name}} collection?"
 
@@ -437,7 +429,7 @@ msgstr "Enter the pip path"
 msgid "Enter the python path"
 msgstr "Enter the python path"
 
-#: app/scripts/controllers/menu.js:1004
+#: app/scripts/controllers/menu.js:1003
 msgid "Enter the remote hostname user@host"
 msgstr "Enter the remote hostname user@host"
 
@@ -469,7 +461,7 @@ msgstr "Export submodule"
 msgid "External collections"
 msgstr "External collections"
 
-#: app/scripts/controllers/menu.js:929
+#: app/scripts/controllers/menu.js:928
 msgid "External collections updated"
 msgstr "External collections updated"
 
@@ -477,7 +469,7 @@ msgstr "External collections updated"
 msgid "External plugins"
 msgstr "External plugins"
 
-#: app/scripts/controllers/menu.js:800
+#: app/scripts/controllers/menu.js:799
 msgid "External plugins updated"
 msgstr "External plugins updated"
 
@@ -552,13 +544,9 @@ msgstr "Gold"
 msgid "Greek"
 msgstr "Greek"
 
-#: app/scripts/services/forms.js:418
+#: app/scripts/services/forms.js:418 app/views/design.html:185
 msgid "Green Yellow"
 msgstr "Green Yellow"
-
-#: app/views/design.html:185
-msgid "GreenYellow"
-msgstr "GreenYellow"
 
 #: app/views/menu.html:827
 msgid "Help"
@@ -574,17 +562,17 @@ msgstr "Icestudio is part of"
 
 #: app/scripts/services/graph.js:1659
 msgid ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
-"board"
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
 msgstr ""
-"If you see blank IN/OUT pins, it is because there is no equivalent in this "
-"board"
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
 
 #: app/scripts/services/utils.js:651
 msgid "Image"
 msgstr "Image"
 
-#: app/scripts/controllers/menu.js:2126
+#: app/scripts/controllers/menu.js:2125
 msgid "Image {{name}} saved"
 msgstr "Image {{name}} saved"
 
@@ -667,16 +655,16 @@ msgid "Internet connection required"
 msgstr "Internet connection required"
 
 #: app/scripts/services/graph.js:298
-msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
-msgstr "Invalid <i>Pull up</i> connection:<br>block already connected"
+msgid "Invalid <i>Pull-up</i> connection:<br>block already connected"
+msgstr "Invalid <i>Pull-up</i> connection:<br>block already connected"
 
 #: app/scripts/services/graph.js:312
-msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
-msgstr "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgid "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgstr "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
 
 #: app/scripts/services/graph.js:304
-msgid "Invalid block connection:<br><i>Pull up</i> already connected"
-msgstr "Invalid block connection:<br><i>Pull up</i> already connected"
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
+msgstr "Invalid block connection:<br><i>Pull-up</i> already connected"
 
 #: app/scripts/services/tools.js:1784
 msgid "Invalid collection {{name}}"
@@ -704,8 +692,8 @@ msgid "Italian"
 msgstr "Italian"
 
 #: app/views/languages.html:110
-msgid "Japanish"
-msgstr "Japanish"
+msgid "Japanese"
+msgstr "Japanese"
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -751,7 +739,7 @@ msgstr "Logging enabled"
 msgid "Logging file"
 msgstr "Logging file"
 
-#: app/scripts/controllers/menu.js:742
+#: app/scripts/controllers/menu.js:741
 msgid "Logging file updated"
 msgstr "Logging file updated"
 
@@ -759,13 +747,9 @@ msgstr "Logging file updated"
 msgid "Maximum bus size: 96 bits"
 msgstr "Maximum bus size: 96 bits"
 
-#: app/scripts/services/forms.js:397
+#: app/scripts/services/forms.js:397 app/views/design.html:129
 msgid "Medium Violet Red"
 msgstr "Medium Violet Red"
-
-#: app/views/design.html:129
-msgid "MediumVioletRed"
-msgstr "MediumVioletRed"
 
 #: app/views/design.html:309 app/views/menu.html:805
 msgid "Memory"
@@ -803,22 +787,18 @@ msgstr "New Name"
 msgid "Next"
 msgstr "Next"
 
-#: app/scripts/controllers/menu.js:1453
+#: app/scripts/controllers/menu.js:1452
 msgid "No collections stored"
 msgstr "No collections stored"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:601
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "OK"
 
-#: app/scripts/services/forms.js:427
+#: app/scripts/services/forms.js:427 app/views/design.html:206
 msgid "Olive Drab"
 msgstr "Olive Drab"
-
-#: app/views/design.html:206
-msgid "OliveDrab"
-msgstr "OliveDrab"
 
 #: app/views/menu.html:100
 msgid "Open"
@@ -828,13 +808,9 @@ msgstr "Open"
 msgid "Open SVG"
 msgstr "Open SVG"
 
-#: app/scripts/services/forms.js:403
+#: app/scripts/services/forms.js:403 app/views/design.html:143
 msgid "Orange Red"
 msgstr "Orange Red"
-
-#: app/views/design.html:143
-msgid "OrangeRed"
-msgstr "OrangeRed"
 
 #: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
@@ -868,8 +844,8 @@ msgstr "Paired labels"
 msgid "Paste"
 msgstr "Paste"
 
-#: app/scripts/controllers/menu.js:751 app/scripts/controllers/menu.js:808
-#: app/scripts/controllers/menu.js:873 app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:750 app/scripts/controllers/menu.js:807
+#: app/scripts/controllers/menu.js:872 app/scripts/controllers/menu.js:936
 msgid "Path {{path}} does not exist"
 msgstr "Path {{path}} does not exist"
 
@@ -889,7 +865,7 @@ msgstr "Prev."
 msgid "Project information"
 msgstr "Project information"
 
-#: app/scripts/controllers/menu.js:955 app/scripts/controllers/menu.js:981
+#: app/scripts/controllers/menu.js:954 app/scripts/controllers/menu.js:980
 msgid "Project information updated"
 msgstr "Project information updated"
 
@@ -901,7 +877,7 @@ msgstr "Project {{name}} loaded"
 msgid "Project {{name}} saved"
 msgstr "Project {{name}} saved"
 
-#: app/scripts/controllers/menu.js:865
+#: app/scripts/controllers/menu.js:864
 msgid "Python Environment updated"
 msgstr "Python Environment updated"
 
@@ -997,13 +973,9 @@ msgstr "Select your board"
 msgid "Show clock"
 msgstr "Show clock"
 
-#: app/scripts/services/forms.js:415
+#: app/scripts/services/forms.js:415 app/views/design.html:178
 msgid "Slate Blue"
 msgstr "Slate Blue"
-
-#: app/views/design.html:178
-msgid "SlateBlue"
-msgstr "SlateBlue"
 
 #: app/views/menu.html:871
 msgid "Source code"
@@ -1013,23 +985,19 @@ msgstr "Source code"
 msgid "Spanish"
 msgstr "Spanish"
 
-#: app/scripts/services/forms.js:421
+#: app/scripts/services/forms.js:421 app/views/design.html:192
 msgid "Spring Green"
 msgstr "Spring Green"
 
-#: app/views/design.html:192
-msgid "SpringGreen"
-msgstr "SpringGreen"
-
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1354
 msgid "Start build"
 msgstr "Start build"
 
-#: app/scripts/controllers/menu.js:1381
+#: app/scripts/controllers/menu.js:1380
 msgid "Start upload"
 msgstr "Start upload"
 
-#: app/scripts/controllers/menu.js:1332
+#: app/scripts/controllers/menu.js:1331
 msgid "Start verification"
 msgstr "Start verification"
 
@@ -1046,8 +1014,8 @@ msgid "System Info"
 msgstr "System Info"
 
 #: app/views/languages.html:62
-msgid "Taiwan"
-msgstr "Taiwan"
+msgid "Taiwanese"
+msgstr "Taiwanese"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1061,13 +1029,13 @@ msgstr "Thank you very much!"
 msgid "The collection {{name}} already exists."
 msgstr "The collection {{name}} already exists."
 
-#: app/scripts/controllers/menu.js:1304
+#: app/scripts/controllers/menu.js:1303
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"the {{name}} board?"
 msgstr ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"the {{name}} board?"
 
 #: app/scripts/services/tools.js:1295
 msgid "The toolchain will be removed. Do you want to continue?"
@@ -1103,11 +1071,11 @@ msgstr ""
 
 #: app/scripts/services/graph.js:532
 msgid ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"To enter \"edit mode\" in a deeper block, you need to finish first the "
+"current one by locking the padlock."
 msgstr ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do so."
+"To enter \"edit mode\" in a deeper block, you need to finish first the "
+"current one by locking the padlock."
 
 #: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
@@ -1115,13 +1083,13 @@ msgstr "To navigate through a design, you need to close \"edit mode\"."
 
 #: app/scripts/controllers/menu.js:349
 msgid ""
-"To save your design you need to lock the padlock and               go to top "
-"level design.<br/><br/>If you want to export               this submodule to "
-"a file, execute \"Save as\" command to do it."
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
 msgstr ""
-"To save your design you need to lock the padlock and               go to top "
-"level design.<br/><br/>If you want to export               this submodule to "
-"a file, execute \"Save as\" command to do it."
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
 
 #: app/views/menu.html:338
 msgid "Toolbox"
@@ -1184,16 +1152,16 @@ msgstr "Untitled"
 msgid "Update (Latest stable)"
 msgstr "Update (Latest stable)"
 
-#: app/scripts/controllers/menu.js:1371 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1370 app/views/design.html:514
 #: app/views/menu.html:633
 msgid "Upload"
 msgstr "Upload"
 
-#: app/scripts/controllers/menu.js:1382
+#: app/scripts/controllers/menu.js:1381
 msgid "Upload done"
 msgstr "Upload done"
 
-#: app/scripts/controllers/menu.js:1333
+#: app/scripts/controllers/menu.js:1332
 msgid "Verification done"
 msgstr "Verification done"
 
@@ -1235,7 +1203,7 @@ msgstr "Wrong block format: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "Wrong block name {{name}}"
 
-#: app/scripts/controllers/menu.js:1925
+#: app/scripts/controllers/menu.js:1924
 msgid "Wrong new name!"
 msgstr "Wrong new name!"
 
@@ -1247,7 +1215,7 @@ msgstr "Wrong project format: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Wrong remote hostname {{name}}"
 
-#: app/scripts/controllers/menu.js:1829
+#: app/scripts/controllers/menu.js:1828
 msgid "Wrong search name!"
 msgstr "Wrong search name!"
 
@@ -1257,49 +1225,47 @@ msgstr "Yellow"
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, if you save it, you'll save only               "
-"the submodule (in this situation \"save as\" works like               "
-"\"export module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
-"You are editing a submodule, if you save it, you'll save only               "
-"the submodule (in this situation \"save as\" works like               "
-"\"export module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 
 #: app/scripts/controllers/menu.js:396
 msgid ""
-"You are navigating into the design, if you want to save the entire design, "
-"you need to back                       to the top level. If you want to "
-"export this module as new file, unlock the module and \"save as\""
+"You are navigating into the design: if you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\""
 msgstr ""
-"You are navigating into the design, if you want to save the entire design, "
-"you need to back                       to the top level. If you want to "
-"export this module as new file, unlock the module and \"save as\""
+"You are navigating into the design: if you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\""
 
 #: app/scripts/services/project.js:103
-msgid "You can load it as it is or convert it for the {{name}} board."
-msgstr "You can load it as it is or convert it for the {{name}} board."
+msgid "You can load it as it is or convert it to use the {{name}} board."
+msgstr "You can load it as it is or convert it to use the {{name}} board."
 
-#: app/scripts/controllers/menu.js:1347
+#: app/scripts/controllers/menu.js:1346
 msgid ""
-"You can only build at the top-level design. Inside submodules, you can only "
+"You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
-"You can only build at the top-level design. Inside submodules, you can only "
+"You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 
-#: app/scripts/controllers/menu.js:1372
+#: app/scripts/controllers/menu.js:1371
 msgid ""
-"You can only upload at the top-level design. Inside submodules, you can only "
+"You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
-"You can only upload at the top-level design. Inside submodules, you can only "
+"You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 
 #: app/views/version.html:23
 msgid "You can read the release notes on the"
 msgstr "You can read the release notes on the"
 
-#: app/scripts/controllers/menu.js:590
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Your changes will be lost if you do not save them"
 
@@ -1311,21 +1277,45 @@ msgstr "back"
 msgid "{{app}} is required."
 msgstr "{{app}} is required."
 
-#: app/scripts/controllers/menu.js:1119
+#: app/scripts/controllers/menu.js:1118
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} datasheet not defined"
 
-#: app/scripts/controllers/menu.js:1105
+#: app/scripts/controllers/menu.js:1104
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} pinout not defined"
 
-#: app/scripts/controllers/menu.js:1145
+#: app/scripts/controllers/menu.js:1144
 msgid "{{board}} rules not defined"
 msgstr "{{board}} rules not defined"
 
-#: app/scripts/controllers/menu.js:499 app/scripts/controllers/menu.js:532
+#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr "{{name}} exported"
+
+#~ msgid "SlateBlue"
+#~ msgstr "SlateBlue"
+
+#~ msgid "DarkGreen"
+#~ msgstr "DarkGreen"
+
+#~ msgid "DarkOrange"
+#~ msgstr "DarkOrange"
+
+#~ msgid "GreenYellow"
+#~ msgstr "GreenYellow"
+
+#~ msgid "MediumVioletRed"
+#~ msgstr "MediumVioletRed"
+
+#~ msgid "OliveDrab"
+#~ msgstr "OliveDrab"
+
+#~ msgid "OrangeRed"
+#~ msgstr "OrangeRed"
+
+#~ msgid "SpringGreen"
+#~ msgstr "SpringGreen"
 
 #~ msgid "Read only"
 #~ msgstr "Read only"
