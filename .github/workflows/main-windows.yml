@@ -32,7 +32,7 @@ jobs:
           node-version: '18.9.1'
       
       - name: Install npm dependencies
-        run:   npm install 
+        run:   npm install --legacy-peer-deps 
       
       # It is necesarry to install wine for building the package for
       # windows. Also it is necesary to download the wine-mono windows

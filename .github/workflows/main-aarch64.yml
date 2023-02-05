@@ -32,7 +32,7 @@ jobs:
           node-version: '18.9.1'
       
       - name: Install npm dependencies
-        run:   npm install 
+        run:   npm install --legacy-peer-deps 
       
       - name: Build Linux
         run: |
