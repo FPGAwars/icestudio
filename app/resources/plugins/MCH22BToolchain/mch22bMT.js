@@ -45,7 +45,6 @@ function upload(data) {
         }
     }
 
-    console.log('CMD', command);
 
 
     nodeChildProcess.exec(
@@ -73,8 +72,6 @@ function upload(data) {
 
 
 }
-
-
 
 iceStudio.bus.events.subscribe('pluginManager.env', setEnvironment);
 iceStudio.bus.events.subscribe('pluginManager.updateEnv', setEnvironment);

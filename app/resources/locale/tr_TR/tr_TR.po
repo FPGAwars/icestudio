@@ -1142,8 +1142,8 @@ msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
-"Daha derin bloğun \"düzenleme modu\" na girmek için, mevcut \"düzenleme modu"
-"\" nu bitirmeniz, bunu yapmak için tuş kilidini kilitlemeniz gerekir."
+"Daha derin bloğun \"düzenleme modu\" na girmek için, mevcut \"düzenleme "
+"modu\" nu bitirmeniz, bunu yapmak için tuş kilidini kilitlemeniz gerekir."
 
 #: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."

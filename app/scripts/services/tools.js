@@ -656,6 +656,7 @@ angular
                   drivers.postUpload();
                 }
                 common.commandOutput = command + "\n\n" + stdout + stderr;
+                console.log('SALIDA', common.commandOutput);
                 $(document).trigger("commandOutputChanged", [
                   common.commandOutput
                 ]);
@@ -992,7 +993,7 @@ angular
           } else {
             //-- Process output
             resolve();
-
+            console.log('RESOURCES', stdout, stderr);
             if (stdout) {
               // Show used resources in the FPGA
               if (typeof common.FPGAResources.nextpnr === "undefined") {

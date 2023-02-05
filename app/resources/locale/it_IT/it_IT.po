@@ -1142,8 +1142,8 @@ msgstr ""
 #: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr ""
-"Per navigare attraverso progetti, devi prima chiudere la \"modalità modifica"
-"\"."
+"Per navigare attraverso progetti, devi prima chiudere la \"modalità "
+"modifica\"."
 
 #: app/scripts/controllers/menu.js:349
 #, fuzzy

@@ -23,10 +23,14 @@ bower_components
 app/resources/collection
 app/resources/locale/**/*.json
 ice-build/
-
 # WebStorm IDE project folder
 .idea
+## Temp file for translation process
 # From update_translations.sh
 app/resources/locale/statistics.txt
 # From table_translations.sh
-app/resources/locale/readme_table.txt
+app/resources/locale/readme_table.txit
+statistics.txt
+readme_table.txt
+
+
