@@ -131,6 +131,12 @@ angular
       iceConsole.log(`  * SourceURL: ${process.release.sourceUrl}`);
 
       iceConsole.log("");
+      iceConsole.log(`NW information: `);
+      iceConsole.log(`  * NW version: ${process.versions['nw']}`);
+      iceConsole.log(`  * NW-flavor: ${process.versions['nw-flavor']}`);  
+      iceConsole.log(`  * Chromium: ${process.versions['chromium']}`);
+
+      iceConsole.log("");
       iceConsole.log("System information:");
       iceConsole.log(`  * Architecture: ${process.arch}`);
       iceConsole.log(`  * Platform: ${process.platform}`);
