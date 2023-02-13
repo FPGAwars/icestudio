@@ -291,6 +291,7 @@ angular
     //-- A non-existent file is passed as a parameters
     //-- It let us distinguish if the new window was created because of
     //-- a new file, or it was the first window opened
+    iceConsole.log("---> NEW PROJECT!!");
     utils.newWindow("Untitled.ice");
   };
 

@@ -1012,6 +1012,8 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     this.newWindow = function (filepath) {
 
+      console.log("(DEBUG): Executing app/scripts/services/utils.js --> newWindow()");
+
       //-- If there are parameters to pass or not
       //-- No parameters by default
       let hasParams = false;
@@ -1066,7 +1068,11 @@ angular.module('icestudio')
       //-- https://nwjs.readthedocs.io/en/latest/References/Window/
       //--   #windowopenurl-options-callback
       //-----------------------------------------------------------
-      nw.Window.open(url, window);
+      //nw.Window.open(url, window);
+      console.log("(DEBUG) Calling: nw.Window.open(url)");
+      console.log(`Url: ${url}`);
+      nw.Window.open(url);
+      
 
     };
 
