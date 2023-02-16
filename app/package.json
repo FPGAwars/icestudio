@@ -5,10 +5,6 @@
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {
-      "name": "Jesús Arroyo Torrens",
-      "url": "https://github.com/Jesus89"
-    },
-    {
       "name": "Carlos Venegas Arrabe",
       "url": "https://github.com/cavearr"
     },
@@ -29,7 +25,7 @@
     "width": 900,
     "height": 620,
     "min_width": 800,
-    "min_height": 300, 
+    "min_height": 300,
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
@@ -48,7 +44,7 @@
   },
   "collection": "0.3.3",
   "engines": {},
-  "node": ">= 0.10.0",
+  "node": ">= 19.3.0",
   "dependencies": {
     "ace-builds": "~1.4.12",
     "adm-zip": "0.4.7",
@@ -58,7 +54,7 @@
     "angular-gettext-tools": "2.3.5",
     "angular-route": "~1.6.9",
     "angular-ui-bootstrap": "~1.3.3",
-    "async": "~1.5.2",
+    "async": "~3.2.4",
     "backbone": "~1.3.3",
     "bootstrap": "~3.3.7",
     "copy-paste": "~1.3.0",
@@ -70,7 +66,7 @@
     "glob": "^7.1.4",
     "jexcel": "^3.9.1",
     "jointjs": "~2.0.1",
-    "jquery": "~3.0.0",
+    "jquery": "~3.6.3",
     "jsuites": "^2.7.1",
     "lodash": "~3.10.1",
     "lodash.debounce": "~3.1.1",
