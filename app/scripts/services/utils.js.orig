@@ -1012,8 +1012,12 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     this.newWindow = function (filepath) {
 
+<<<<<<< HEAD
+      console.log('Abriendo ventana');
+=======
       console.log("(DEBUG): Executing app/scripts/services/utils.js --> newWindow()");
 
+>>>>>>> 3ad5e3ac92dadc512b1ac68b88c449135a66a7d9
       //-- If there are parameters to pass or not
       //-- No parameters by default
       let hasParams = false;
