@@ -41,7 +41,7 @@ jobs:
 
       # jq is bash command for reading properties from a json file
       - name: Install jq package
-        run: apt install jq
+        run: sudo apt install jq
 
       # Read the icestudio version from package.json (version property)
       - id: icestudio_json
@@ -52,13 +52,13 @@ jobs:
       # Timestamp for the build
       - id: build_date
         run: |
-          content=`tr '\n' ' ' < app/buildinfo.json`
-          echo "buildJson=${content}" >> $GITHUB_OUTPUT
+          timestamp=$(jq -r '.ts' app/buildinfo.json)
+          echo "icestudio_timestamp=${timestamp}" >> $GITHUB_OUTPUT
           
       - name: 'Upload ZIP/Aarch64'
         env:
           ICESTUDIO_VERSION: "${{steps.icestudio_json.icestudio_version}}" 
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
+          TIMESTAMP: "${{steps.build_date.icestudio_timestamp}}"
         uses: 'actions/upload-artifact@v3'
         with:
           name: "Aarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
