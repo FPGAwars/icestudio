@@ -244,7 +244,7 @@ jobs:
 
       # jq is bash command for reading properties from a json file
       - name: Install jq package
-        run: apt install jq
+        run: sudo apt install jq
 
       # Read the icestudio version from package.json (version property)
       - id: icestudio_json

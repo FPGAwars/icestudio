@@ -60,7 +60,7 @@ jobs:
           
       - name: 'Upload AppImage/linux64'
         env:
-          ICESTUDIO_VERSION: "${{steps.icestudio_json.icestudio_version}}" 
+          ICESTUDIO_VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
           TIMESTAMP: "${{steps.build_date.icestudio_timestamp}}"
         uses: 'actions/upload-artifact@v3'
         with:
@@ -70,7 +70,7 @@ jobs:
           
       - name: 'Upload ZIP/linux64'
         env:
-          ICESTUDIO_VERSION: "${{steps.icestudio_json.icestudio_version}}"
+          ICESTUDIO_VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           TIMESTAMP: "${{steps.build_date.icestudio_timestamp}}"
         uses: 'actions/upload-artifact@v3'
         with:
