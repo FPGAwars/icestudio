@@ -13,7 +13,7 @@ jobs:
   #-- Build for Linux and windows
   build-LinWin:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       #-- URL to upload the binaries for 
       #-- the jobs executed after build-LinWin
@@ -53,7 +53,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '18.9.1'
+          node-version: '19.3.0'
 
       - name: Install npm dependencies
         run: |  
@@ -171,7 +171,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '17.3.0'
+          node-version: '19.3.0'
       - name: Install npm dependencies
         run:   npm install 
       - name: Build OSX packages
@@ -217,7 +217,7 @@ jobs:
     needs: build-LinWin
 
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -230,7 +230,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '17.3.0'
+          node-version: '19.3.0'
       
       - name: Install npm dependencies
         run:   npm install 
