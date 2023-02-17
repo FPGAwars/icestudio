@@ -42,11 +42,11 @@ jobs:
           export DISPLAY=:0.0 
           npm run buildLinux64
           
-        # jq is bash command for reading properties from a json file
+      # jq is bash command for reading properties from a json file
       - name: Install jq package
         run: apt install jq
 
-        # Reading the icestudio version from package.json (version property)
+      # Read the icestudio version from package.json (version property)
       - id: icestudio_json
         run: |
           version=$(jq -r '.version' package.json)
@@ -70,7 +70,7 @@ jobs:
           
       - name: 'Upload ZIP/linux64'
         env:
-          ICESTUDIO_VERSION: "${{icestudio_version}}"
+          ICESTUDIO_VERSION: "${{steps.icestudio_json.icestudio_version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v3'
         with:
