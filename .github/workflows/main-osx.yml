@@ -42,13 +42,14 @@ jobs:
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
+
     
       # Timestamp for the build
       - id: build_date
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
-          echo "::set-output name=buildJson::$content"
+          echo "buildJson=${content}" >> $GITHUB_OUTPUT
           
       - name: 'Upload DMG/OSX64'
         env:

@@ -40,7 +40,7 @@ jobs:
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
 
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
@@ -183,7 +183,7 @@ jobs:
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
-          echo "::set-output name=packageJson::$content"  
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT 
 
       # Upload the binaries to the release 
       - name: 'Upload DMG/OSX64'
@@ -250,7 +250,7 @@ jobs:
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
 
       # -- Debug: Print the icestudio version
       # -- It is read from the package.json

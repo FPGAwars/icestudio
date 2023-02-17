@@ -51,13 +51,13 @@ jobs:
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
     
       # Timestamp for the build
       - id: build_date
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
-          echo "::set-output name=buildJson::$content"
+          echo "buildJson=${content}" >> $GITHUB_OUTPUT
           
       - name: 'Upload MSI/win64'
         env:
