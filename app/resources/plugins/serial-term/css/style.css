@@ -3,7 +3,39 @@
 body{
   padding:30px;
   background: #222;
+
 }
 select{
   color:black;
+}
+
+div id="terminal" {
+  height: 50px;
+  width: 50px;
+  background-color: powderblue;
+  
+  
+}
+
+textarea {
+    display: inline-block;
+    margin: 0;
+    padding: .2em;
+    width: auto;
+    min-width: 30em;
+    /* The max-width "100%" value fixes a weird issue where width is too wide by default and extends beyond 100% of the parent in some agents. */
+    max-width: 100%;
+    /* Height "auto" will allow the text area to expand vertically in size with a horizontal scrollbar if pre-existing content is added to the box before rendering. Remove this if you want a pre-set height. Use "em" to match the font size set in the website. */
+    height: auto;
+    /* Use "em" to define the height based on the text size set in your website and the text rows in the box, not a static pixel value. */
+    min-height: 10em;
+    /* Do not use "border" in textareas unless you want to remove the 3D box most browsers assign and flatten the box design. */
+    /*border: 1px solid black;*/
+    cursor: text;
+    /* Some textareas have a light gray background by default anyway. */
+    background-color: #2f3131;
+    /* Overflow "auto" allows the box to start with no scrollbars but add them as content fills the box. */
+    overflow: auto;
+    /* Resize creates a tab in the lower right corner of textarea for most modern browsers and allows users to resize the box manually. Note: Resize isn't supported by most older agents and IE. */
+    resize: both;
 }
