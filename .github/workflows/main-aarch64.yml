@@ -57,8 +57,8 @@ jobs:
           
       - name: 'Upload ZIP/Aarch64'
         env:
-          ICESTUDIO_VERSION: "${{steps.icestudio_json.icestudio_version}}" 
-          TIMESTAMP: "${{steps.build_date.icestudio_timestamp}}"
+          ICESTUDIO_VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
+          TIMESTAMP: "${{steps.build_date.outputs.icestudio_timestamp}}"
         uses: 'actions/upload-artifact@v3'
         with:
           name: "Aarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"

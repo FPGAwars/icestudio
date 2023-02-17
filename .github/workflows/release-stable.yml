@@ -256,7 +256,7 @@ jobs:
       # -- It is read from the package.json
       - name: Get the Icestudio version
         env:
-          VERSION: "${{steps.icestudio_json.icestudio_version}}" 
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
         run: |
           echo "VERSION: ${{ env.VERSION }}"
   
@@ -267,7 +267,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VERSION: "${{steps.icestudio_json.icestudio_version}}" 
+            VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
         with:
             upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
             asset_path: "dist/icestudio-${{env.VERSION}}-aarch64.zip"
