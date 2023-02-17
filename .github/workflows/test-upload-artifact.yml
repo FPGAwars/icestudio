@@ -17,6 +17,6 @@ jobs:
       - name: Test creating dist files
         run:  dd if=/dev/zero of=test.dat  bs=1024  count=1024
       - name: 'Upload artifact'
-        uses: 'actions/upload-artifact@v2'
+        uses: 'actions/upload-artifact@v3'
         with:
           path: test.dat

@@ -25,12 +25,12 @@ jobs:
     steps:
      
       # Checkout the develop branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: develop
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '19.3.0'
       
@@ -61,7 +61,7 @@ jobs:
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: 'actions/upload-artifact@v2'
+        uses: 'actions/upload-artifact@v3'
         with:
           name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
@@ -71,7 +71,7 @@ jobs:
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: 'actions/upload-artifact@v2'
+        uses: 'actions/upload-artifact@v3'
         with:
           name: "linux64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.zip"

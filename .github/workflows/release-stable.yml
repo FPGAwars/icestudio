@@ -28,7 +28,7 @@ jobs:
 
       # Checkout the master repo branch
       - name: Checkout!
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
 
@@ -51,7 +51,7 @@ jobs:
 
       # Install Node
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '19.3.0'
 
@@ -164,12 +164,12 @@ jobs:
     steps:
      
       - name: Checkout the master repo branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '19.3.0'
       - name: Install npm dependencies
@@ -223,12 +223,12 @@ jobs:
     steps:
     
       # Checkout the develop branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: master
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '19.3.0'
       
