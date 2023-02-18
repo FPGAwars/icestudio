@@ -23,14 +23,14 @@ jobs:
     steps:
      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: develop
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.9.1'
+          node-version: '19.3.0'
       - name: Install npm dependencies
         run:   npm install --legacy-peer-deps 
       - name: Build OSX packages
@@ -42,19 +42,20 @@ jobs:
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
+
     
       # Timestamp for the build
       - id: build_date
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
-          echo "::set-output name=buildJson::$content"
+          echo "buildJson=${content}" >> $GITHUB_OUTPUT
           
       - name: 'Upload DMG/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "osx64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.dmg"
@@ -64,7 +65,7 @@ jobs:
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "osx64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.zip"

@@ -13,7 +13,7 @@ jobs:
   #-- Build for Linux and windows
   build-LinWin:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       #-- URL to upload the binaries for 
       #-- the jobs executed after build-LinWin
@@ -28,7 +28,7 @@ jobs:
 
       # Checkout the master repo branch
       - name: Checkout!
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
 
@@ -40,7 +40,7 @@ jobs:
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
 
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
@@ -51,9 +51,9 @@ jobs:
 
       # Install Node
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.9.1'
+          node-version: '19.3.0'
 
       - name: Install npm dependencies
         run: |  
@@ -164,14 +164,14 @@ jobs:
     steps:
      
       - name: Checkout the master repo branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '17.3.0'
+          node-version: '19.3.0'
       - name: Install npm dependencies
         run:   npm install 
       - name: Build OSX packages
@@ -183,7 +183,7 @@ jobs:
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
-          echo "::set-output name=packageJson::$content"  
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT 
 
       # Upload the binaries to the release 
       - name: 'Upload DMG/OSX64'
@@ -217,20 +217,20 @@ jobs:
     needs: build-LinWin
 
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
       # Checkout the develop branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: master
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '17.3.0'
+          node-version: '19.3.0'
       
       - name: Install npm dependencies
         run:   npm install 
@@ -242,21 +242,21 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-      #-- Read the package.json file
-      - name: Read the package.json file
-        id: icestudio_json
+      # jq is bash command for reading properties from a json file
+      - name: Install jq package
+        run: sudo apt install jq
+
+      # Read the icestudio version from package.json (version property)
+      - id: icestudio_json
         run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          version=$(jq -r '.version' package.json)
+          echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
 
       # -- Debug: Print the icestudio version
       # -- It is read from the package.json
       - name: Get the Icestudio version
         env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
         run: |
           echo "VERSION: ${{ env.VERSION }}"
   
@@ -267,7 +267,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+            VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
         with:
             upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
             asset_path: "dist/icestudio-${{env.VERSION}}-aarch64.zip"

@@ -16,20 +16,20 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
      
       # Checkout the develop branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: develop
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.9.1'
+          node-version: '19.3.0'
       
       - name: Install npm dependencies
         run:   npm install --legacy-peer-deps 
@@ -38,27 +38,28 @@ jobs:
         run: |
           export DISPLAY=:0.0 
           npm run buildAarch64
-          
-        # Loading vars from icestudio package.json
+
+      # jq is bash command for reading properties from a json file
+      - name: Install jq package
+        run: sudo apt install jq
+
+      # Read the icestudio version from package.json (version property)
       - id: icestudio_json
         run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          version=$(jq -r '.version' package.json)
+          echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
     
       # Timestamp for the build
       - id: build_date
         run: |
-          content=`tr '\n' ' ' < app/buildinfo.json`
-          echo "::set-output name=buildJson::$content"h
+          timestamp=$(jq -r '.ts' app/buildinfo.json)
+          echo "icestudio_timestamp=${timestamp}" >> $GITHUB_OUTPUT
           
       - name: 'Upload ZIP/Aarch64'
         env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: 'actions/upload-artifact@v2'
+          ICESTUDIO_VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
+          TIMESTAMP: "${{steps.build_date.outputs.icestudio_timestamp}}"
+        uses: 'actions/upload-artifact@v3'
         with:
           name: "Aarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-aarch64.zip"
