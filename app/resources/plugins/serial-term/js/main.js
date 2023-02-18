@@ -214,8 +214,7 @@ var serialManager = function () {
         if (this.receiverUserF !== false) {
             this.receiverUserF(
               this.decoder.decode(info.data).
-                    //replace(/(?:\\[n]|[\n])/g, "\n\r")  // one more line after  a received data
-                   replace(/(?:\\[n]|[\n])/g, "\r")
+                   replace(/(?:\\[n]|[\n])/g, "\n\r")  // one more line after  a received data
             );
         }
 
@@ -336,13 +335,14 @@ function renderRec(data) {
     //-- Write the bytes to the terminal
     for (byte of buf) {
       term.write(colorRx  + `${byte.toString(16)} `+ colorinput);
-    //  print( "<- "+ colorRx  + `${byte.toString(16)} `+ colorinput);
+    //  print( "<- "+ colorRx  + `${byte.toString(16)} `+ colorinput);    
     }
   }
+  
   //-- ASCII mode
   else {
     term.write(colorRx + data + colorinput);
-  //  print( "<- "+colorRx + data + colorinput);  
+    //  print( "<- "+colorRx + data + colorinput);  
     
   }
 
@@ -452,8 +452,9 @@ function renderPlug(connectionInfo) {
         });
 
         term.onData(function (data) {
-            if (_receive_flag) {
-                term.write("\r\n");
+                                      
+            if (_receive_flag) {               
+                if (flushOnEnter) term.write("\r\n");
                 _receive_flag = false;
                 term.setOption("cursorStyle", "bar");
                 term.setOption("cursorBlink", true);
@@ -1049,7 +1050,6 @@ function handleData(data) {
             switch (data) {
                 case "\x7F": // BACKSPACE
                     handleCursorErase(true);
-             //      _cursorH = this.entries.length - 1;
                     break;
 
                 case "\r": // ENTER
@@ -1058,10 +1058,10 @@ function handleData(data) {
                         handleCursorInsert("\r");
                     } else {
                         _finishedLastEntry = true;
-                        
+                                                                 
                         push1 ("");
                         _cursorH = this.entries.length-1; 
-                        
+                                    
                         clearInput(); // clear and go to "home"
                         _cursor = 0;
 
@@ -1071,9 +1071,8 @@ function handleData(data) {
                             term.write( colorTx + _input.replace(/\f/g, "\r\n") +  colorinput );
                             // term.write (colorTx + _input.replace(/\f/g, "\r") + colorinput );
                             // term.write (colorTx + _input + colorinput );
-                            term.write("\r\n");
-                        }
-
+                        }                        
+                        term.write("\r\n");                        
                         sm.write(_input.replace(/\f/g, "\r") + onEnterMode);
                         _input = "";
                         _ReturnsPosition = [];
@@ -1089,10 +1088,12 @@ function handleData(data) {
     } else {
         //send directly every key press to the serial port (no flush on enter = 0 )
 
-        if (data.charCodeAt(0) == 13) {
-            //enter key
-            if (localEcho) term.write("\r\n");
+        if (data.charCodeAt(0) == 13) {     //enter key           
             sm.write(onEnterMode);
+                          
+            if (hexView) setTimeout(() => {  term.write("\r\n"); }, 15); // wait a bit to let the time to receive and display all (up to 3) the "OnEnterSend Mode" chars  
+            else term.write("\r\n");
+                
         } else {
             // terminal echoing of cursor movements avoided outside the "flush on enter" mode
             if (
