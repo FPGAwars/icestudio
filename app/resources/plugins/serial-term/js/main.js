@@ -212,12 +212,28 @@ var serialManager = function () {
         info.connectionId == sm.info.conn.connectionId) 
       {
         if (this.receiverUserF !== false) {
-            this.receiverUserF(
-              this.decoder.decode(info.data).
-                   replace(/(?:\\[n]|[\n])/g, "\n\r")  // one more line after  a received data
-            );
-        }
 
+            //-- info.data is an arrayBuffer
+            //-- Convert it into an array of unsigned bytes
+            const bytearray = new Uint8Array(info.data);
+
+            //-- Call the user function with the received data
+            if (hexView) {
+
+                //-- Received data as raw bytes
+                this.receiverUserF(bytearray);
+            }
+            else {
+                //-- Convert the data received to a string of characters
+                let string = this.decoder.decode(info.data);
+
+                //-- Replace all the \n characters by \n\r
+                string = string.replace(/(?:\\[n]|[\n])/g, "\n\r");
+
+                //-- Receive data as characteres
+                this.receiverUserF(string);
+            }
+        }
       }
     }
 
@@ -332,11 +348,15 @@ function renderRec(data) {
     //-- Convert the data to bytes
     const buf = Buffer.from(data, 'utf8');
 
-    //-- Write the bytes to the terminal
-    for (byte of buf) {
-      term.write(colorRx  + `${byte.toString(16)} `+ colorinput);
-    //  print( "<- "+ colorRx  + `${byte.toString(16)} `+ colorinput);    
-    }
+    //-- Write the bytes to the terminal, using the
+    //-- corresponding colors
+    term.write(colorRx);
+
+    for (byte of buf) 
+      term.write(`${byte.toString(16).padStart(2, '0')} `);
+    
+    //-- Back to the input color
+    term.write(colorinput);
   }
   
   //-- ASCII mode
