@@ -50,6 +50,10 @@ class WafleWindowManager {
                 }
                 target.style.left = target.oldLeft + target.distX + "px";
                 target.style.top = target.oldTop + target.distY + "px";
+                //default size of collection  manager window when dragged/floating in the icestudio workspace
+                target.style.width='180px';
+                target.style.height='450px';
+                
             }
 
             function endDrag() {
