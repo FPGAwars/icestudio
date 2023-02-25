@@ -35,315 +35,314 @@ angular
       //-- Accessing _package object
       //-- Defined in module app/scripts/factories/window.js
       _package
-    ) 
-{
+    ) {
 
-  //-------------------------------------------------------------------------
-  //-- This code is executed when a new Icestudio Window is created:
-  //--  Either on startup, when a new project is created or when an
-  //--  example is opened
-  //--
-  //-- The new window receives the parameters through the URL
-  //-- Ex. 
-  //-------------------------------------------------------------------------  
+      //-------------------------------------------------------------------------
+      //-- This code is executed when a new Icestudio Window is created:
+      //--  Either on startup, when a new project is created or when an
+      //--  example is opened
+      //--
+      //-- The new window receives the parameters through the URL
+      //-- Ex. 
+      //-------------------------------------------------------------------------  
 
-  //-- Initialize scope
+      //-- Initialize scope
 
-  $scope.profile = profile;
-  $scope.project = project;
-  $scope.tools = tools;
-  $scope.common = common;
+      $scope.profile = profile;
+      $scope.project = project;
+      $scope.tools = tools;
+      $scope.common = common;
 
-  $scope.version = _package.version;
-  $scope.toolchain = tools.toolchain;
+      $scope.version = _package.version;
+      $scope.toolchain = tools.toolchain;
 
-  $scope.workingdir = "";
-  $scope.snapshotdir = "";
+      $scope.workingdir = "";
+      $scope.snapshotdir = "";
 
-  let zeroProject = true; // New project without changes
-  let resultAlert = null;
-  let winCommandOutput = null;
+      let zeroProject = true; // New project without changes
+      let resultAlert = null;
+      let winCommandOutput = null;
 
-  let buildUndoStack = [];
-  let changedUndoStack = [];
-  let currentUndoStack = [];
+      let buildUndoStack = [];
+      let changedUndoStack = [];
+      let currentUndoStack = [];
 
-  //-----------------------------------
-  // MAIN WINDOW
-  //-----------------------------------
+      //-----------------------------------
+      // MAIN WINDOW
+      //-----------------------------------
 
-  //-- Get the Window object
-  //-- The nw object is globally available. It contains all the
-  //-- NWjs APIs
-  //-- More information:
-  //--  https://nwjs.readthedocs.io/en/latest/ 
-  let win = nw.Window.get();
+      //-- Get the Window object
+      //-- The nw object is globally available. It contains all the
+      //-- NWjs APIs
+      //-- More information:
+      //--  https://nwjs.readthedocs.io/en/latest/ 
+      let win = nw.Window.get();
 
-  //-- ONLY MAC:
-  //-- Creates the builtin menus (App, Edit and Window) within the menubar
-  //-- on Mac
-  //-- More information: 
-  //-- https://nwjs.readthedocs.io/en/latest/References/Menu/
-  //-- #menucreatemacbuiltinappname-options-mac
-  if (process.platform === "darwin") {
-  
-    let mb = new nw.Menu({
-      type: "menubar",
-    });
-    
-    mb.createMacBuiltin("Icestudio");
-    win.menu = mb;
-  }
+      //-- ONLY MAC:
+      //-- Creates the builtin menus (App, Edit and Window) within the menubar
+      //-- on Mac
+      //-- More information: 
+      //-- https://nwjs.readthedocs.io/en/latest/References/Menu/
+      //-- #menucreatemacbuiltinappname-options-mac
+      if (process.platform === "darwin") {
 
-  //-- Get the focus on the main window
-  win.focus();
+        let mb = new nw.Menu({
+          type: "menubar",
+        });
 
-  //--------------------------------------------------------------
-  //-- Configure the window events
-  //-- More information:
-  //-- https://nwjs.readthedocs.io/en/latest/References/Window/
-  //--------------------------------------------------------------
+        mb.createMacBuiltin("Icestudio");
+        win.menu = mb;
+      }
 
-  //-- Event: Window closed
-  win.on("close", function () {
+      //-- Get the focus on the main window
+      win.focus();
 
-    //-- Call the exit function
-    exit();
-  });
+      //--------------------------------------------------------------
+      //-- Configure the window events
+      //-- More information:
+      //-- https://nwjs.readthedocs.io/en/latest/References/Window/
+      //--------------------------------------------------------------
 
-  //-- Event: The window is maximized
-  win.on("maximize", function () {
+      //-- Event: Window closed
+      win.on("close", function () {
 
-    //-- Adjust the paper to the new size
-    graph.fitPaper();
-  });
+        //-- Call the exit function
+        exit();
+      });
 
-  //-- Event: The window was resized
-  win.on("resize", function () {
+      //-- Event: The window is maximized
+      win.on("maximize", function () {
 
-    //-- When working with big designs it is better not to fit 
-    //-- the contents (Leave it commented)
-    graph.fitPaper();
-    //graph.fitContent();
-  });
+        //-- Adjust the paper to the new size
+        graph.fitPaper();
+      });
 
-  //-- Event: The window was moved
-  win.on("move", function () {
-    //-- When working with big designs it is better not to fit
-    //-- the contents (leave it commented)
-    //graph.fitContent();
-  });
+      //-- Event: The window was resized
+      win.on("resize", function () {
 
-  //-- Emitted when window is restored from minimize, maximize and 
-  //-- fullscreen state.
-  win.on("restore", function () {
-    graph.fitContent();
-  });
+        //-- When working with big designs it is better not to fit 
+        //-- the contents (Leave it commented)
+        graph.fitPaper();
+        //graph.fitContent();
+      });
 
+      //-- Event: The window was moved
+      win.on("move", function () {
+        //-- When working with big designs it is better not to fit
+        //-- the contents (leave it commented)
+        //graph.fitContent();
+      });
 
-  //-------------------------------------------------------------------------
-  //-- Read the arguments passed to the app
-  //-- If no arguments, nothing is done (just a blank project)
-  //-- Currently, there is only one argument to pass: The filename of the
-  //--   icestudio design to open
-  //-------------------------------------------------------------------------
-
-  //-- The parameters are located in the URL
-  //-- They can be obtained by the global object window.location.search
-  //--  It returns the querystring part of a URL, including the question
-  //--  mark (?).
-
-  //-- Build the URL object
-  let myURL = new url.URL("http://index.html" + window.location.search);
-
-  //-- Icestudio file to open on the new window. 
-  //-- There is no .ice file by default
-  let filepath = "";
-
-  //-- Get the icestudio_argv param
-  let icestudioArgv = myURL.searchParams.get('icestudio_argv');
-
-  //-- The argument is given as URL
-  //-- It happens when a new icestudio project is created or a file/example
-  //-- are loaded in a new window
-  if (icestudioArgv) {
-
-    //-- Decode the arguments again (from base64 to utf8)
-    //-- What is obtained is a json string
-    let paramsJson = Buffer.from(icestudioArgv, 'base64').toString('utf8');
-
-    //-- Get the final params object
-    let params = JSON.parse(paramsJson);
-
-    //-- Get the filepath
-    filepath = params["filepath"];
-  }
-  //-- No argument through url
-  //-- Check if there was an argument coming from the command line
-  //-- If there are arguments is because it has been start by double
-  //-- clicking on an .ice file
-  else {
-
-    //-- Read the arguments from nw API
-    let args = nw.App.argv;
-
-    //-- There arguments
-    if (args.length > 0 ) {
-
-      //-- Read the first argument. It should be the filepath
-      filepath = nw.App.argv[0];
-    }
-  }
- 
-  //-- If there was a .ice file given
-  if (filepath) {
-
-    //-- Check the filepath
-    if (fs.existsSync(filepath)) {
-
-      //-- Open the file
-      project.open(filepath);
-    }
-  }
-
-  //-- Set the working directory for the current design
-  updateWorkingdir(project.path);
-
-  //-- Show the version notes after some time, if the corresponding option
-  //-- was set in the profile
-  setTimeout(function () {
-
-    //-- Get the current state of the version info
-    let versionW = $scope.profile.get("displayVersionInfoWindow");
-
-    //-- Get the latest version used
-    let lastversionReview = $scope.profile.get("lastVersionReview");
-
-    //-- Check if the current version is newer than the one used
-    //-- before
-    let hasNewVersion =
-       lastversionReview === false || lastversionReview < _package.version;
-
-    //-- Display the version notes, if the option is enabled or
-    //-- if this is a newer version
-    if (versionW === "yes" || hasNewVersion) {
-      $scope.openVersionInfoWindow();
-    }
-  }, 500);
-
-  
-  //-------------------------------------------------------------------------
-  //--  FUNCTIONS
-  //-------------------------------------------------------------------------
-
-  //-----------------------------------------------------------
-  //-- Display the version notes info window
-  //-----------------------------------------------------------
-  $scope.openVersionInfoWindow = function () {
-
-    //-- The version notes panel is no longer hidden: Show it!
-    $("#version-info-tab").removeClass("hidden");
-
-    //-- Get the state of the version notes: to be displayed or not
-    let versionW = $scope.profile.get("displayVersionInfoWindow");
-
-    //-- Get the state for the "don't display" checkbox
-    let noShowVersion = (versionW === "no");
-
-    //-- Set the state of the "don't display" checkbox
-    $('#version-info-tab--no-display').prop(
-      "checked",
-      noShowVersion
-    );
-  };
-
-  //-------------------------------------------------------------------------
-  //-- Callback function of the CLOSE button from the version notes window
-  //-- The state of the "don't display" checkbox is stored in the
-  //-- profile file
-  //-------------------------------------------------------------------------
-  $scope.closeVersionInfoWindow = function () {
-
-    //-- Hide the version notes window
-    $("#version-info-tab").addClass("hidden");
-
-    //-- Get the state of the "Don't display" checkbox
-    let nodisplay = $('#version-info-tab--no-display').is(
-      ":checked"
-    );
-
-    //-- Write the option to the profile file (so that it is remembered
-    //--  after icestudio is closed)
-    let option = (nodisplay) ? "no" : "yes";
-    profile.set("displayVersionInfoWindow", option);
-    profile.set("lastVersionReview", _package.version);
-  };
+      //-- Emitted when window is restored from minimize, maximize and 
+      //-- fullscreen state.
+      win.on("restore", function () {
+        graph.fitContent();
+      });
 
 
-  //---------------------------------------------------------------------
-  //-- CALLBACK FUNCTIONS for the File MENU
-  //---------------------------------------------------------------------
+      //-------------------------------------------------------------------------
+      //-- Read the arguments passed to the app
+      //-- If no arguments, nothing is done (just a blank project)
+      //-- Currently, there is only one argument to pass: The filename of the
+      //--   icestudio design to open
+      //-------------------------------------------------------------------------
 
-  //-- FILE/New
-  $scope.newProject = () => {
+      //-- The parameters are located in the URL
+      //-- They can be obtained by the global object window.location.search
+      //--  It returns the querystring part of a URL, including the question
+      //--  mark (?).
 
-    //-- Create a new blank icestudio window
-    //-- A non-existent file is passed as a parameters
-    //-- It let us distinguish if the new window was created because of
-    //-- a new file, or it was the first window opened
-    iceConsole.log("---> NEW PROJECT!!");
-    utils.newWindow("Untitled.ice");
-  };
+      //-- Build the URL object
+      let myURL = new url.URL("http://index.html" + window.location.search);
+
+      //-- Icestudio file to open on the new window. 
+      //-- There is no .ice file by default
+      let filepath = "";
+
+      //-- Get the icestudio_argv param
+      let icestudioArgv = myURL.searchParams.get('icestudio_argv');
+
+      //-- The argument is given as URL
+      //-- It happens when a new icestudio project is created or a file/example
+      //-- are loaded in a new window
+      if (icestudioArgv) {
+
+        //-- Decode the arguments again (from base64 to utf8)
+        //-- What is obtained is a json string
+        let paramsJson = Buffer.from(icestudioArgv, 'base64').toString('utf8');
+
+        //-- Get the final params object
+        let params = JSON.parse(paramsJson);
+
+        //-- Get the filepath
+        filepath = params["filepath"];
+      }
+      //-- No argument through url
+      //-- Check if there was an argument coming from the command line
+      //-- If there are arguments is because it has been start by double
+      //-- clicking on an .ice file
+      else {
+
+        //-- Read the arguments from nw API
+        let args = nw.App.argv;
+
+        //-- There arguments
+        if (args.length > 0) {
+
+          //-- Read the first argument. It should be the filepath
+          filepath = nw.App.argv[0];
+        }
+      }
+
+      //-- If there was a .ice file given
+      if (filepath) {
+
+        //-- Check the filepath
+        if (fs.existsSync(filepath)) {
+
+          //-- Open the file
+          project.open(filepath);
+        }
+      }
+
+      //-- Set the working directory for the current design
+      updateWorkingdir(project.path);
+
+      //-- Show the version notes after some time, if the corresponding option
+      //-- was set in the profile
+      setTimeout(function () {
+
+        //-- Get the current state of the version info
+        let versionW = $scope.profile.get("displayVersionInfoWindow");
+
+        //-- Get the latest version used
+        let lastversionReview = $scope.profile.get("lastVersionReview");
+
+        //-- Check if the current version is newer than the one used
+        //-- before
+        let hasNewVersion =
+          lastversionReview === false || lastversionReview < _package.version;
+
+        //-- Display the version notes, if the option is enabled or
+        //-- if this is a newer version
+        if (versionW === "yes" || hasNewVersion) {
+          $scope.openVersionInfoWindow();
+        }
+      }, 500);
 
 
-  //-------------------------------------------------------------------------
-  //-- FILE/Open
-  //-- Open a new .ice file and load it in Icestudio
-  //-- A Dialog for selecting the file is displayed
-  //-------------------------------------------------------------------------
-  $scope.openProjectDialog = function () {
+      //-------------------------------------------------------------------------
+      //--  FUNCTIONS
+      //-------------------------------------------------------------------------
 
-    //-- Open the file Dialog
-    //-- The selector is passed as a parameter
-    //-- The html element is located in the menu.html file
-    utils.openDialog("#input-open-project", function (filepath) {
+      //-----------------------------------------------------------
+      //-- Display the version notes info window
+      //-----------------------------------------------------------
+      $scope.openVersionInfoWindow = function () {
 
-      //-- Open the file in icestudio
-      $scope.openProject(filepath);
+        //-- The version notes panel is no longer hidden: Show it!
+        $("#version-info-tab").removeClass("hidden");
 
-    });
-  };
+        //-- Get the state of the version notes: to be displayed or not
+        let versionW = $scope.profile.get("displayVersionInfoWindow");
 
-  //--------------------------------------------------------------------------
-  //-- Open an icestudio File directly (No Dialog)
-  //--
-  //-- INPUTS:
-  //--   * filepath (String): Icestudio file to open
-  //--------------------------------------------------------------------------
-  $scope.openProject = function (filepath) {
+        //-- Get the state for the "don't display" checkbox
+        let noShowVersion = (versionW === "no");
 
-    if (zeroProject) {
-      // If this is the first action, open
-      // the project in the same window
-     
-      updateWorkingdir(filepath);
-      project.open(filepath);
+        //-- Set the state of the "don't display" checkbox
+        $('#version-info-tab--no-display').prop(
+          "checked",
+          noShowVersion
+        );
+      };
 
-    } 
-    else if (project.changed || !equalWorkingFilepath(filepath)) {
-      // If this is not the first action, and
-      // the file path is different, open
-      // the project in a new window
-      utils.newWindow(filepath);
-    }
-  };
+      //-------------------------------------------------------------------------
+      //-- Callback function of the CLOSE button from the version notes window
+      //-- The state of the "don't display" checkbox is stored in the
+      //-- profile file
+      //-------------------------------------------------------------------------
+      $scope.closeVersionInfoWindow = function () {
+
+        //-- Hide the version notes window
+        $("#version-info-tab").addClass("hidden");
+
+        //-- Get the state of the "Don't display" checkbox
+        let nodisplay = $('#version-info-tab--no-display').is(
+          ":checked"
+        );
+
+        //-- Write the option to the profile file (so that it is remembered
+        //--  after icestudio is closed)
+        let option = (nodisplay) ? "no" : "yes";
+        profile.set("displayVersionInfoWindow", option);
+        profile.set("lastVersionReview", _package.version);
+      };
+
+
+      //---------------------------------------------------------------------
+      //-- CALLBACK FUNCTIONS for the File MENU
+      //---------------------------------------------------------------------
+
+      //-- FILE/New
+      $scope.newProject = () => {
+
+        //-- Create a new blank icestudio window
+        //-- A non-existent file is passed as a parameters
+        //-- It let us distinguish if the new window was created because of
+        //-- a new file, or it was the first window opened
+        iceConsole.log("---> NEW PROJECT!!");
+        utils.newWindow("Untitled.ice");
+      };
+
+
+      //-------------------------------------------------------------------------
+      //-- FILE/Open
+      //-- Open a new .ice file and load it in Icestudio
+      //-- A Dialog for selecting the file is displayed
+      //-------------------------------------------------------------------------
+      $scope.openProjectDialog = function () {
+
+        //-- Open the file Dialog
+        //-- The selector is passed as a parameter
+        //-- The html element is located in the menu.html file
+        utils.openDialog("#input-open-project", function (filepath) {
+
+          //-- Open the file in icestudio
+          $scope.openProject(filepath);
+
+        });
+      };
+
+      //--------------------------------------------------------------------------
+      //-- Open an icestudio File directly (No Dialog)
+      //--
+      //-- INPUTS:
+      //--   * filepath (String): Icestudio file to open
+      //--------------------------------------------------------------------------
+      $scope.openProject = function (filepath) {
+
+        if (zeroProject) {
+          // If this is the first action, open
+          // the project in the same window
+
+          updateWorkingdir(filepath);
+          project.open(filepath);
+
+        }
+        else if (project.changed || !equalWorkingFilepath(filepath)) {
+          // If this is not the first action, and
+          // the file path is different, open
+          // the project in a new window
+          utils.newWindow(filepath);
+        }
+      };
 
 
 
       $scope.saveProject = function () {
         if (
           (typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true ) || graph.breadcrumbs.length>1
+            common.isEditingSubmodule === true) || graph.breadcrumbs.length > 1
         ) {
           alertify.alert(
             gettextCatalog.getString("Save submodule"),
@@ -386,40 +385,40 @@ angular
 
 
       $scope.saveProjectAs = function (localCallback) {
-        if(  (  typeof common.isEditingSubmodule === "undefined" || (
-                typeof common.isEditingSubmodule !== "undefined" &&
-                 common.isEditingSubmodule === false)
-    
-               ) && graph.breadcrumbs.length>1){
-
-                alertify.alert(
-                  gettextCatalog.getString("Export submodule"),
-                  gettextCatalog.getString(
-                    'You are navigating into the design: if you want to save the entire design, you need to go back \
-                     to the top-level. If you want to export this module as new file, unlock the module and use "Save as"'
-                  ),
-                  function () { }
-                );
-        }else{
-                if (
+        if ((typeof common.isEditingSubmodule === "undefined" || (
           typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
-        ) {
-          alertify.confirm(
+          common.isEditingSubmodule === false)
+
+        ) && graph.breadcrumbs.length > 1) {
+
+          alertify.alert(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-                'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
-                module"). Do you want to continue?'
-             
+              'You are navigating into the design: if you want to save the entire design, you need to go back \
+                     to the top-level. If you want to export this module as new file, unlock the module and use "Save as"'
             ),
-            function () {
-              $scope.doSaveProjectAs(localCallback);
-            },
             function () { }
           );
         } else {
-          $scope.doSaveProjectAs(localCallback);
-        }
+          if (
+            typeof common.isEditingSubmodule !== "undefined" &&
+            common.isEditingSubmodule === true
+          ) {
+            alertify.confirm(
+              gettextCatalog.getString("Export submodule"),
+              gettextCatalog.getString(
+                'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
+                module"). Do you want to continue?'
+
+              ),
+              function () {
+                $scope.doSaveProjectAs(localCallback);
+              },
+              function () { }
+            );
+          } else {
+            $scope.doSaveProjectAs(localCallback);
+          }
         }
       };
 
@@ -450,7 +449,7 @@ angular
 
       $scope.addAsBlock = function () {
         var notification = true;
-        utils.openDialog("#input-add-as-block", 
+        utils.openDialog("#input-add-as-block",
           function (filepaths) {
             filepaths = filepaths.split(";");
             for (var i in filepaths) {
@@ -571,7 +570,7 @@ angular
         return $scope.workingdir + project.name + ".ice" === filepath;
       }
 
-    
+
       $scope.quit = function () {
         exit();
       };
@@ -584,8 +583,8 @@ angular
           alertify.set("confirm", "defaultFocus", "cancel");
           alertify.confirm(
             utils.bold(
-              gettextCatalog.getString("Do you want to close " + 
-                                       "the application?")
+              gettextCatalog.getString("Do you want to close " +
+                "the application?")
             ) +
             "<br>" +
             gettextCatalog.getString(
@@ -657,11 +656,11 @@ angular
           }, 250);
         }
       };
-      
+
       $scope.duplicateSelected = function () {
         graph.duplicateSelected();
       };
-      
+
       $scope.removeSelected = function () {
         graph.removeSelected();
       };
@@ -674,17 +673,17 @@ angular
           .catch(function () { });
       };
 
-      $scope.showLabelFinder = function() {
+      $scope.showLabelFinder = function () {
         showLabelFinder();
-      };  
-      
-      $scope.showToolBox = function() {
+      };
+
+      $scope.showToolBox = function () {
         showToolBox();
-      };  
-      
-      $scope.showCollectionManager = function() {
+      };
+
+      $scope.showCollectionManager = function () {
         showCollectionManager();
-      };  
+      };
 
       /* redundant: patched via $scope - @mgesteiro
       function removeSelected() {
@@ -723,7 +722,7 @@ angular
           //-- Return without closing
           if (evt.cancel) {
             return;
-          } 
+          }
 
           //-- Read the new logfile
           let newLogfile = form.values[0];
@@ -801,9 +800,9 @@ angular
           }
 
           //-- If the file is valid...
-          if ( newPath === "" || fs.existsSync(newPath)) {
+          if (newPath === "" || fs.existsSync(newPath)) {
 
-             //-- Set the new file
+            //-- Set the new file
             profile.set("externalPlugins", newPath);
 
             //-- Notify to the user
@@ -826,7 +825,7 @@ angular
             );
           }
         });
-      }; 
+      };
 
       //---------------------------------------------------------------------
       //-- Display a form for asking the user to introduce the
@@ -854,20 +853,19 @@ angular
           let newPipPath = form.values[1];
 
           //-- If there where no changes ... return
-          if ( newPythonPath === pythonEnv.python &&
-               newPipPath === pythonEnv.pip) {
-                 return;
+          if (newPythonPath === pythonEnv.python &&
+            newPipPath === pythonEnv.pip) {
+            return;
           }
 
           //-- If the files are valid...
           if (
             (newPythonPath === "" || fs.existsSync(newPythonPath)) &&
-            (newPipPath === "" || fs.existsSync(newPipPath))) 
-          {
+            (newPipPath === "" || fs.existsSync(newPipPath))) {
             //-- The files are valid...
             //-- Set them in the profile
-            let newPythonEnv = { 
-              python: newPythonPath, pip: newPipPath 
+            let newPythonEnv = {
+              python: newPythonPath, pip: newPipPath
             };
             profile.set("pythonEnv", newPythonEnv);
 
@@ -939,7 +937,7 @@ angular
             alertify.success(
               gettextCatalog.getString("External collections updated")
             );
-          } 
+          }
           //-- The file is not valid
           else {
             //-- Notify the user
@@ -957,7 +955,7 @@ angular
         });
       };
 
-      
+
       $(document).on("infoChanged", function (evt, newValues) {
         var values = getProjectInformation();
         if (!_.isEqual(values, newValues)) {
@@ -1350,9 +1348,9 @@ angular
       };
 
       $scope.buildCode = function () {
-        console.log('BUILDCODE',common);
-        console.log('STACK',graph.breadcrumbs);
-        if ( graph.breadcrumbs.length > 1 ) {
+        console.log('BUILDCODE', common);
+        console.log('STACK', graph.breadcrumbs);
+        if (graph.breadcrumbs.length > 1) {
           alertify.alert(
             gettextCatalog.getString("Build"),
             gettextCatalog.getString(
@@ -1377,7 +1375,7 @@ angular
 
       $scope.uploadCode = function () {
 
-        if ( graph.breadcrumbs.length > 1 ) {
+        if (graph.breadcrumbs.length > 1) {
           alertify.alert(
             gettextCatalog.getString("Upload"),
             gettextCatalog.getString(
@@ -1497,7 +1495,7 @@ angular
 
           "    <p>Core Team:</p>",
           '    <ul  class="credits-developers-list">',
-         
+
           "           <li><strong>Carlos Venegas Arrabé</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
@@ -1509,7 +1507,7 @@ angular
           "</ul>",
           "    <p>Highlighted contributors:</p>",
           '    <ul  class="credits-developers-list">',
-         
+
           "           <li><strong>Alex Gutierrez Tomas</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/mslider"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/microslider"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
@@ -1619,7 +1617,7 @@ angular
 
       // -- Show Floating toolbox
       shortcuts.method("showToolBox", $scope.showToolBox);
-      
+
       // -- Show colection Manager
       shortcuts.method("showCollectionManager", $scope.showCollectionManager);
 
@@ -1635,7 +1633,7 @@ angular
           //-- Changed: The Back key is disabled by default
           //--  (asked by joaquim) 
           //-- (Uncomment the next sentence  for enabling it)
-         // $rootScope.$broadcast("breadcrumbsBack");
+          // $rootScope.$broadcast("breadcrumbsBack");
         }
       });
 
@@ -1658,30 +1656,30 @@ angular
 
       //-- LABEL-FINDER POPUP
       // key functions
-      $('body').keydown(function(e){
-        if (e.which === 13 && 
-            $('.lFinder-popup').hasClass('lifted') === false) { // enter key -> Find items
+      $('body').keydown(function (e) {
+        if (e.which === 13 &&
+          $('.lFinder-popup').hasClass('lifted') === false) { // enter key -> Find items
           $scope.fitContent(); // Fit content before search
           findItems();
         }
-        if (e.which === 37 && 
-            $('.lFinder-popup').hasClass('lifted') === false){ // left key -> previous item selection
+        if (e.which === 37 &&
+          $('.lFinder-popup').hasClass('lifted') === false) { // left key -> previous item selection
           prevItem();
         }
-        if (e.which === 39 && 
-            $('.lFinder-popup').hasClass('lifted') === false){ // right key -> next item selection
+        if (e.which === 39 &&
+          $('.lFinder-popup').hasClass('lifted') === false) { // right key -> next item selection
           nextItem();
         }
         if (e.which === 9 &&
-            $('.lFinder-popup').hasClass('lifted') === false){ // tab key -> show/hide advanced tab
+          $('.lFinder-popup').hasClass('lifted') === false) { // tab key -> show/hide advanced tab
           toggleAdvancedTab();
         }
       });
-      
+
       // advanced retractable button
-      $(document).on("mousedown", ".lFinder-advanced--toggle", function (){
+      $(document).on("mousedown", ".lFinder-advanced--toggle", function () {
         toggleAdvancedTab();
-      }); 
+      });
 
       // input finder
       $(document).on("input", ".lFinder-field", function () {
@@ -1706,18 +1704,18 @@ angular
       });
 
       // option -> case sensitive
-      $(document).on("mousedown", ".lFinder-case--option", function (){
+      $(document).on("mousedown", ".lFinder-case--option", function () {
         optionCase = !optionCase;
         if (optionCase === true) {
           $('.lFinder-case--option').addClass('on');
         } else {
           $('.lFinder-case--option').removeClass('on');
         }
-        findItems();    
+        findItems();
       });
 
       // option -> exact
-      $(document).on("mousedown", ".lFinder-exact--option", function (){
+      $(document).on("mousedown", ".lFinder-exact--option", function () {
         optionExact = !optionExact;
         if (optionExact === true) {
           $('.lFinder-exact--option').addClass('on');
@@ -1728,41 +1726,41 @@ angular
       });
 
       // close button
-      $(document).on("mousedown", ".lFinder-close", function (){
+      $(document).on("mousedown", ".lFinder-close", function () {
         showLabelFinder();
       });
 
       // Replace Name
-      $(document).on("mousedown", ".lFinder-replace--name", function (){
+      $(document).on("mousedown", ".lFinder-replace--name", function () {
         replaceLabelName();
         findItems();
       });
 
       // Change Color
-      $(document).on("mousedown", ".lFinder-change--color", function (){
+      $(document).on("mousedown", ".lFinder-change--color", function () {
         changeLabelColor();
       });
 
       // Replace All
-      $(document).on("mousedown", ".lFinder-replace--all", function (){
-        for (let i = 1; i <= foundItems; i++){
+      $(document).on("mousedown", ".lFinder-replace--all", function () {
+        for (let i = 1; i <= foundItems; i++) {
           actualItem = i;
           replaceLabelName();
         }
       });
 
       // Color dropdown menu
-      $(document).on("mousedown", ".lf-dropdown-title", function (){
+      $(document).on("mousedown", ".lf-dropdown-title", function () {
         toggleColorDropdown();
       });
-      $(document).on("mouseleave", ".lf-dropdown-menu", function (){
-        if (colorDropdown === true){
+      $(document).on("mouseleave", ".lf-dropdown-menu", function () {
+        if (colorDropdown === true) {
           toggleColorDropdown();
         }
       });
 
       // color get option
-      $(document).on("mousedown", ".lf-dropdown-option", function(){
+      $(document).on("mousedown", ".lf-dropdown-option", function () {
         let selected = this;
         $('.lf-dropdown-title').html("<span class=\"lf-selected-color color-" + selected.dataset.color + "\" data-color=\"" + selected.dataset.color + "\"></span>" + selected.dataset.name + "<span class=\"lf-dropdown-icon\"></span>");
         toggleColorDropdown();
@@ -1789,7 +1787,7 @@ angular
           $('.lFinder-field').val(''); // reset entry
           $('.highlight').removeClass('highlight');
           $('.greyedout').removeClass('greyedout');
-          if (advanced === true){
+          if (advanced === true) {
             advanced = false;
             $('.lFinder-advanced--toggle').removeClass('on');
             $('.lFinder-advanced').removeClass('show');
@@ -1806,14 +1804,14 @@ angular
         } else {
           $('.lFinder-advanced--toggle').removeClass('on');
           $('.lFinder-advanced').removeClass('show');
-          if (colorDropdown === true){
+          if (colorDropdown === true) {
             toggleColorDropdown();
           }
         }
       }
 
-      function toggleColorDropdown(){
-        if (colorDropdown === true){
+      function toggleColorDropdown() {
+        if (colorDropdown === true) {
           colorDropdown = false;
           $('.lf-dropdown-menu').removeClass('show');
         } else {
@@ -1829,21 +1827,21 @@ angular
         let parsedSearch = utils.parsePortLabel(searchName, common.PATTERN_PORT_LABEL); // parse search label name
 
         let reName = null; // regex search Name
-        if (parsedSearch && parsedSearch.name){
+        if (parsedSearch && parsedSearch.name) {
           reName = new RegExp(parsedSearch.name, 'i'); // contains + case insensitive (less restrictive)
           if (optionCase === true && optionExact === false) { // contains + case sensitive
-            reName = new RegExp (parsedSearch.name);
+            reName = new RegExp(parsedSearch.name);
           } else if (optionCase === false && optionExact === true) { // exact + case-insensitive
-            reName = new RegExp ("\\b"+parsedSearch.name+"\\b", 'i');
+            reName = new RegExp("\\b" + parsedSearch.name + "\\b", 'i');
           } else if (optionCase === true && optionExact === true) { // exact + case sensitive (most restrictive)
-            reName = new RegExp ("\\b"+parsedSearch.name+"\\b");
+            reName = new RegExp("\\b" + parsedSearch.name + "\\b");
           }
         } else {
-          if (searchName.length > 0){
+          if (searchName.length > 0) {
             alertify.warning(gettextCatalog.getString('Wrong search name!'));
           }
         }
-        
+
         foundItems = 0;
         actualItem = 0;
         itemList = []; // List with "json" elements of blocks
@@ -1855,9 +1853,9 @@ angular
         //-- label filter + indexing
         for (let i = 0; i < graphCells.length; i++) {
           if (graphCells[i].attributes.blockType === blocks.BASIC_INPUT_LABEL ||
-              graphCells[i].attributes.blockType === blocks.BASIC_OUTPUT_LABEL) {
+            graphCells[i].attributes.blockType === blocks.BASIC_OUTPUT_LABEL) {
             if (parsedSearch && parsedSearch.name.length > 0 &&
-                  graphCells[i].attributes.data.name.match(reName) !== null) {           
+              graphCells[i].attributes.data.name.match(reName) !== null) {
               for (let j = 0; j < htmlIoBlocks.length; j++) {
                 if (htmlIoBlocks[j].dataset.blkid === graphCells[i].attributes.id) {
                   itemList.push(graphCells[i]);
@@ -1875,7 +1873,7 @@ angular
           for (let n = 0; n < foundItems; n++) {
             itemHtmlList[n].classList.remove('greyedout');
           }
-        } 
+        }
         $('.items-found').html(actualItem + "/" + foundItems);
         nextItem();
       }
@@ -1885,7 +1883,7 @@ angular
         actualItem--;
         if (foundItems === 0) {
           actualItem = 0;
-        } 
+        }
         else {
           if (actualItem < 1) {
             actualItem = foundItems;
@@ -1900,7 +1898,7 @@ angular
         actualItem++;
         if (foundItems === 0) {
           actualItem = 0;
-        } 
+        }
         else {
           if (actualItem > foundItems) {
             actualItem = 1;
@@ -1911,31 +1909,31 @@ angular
       }
 
       function showMatchedItem() {
-        itemHtmlList[actualItem -1].querySelector('.header').classList.add('highlight');
+        itemHtmlList[actualItem - 1].querySelector('.header').classList.add('highlight');
       }
 
       function replaceLabelName() {
         let newName = $('.lFinder-name--field').val();
         let parsedNewName = utils.parsePortLabel(newName, common.PATTERN_PORT_LABEL); // parse search label name
 
-        if (parsedNewName && parsedNewName.name){
+        if (parsedNewName && parsedNewName.name) {
           if (actualItem > 0 && newName.length > 0) {
             let matchName = $('.lFinder-field').val();
             if (optionCase === false) {
-              matchName = new RegExp (matchName, 'i'); // case insensitive
+              matchName = new RegExp(matchName, 'i'); // case insensitive
             }
-            let actualName = itemHtmlList[actualItem -1].querySelector('.header label').innerHTML;
+            let actualName = itemHtmlList[actualItem - 1].querySelector('.header label').innerHTML;
 
             let iBus = actualName.indexOf("["); // slice vector part of label buses
-            if (iBus > 0){
+            if (iBus > 0) {
               actualName = actualName.slice(0, iBus);
             }
-  
+
             newName = actualName.replace(matchName, newName);
-            graph.editLabelBlock(itemList[actualItem -1].attributes.id, newName, itemList[actualItem -1].attributes.data.blockColor);
+            graph.editLabelBlock(itemList[actualItem - 1].attributes.id, newName, itemList[actualItem - 1].attributes.data.blockColor);
           }
         } else {
-          if (newName.length > 0){
+          if (newName.length > 0) {
             alertify.warning(gettextCatalog.getString('Wrong new name!'));
           }
         }
@@ -1944,7 +1942,7 @@ angular
       function changeLabelColor() {
         let newColor = $('.lf-selected-color').data('color');
         if (actualItem > 0 && newColor.length > 0) {
-          graph.editLabelBlock(itemList[actualItem -1].attributes.id, itemList[actualItem -1].attributes.data.name, newColor);
+          graph.editLabelBlock(itemList[actualItem - 1].attributes.id, itemList[actualItem - 1].attributes.data.name, newColor);
         }
       }
       //-- END LABEL-FINDER functions
@@ -1952,9 +1950,9 @@ angular
       //-- BASIC TOOLBOX
       //-- close floating toolbox with x button
       $(document).on("mousedown", ".closeToolbox-button", function () {
-        mousedown = true;                         
+        mousedown = true;
         showToolBox();  // close toolbox 
-      }); 
+      });
 
       //-- draggable toolbox
       $(document).on("mousedown", "#iceToolbox .title-bar", function () {
@@ -1968,7 +1966,7 @@ angular
       $(document).on("mousemove", function (e) {
         mousePosition.x = e.pageX;
         mousePosition.y = e.pageY;
-        if (mouseDownTB === true){
+        if (mouseDownTB === true) {
           let posY = mousePosition.y - 40;
           let posX = mousePosition.x - 80;
           const winW = window.innerWidth;
@@ -1982,8 +1980,8 @@ angular
           } else if (posX > offsetX) {
             posX = offsetX - 1;
           }
-          if (posY < topMenuH -24) {
-            posY = topMenuH -24;
+          if (posY < topMenuH - 24) {
+            posY = topMenuH - 24;
           } else if (posY > offsetY) {
             posY = offsetY - 1;
           }
@@ -2040,24 +2038,21 @@ angular
           toolbox.dom.addClass('opened');
         }
       }
-      
-      
+
+
       //////////////////////////////////////
 
-       //----------------------------------------------------
+      //----------------------------------------------------
       //-- Callback function for launching CM from Menu
       //----------------------------------------------------
-      
+
       function showCollectionManager() {
-         
-         //// TODO
-          
-          
-               
+        iceStudio.bus.events.publish('pluginManager.launch', 'collectionManager2');
+
       }
       /////////////////////////////////////////////////////
-      
-      
+
+
 
       //-----------------------------------------------------------------
       //-- Callback function for the ToolBox menu. Whenever an option
@@ -2074,22 +2069,22 @@ angular
         switch (menuOption) {
 
           //-- Input: Place an input port
-          case 'input': 
-            project.addBasicBlock(blocks.BASIC_INPUT); 
+          case 'input':
+            project.addBasicBlock(blocks.BASIC_INPUT);
             break;
 
           //-- Output: Place an output port
-          case 'output': 
-            project.addBasicBlock(blocks.BASIC_OUTPUT); 
+          case 'output':
+            project.addBasicBlock(blocks.BASIC_OUTPUT);
             break;
 
           //-- Input label
-          case 'labelInput': 
-            project.addBasicBlock(blocks.BASIC_OUTPUT_LABEL); 
+          case 'labelInput':
+            project.addBasicBlock(blocks.BASIC_OUTPUT_LABEL);
             break;
 
           //-- Output label
-          case 'labelOutput': 
+          case 'labelOutput':
             project.addBasicBlock(blocks.BASIC_INPUT_LABEL);
             break;
 
@@ -2098,32 +2093,32 @@ angular
             project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
             break;
 
-          case 'memory': 
-            project.addBasicBlock(blocks.BASIC_MEMORY); 
+          case 'memory':
+            project.addBasicBlock(blocks.BASIC_MEMORY);
             break;
 
-          case 'code': 
-            project.addBasicBlock(blocks.BASIC_CODE); 
+          case 'code':
+            project.addBasicBlock(blocks.BASIC_CODE);
             break;
 
-          case 'information': 
-            project.addBasicBlock(blocks.BASIC_INFO); 
+          case 'information':
+            project.addBasicBlock(blocks.BASIC_INFO);
             break;
 
-          case 'constant': 
-            project.addBasicBlock(blocks.BASIC_CONSTANT); 
+          case 'constant':
+            project.addBasicBlock(blocks.BASIC_CONSTANT);
             break;
 
-          case 'verify': 
-            $scope.verifyCode(); 
+          case 'verify':
+            $scope.verifyCode();
             break;
 
-          case 'build': 
-            $scope.buildCode(); 
+          case 'build':
+            $scope.buildCode();
             break;
 
-          case 'upload': 
-            $scope.uploadCode(); 
+          case 'upload':
+            $scope.uploadCode();
             break;
         }
         return false;
@@ -2246,5 +2241,5 @@ angular
         }
       }
       iceStudio.bus.events.subscribe("menu.collection", ebusCollection);
-});
+    });
 
