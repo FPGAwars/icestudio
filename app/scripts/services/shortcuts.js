@@ -64,7 +64,11 @@ angular.module('icestudio')
     /* For easy keycode identification: https://keycode.info/ */
 
     var shortcuts = {
-
+               
+      showCollectionManager: {
+        linux: { label: 'Ctrl+M', ctrl: true, key: 77 },
+        mac: { label: '⌘+M', meta: true, key: 77 }
+      },
       showToolBox: {
         linux: { label: 'Ctrl+T', ctrl: true, key: 84 },
         mac: { label: '⌘+T', meta: true, key: 84 }

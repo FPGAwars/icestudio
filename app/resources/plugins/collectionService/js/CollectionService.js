@@ -180,6 +180,7 @@ class CollectionService
 
   buildTreeBlocks(child, rootPath)
   {
+     
     if (typeof child.children !== "undefined") {
       let node = {
         name: child.name,
@@ -192,15 +193,23 @@ class CollectionService
       };
 
       for (let i = 0; i < child.children.length; i++) {
-        node.items.push(this.buildTreeBlocks(child.children[i], rootPath));
-        if (node.items[node.items.length - 1].isFolder === false) {
-          this.queueIndexDB({
-            id: this.id,
-            blockId: node.items[node.items.length - 1].id,
-            path: node.items[node.items.length - 1].path,
-          });
-        }
-      } //-- for child.children.length
+           console.log(child.children[i].path.substring(child.children[i].path.indexOf('.')));
+           
+           var ext = child.children[i].path.substring(child.children[i].path.indexOf('.'));
+           //  Empeaches the problematic loading in CM treeview of .md, json, pdf files ( stored bellow collections "block" subfolders ) 
+           if ( ext !='.md' &&   ext!='.json' &&   ext!='.pdf' )   {                     
+     
+                node.items.push(this.buildTreeBlocks(child.children[i], rootPath));
+                if (node.items[node.items.length - 1].isFolder === false) {
+                  this.queueIndexDB({
+                    id: this.id,
+                    blockId: node.items[node.items.length - 1].id,
+                    path: node.items[node.items.length - 1].path,
+                  });
+                }
+            }
+     
+        } //-- for child.children.length
 
       if (this.hasSubFolders(node)) node.hasSubFolders = true;
       return node;
