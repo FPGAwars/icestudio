@@ -410,6 +410,7 @@ angular
             gettextCatalog.getString(
                 'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
                 module"). Do you want to continue?'
+             
             ),
             function () {
               $scope.doSaveProjectAs(localCallback);
@@ -656,11 +657,11 @@ angular
           }, 250);
         }
       };
-
+      
       $scope.duplicateSelected = function () {
         graph.duplicateSelected();
       };
-
+      
       $scope.removeSelected = function () {
         graph.removeSelected();
       };
@@ -680,6 +681,16 @@ angular
       $scope.showToolBox = function() {
         showToolBox();
       };  
+      
+      $scope.showCollectionManager = function() {
+        showCollectionManager();
+      };  
+
+      /* redundant: patched via $scope - @mgesteiro
+      function removeSelected() {
+        project.removeSelected();  // <- this is justa a wrapper of graph.removeSelected()
+      }
+      */
 
       $scope.fitContent = function () {
         graph.fitContent();
@@ -915,7 +926,7 @@ angular
             newExternalCollections === "" ||
             fs.existsSync(newExternalCollections)
           ) {
-            //-- The file is valida...
+            //-- The file is valid...
             //-- Set it in the profile
             profile.set("externalCollections", newExternalCollections);
 
@@ -1608,6 +1619,9 @@ angular
 
       // -- Show Floating toolbox
       shortcuts.method("showToolBox", $scope.showToolBox);
+      
+      // -- Show colection Manager
+      shortcuts.method("showCollectionManager", $scope.showCollectionManager);
 
       shortcuts.method("back", function () {
         if (graph.isEnabled()) {
@@ -2026,6 +2040,24 @@ angular
           toolbox.dom.addClass('opened');
         }
       }
+      
+      
+      //////////////////////////////////////
+
+       //----------------------------------------------------
+      //-- Callback function for launching CM from Menu
+      //----------------------------------------------------
+      
+      function showCollectionManager() {
+         
+         //// TODO
+          
+          
+               
+      }
+      /////////////////////////////////////////////////////
+      
+      
 
       //-----------------------------------------------------------------
       //-- Callback function for the ToolBox menu. Whenever an option
