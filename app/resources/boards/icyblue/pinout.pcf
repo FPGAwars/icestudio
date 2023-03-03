@@ -1,0 +1,49 @@
+# -----------------------------------------------------------------------------
+#- IcyBlue Feather constraint file (.pcf)
+#- By Seth Kerr
+#- August - 2022
+#- GPL license
+# -----------------------------------------------------------------------------
+
+# ------------ RGB LED Driver -------------------------------------------------
+set_io --warn-no-port LED_B 39  # output
+set_io --warn-no-port LED_G 40  # output
+set_io --warn-no-port LED_R 41  # output
+
+
+# ------------ User LEDS ------------------------------------------------------
+set_io --warn-no-port LED2 2 # output
+set_io --warn-no-port LED3 3 # output
+
+# ------------ SPI Flash ------------------------------------------------------
+set_io --warn-no-port F_SCK 15
+set_io --warn-no-port F_SSB 16
+set_io --warn-no-port F_IO0 14
+set_io --warn-no-port F_IO1 17
+
+
+# ------------ GPIO -----------------------------------------------------------
+set_io --warn-no-port P4 4
+set_io --warn-no-port P6 6
+set_io --warn-no-port P9 9
+set_io --warn-no-port P10 10
+set_io --warn-no-port P11 11
+set_io --warn-no-port P12 12
+set_io --warn-no-port P13 13
+
+set_io --warn-no-port P18 18
+set_io --warn-no-port P19 19
+set_io --warn-no-port P20 20
+set_io --warn-no-port P21 21
+set_io --warn-no-port P23 23
+set_io --warn-no-port P25 25
+
+set_io --warn-no-port P37 37
+set_io --warn-no-port P38 38
+set_io --warn-no-port P42 42
+set_io --warn-no-port P43 43
+set_io --warn-no-port P44 44
+set_io --warn-no-port P45 45
+set_io --warn-no-port P46 46
+set_io --warn-no-port P47 47
+set_io --warn-no-port P48 48
