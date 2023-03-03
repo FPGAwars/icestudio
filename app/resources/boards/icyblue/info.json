@@ -1,4 +1,4 @@
 {"label":"icyBlue","datasheet":"https://github.com/skerr92/IcyBlue/blob/main/Documentation/IcyBlue%20Feather%20Datasheet%20rev1a.pdf",
 "interface":"FTDI","FPGAResources": {"ffs":3520,"luts":3520,
-"pios":22,"plbs":440,"brams":20}}
+"pios":27,"plbs":440,"brams":20}}
 
