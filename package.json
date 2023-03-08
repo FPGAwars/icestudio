@@ -44,12 +44,14 @@
     "grunt-wget": "^0.1.3",
     "grunt-zip": "^0.18.2",
     "npm-platform-dependencies": "0.1.0",
-    "nw": "0.72.0",
+"nw": "0.72.0",
     "nw-builder": "^3.5.7"
   },
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
   },
+
+
   "optionalDependencies": {
     "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
