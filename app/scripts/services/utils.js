@@ -169,10 +169,12 @@ angular.module('icestudio')
     //--    execute along with the arguments
     //--   -callback: Function called when the command executed is done
     //--   -notifyerror: Show a GUI notification if there is an error
+    //--   -callbackAsync: Automatic callback if async.serial calls it
     //-------------------------------------------------------------------
     this.executeCommand = function (command,
       callback,
-      notifyerror = true) {
+      notifyerror = true,
+      callbackAsync = undefined) {
 
       //-- Construct a string with the full command
       let cmd = command.join(' ');
@@ -221,6 +223,7 @@ angular.module('icestudio')
 
       proccess.on('exit', function (code) {
 
+
         if (code !== 0) {
           _this.enableKeyEvents();
           _this.enableClickEvents();
@@ -235,11 +238,21 @@ angular.module('icestudio')
           }
 
           //-- Comand finished with errors. Call the callback function
-          callback(true, output);
-
+          if (typeof callback !== 'undefined' && callback !== null) {
+            callback(true, output);
+          }
+          if (typeof callbackAsync !== 'undefined') {
+            callbackAsync();
+          }
         } else {
           //-- Command finished with NO errors. Call the callback function
-          callback(false, output);
+          if (typeof callback !== 'undefined' && callback !== null) {
+            callback(false, output);
+          }
+          if (typeof callbackAsync !== 'undefined') {
+            callbackAsync();
+          }
+
         }
       });
 
@@ -294,7 +307,10 @@ angular.module('icestudio')
         if (common.WIN32) {
           //command.push('--always-copy');
         }
-        this.executeCommand(command, callback);
+        console.log('=>>>>>>>>>>>>');
+        console.log(callback);
+        this.executeCommand(command, null, true, callback);
+        console.log('<<<<<<<<<<<<<===');
 
       } else {
         //-- The virtual environment already existed
@@ -347,7 +363,8 @@ angular.module('icestudio')
       const params = this.getApioParameters();
       console.log(pipExec, executable, params);
       //-- Run the pip command!
-      this.executeCommand([executable, params], callback);
+      this.executeCommand([executable, params], null, true, callback);
+      console.log('Fin installOnlineApio');
     };
 
 
@@ -404,7 +421,7 @@ angular.module('icestudio')
     this.apioInstall = function (pkg, callback) {
 
       //-- common.APIO_CMD contains the command for executing APIO
-      this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
+      this.executeCommand([common.APIO_CMD, 'install', pkg], null, true, callback);
     };
 
     //-- The toolchains are NOT disabled by default
@@ -1072,7 +1089,7 @@ angular.module('icestudio')
       console.log("(DEBUG) Calling: nw.Window.open(url)");
       console.log(`Url: ${url}`);
       nw.Window.open(url);
-      
+
 
     };
 

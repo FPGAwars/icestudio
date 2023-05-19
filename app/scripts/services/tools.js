@@ -1519,6 +1519,7 @@ angular
         //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Create virtualenv..."), 20);
 
+        console.log(callback);
         //-- Create the virtual env
         utils.createVirtualenv(callback);
       }
