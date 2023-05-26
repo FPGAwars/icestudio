@@ -8,30 +8,30 @@ class IceHD {
         this.fs = require('fs');
         this.path = require('path');
     }
-    
-    init(){
+
+    init() {
         this.fs = require('fs');
         this.path = require('path');
     }
-    isValidPath(path){
+    isValidPath(path) {
         return this.fs.existsSync(path);
     }
 
     isDir(path) {
-        return  this.fs.lstatSync(path).isDirectory();
+        return this.fs.lstatSync(path).isDirectory();
     }
     isFile(path) {
-        let stats=false;
-         try{
-            stats=this.fs.lstatSync(path).isFile()
-       }catch(e){
+        let stats = false;
+        try {
+            stats = this.fs.lstatSync(path).isFile()
+        } catch (e) {
             // TODO: Handle error  
-            if(e.code == 'ENOENT'){
-            
-          }else {
-          
+            if (e.code == 'ENOENT') {
+
+            } else {
+
             }
-       }
+        }
         return stats;
     }
 
@@ -39,38 +39,37 @@ class IceHD {
         return this.fs.lstatSync(path).isSymbolicLink();
     }
 
-    joinPath(folder,name){
-        console.log(folder,name);
+    joinPath(folder, name) {
         return this.path.join(folder, name);
     }
 
     basename(filepath) {
         let b = this.path.basename(filepath);
-        return (b.indexOf('.')<0)? b : b.substr(0, b.lastIndexOf('.'));
+        return (b.indexOf('.') < 0) ? b : b.substr(0, b.lastIndexOf('.'));
     }
 
-    readDir(folder){
-        let content=[];
-        if(this.isValidPath(folder) && (this.isDir(folder) || this.isSymbolicLink(folder))){
-            content=this.fs.readdirSync(folder);
+    readDir(folder) {
+        let content = [];
+        if (this.isValidPath(folder) && (this.isDir(folder) || this.isSymbolicLink(folder))) {
+            content = this.fs.readdirSync(folder);
         }
         return content;
-        
+
     }
 
-    mkDir(folder){
+    mkDir(folder) {
 
-      //-- Check if the .icestudio folder exist
-      if (!this.fs.existsSync(folder)) {
+        //-- Check if the .icestudio folder exist
+        if (!this.fs.existsSync(folder)) {
 
-        //-- Create the .icestudio folder
-        this.fs.mkdirSync(folder);
-      }
+            //-- Create the .icestudio folder
+            this.fs.mkdirSync(folder);
+        }
 
     }
 
     getFilesRecursive(folder, level) {
-        let _this=this;
+        let _this = this;
         let fileTree = [];
         const validator = /.*\.(ice|json|md)$/;
         try {
@@ -99,34 +98,34 @@ class IceHD {
         return fileTree;
     }
 
-    readFile(path, callback,callbackErr){
-        if(this.isValidPath(path)){
+    readFile(path, callback, callbackErr) {
+        if (this.isValidPath(path)) {
             let content = this.fs.readFileSync(path).toString();
-            callback(path,content);
-        }else{
-           if(typeof callbackErr !== 'undefined') callbackErr(path);
+            callback(path, content);
+        } else {
+            if (typeof callbackErr !== 'undefined') callbackErr(path);
         }
     }
-    
-    writeFile(path, content,callback){
+
+    writeFile(path, content, callback) {
         try {
             this.fs.writeFileSync(path, content);
-    
-            if(typeof callback !== 'undefined') callback(path,content);
-          } catch (err) {
+
+            if (typeof callback !== 'undefined') callback(path, content);
+        } catch (err) {
             console.error(err)
-          }
+        }
     }
     coverPath(filepath) {
-      return '"' + filepath + '"';
+        return '"' + filepath + '"';
     }
     shellEscape(arrayArgs) {
         return arrayArgs.map(function (c) {
-          if (c.indexOf("(") >= 0) {
-            c = `"${c}"`;
-          }
-          return c;
+            if (c.indexOf("(") >= 0) {
+                c = `"${c}"`;
+            }
+            return c;
         });
-      }
+    }
 
 }

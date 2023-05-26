@@ -10,42 +10,44 @@ let pConfig = { env: false };
 let pluginUUID = -1;
 let colService = false;
 
-function setupEnvironment(env)
-{
+function setupEnvironment(env) {
   if (typeof env === 'undefined' ||
     typeof env.VERSION === 'undefined') {
-  
-      setTimeout(function () {
+
+    setTimeout(function () {
       iceStudio.bus.events.publish('pluginManager.getEnvironment');
-  
+
     }, 2000);
-  
+
   } else {
     pConfig.env = env;
     let tmp = pConfig.env.defaultCollection;
     tmp.name = 'Default collection';
-  
+
     if (colService === false) {
 
       colService = new CollectionService();
       colService.setId(pluginUUID);
       colService.init();
-      colService.collectionsToTree(
-        [tmp]
-          .concat(pConfig.env.externalCollections)
-          .concat(pConfig.env.internalCollections));
+
+      let dirCols = [tmp];
+      if (pConfig.env.externalCollections.length > 0) {
+        dirCols = dirCols.concat(pConfig.env.externalCollections);
+      }
+      if (pConfig.env.internalCollections.length > 0) {
+        dirCols = dirCols.concat(pConfig.env.internalCollections);
+      }
+      colService.collectionsToTree(dirCols);
     }
   }
 }
 
-function registerEvents() 
-{
+function registerEvents() {
   iceStudio.bus.events.subscribe('pluginManager.env', setupEnvironment);
   iceStudio.bus.events.subscribe('pluginManager.updateEnv', setupEnvironment);
 }
 
-function onPluginGetUUID(data) 
-{
+function onPluginGetUUID(data) {
   pluginUUID = data.uuid;
   registerEvents();
   iceStudio.bus.events.publish('pluginManager.getEnvironment');

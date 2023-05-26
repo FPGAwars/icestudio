@@ -1,30 +1,26 @@
-class CollectionService 
-{
+class CollectionService {
 
-  constructor() 
-  {
+  constructor() {
     this.indexQ = [];
     this.indexing = false;
     this.id = -1;
-    this.collections=false;
-    this.temp=false;
+    this.collections = false;
+    this.temp = false;
   }
 
-  init() 
-  {
-    iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this,this.id);
-    iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this,this.id);
-    iceStudio.bus.events.subscribe("collectionService.isIndexing", "isIndexing", this,this.id);
-    iceStudio.bus.events.subscribe("localDatabase.retrieved", "treePreload", this,this.id);
-    iceStudio.bus.events.subscribe("collectionService.getCollections", "publishCollections", this,this.id);
+  init() {
+    iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this, this.id);
+    iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this, this.id);
+    iceStudio.bus.events.subscribe("collectionService.isIndexing", "isIndexing", this, this.id);
+    iceStudio.bus.events.subscribe("localDatabase.retrieved", "treePreload", this, this.id);
+    iceStudio.bus.events.subscribe("collectionService.getCollections", "publishCollections", this, this.id);
   }
 
   setId(id) {
     this.id = id;
   }
 
-  blockInQueue(blkid) 
-  {
+  blockInQueue(blkid) {
     let qlength = this.indexQ.length - 1;
     while (qlength > -1) {
       if (this.indexQ[qlength].blockId === blkid) {
@@ -35,53 +31,49 @@ class CollectionService
     return false;
   }
 
-  treePreload(preload){
+  treePreload(preload) {
 
-    if(typeof preload.tree !== 'undefined'){
-      this.temp=preload.tree
+    if (typeof preload.tree !== 'undefined') {
+      this.temp = preload.tree
     }
   }
 
-  getCollections()
-  {
-    if(this.indexing===false){
+  getCollections() {
+    if (this.indexing === false) {
       return this.collections;
-    } 
+    }
     return this.temp;
   }
 
-  publishCollections()
-  {
-    if(this.indexing===false){
+  publishCollections() {
+    if (this.indexing === false) {
       iceStudio.bus.events.publish("collectionService.collections", this.collections);
-    }else{
-      
+    } else {
+
       iceStudio.bus.events.publish("collectionService.collections", this.temp);
     }
   }
 
-  blockContentLoaded(args) 
-  {
+  blockContentLoaded(args) {
     if (this.blockInQueue(args.blockId)) {
       args.obj.path = args.path;
       this.indexBlock(args.blockId, args.obj);
     }
   }
 
-  preloadVtree(){
+  preloadVtree() {
 
-    
+
   }
 
-  isBlockValidForIndex(obj) 
-  {
+  isBlockValidForIndex(obj) {
     return (typeof obj !== "undefined" &&
       obj !== false &&
       obj !== false &&
       typeof obj.package !== "undefined" &&
-      typeof obj.package.description !== "undefined" && // typoeof undefined
-      typeof obj.package.name !== "undefined" &&        // typoeof undefined
-      typeof obj.package.image !== "undefined" &&       // typoeof undefined
+      typeof obj.package.description !== "undefined" &&
+      typeof obj.package.name !== "undefined" &&
+      typeof obj.package.image !== "undefined" &&
 
       obj.package.description !== null &&     // null
       obj.package.name !== null &&            // null
@@ -94,8 +86,7 @@ class CollectionService
     );
   }
 
-  indexBlock(id, obj) 
-  {
+  indexBlock(id, obj) {
     let _this = this;
     if (this.isBlockValidForIndex(obj)) {
 
@@ -105,12 +96,14 @@ class CollectionService
         name: obj.package.name,
         icon: obj.package.image,
         path: obj.path,
-        store:'blockAssets'
+        store: 'blockAssets'
       };
 
       let transaction = {
-        database: {dbId:'Collections',
-        storages:['blockAssets'],'version':1},
+        database: {
+          dbId: 'Collections',
+          storages: ['blockAssets'], 'version': 1
+        },
         data: item
       };
 
@@ -120,17 +113,15 @@ class CollectionService
     }
   }
 
-  blockIndexedOK(item)
-  {
-    if(item.database.dbId==='Collections' &&
-       item.data.store==='blockAssets' &&
-    this.blockInQueue(item.data.id)){
+  blockIndexedOK(item) {
+    if (item.database.dbId === 'Collections' &&
+      item.data.store === 'blockAssets' &&
+      this.blockInQueue(item.data.id)) {
       this.indexNext();
     }
   }
 
-  indexNext()
-  {
+  indexNext() {
     if (this.indexing) {
       this.indexQ.splice(0, 1);
       if (this.indexQ.length > 0) {
@@ -138,32 +129,32 @@ class CollectionService
       } else {
         this.indexing = false;
         iceStudio.bus.events.publish("collectionService.indexingEnd");
-            let item = {
-        id: 'vtree-resume',
-        store:'blockAssets',
-        tree:this.collections
-      };
+        let item = {
+          id: 'vtree-resume',
+          store: 'blockAssets',
+          tree: this.collections
+        };
 
-      let transaction = {
-        database: {dbId:'Collections',
-        storages:['blockAssets'],'version':1},
-        data: item
-      };
+        let transaction = {
+          database: {
+            dbId: 'Collections',
+            storages: ['blockAssets'], 'version': 1
+          },
+          data: item
+        };
 
-      iceStudio.bus.events.publish("localDatabase.store", transaction);
-   
+        iceStudio.bus.events.publish("localDatabase.store", transaction);
+
       }
     }
   }
 
-  isIndexing()
-  {
-    iceStudio.bus.events.publish("collectionService.indexStatus",{indexing: this.indexing, queue:this.indexQ.length});
+  isIndexing() {
+    iceStudio.bus.events.publish("collectionService.indexStatus", { indexing: this.indexing, queue: this.indexQ.length });
     return this.indexing;
   }
 
-  indexDB(force)
-  {
+  indexDB(force) {
     force = force || false;
     if ((this.indexing === false && this.indexQ.length > 0) || force) {
       this.indexing = true;
@@ -171,16 +162,14 @@ class CollectionService
     }
   }
 
-  queueIndexDB(params)
-  {
+  queueIndexDB(params) {
     params.dispatch = false;
     this.indexQ.push(params);
     this.indexDB();
   }
 
-  buildTreeBlocks(child, rootPath)
-  {
-     
+  buildTreeBlocks(child, rootPath) {
+
     if (typeof child.children !== "undefined") {
       let node = {
         name: child.name,
@@ -192,28 +181,32 @@ class CollectionService
         id: this.nodeHash(`${child.path}`),
       };
 
+      let ext = '';
+      let posExtension = false;
       for (let i = 0; i < child.children.length; i++) {
-           console.log(child.children[i].path.substring(child.children[i].path.indexOf('.')));
-           
-           var ext = child.children[i].path.substring(child.children[i].path.indexOf('.'));
-           //  Empeaches the problematic loading in CM treeview of .md, json, pdf files ( stored bellow collections "block" subfolders ) 
-           if ( ext !='.md' &&   ext!='.json' &&   ext!='.pdf' )   {                     
-     
-                node.items.push(this.buildTreeBlocks(child.children[i], rootPath));
-                if (node.items[node.items.length - 1].isFolder === false) {
-                  this.queueIndexDB({
-                    id: this.id,
-                    blockId: node.items[node.items.length - 1].id,
-                    path: node.items[node.items.length - 1].path,
-                  });
-                }
-            }
-     
-        } //-- for child.children.length
+
+        posExtension = child.children[i].path.indexOf('.');
+        ext = child.children[i].path.substring(posExtension);
+
+        // Only read .ice files and folders
+        if (ext == '.ice' || posExtension == -1) {
+
+          node.items.push(this.buildTreeBlocks(child.children[i], rootPath));
+          if (node.items[node.items.length - 1].isFolder === false) {
+            this.queueIndexDB({
+              id: this.id,
+              blockId: node.items[node.items.length - 1].id,
+              path: node.items[node.items.length - 1].path,
+            });
+          }
+        }
+
+      } //-- for child.children.length
 
       if (this.hasSubFolders(node)) node.hasSubFolders = true;
+
       return node;
-    
+
     } else {
       return {
         id: this.nodeHash(child.path),
@@ -236,8 +229,7 @@ class CollectionService
     return false;
   }
 
-  buildTreeFromCollection(node)
-  {
+  buildTreeFromCollection(node) {
     let tree = [];
 
     if (Array.isArray(node)) {
@@ -269,20 +261,21 @@ class CollectionService
     }
   }
 
-  collectionsToTree(collArray)
-  {
-     let item = {
-        id: 'vtree-resume',
-        store:'blockAssets'
-      };
+  collectionsToTree(collArray) {
+    let item = {
+      id: 'vtree-resume',
+      store: 'blockAssets'
+    };
 
-      let transaction = {
-        database: {dbId:'Collections',
-        storages:['blockAssets'],'version':1},
-        data: item
-      };
-      iceStudio.bus.events.publish("localDatabase.retrieve", transaction);
-      
+    let transaction = {
+      database: {
+        dbId: 'Collections',
+        storages: ['blockAssets'], 'version': 1
+      },
+      data: item
+    };
+    iceStudio.bus.events.publish("localDatabase.retrieve", transaction);
+
     iceStudio.bus.events.publish("collectionService.indexingStart");
     this.guiOpts = false;
     collArray.sort(function compare(a, b) {
@@ -297,8 +290,7 @@ class CollectionService
     this.collections = this.buildTreeFromCollection(collArray);
   }
 
-  nodeHash(text) 
-  {
+  nodeHash(text) {
     return sha256.hex(text);
   }
 }
