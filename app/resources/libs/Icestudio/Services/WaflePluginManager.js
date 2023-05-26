@@ -82,7 +82,6 @@ class WaflePluginManager {
         const fs = require('fs');
         let _this = this;
         fs.readdir(this.pluginDir, function (err, files) {
-            console.log('PLUGINS::',files);
             _this.toload = files.length;
             files.forEach(function (file) {
                 fs.readFile(_this.pluginDir + '/' + file + '/manifest.json', 'utf8', function (err, contents) {
@@ -114,11 +113,11 @@ class WaflePluginManager {
                             } else {
                                 _this.plugins[file] = new WaflePluginExtEmbeddedWindowed(args);
                             }
-                        } else if(typeof args.manifest.gui !== 'undefined' &&
-                                typeof args.manifest.gui.type !== 'undefined' &&
-                                args.manifest.gui.type === 'service'){
-                                _this.plugins[file] = new WaflePluginExtService(args);
-                        }else {
+                        } else if (typeof args.manifest.gui !== 'undefined' &&
+                            typeof args.manifest.gui.type !== 'undefined' &&
+                            args.manifest.gui.type === 'service') {
+                            _this.plugins[file] = new WaflePluginExtService(args);
+                        } else {
                             _this.plugins[file] = new WaflePlugin(args);
                         }
                     }
