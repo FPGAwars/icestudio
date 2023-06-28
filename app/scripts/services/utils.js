@@ -70,12 +70,12 @@ angular.module('icestudio')
         else {
           let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
           paths.forEach((base) => {
-            possibleExecutables.push(`${base}python3`);
-            possibleExecutables.push(`${base}python`);
 
-            for (let i = 7; i < 16; i++) {
+            for (let i = 16; i >= 7; i--) {
               possibleExecutables.push(`${base}python3.${i}`);
             }
+            possibleExecutables.push(`${base}python3`);
+            possibleExecutables.push(`${base}python`);
           });
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
@@ -83,6 +83,7 @@ angular.module('icestudio')
 
         }
 
+        console.log('Possible Python', possibleExecutables);
         //-- Move through all the possible executables
         //-- checking if they are executable
         for (let executable of possibleExecutables) {
@@ -307,10 +308,7 @@ angular.module('icestudio')
         if (common.WIN32) {
           //command.push('--always-copy');
         }
-        console.log('=>>>>>>>>>>>>');
-        console.log(callback);
         this.executeCommand(command, null, true, callback);
-        console.log('<<<<<<<<<<<<<===');
 
       } else {
         //-- The virtual environment already existed
