@@ -185,11 +185,12 @@ class CollectionService {
       let posExtension = false;
       for (let i = 0; i < child.children.length; i++) {
 
-        posExtension = child.children[i].path.indexOf('.');
+        posExtension = child.children[i].path.lastIndexOf('.');
+
         ext = child.children[i].path.substring(posExtension);
 
         // Only read .ice files and folders
-        if (ext == '.ice' || posExtension == -1) {
+        if (ext == '.ice' || child.children[i].isDir) {
 
           node.items.push(this.buildTreeBlocks(child.children[i], rootPath));
           if (node.items[node.items.length - 1].isFolder === false) {
