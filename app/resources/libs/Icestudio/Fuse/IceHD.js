@@ -45,7 +45,14 @@ class IceHD {
 
     basename(filepath) {
         let b = this.path.basename(filepath);
-        return (b.indexOf('.') < 0) ? b : b.substr(0, b.lastIndexOf('.'));
+        let basen = b;
+        if (this.isFile(filepath)) {
+
+            // Is file
+            basen = (b.indexOf('.') < 0) ? b : b.substr(0, b.lastIndexOf('.'));
+        }
+        console.log(basen);
+        return basen;
     }
 
     readDir(folder) {
@@ -82,11 +89,13 @@ class IceHD {
                     fileTree.push({
                         name: name,
                         path: path,
+                        isDir: true,
                         children: (level >= 0) ? _this.getFilesRecursive(path, level) : []
                     });
                 } else if (validator.test(name)) {
                     fileTree.push({
                         name: _this.basename(name),
+                        isDir: false,
                         path: path
                     });
                 }

@@ -91,32 +91,32 @@ module.exports = function (grunt) {
   //----------------------------------------------------------
   //-- GLOBAL constants used
   //----------------------------------------------------------
-  
+
   //-- Is this a WIP release (Work in Progress) or
   //-- a stable release?
   //-- WIP = true --> Work in progress
   //-- WIP = false --> Stable release
   const WIP = true;
-  
+
   //-- ICestudio App dir
   const APPDIR = "app";
-  
+
   //-- Icestudio package.json
   const PACKAGE_JSON = "package.json";
-  
+
   //-- Icestudio package.json with PATH
   const APP_PACKAGE_JSON = APPDIR + '/' + PACKAGE_JSON;
-  
+
   //-- Timestamp JSON file
   const BUILDINFO_JSON = "buildinfo.json";
-  
+
   //-- Timestamp file. This file is created everytime grunt
   //-- is executed. Icestudio reads this file
   const APP_TIMESTAMP_FILE = APPDIR + '/' + BUILDINFO_JSON;
-  
+
   //-- Folder with the Icestudio Javascript files
   const APP_SCRIPTS = APPDIR + "/scripts";
-  
+
   //-- Folder with the Icestudio resources
   const APP_RESOURCES = APPDIR + "/resources";
 
@@ -125,7 +125,7 @@ module.exports = function (grunt) {
 
   //-- Folder with the Default collection translations
   const DEFAULT_COLLECTION_LOCALE = DEFAULT_COLLECTION_FOLDER + "/locale";
-  
+
   //-- Folder with the Translations
   const APP_LOCALE = APP_RESOURCES + "/locale";
 
@@ -134,25 +134,25 @@ module.exports = function (grunt) {
 
   //-- Cache folder for downloading NW
   const CACHE = "cache";
-  
+
   //-- Icestudio HTML mail file
   const INDEX_HTML = "index.html";
-  
+
   //-- Grunt configuration file
   const GRUNT_FILE = "Gruntfile.js";
-  
+
   //-- jshint configuration file
   const JSHINT_CONFIG_FILE = ".jshintrc";
-  
+
   //-- Constants for the host architecture (Where grunt is run)
   const WIN32 = process.platform === "win32";
   const DARWIN = process.platform === "darwin";
-  
+
   //-- Constant for the TARGET architectures
   const TARGET_OSX64 = "osx64";
   const TARGET_LINUX64 = "linux64";
   const TARGET_WIN64 = "win64";
-  const TARGET_AARCH64 ="aarch64";
+  const TARGET_AARCH64 = "aarch64";
 
   //-------------------------------------------------------------
   //-- Constants for the EXEC TASK
@@ -161,19 +161,19 @@ module.exports = function (grunt) {
   //-- Command for executing the NW. You should add the folder where
   //-- your app (index.html) is placed
   //-- Ej. nw app
-  const NWJS_EXEC_CMD =  ["nw", APPDIR].join(" ");
+  const NWJS_EXEC_CMD = ["nw", APPDIR].join(" ");
 
   //-- Command for stoping NWjs on Windows
   const NWJS_WIN_STOP = "taskkill /F /IM nw.exe >NUL 2>&1";
 
   //-- command for stoping NWjs on Unix like systems (Linux, Mac)
-  const NWJS_UNIX_STOP =  "killall nw   2>/dev/null || " + 
-                          "killall nwjs 2>/dev/null ||" + 
-                          "(exit 0)";
+  const NWJS_UNIX_STOP = "killall nw   2>/dev/null || " +
+    "killall nwjs 2>/dev/null ||" +
+    "(exit 0)";
 
   //-- Final command for stoping NWjs
   const NWJS_STOP = WIN32 ? NWJS_WIN_STOP : NWJS_UNIX_STOP;
-  
+
   //--------------------------------------------------------------------------
   //-- Python executable. Used for generating the Windows installer
   //--------------------------------------------------------------------------
@@ -182,36 +182,36 @@ module.exports = function (grunt) {
 
   //-- Destination folder where to download the python executable
   const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE;
-  
+
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
   //-- before creating the MAC package
   const SCRIPT_OSX = "scripts/repairOSX.sh";
-  
+
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
   //-- platforms are stored
   //------------------------------------------------------------------
   const DIST = "dist";
-  
+
   //-- Temp folder for building the packages
   const DIST_TMP = DIST + "/tmp";
-  
+
   //-- Temp folder for storing the fonts
   const DIST_TMP_FONTS = DIST_TMP + "/fonts";
-  
+
   //-- Icestudio Build dir: Final files for the given architecture are placed
   //-- here before building the package
   const DIST_ICESTUDIO = DIST + "/icestudio";
-  
+
   //-- Folder for the AARCH build package
   const DIST_ICESTUDIO_AARCH64 = DIST_ICESTUDIO + "/" + TARGET_AARCH64;
-  
+
   //-- Folder for the LINUX64 build package
   const DIST_ICESTUDIO_LINUX64 = DIST_ICESTUDIO + "/" + TARGET_LINUX64;
-  
+
   //-- Folder for the Win64 build package
   const DIST_ICESTUDIO_WIN64 = DIST_ICESTUDIO + "/" + TARGET_WIN64;
-  
+
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
 
@@ -253,13 +253,13 @@ module.exports = function (grunt) {
 
   //-- Destination folder and filename for the default collection
   //-- The collection version is removed from the .zip file
-  const CACHE_DEFAULT_COLLECTION_FILE = 
+  const CACHE_DEFAULT_COLLECTION_FILE =
     CACHE + "/collection/collection-default.zip";
 
   //-- URL for downloading the .zip file of the Default collection
-  const DEFAULT_COLLECTION_URL_FILE = 
-    "https://github.com/FPGAwars/collection-default/archive/" + 
-     DEFAULT_COLLECTION_ZIP_FILE; 
+  const DEFAULT_COLLECTION_URL_FILE =
+    "https://github.com/FPGAwars/collection-default/archive/" +
+    DEFAULT_COLLECTION_ZIP_FILE;
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -270,7 +270,7 @@ module.exports = function (grunt) {
   const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
     -DVERSION=${pkg.version} \
     -V3 scripts/windows_installer.nsi`;
-   
+
   //---------------------------------------------------------------
   //-- NW TASK: Build the app
   //---------------------------------------------------------------
@@ -285,7 +285,7 @@ module.exports = function (grunt) {
   //-- They have been previsouly copied from APPDIR to DIST_TMP
   //-- SRC files used for building the app
   const DIST_SRC_FILES = DIST_TMP + "/**";
-  
+
   //-- Select the NW build flavor
   //-- Currently the "sdk" flavour is selected always
   //-- for Either WIP or stable versions
@@ -293,14 +293,14 @@ module.exports = function (grunt) {
 
   //-- Path to the Windows ICO icon file for Icestudio
   const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
-  
+
   //-- Path to the MAC ICNS icon file for Icestudio
   const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
-    //-- The NW for ARM is not included in the nw-build, so all the prrocess
+  //-- The NW for ARM is not included in the nw-build, so all the prrocess
   //-- of generating the target binary should de done manually
   //-- NWJS URL FOR downloading NW for ARM
-  const NWJS_ARM_BASE_URL = 
+  const NWJS_ARM_BASE_URL =
     "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/";
 
   //-- You should copy & paste the release ID from Github:
@@ -311,13 +311,13 @@ module.exports = function (grunt) {
   //-- Name of the NW tarball. It is created from the NW_VERSION, BUT...
   //-- its name change between releases....so CHECK IT!!!!!
   //-- unpack the seconf number of the version: Ex "0.58.0" --> v2 = 58
-  let [ ,v2, ] = NW_VERSION.split('.');
+  let [, v2,] = NW_VERSION.split('.');
   //-- Filename for the NW ARM
   const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm`;
 
   //-- Folder and filename for the NW ARM
-  const NWJS_ARM_FILENAME = 
-        NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
+  const NWJS_ARM_FILENAME =
+    NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
 
   //-- NW FOR ARM. Final binary to download
   const NWJS_ARM_BINARY = NWJS_ARM_BASE_URL + NWJS_ARM_FILENAME;
@@ -326,18 +326,18 @@ module.exports = function (grunt) {
   const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
 
   //-- NW-dist ARM destination folder when uncompressed
-  const DIST_TMP_ARM = DIST_TMP + "/nwjsAarch64"; 
+  const DIST_TMP_ARM = DIST_TMP + "/nwjsAarch64";
 
   //-- NW tarball name
   const NW_NAME_TAR_GZ = NWJS_ARM_NAME + ".tar.gz";
 
   //-- NW Path 
-  const NW_PATH = DIST_TMP_ARM + 
-        "/usr/docker/dist/nwjs-chromium-ffmpeg-branding";  
+  const NW_PATH = DIST_TMP_ARM +
+    "/usr/docker/dist/nwjs-chromium-ffmpeg-branding";
 
   //-- NW TARBALL with path
   const NW_TARBALL = NW_PATH + "/" + NW_NAME_TAR_GZ;
-  
+
   //-- SRC path where the NW files (for ARM) are locted
   const NW_SRC_PATH = DIST_TMP_ARM + "/" + NWJS_ARM_NAME;
 
@@ -347,7 +347,7 @@ module.exports = function (grunt) {
   //-- SRC files to include in the Release
   //-- They are copied to the TMP folder, were more files are added before
   //-- compressing into the final .zip file
-  const APP_SRC_FILES = [ 
+  const APP_SRC_FILES = [
     INDEX_HTML,          //-- Main html file
     PACKAGE_JSON,        //-- Package.json file
     BUILDINFO_JSON,      //-- Timestamp
@@ -358,11 +358,11 @@ module.exports = function (grunt) {
     "node_modules/**",   //-- Node modules files
   ];
 
-   //-- Source folder with the Fonts
-   const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
+  //-- Source folder with the Fonts
+  const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
 
-   //-- ALL files and directories
-   const ALL = ["**"];
+  //-- ALL files and directories
+  const ALL = ["**"];
 
   //----------------------------------------------------------------------
   //-- COMPRESS TASK: Build the release package. Constants
@@ -372,40 +372,40 @@ module.exports = function (grunt) {
   //-- Sintax:  icestudio-{version}-{platform}
 
   //-- Linux
-  const ICESTUDIO_PKG_NAME_LINUX64 =  ICESTUDIO_PKG_NAME + "-" + 
-        TARGET_LINUX64;
+  const ICESTUDIO_PKG_NAME_LINUX64 = ICESTUDIO_PKG_NAME + "-" +
+    TARGET_LINUX64;
 
   //-- windows
-  const ICESTUDIO_PKG_NAME_WIN64 = ICESTUDIO_PKG_NAME + "-" +  
-        TARGET_WIN64;
-        
+  const ICESTUDIO_PKG_NAME_WIN64 = ICESTUDIO_PKG_NAME + "-" +
+    TARGET_WIN64;
+
   //-- MAC
-  const ICESTUDIO_PKG_NAME_OSX64 = ICESTUDIO_PKG_NAME + "-" +  
-        TARGET_OSX64;
+  const ICESTUDIO_PKG_NAME_OSX64 = ICESTUDIO_PKG_NAME + "-" +
+    TARGET_OSX64;
 
   //-- ARM
-  const ICESTUDIO_PKG_NAME_AARCH64 = ICESTUDIO_PKG_NAME + "-" +  
-        TARGET_AARCH64;
+  const ICESTUDIO_PKG_NAME_AARCH64 = ICESTUDIO_PKG_NAME + "-" +
+    TARGET_AARCH64;
 
 
   //-- Full Packages names (with the local path + .zip) for the  
   //-- diferent platforms
 
   //-- Linux
-  const DIST_TARGET_LINUX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
-        ".zip";
+  const DIST_TARGET_LINUX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 +
+    ".zip";
 
   //-- Windows
-  const DIST_TARGET_WIN64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_WIN64 + 
-        ".zip";
+  const DIST_TARGET_WIN64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_WIN64 +
+    ".zip";
 
   //-- MAC
-  const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + 
-        ".zip";
+  const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 +
+    ".zip";
 
   //-- MAC
-  const DIST_TARGET_AARCH64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_AARCH64 + 
-        ".zip";  
+  const DIST_TARGET_AARCH64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_AARCH64 +
+    ".zip";
 
   //----------------------------------------------------------------------
   //-- APPIMAGE TASK: Build the appimage Linux executable. Constants
@@ -417,15 +417,15 @@ module.exports = function (grunt) {
   const LINUX_EXEC_FILE = pkg.name;
 
   //-- Linux final APPIMAGE_FILENAME
-  const LINUX_APPIMAGE_FILE = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
-        ".AppImage";
+  const LINUX_APPIMAGE_FILE = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 +
+    ".AppImage";
 
   //----------------------------------------------------------------------
   //-- APPDMG TASK: Build the dmg MAC executable. Constants
   //----------------------------------------------------------------------
 
   //-- Background image for the installer
-  const MAC_DMG_BACKGROUND_IMAGE =  
+  const MAC_DMG_BACKGROUND_IMAGE =
     "docs/resources/images/installation/installer-background.png";
 
   //-- MAC executable filename (inside the DMG image folder)
@@ -479,11 +479,11 @@ module.exports = function (grunt) {
     ],
 
     //-- TARGET_OSX64
-    "osx64": [ 
+    "osx64": [
       "exec:repairOSX",  //-- Execute a script for MAC
       "compress:osx64",  //-- Create the Icestudio .zip package
       "appdmg"           //-- Build the Icestudio appmdg package
-    ],  
+    ],
 
 
     //-- TARGET_AARCH64
@@ -511,7 +511,7 @@ module.exports = function (grunt) {
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
-  if (DARWIN  || platform === "darwin") {
+  if (DARWIN || platform === "darwin") {
     platform = TARGET_OSX64;
     options["scope"].push("darwinDependencies");
   }
@@ -523,14 +523,14 @@ module.exports = function (grunt) {
   if (platform === TARGET_AARCH64) {
     platform = TARGET_LINUX64;
   }
- 
+
   //------------------------------------------------------------------
   //-- CLEAN:tmp
   //-- Add the "clean:tmp" command to the list of commands to execute
   //-- It will be the last taks
   //------------------------------------------------------------------
   distPlatformTasks = distPlatformTasks.concat(["clean:tmp"]);
- 
+
   //------------------------------------------------------------------
   //-- Task to perform for the DIST target
   //-- There are common task that should be
@@ -603,13 +603,13 @@ module.exports = function (grunt) {
     "wget:collection",   //-- Download the collection
     "unzip"              //-- Unzip the collection (install it)
   ]);
- 
+
   //-- grunt server
   //-- Start icestudio
   grunt.registerTask("serve", [
     "nggettext_compile", //-- Get the translation in json files
     "watch:scripts", //-- Watch the given files. When there is change
-                     //-- icestudio is restarted
+    //-- icestudio is restarted
   ]);
 
   // grunt dist: Create the app package
@@ -722,7 +722,7 @@ module.exports = function (grunt) {
         },
 
         //-- URL where the file is localted
-        src:  PYTHON_URL,
+        src: PYTHON_URL,
 
         //-- Write the file to this folder
         dest: CACHE_PYTHON_EXE,
@@ -752,9 +752,9 @@ module.exports = function (grunt) {
     //-- The .zip file is unzip in the destination folder
     //-  https://www.npmjs.com/package/grunt-zip
     unzip: {
-      
+
       'using-router': {
-        router : function (filepath) {
+        router: function (filepath) {
           //-- Change the folder name of the compress files to 'collection'
           //-- (The original name contains a folder with the version. We want
           //--  it to be removed)
@@ -777,10 +777,10 @@ module.exports = function (grunt) {
       //-- Uncompress the NW for arm, and merge the files
       //-- with the linux build
       mergeAarch64: {
-        command: [   
+        command: [
 
           //-- Create a temp DIR
-          `mkdir -p ${DIST_TMP_ARM}`,  
+          `mkdir -p ${DIST_TMP_ARM}`,
 
           //-- Uncompress the NW-dist package
           `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`,
@@ -793,15 +793,15 @@ module.exports = function (grunt) {
 
           //-- Rename the binary file to icestudio
           `mv ${DIST_ICESTUDIO_AARCH64}/nw ` +
-             `${DIST_ICESTUDIO_AARCH64}/icestudio`,
+          `${DIST_ICESTUDIO_AARCH64}/icestudio`,
 
           //-- Give execution permissions to icestudio file
           `chmod +x ${DIST_ICESTUDIO_AARCH64}/icestudio`
 
         ].join(' && ')
-      
+
       },
-     
+
     },
 
     //-- TASK EXEC: Define the Commands and scripts that can be executed
@@ -821,7 +821,7 @@ module.exports = function (grunt) {
       all: [APP_SCRIPTS + "/**/*.js", GRUNT_FILE],
 
       options: {
-        
+
         //-- jshint configuration file
         //-- See: https://jshint.com/docs/
         jshintrc: JSHINT_CONFIG_FILE,
@@ -843,7 +843,7 @@ module.exports = function (grunt) {
 
           //-- Copy the Icestudio files
           {
-            expand: true, 
+            expand: true,
             cwd: APPDIR,        //-- working folder
             dest: DIST_TMP,     //-- Target folder
             src: APP_SRC_FILES  //-- Src files to copy
@@ -995,7 +995,7 @@ module.exports = function (grunt) {
             src: ALL,
 
             //-- Folder name inside the ZIP archive
-            dest:  ICESTUDIO_PKG_NAME_WIN64,
+            dest: ICESTUDIO_PKG_NAME_WIN64,
           },
         ],
       },
@@ -1026,7 +1026,7 @@ module.exports = function (grunt) {
         ],
       },
 
-      //-- TARGET AARCH64 (ARM64)
+      //-- TARGET AARCH64 ( ARM64 ∫)
       Aarch64: {
         options: {
           //-- Target .zip file
@@ -1046,7 +1046,7 @@ module.exports = function (grunt) {
             src: ALL,
 
             //-- Folder name inside the ZIP archive
-            dest:  ICESTUDIO_PKG_NAME_AARCH64 
+            dest: ICESTUDIO_PKG_NAME_AARCH64
           },
         ],
       },
@@ -1166,5 +1166,5 @@ module.exports = function (grunt) {
     },
   });
 
-  
+
 };
