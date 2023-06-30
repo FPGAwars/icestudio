@@ -1,4 +1,4 @@
-[{"type":"input","name":"CLK","value":"P3"},
+[{"type":"input","name":"CLK","value":"P6"},
 {"type":"output","name":"LED","value":"U16","pullmode":"UP"},
 {"type":"input","name":"SPI_CS","value":"R2","pullmode":"NONE"},
 {"type":"input","name":"SPI_MISO","value":"V2","pullmode":"NONE"},
@@ -152,4 +152,5 @@
 {"type":"inout","name":"P6_F14","value":"F14","pullmode":"NONE"},
 {"type":"inout","name":"P6_F13","value":"F13","pullmode":"NONE"},
 {"type": "output", "name": "NULL", "value": "NULL", "pullmode":"NONE"},
-{"type": "input", "name": "NULL", "value": "NULL", "pullmode":"NONE"}]
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode":"NONE"}
+]
