@@ -867,7 +867,7 @@ angular.module('icestudio')
               let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
               pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
 
-              if (pullmode == 'UP'|| pullmode == 'DOWN'){
+              if (pullmode === 'UP'|| pullmode === 'DOWN'){
                 code += 'PULLMODE=' + pullmode;
               }
               code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
@@ -889,7 +889,7 @@ angular.module('icestudio')
             let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
             pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
          
-            if (pullmode == 'UP'|| pullmode == 'DOWN'){
+            if (pullmode === 'UP'|| pullmode === 'DOWN'){
                 code += 'PULLMODE=' + pullmode;
             }
             code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
