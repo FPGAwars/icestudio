@@ -1,0 +1,358 @@
+[
+  {
+    "name": "CLK",
+    "value": "B12",
+    "type": "input"
+  },
+  {
+    "name": "rst_n",
+    "value": "R3",
+    "type": "input",
+    "pullmode": "NONE"
+  },
+  {
+    "name": "btn_0",
+    "value": "U16",
+    "type": "input"
+  },
+  {
+    "name": "btn_1",
+    "value": "T17",
+    "type": "input"
+  },
+  {
+    "name": "led_a[0]",
+    "value": "C13",
+    "type": "output"
+  },
+  {
+    "name": "led_a[1]",
+    "value": "D12",
+    "type": "output"
+  },
+  {
+    "name": "led_a[2]",
+    "value": "U2",
+    "type": "output"
+  },
+  {
+    "name": "led_a[3]",
+    "value": "T3",
+    "type": "output"
+  },
+  {
+    "name": "led_a[4]",
+    "value": "D13",
+    "type": "output"
+  },
+  {
+    "name": "led_a[5]",
+    "value": "E13",
+    "type": "output"
+  },
+  {
+    "name": "led_a[6]",
+    "value": "C16",
+    "type": "output"
+  },
+  {
+    "name": "led_c[0]",
+    "value": "T1",
+    "type": "output"
+  },
+  {
+    "name": "led_c[1]",
+    "value": "R1",
+    "type": "output"
+  },
+  {
+    "name": "led_c[2]",
+    "value": "U1",
+    "type": "output"
+  },
+  {
+    "name": "spi_cs_n",
+    "value": "R2",
+    "type": "output"
+  },
+  {
+    "name": "spi_mosi",
+    "value": "W2",
+    "type": "input"
+  },
+  {
+    "name": "spi_miso",
+    "value": "V2",
+    "type": "input"
+  },
+  {
+    "name": "spi_wp",
+    "value": "Y2",
+    "type": "output"
+  },
+  {
+    "name": "spi_hold",
+    "value": "W1",
+    "type": "output"
+  },
+  {
+    "name": "SZGY1_D0P",
+    "value": "E4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D1P",
+    "value": "A4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D2P",
+    "value": "C4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D3P",
+    "value": "B2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D4P",
+    "value": "A2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D5P",
+    "value": "C1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D6P",
+    "value": "F4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D7P",
+    "value": "D2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D0N",
+    "value": "D5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D1N",
+    "value": "A5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D2N",
+    "value": "B4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D3N",
+    "value": "C2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D4N",
+    "value": "B1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D5N",
+    "value": "D1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D6N",
+    "value": "E3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY1_D7N",
+    "value": "E1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S0",
+    "value": "G2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S1",
+    "value": "J3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S2",
+    "value": "F1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S3",
+    "value": "K3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S4",
+    "value": "J4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S5",
+    "value": "K2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S6",
+    "value": "J5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S7",
+    "value": "J1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S8",
+    "value": "N2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S9",
+    "value": "L3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S10",
+    "value": "M1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S11",
+    "value": "L2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S12",
+    "value": "N3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S13",
+    "value": "N4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S14",
+    "value": "M3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S15",
+    "value": "P5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S16",
+    "value": "H1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S17",
+    "value": "K5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S18",
+    "value": "K4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S19",
+    "value": "K1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S20",
+    "value": "L4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S21",
+    "value": "L1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S22",
+    "value": "L5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S23",
+    "value": "M4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S24",
+    "value": "N1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S25",
+    "value": "N5",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S26",
+    "value": "P3",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S27",
+    "value": "P4",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S28",
+    "value": "H2",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S29",
+    "value": "P1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S30",
+    "value": "G1",
+    "type": "inout"
+  },
+  {
+    "name": "SZGY0_S31",
+    "value": "P2",
+    "type": "inout"
+  },
+  {
+    "name": "i2c_sda",
+    "value": "C14",
+    "type": "inout"
+  },
+  {
+    "name": "i2c_scl",
+    "value": "E14",
+    "type": "inout"
+  },
+  {
+    "type": "output",
+    "name": "NULL",
+    "value": "NULL"
+  },
+  {
+    "type": "input",
+    "name": "NULL",
+    "value": "NULL"
+  }
+]

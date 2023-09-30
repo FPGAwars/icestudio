@@ -1,0 +1,13 @@
+{
+  "label": "Butterstick-r10-2g-85k",
+  "datasheet": "https://github.com/butterstick-fpga",
+  "interface": "FTDI",
+  "arch" : "ecp5",
+  "FPGAResources": {
+    "ffs": 24288,
+    "luts": 24288,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}
