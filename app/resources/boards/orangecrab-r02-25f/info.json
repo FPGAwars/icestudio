@@ -1,13 +1,1 @@
-{
-  "label": "ORANGECRAB-r02-25F",
-  "datasheet": "https://github.com/gregdavill/OrangeCrab",
-  "interface": "FTDI",
-  "arch" : "ecp5",
-  "FPGAResources": {
-    "ffs": 5280,
-    "luts": 5280,
-    "pios": 39,
-    "plbs": 660,
-    "brams": 30
-  }
-}
+{"label":"ORANGECRAB-r02-25F","datasheet":"https://github.com/gregdavill/OrangeCrab","interface":"FTDI","arch":"ecp5","FPGAResources":{"ffs":5280,"luts":5280,"pios":39,"plbs":660,"brams":30}}

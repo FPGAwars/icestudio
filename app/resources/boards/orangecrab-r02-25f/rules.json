@@ -1,8 +1,1 @@
-{
-  "input" : [
-    {
-      "port" : "clk",
-      "pin": "G2"
-    }
-  ]
-}
+{"input":[{"port":"clk","pin":"G2"}]}
