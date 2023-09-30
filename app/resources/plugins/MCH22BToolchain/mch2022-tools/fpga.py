@@ -76,15 +76,18 @@ if current_mode != WEBUSB_MODE_FPGA_DOWNLOAD:
 else:
     print("ESP32 already in FPGA download mode, connecting...")
 
-while True:
-    data = None
+requested_len = 4 + 4 - 1 # 2 times "FPGA" if we are unlucky and "PGAFPGA" got transmitted
+data = bytearray()
+timeout = time.monotonic() + 5
+
+while (data.find(b'FPGA') == -1):
+    if len(data) >= requested_len * 50 or time.monotonic() > timeout: # ~50 tries or 5 seconds
+        raise ValueError("Badge does not answer")
     try:
-        data = bytes(esp32_ep_in.read(32))
+        data += bytes(esp32_ep_in.read(32))
     except Exception as e:
         #print(e)
         pass
-    if (data == b"FPGA"):
-        break
 
 esp32_ep_out.write(b'FPGA')
 

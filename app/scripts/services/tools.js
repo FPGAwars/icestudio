@@ -137,7 +137,7 @@ angular
                 let bitstream = hd.joinPath(common.BUILD_DIR, 'hardware.bin');
 
                 let uploader = hd.joinPath(common.DEFAULT_PLUGIN_DIR, 'mch2022-tools');
-                uploader = hd.joinPath(uploader, 'webusb_fpga');
+                uploader = hd.joinPath(uploader, 'fpga');
 
                 let python = hd.joinPath(common.ENV_BIN_DIR, 'python3');
 
