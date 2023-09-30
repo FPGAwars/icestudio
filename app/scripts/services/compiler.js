@@ -867,7 +867,9 @@ angular.module('icestudio')
               let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
               pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
 
-              code += 'PULLMODE=' + pullmode;
+              if (pullmode === 'UP'|| pullmode === 'DOWN'){
+                code += 'PULLMODE=' + pullmode;
+              }
               code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
             }
           } else if (block.data.pins.length > 0) {
@@ -886,8 +888,10 @@ angular.module('icestudio')
             //-- Get the pullmode property of the physical pin (its id is pin.value)
             let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
             pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
-
-            code += 'PULLMODE=' + pullmode;
+         
+            if (pullmode === 'UP'|| pullmode === 'DOWN'){
+                code += 'PULLMODE=' + pullmode;
+            }
             code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
           }
         }
