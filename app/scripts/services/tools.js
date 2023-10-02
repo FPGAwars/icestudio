@@ -71,7 +71,7 @@ angular
         let board = (common.selectedBoard.name === 'MCH2022_badge') ? 'iCE40-UP5K' : common.selectedBoard.name;
 
         return apioRun(
-          ["build", "--board", board],
+          ["build", "--board", board, "--top-module", "main"],
           startMessage,
           endMessage
         );
@@ -84,9 +84,8 @@ angular
         if (common.selectedBoard.name === 'MCH2022_badge') {
           return toolchainRun(['upload'], startMessage, endMessage);
         }
-
         return apioRun(
-          ["upload", "--board", common.selectedBoard.name],
+          ["upload", "--board", common.selectedBoard.name, "--top-module", "main"],
           startMessage,
           endMessage
         );
@@ -450,7 +449,6 @@ angular
       function checkToolchain(callback, notifyerror = true) {
 
         iceConsole.log("===> tools.CHECKTOOLCHAIN");
-        console.log("===> tools.CHECKTOOLCHAIN");
 
 
         //-- Comand to Execute: apio --version
@@ -461,13 +459,11 @@ angular
         //-- common.APIO_CMD contains the command for executing APIO
         utils.executeCommand([common.APIO_CMD, '--version'], (error, output) => {
           iceConsole.log("  Error flag: " + error);
-          console.log("  Error flag: " + error);
 
           //-- Toolchain not installed (or error executing it)
           if (error) {
 
             iceConsole.log("  Error: " + error);
-            console.log("  Error: " + error);
 
             //-- No apio version (blank)
             toolchain.apio = "";
@@ -489,7 +485,6 @@ angular
           //-- Toolchain installed  
           else {
 
-            console.log("  No Errors. Toolchain installed----");
             iceConsole.log("  No Errors. Toolchain installed--");
 
             //-- Convert the object received to a string
@@ -498,7 +493,6 @@ angular
             //-- Get the version number
             toolchain.apio = msg.match(/apio,\sversion\s(.+)/)[1];
 
-            console.log("  Apio version: " + toolchain.apio);
 
             //-- Check if the apio version is ok with the specification
             //-- in the package.json file
@@ -516,7 +510,6 @@ angular
             //-- An old version of apio is installed
             else {
 
-              console.log("Toolchain version does not match");
               iceConsole.log("Toolchain version does not match");
 
               toolchainNotInstalledAlert(
@@ -626,7 +619,6 @@ angular
 
           function _executeLocal() {
 
-
             var apio = utils.getApioExecutable();
 
             commands = shellEscape(commands);
@@ -655,8 +647,8 @@ angular
                   // Upload command requires to restore the drivers (Mac OS)
                   drivers.postUpload();
                 }
+
                 common.commandOutput = command + "\n\n" + stdout + stderr;
-                console.log('SALIDA', common.commandOutput);
                 $(document).trigger("commandOutputChanged", [
                   common.commandOutput
                 ]);
@@ -993,7 +985,6 @@ angular
           } else {
             //-- Process output
             resolve();
-            console.log('RESOURCES', stdout, stderr);
             if (stdout) {
               // Show used resources in the FPGA
               if (typeof common.FPGAResources.nextpnr === "undefined") {
@@ -1248,7 +1239,6 @@ angular
       //--
       this.installToolchainDev = function () {
 
-        console.log("Install toolchain-DEV!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1519,7 +1509,6 @@ angular
         //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Create virtualenv..."), 20);
 
-        console.log(callback);
         //-- Create the virtual env
         utils.createVirtualenv(callback);
       }

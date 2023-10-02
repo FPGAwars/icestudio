@@ -9,7 +9,7 @@ set_io clk 35    # input
 set_frequency clk 12
 
 # UART (to RP2040)
-set_io -nowarn -pullup yes uart_tx      9 . # output
+set_io -nowarn -pullup yes uart_tx      9   # output
 set_io -nowarn -pullup yes uart_rx      6   # input
 
 # IRQ (to ESP32)
