@@ -229,6 +229,10 @@ jobs:
         with:
           ref: master
       
+      #-- PATCH! For ARM use NWjs 0.60
+      - name: Setup por arm64
+        run:  ./scripts/preInstallArm64.sh
+
       - name: Setup Nodejs version
         uses: actions/setup-node@v3
         with:
