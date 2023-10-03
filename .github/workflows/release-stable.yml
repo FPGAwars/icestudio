@@ -36,7 +36,7 @@ jobs:
       - name: Install jq package
         run: sudo apt install jq
 
-      #-- Read the package.json file
+      # Read the icestudio version from package.json (version property)
       - name: Read the package.json file
         id: icestudio_json
         run: |
@@ -47,7 +47,7 @@ jobs:
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
         env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
         run: |
           echo "VERSION: ${{ env.VERSION }}"
 
