@@ -32,6 +32,10 @@ jobs:
         with:
           ref: master
 
+      # jq is bash command for reading properties from a json file
+      - name: Install jq package
+        run: sudo apt install jq
+
       #-- Read the package.json file
       - name: Read the package.json file
         id: icestudio_json
