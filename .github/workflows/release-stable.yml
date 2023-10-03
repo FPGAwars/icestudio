@@ -42,6 +42,7 @@ jobs:
         run: |
           version=$(jq -r '.version' package.json)
           echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
+          echo $version
 
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
