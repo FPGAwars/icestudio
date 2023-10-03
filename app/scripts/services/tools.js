@@ -71,7 +71,7 @@ angular
         let board = (common.selectedBoard.name === 'MCH2022_badge') ? 'iCE40-UP5K' : common.selectedBoard.name;
 
         return apioRun(
-          ["build", "--board", board, "--top-module", "main"],
+          ["build", "--board", board], // TODO: Include top module name: , "--top-module", "main"],
           startMessage,
           endMessage
         );
@@ -85,7 +85,7 @@ angular
           return toolchainRun(['upload'], startMessage, endMessage);
         }
         return apioRun(
-          ["upload", "--board", common.selectedBoard.name, "--top-module", "main"],
+          ["upload", "--board", common.selectedBoard.name], //TODO: Include top module name, "--top-module", "main"],
           startMessage,
           endMessage
         );
