@@ -36,11 +36,8 @@ jobs:
       - name: Read the package.json file
         id: icestudio_json
         run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "packageJson=${content}" >> $GITHUB_OUTPUT
+          version=$(jq -r '.version' package.json)
+          echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
 
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
