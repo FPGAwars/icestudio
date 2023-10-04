@@ -69,12 +69,18 @@ angular
       //-- Execute the apio build command. It builds the current circuit
       this.buildCode = function (startMessage, endMessage) {
         let board = (common.selectedBoard.name === 'MCH2022_badge') ? 'iCE40-UP5K' : common.selectedBoard.name;
-
+        let apioParams = [];
+        if (toolchain.apio >= '0.9.0') {
+          apioParams = ["build", "--board", board, "--top-module", "main"];
+        } else {
+          apioParams = ["build", "--board", board];
+        }
         return apioRun(
-          ["build", "--board", board], // TODO: Include top module name: , "--top-module", "main"],
+          apioParams,
           startMessage,
           endMessage
         );
+
       };
 
       //-- Execute the apio upload command. It uploads the bitstream to the  
@@ -84,8 +90,15 @@ angular
         if (common.selectedBoard.name === 'MCH2022_badge') {
           return toolchainRun(['upload'], startMessage, endMessage);
         }
+        let apioParams = [];
+        if (toolchain.apio >= '0.9.0') {
+          apioParams = ["upload", "--board", common.selectedBoard.name, "--top-module", "main"];
+        } else {
+          apioParams = ["upload", "--board", common.selectedBoard.name];
+        }
+
         return apioRun(
-          ["upload", "--board", common.selectedBoard.name], //TODO: Include top module name, "--top-module", "main"],
+          apioParams,
           startMessage,
           endMessage
         );
