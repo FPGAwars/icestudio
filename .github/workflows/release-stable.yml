@@ -205,7 +205,7 @@ jobs:
       - name: 'Upload ZIP/OSX64'
         uses: actions/upload-release-asset@v1
         env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
