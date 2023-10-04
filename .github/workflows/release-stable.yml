@@ -162,7 +162,9 @@ jobs:
     # -- It is only run if the build for linux/win is ok, and  
     # -- the release was already created
     needs: build-LinWin
-    runs-on: macos-10.15
+
+    runs-on: macOS-latest
+    
     steps:
      
       - name: Checkout the master repo branch
