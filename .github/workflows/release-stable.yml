@@ -94,8 +94,9 @@ jobs:
           prerelease: false
           tag_name: v${{ env.VERSION }}
           files: |
-            "dist/icestudio-${{env.VERSION}}-win64.exe"
-            "dist/icestudio-${{env.VERSION}}-win64.zip"
+            dist/icestudio-${{env.VERSION}}-win64.exe
+            dist/icestudio-${{env.VERSION}}-win64.zip
+          body: A new release (Draft)
 
 
       #-- Build for linux
