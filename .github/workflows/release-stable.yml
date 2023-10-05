@@ -75,27 +75,59 @@ jobs:
           wine msiexec /i wine-mono-5.0.0-x86.msi
       
       # -- Build For windows!!
-      - name: Build Microsoft Windows package
-        run: |
-          export DISPLAY=:0.0 
-          npm run buildWindows
-          echo "====> DEBUG: Contents of the dist folder..."
-          ls -l dist
+      # - name: Build Microsoft Windows package
+      #   run: |
+      #     export DISPLAY=:0.0 
+      #     npm run buildWindows
+      #     echo "====> DEBUG: Contents of the dist folder..."
+      #     ls -l dist
+
+
+      #-- Test
+      - name: TEST. Generate test files
+        run: echo "Hola1" > Test1.txt
+        run: echo "Hola2" > Test2.txt
 
       #-- Create the Release (draft)
       - name: Create the Stable Release
         id: create_release
-        uses: ncipollo/release-action@v1
+        uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: v${{ env.VERSION }}
-          name: v${{ env.VERSION }}
-          body: |
-            A new stable release
           draft: true
           prerelease: false
+          tag_name: v${{ env.VERSION }}
+          files: Test1.txt
+          #files: "dist/icestudio-${{env.VERSION}}-win64.exe"
+
+      - name: Upload Test files
+        uses: softprops/action-gh-release@v1
+        env:
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: true
+          prerelease: false
+          tag_name: v${{ env.VERSION }}
+          files: Test2.txt
+          #files: "dist/icestudio-${{env.VERSION}}-win64.exe"
+
+
+      # - name: Create the Stable Release
+      #   id: create_release
+      #   uses: ncipollo/release-action@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+      #   with:
+      #     tag: v${{ env.VERSION }}
+      #     name: v${{ env.VERSION }}
+      #     body: |
+      #       A new stable release
+      #     draft: true
+      #     prerelease: false
 
       # ---------------------------------------
       # -- Upload the Windows binaries to the release
