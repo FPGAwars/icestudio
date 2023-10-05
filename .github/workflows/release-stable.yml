@@ -101,15 +101,16 @@ jobs:
       # -- Upload the Windows binaries to the release
       # ---------------------------------------
       - name: 'Upload MSI/win64'
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         env:
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-win64.exe"
-          asset_path: "dist/icestudio-${{env.VERSION}}-win64.exe"
-          asset_content_type: application/tar+gzip
+          files: "dist/icestudio-${{env.VERSION}}-win64.exe"
+          #upload_url: ${{ steps.create_release.outputs.upload_url }}
+          #asset_name: "icestudio-${{env.VERSION}}-win64.exe"
+          #asset_path: "dist/icestudio-${{env.VERSION}}-win64.exe"
+          #asset_content_type: application/tar+gzip
           
       - name: 'Upload ZIP/win64'
         uses: actions/upload-release-asset@v1
