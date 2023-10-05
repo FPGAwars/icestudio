@@ -85,13 +85,13 @@ jobs:
       #-- Create the Release (draft)
       - name: Create the Stable Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
         with:
-          tag_name: v${{ env.VERSION }}
-          release_name: v${{ env.VERSION }}
+          tag: v${{ env.VERSION }}
+          name: v${{ env.VERSION }}
           body: |
             A new stable release
           draft: true
