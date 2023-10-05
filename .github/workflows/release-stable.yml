@@ -106,6 +106,7 @@ jobs:
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: v${{ env.VERSION }}
           files: "dist/icestudio-${{env.VERSION}}-win64.exe"
           #upload_url: ${{ steps.create_release.outputs.upload_url }}
           #asset_name: "icestudio-${{env.VERSION}}-win64.exe"
