@@ -85,8 +85,9 @@ jobs:
 
       #-- Test
       - name: TEST. Generate test files
-        run: echo "Hola1" > Test1.txt
-        run: echo "Hola2" > Test2.txt
+        run: |
+          echo "Hola1" > Test1.txt
+          echo "Hola2" > Test2.txt
 
       #-- Create the Release (draft)
       - name: Create the Stable Release
