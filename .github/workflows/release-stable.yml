@@ -163,7 +163,7 @@ jobs:
       - name: 'Upload DMG/OSX64'
         uses: softprops/action-gh-release@v1
         env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
