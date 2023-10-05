@@ -75,21 +75,14 @@ jobs:
           wine msiexec /i wine-mono-5.0.0-x86.msi
       
       # -- Build For windows!!
-      # - name: Build Microsoft Windows package
-      #   run: |
-      #     export DISPLAY=:0.0 
-      #     npm run buildWindows
-      #     echo "====> DEBUG: Contents of the dist folder..."
-      #     ls -l dist
-
-
-      #-- Test
-      - name: TEST. Generate test files
+      - name: Build Microsoft Windows package
         run: |
-          echo "Hola1" > Test1.txt
-          echo "Hola2" > Test2.txt
+          export DISPLAY=:0.0 
+          npm run buildWindows
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
 
-      #-- Create the Release (draft)
+      #-- Create the Release (draft) and Upload Window binaries
       - name: Create the Stable Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -100,67 +93,12 @@ jobs:
           draft: true
           prerelease: false
           tag_name: v${{ env.VERSION }}
-          files: Test1.txt
-          #files: "dist/icestudio-${{env.VERSION}}-win64.exe"
-
-      - name: Upload Test files
-        uses: softprops/action-gh-release@v1
-        env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          draft: true
-          prerelease: false
-          tag_name: v${{ env.VERSION }}
-          files: Test2.txt
-          #files: "dist/icestudio-${{env.VERSION}}-win64.exe"
+          files: |
+            "dist/icestudio-${{env.VERSION}}-win64.exe"
+            "dist/icestudio-${{env.VERSION}}-win64.zip"
 
 
-      # - name: Create the Stable Release
-      #   id: create_release
-      #   uses: ncipollo/release-action@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
-      #   with:
-      #     tag: v${{ env.VERSION }}
-      #     name: v${{ env.VERSION }}
-      #     body: |
-      #       A new stable release
-      #     draft: true
-      #     prerelease: false
-
-      # ---------------------------------------
-      # -- Upload the Windows binaries to the release
-      # ---------------------------------------
-      - name: 'Upload MSI/win64'
-        uses: softprops/action-gh-release@v1
-        env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          draft: true
-          prerelease: false
-          tag_name: v${{ env.VERSION }}
-          files: "dist/icestudio-${{env.VERSION}}-win64.exe"
-          #upload_url: ${{ steps.create_release.outputs.upload_url }}
-          #asset_name: "icestudio-${{env.VERSION}}-win64.exe"
-          #asset_path: "dist/icestudio-${{env.VERSION}}-win64.exe"
-          #asset_content_type: application/tar+gzip
-          
-      - name: 'Upload ZIP/win64'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-win64.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-win64.zip"
-          asset_content_type: application/tar+gzip
-
-
-       #-- Build for linux
+      #-- Build for linux
       - name: Build Linux
         run: |
           export DISPLAY=:0.0 
@@ -168,30 +106,22 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-        # ---------------------------------------
-        # -- Upload the Linux binaries to the release
-        # ---------------------------------------
-      - name: 'Upload AppImage/linux64'
-        uses: actions/upload-release-asset@v1
+      # ---------------------------------------
+      # -- Upload the Linux binaries to the release
+      # ---------------------------------------
+      - name: Upload Linux64 binaries
+        uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
-          asset_name: "icestudio-${{env.VERSION}}-linux64.AppImage"
-          asset_content_type: application/tar+gzip
+          draft: true
+          prerelease: false
+          tag_name: v${{ env.VERSION }}
+          files: |
+            "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
+            "dist/icestudio-${{env.VERSION}}-linux64.zip"
 
-      - name: 'Upload ZIP/linux64'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-linux64.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.zip"
-          asset_content_type: application/tar+gzip
 
   # Build for macos
   build-macos:
@@ -226,29 +156,22 @@ jobs:
           content=`tr '\n' ' ' < package.json`
           echo "packageJson=${content}" >> $GITHUB_OUTPUT 
 
-      # Upload the binaries to the release 
+      # ---------------------------------------
+      # -- Upload Mac binaries to the release
+      # ---------------------------------------
       - name: 'Upload DMG/OSX64'
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # -- The upload url is read from the previous job: build-LinWin
-          upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-osx64.dmg"
-          asset_path: "dist/icestudio-${{env.VERSION}}-osx64.dmg"
-          asset_content_type: application/tar+gzip
+          draft: true
+          prerelease: false
+          tag_name: v${{ env.VERSION }}
+          files: |
+            "dist/icestudio-${{env.VERSION}}-osx64.dmg"
+            "dist/icestudio-${{env.VERSION}}-osx64.zip"
 
-      - name: 'Upload ZIP/OSX64'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-osx64.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-osx64.zip"
-          asset_content_type: application/tar+gzip
 
   # Build for ARM 64
   build-arm:
@@ -305,17 +228,19 @@ jobs:
         run: |
           echo "VERSION: ${{ env.VERSION }}"
   
-        # ---------------------------------------
-        # -- Upload the binaries to the release
-        # ---------------------------------------
+      # ---------------------------------------
+      # -- Upload ARM binaries to the release
+      # ---------------------------------------
       - name: 'Upload ZIP/Aarch64'
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}" 
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
-            asset_path: "dist/icestudio-${{env.VERSION}}-aarch64.zip"
-            asset_name: "icestudio-${{env.VERSION}}-aarch64.zip"
-            asset_content_type: application/tar+gzip
+          draft: true
+          prerelease: false
+          tag_name: v${{ env.VERSION }}
+          files: |
+            "dist/icestudio-${{env.VERSION}}-aarch64.zip"
+
 
