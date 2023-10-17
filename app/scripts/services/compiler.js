@@ -107,10 +107,25 @@ angular.module('icestudio')
           var _in = data.ports.in[i];
           ports.push(' input ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
         }
+
         for (var o in data.ports.out) {
           var _out = data.ports.out[o];
           ports.push(' output ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
         }
+        for (var i in data.ports.inout) {
+          var _inout = data.ports.inout[i];
+          ports.push(' inout ' + (_inout.range ? (_inout.range + ' ') : '') + _inout.name);
+        }
+
+        for (var i in data.ports.inoutLeft) {
+          var _in = data.ports.inoutLeft[i];
+          ports.push(' inout ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
+        }
+        for (var o in data.ports.inoutRight) {
+          var _out = data.ports.inoutRight[o];
+          ports.push(' inout ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
+        }
+
 
         if (ports.length > 0) {
           code += ' (\n';
@@ -145,19 +160,19 @@ angular.module('icestudio')
       return code;
     }
 
-    function digestNameBlock(block){
-        let id=block;
-        
-       if(typeof block.id !== 'undefined'){
-          id=utils.digestId(block.id);
-        
-        if(typeof block.data !== 'undefined' && 
-           typeof block.data.name !== 'undefined' &&
-           block.data.name.trim() !== ''){
-             id=`${id}__${block.data.name}`;
-           }
-         }
-         return id.replace(/(-)|(\s)/g,'');
+    function digestNameBlock(block) {
+      let id = block;
+
+      if (typeof block.id !== 'undefined') {
+        id = utils.digestId(block.id);
+
+        if (typeof block.data !== 'undefined' &&
+          typeof block.data.name !== 'undefined' &&
+          block.data.name.trim() !== '') {
+          id = `${id}__${block.data.name}`;
+        }
+      }
+      return id.replace(/(-)|(\s)/g, '');
     }
 
     function getParams(project) {
@@ -166,15 +181,15 @@ angular.module('icestudio')
 
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-        
+
         if (block.type === blocks.BASIC_CONSTANT) {
           params.push({
             name: utils.digestId(block.id),
             value: block.data.value
           });
         } else if (block.type === blocks.BASIC_MEMORY) {
-          let name =  utils.digestId(block.id);
-        
+          let name = utils.digestId(block.id);
+
           params.push({
             name: name,
             value: '"' + name + '.list"'
@@ -188,23 +203,40 @@ angular.module('icestudio')
     function getPorts(project) {
       var ports = {
         in: [],
-        out: []
+        out: [],
+        inout: []
       };
       var graph = project.design.graph;
 
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === blocks.BASIC_INPUT) {
-        
-          ports.in.push({
-            name: utils.digestId(block.id),
-            range: block.data.range ? block.data.range : ''
-          });
+          if (typeof block.data.inout !== 'undefined' && block.data.inout === true) {
+            ports.inout.push({
+              name: utils.digestId(block.id),
+              range: block.data.range ? block.data.range : ''
+            });
+          } else {
+            ports.in.push({
+              name: utils.digestId(block.id),
+              range: block.data.range ? block.data.range : ''
+            });
+          }
         } else if (block.type === blocks.BASIC_OUTPUT) {
-          ports.out.push({
-            name: utils.digestId(block.id),
-            range: block.data.range ? block.data.range : ''
-          });
+
+          if (typeof block.data.inout !== 'undefined' && block.data.inout === true) {
+            ports.inout.push({
+              name: utils.digestId(block.id),
+              range: block.data.range ? block.data.range : ''
+            });
+          } else {
+
+
+            ports.out.push({
+              name: utils.digestId(block.id),
+              range: block.data.range ? block.data.range : ''
+            });
+          }
         }
       }
 
@@ -339,7 +371,7 @@ angular.module('icestudio')
           var block = graph.blocks[i];
           if (block.type === blocks.BASIC_INPUT) {
             if (wire.source.block === block.id) {
-              connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id)+ ';');
+              connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id) + ';');
             }
           } else if (block.type === blocks.BASIC_OUTPUT) {
             if (wire.target.block === block.id) {
@@ -448,7 +480,7 @@ angular.module('icestudio')
                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== blocks.BASIC_CODE) {
-                paramName =  utils.digestId(paramName); 
+                paramName = utils.digestId(paramName);
               }
               var param = '';
               param += ' .' + paramName;
@@ -463,7 +495,7 @@ angular.module('icestudio')
 
           //-- Instance name
 
-          instance += ' ' +  utils.digestId(block.id) ;
+          instance += ' ' + utils.digestId(block.id);
 
           //-- Ports
 
@@ -493,7 +525,7 @@ angular.module('icestudio')
       function connectPort(portName, portsNames, ports, block) {
         if (portName) {
           if (block.type !== blocks.BASIC_CODE) {
-            portName =  utils.digestId(portName);
+            portName = utils.digestId(portName);
           }
           if (portsNames.indexOf(portName) === -1) {
             portsNames.push(portName);
@@ -704,34 +736,34 @@ angular.module('icestudio')
 
         // Dependencies modules
         //-- Generate the comments heather for the module
-        if(typeof project.package !== 'undefined'){
-          
+        if (typeof project.package !== 'undefined') {
+
           //-- Sepation from the previous verilog block
-          code +='\n';
+          code += '\n';
 
           //-- It is only generate if the project/block has a name
           //-- Usually the top entity do not have a main
           if (project.package.name) {
-            code +='//---------------------------------------------------\n';
-            code +='//-- ' + project.package.name + '\n';
-            code +='//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
-            code +='//-- ' + project.package.description + '\n';
-            code +='//---------------------------------------------------\n';
+            code += '//---------------------------------------------------\n';
+            code += '//-- ' + project.package.name + '\n';
+            code += '//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
+            code += '//-- ' + project.package.description + '\n';
+            code += '//---------------------------------------------------\n';
           }
         }
 
         for (var d in dependencies) {
-          code += verilogCompiler( utils.digestId(d) , dependencies[d]);
+          code += verilogCompiler(utils.digestId(d), dependencies[d]);
         }
 
         // Code modules 
-      
+
         for (i in blockArray) {
           block = blockArray[i];
           if (block) {
             if (block.type === blocks.BASIC_CODE) {
               data = {
-                name: name + '_' +  utils.digestId(block.id) ,
+                name: name + '_' + utils.digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
                 content: block.data.code //.replace(/\n+/g, '\n').replace(/\n$/g, '')
@@ -760,7 +792,7 @@ angular.module('icestudio')
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'set_io ';
-              code +=  utils.digestId(block.id) ;
+              code += utils.digestId(block.id);
               code += '[' + pin.index + '] ';
               code += value;
               code += '\n';
@@ -769,7 +801,7 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
-            code +=  utils.digestId(block.id) ;
+            code += utils.digestId(block.id);
             code += ' ';
             code += value;
             code += '\n';
@@ -845,29 +877,29 @@ angular.module('icestudio')
         if (block.type === blocks.BASIC_INPUT ||
           block.type === blocks.BASIC_OUTPUT) {
 
-            //-- Future improvement: Both cases: 1-pin or multiple pins in an array
-            //-- could be refactorized instead of repeating code
-            //-- (i usually name this as plural and singular cases)
+          //-- Future improvement: Both cases: 1-pin or multiple pins in an array
+          //-- could be refactorized instead of repeating code
+          //-- (i usually name this as plural and singular cases)
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'LOCATE COMP "';
-              code +=  utils.digestId(block.id) ;  //-- Future improvement: use pin.name. It should also be changed in the main module
+              code += utils.digestId(block.id);  //-- Future improvement: use pin.name. It should also be changed in the main module
               code += '[' + pin.index + ']" SITE "';
               code += value;
               code += '";\n';
 
               code += 'IOBUF  PORT "';
-              code +=  utils.digestId(block.id) ;
+              code += utils.digestId(block.id);
               code += '[' + pin.index + ']" ';
 
               //-- Get the pullmode property of the physical pin (its id is pin.value)
               let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
               pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
 
-              if (pullmode === 'UP'|| pullmode === 'DOWN'){
+              if (pullmode === 'UP' || pullmode === 'DOWN') {
                 code += 'PULLMODE=' + pullmode;
               }
               code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
@@ -876,21 +908,21 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'LOCATE COMP "';
-            code +=  utils.digestId(block.id) ;  //-- Future improvement: use pin.name. It should also be changed in the main module
+            code += utils.digestId(block.id);  //-- Future improvement: use pin.name. It should also be changed in the main module
             code += '" SITE "';
             code += value;
             code += '";\n';
 
             code += 'IOBUF  PORT "';
-            code +=  utils.digestId(block.id) ;
+            code += utils.digestId(block.id);
             code += '" ';
 
             //-- Get the pullmode property of the physical pin (its id is pin.value)
             let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
             pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
-         
-            if (pullmode === 'UP'|| pullmode === 'DOWN'){
-                code += 'PULLMODE=' + pullmode;
+
+            if (pullmode === 'UP' || pullmode === 'DOWN') {
+              code += 'PULLMODE=' + pullmode;
             }
             code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
           }
@@ -917,7 +949,7 @@ angular.module('icestudio')
           var block = blockArray[i];
           if (block.type === blocks.BASIC_MEMORY) {
             listFiles.push({
-              name: utils.digestId(block.id)  + '.list',
+              name: utils.digestId(block.id) + '.list',
               content: block.data.list
             });
           }
@@ -1068,13 +1100,13 @@ angular.module('icestudio')
         if (block.type === blocks.BASIC_INPUT) {
           if (block.data.name) {
             input.push({
-              id: utils.digestId(block.id) ,
+              id: utils.digestId(block.id),
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
             input.push({
-              id:  utils.digestId(block.id) ,
+              id: utils.digestId(block.id),
               name: inputUnnamed.toString(),
             });
             inputUnnamed += 1;
@@ -1082,13 +1114,13 @@ angular.module('icestudio')
         } else if (block.type === blocks.BASIC_OUTPUT) {
           if (block.data.name) {
             output.push({
-              id:  utils.digestId(block.id) ,
+              id: utils.digestId(block.id),
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
             output.push({
-              id:  utils.digestId(block.id) ,
+              id: utils.digestId(block.id),
               name: outputUnnamed.toString()
             });
             outputUnnamed += 1;
