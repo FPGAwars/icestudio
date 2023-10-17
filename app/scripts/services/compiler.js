@@ -103,26 +103,27 @@ angular.module('icestudio')
         //-- Ports
 
         var ports = [];
-        for (var i in data.ports.in) {
-          var _in = data.ports.in[i];
+        let i, o, _in, _out, _inout;
+        for (i in data.ports.in) {
+          _in = data.ports.in[i];
           ports.push(' input ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
         }
 
-        for (var o in data.ports.out) {
-          var _out = data.ports.out[o];
+        for (o in data.ports.out) {
+          _out = data.ports.out[o];
           ports.push(' output ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
         }
-        for (var i in data.ports.inout) {
-          var _inout = data.ports.inout[i];
+        for (i in data.ports.inout) {
+          _inout = data.ports.inout[i];
           ports.push(' inout ' + (_inout.range ? (_inout.range + ' ') : '') + _inout.name);
         }
 
-        for (var i in data.ports.inoutLeft) {
-          var _in = data.ports.inoutLeft[i];
+        for (i in data.ports.inoutLeft) {
+          _in = data.ports.inoutLeft[i];
           ports.push(' inout ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
         }
-        for (var o in data.ports.inoutRight) {
-          var _out = data.ports.inoutRight[o];
+        for (o in data.ports.inoutRight) {
+          _out = data.ports.inoutRight[o];
           ports.push(' inout ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
         }
 

@@ -682,8 +682,8 @@ angular.module('icestudio')
         var leftPorts = [];
         var rightPorts = [];
         var topPorts = [];
-
-        for (var i in instance.data.ports.in) {
+        let i, o, p;
+        for (i in instance.data.ports.in) {
           port = instance.data.ports.in[i];
           if (!port.range) {
             port.default = utils.hasInputRule(port.name);
@@ -695,7 +695,7 @@ angular.module('icestudio')
             size: port.size || 1
           });
         }
-        for (var i in instance.data.ports.inoutLeft) {
+        for (i in instance.data.ports.inoutLeft) {
           port = instance.data.ports.inoutLeft[i];
           if (!port.range) {
             port.default = utils.hasInputRule(port.name);
@@ -709,7 +709,7 @@ angular.module('icestudio')
         }
 
 
-        for (var o in instance.data.ports.out) {
+        for (o in instance.data.ports.out) {
           port = instance.data.ports.out[o];
           rightPorts.push({
             id: port.name,
@@ -718,7 +718,7 @@ angular.module('icestudio')
             size: port.size || 1
           });
         }
-        for (var o in instance.data.ports.inoutRight) {
+        for (o in instance.data.ports.inoutRight) {
           port = instance.data.ports.inoutRight[o];
           rightPorts.push({
             id: port.name,
@@ -729,7 +729,7 @@ angular.module('icestudio')
         }
 
 
-        for (var p in instance.data.params) {
+        for (p in instance.data.params) {
           port = instance.data.params[p];
           topPorts.push({
             id: port.name,
@@ -1386,7 +1386,7 @@ angular.module('icestudio')
         let block = cellView.model.attributes;
 
         // Backward compatibility
-        if (typeof block.data.ports.inoutLeft == 'undefined') {
+        if (typeof block.data.ports.inoutLeft === 'undefined') {
           block.data.ports.inoutLeft = [];
           block.data.ports.inoutRight = [];
         }
