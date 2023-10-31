@@ -902,8 +902,8 @@ angular.module('icestudio')
 
               if (pullmode === 'UP' || pullmode === 'DOWN') {
                 code += 'PULLMODE=' + pullmode;
-              }
-              code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
+              }              
+            code += ' ;\n\n';
             }
           } else if (block.data.pins.length > 0) {
             pin = block.data.pins[0];
@@ -925,7 +925,7 @@ angular.module('icestudio')
             if (pullmode === 'UP' || pullmode === 'DOWN') {
               code += 'PULLMODE=' + pullmode;
             }
-            code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
+            code += ' ;\n\n';
           }
         }
       }
