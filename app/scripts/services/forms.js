@@ -1672,7 +1672,7 @@ angular.module('icestudio')
 
               //-- Show a warning notification
               this.resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong block name {{name}}',
+                gettextCatalog.getString('**Wrong block name {{name}}',
                   { name: name }));
               return;
             }
