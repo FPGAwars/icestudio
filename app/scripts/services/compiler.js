@@ -88,9 +88,11 @@ angular.module('icestudio')
         //-- Parameters
 
         var params = [];
+        let pname = '';
         for (var p in data.params) {
           if (data.params[p] instanceof Object) {
-            params.push(' parameter ' + data.params[p].name + ' = ' + (data.params[p].value ? data.params[p].value : '0'));
+            pname = (data.params[p].name.charAt(0) === '@') ? data.params[p].name.substr(1) : data.params[p].name;
+            params.push(' parameter ' + pname + ' = ' + (data.params[p].value ? data.params[p].value : '0'));
           }
         }
 
@@ -104,27 +106,59 @@ angular.module('icestudio')
 
         var ports = [];
         let i, o, _in, _out, _inout;
+
+        let signed;
         for (i in data.ports.in) {
           _in = data.ports.in[i];
-          ports.push(' input ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
+          pname = _in.name;
+          signed = '';
+          if (_in.name.charAt(0) === '@') {
+            pname = _in.name.substr(1);
+            signed = ' signed ';
+          }
+          ports.push(' input ' + signed + (_in.range ? (_in.range + ' ') : '') + pname);
         }
 
         for (o in data.ports.out) {
           _out = data.ports.out[o];
-          ports.push(' output ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
+          pname = _out.name;
+          signed = '';
+          if (_out.name.charAt(0) === '@') {
+            pname = _out.name.substr(1);
+            signed = ' signed ';
+          }
+          ports.push(' output ' + signed + (_out.range ? (_out.range + ' ') : '') + pname);
         }
         for (i in data.ports.inout) {
           _inout = data.ports.inout[i];
-          ports.push(' inout ' + (_inout.range ? (_inout.range + ' ') : '') + _inout.name);
+          pname = _inout.name;
+          signed = '';
+          if (_inout.name.charAt(0) === '@') {
+            pname = _inout.name.substr(1);
+            signed = ' signed ';
+          }
+          ports.push(' inout ' + signed + (_inout.range ? (_inout.range + ' ') : '') + pname);
         }
 
         for (i in data.ports.inoutLeft) {
           _in = data.ports.inoutLeft[i];
-          ports.push(' inout ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
+          pname = _in.name;
+          signed = '';
+          if (_in.name.charAt(0) === '@') {
+            pname = _in.name.substr(1);
+            signed = ' signed ';
+          }
+          ports.push(' inout ' + signed + (_in.range ? (_in.range + ' ') : '') + pname);
         }
         for (o in data.ports.inoutRight) {
           _out = data.ports.inoutRight[o];
-          ports.push(' inout ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
+          pname = _out.name;
+          signed = '';
+          if (_out.name.charAt(0) === '@') {
+            pname = _out.name.substr(1);
+            signed = ' signed ';
+          }
+          ports.push(' inout ' + signed + (_out.range ? (_out.range + ' ') : '') + pname);
         }
 
 
@@ -483,6 +517,7 @@ angular.module('icestudio')
               if (block.type !== blocks.BASIC_CODE) {
                 paramName = utils.digestId(paramName);
               }
+              paramName = (paramName.charAt(0) === '@') ? paramName.substr(1) : paramName;
               var param = '';
               param += ' .' + paramName;
               param += '(p' + w + ')';
@@ -530,6 +565,7 @@ angular.module('icestudio')
           }
           if (portsNames.indexOf(portName) === -1) {
             portsNames.push(portName);
+            portName = (portName.charAt(0) === '@') ? portName.substr(1) : portName;
             var port = '';
             port += ' .' + portName;
             port += '(w' + w + ')';
@@ -815,6 +851,7 @@ angular.module('icestudio')
 
         var used = [];
         var initPorts = opt.initPorts || getInitPorts(project);
+        let pname = '';
         for (i in initPorts) {
           var initPort = initPorts[i];
           if (used.indexOf(initPort.pin) !== -1) {
@@ -836,9 +873,10 @@ angular.module('icestudio')
             }
           }
 
+          pname = (initPorts[i].name.charAt(0) === '@') ? initPorts[i].name.substr(1) : initPorts[i].name;
           if (!found) {
             code += 'set_io v';
-            code += initPorts[i].name;
+            code += pname;
             code += ' ';
             code += initPorts[i].pin;
             code += '\n';
@@ -902,8 +940,8 @@ angular.module('icestudio')
 
               if (pullmode === 'UP' || pullmode === 'DOWN') {
                 code += 'PULLMODE=' + pullmode;
-              }              
-            code += ' ;\n\n';
+              }
+              code += ' ;\n\n';
             }
           } else if (block.data.pins.length > 0) {
             pin = block.data.pins[0];
@@ -991,10 +1029,12 @@ angular.module('icestudio')
       var params = mainParams(project);
       if (params.length > 0) {
         content += '\n// TODO: edit the module parameters here\n';
+        let pname = '';
         content += '// e.g. localparam constant_value = 1;\n';
         for (p in params) {
-          content += 'localparam ' + params[p].name + ' = ' + params[p].value + ';\n';
-          _params.push(' .' + params[p].id + '(' + params[p].name + ')');
+          pname = (params[p].name.charAt(0) === '@') ? params[p].name.substr(1) : params[p].name;
+          content += 'localparam ' + pname + ' = ' + params[p].value + ';\n';
+          _params.push(' .' + params[p].id + '(' + pname + ')');
         }
       }
 
@@ -1004,13 +1044,26 @@ angular.module('icestudio')
       var output = io.output;
       content += '\n// Input/Output\n';
       var _ports = [];
+      let signed = '';
       for (i in input) {
-        content += 'reg ' + (input[i].range ? input[i].range + ' ' : '') + input[i].name + ';\n';
-        _ports.push(' .' + input[i].id + '(' + input[i].name + ')');
+        signed = '';
+        pname = input[i].name;
+        if (input[i].name.charAt(0) === '@') {
+          pname = input[i].name.substr(1);
+          signed = ' signed ';
+        }
+        content += 'reg ' + signed + (input[i].range ? input[i].range + ' ' : '') + pname + ';\n';
+        _ports.push(' .' + input[i].id + '(' + pname + ')');
       }
       for (o in output) {
-        content += 'wire ' + (output[o].range ? output[o].range + ' ' : '') + output[o].name + ';\n';
-        _ports.push(' .' + output[o].id + '(' + output[o].name + ')');
+        signed = '';
+        pname = output[o].name;
+        if (output[o].name.charAt(0) === '@') {
+          pname = output[o].name.substr(1);
+          signed = ' signed ';
+        }
+        content += 'wire ' + signed + (output[o].range ? output[o].range + ' ' : '') + pname + ';\n';
+        _ports.push(' .' + output[o].id + '(' + pname + ')');
       }
 
       // Module instance
@@ -1055,8 +1108,10 @@ angular.module('icestudio')
       content += ' // TODO: initialize the registers here\n';
       content += ' // e.g. value = 1;\n';
       content += ' // e.g. #2 value = 0;\n';
+      var pname;
       for (i in input) {
-        content += ' ' + input[i].name + ' = 0;\n';
+        pname = (input[i].name.charAt(0) === '@') ? input[i].name.substr(1) : input[i].name;
+        content += ' ' + pname + ' = 0;\n';
       }
       content += '\n';
       content += ' #(DURATION) $display("End of simulation");\n';
@@ -1079,12 +1134,14 @@ angular.module('icestudio')
       var io = mainIO(project);
       var input = io.input;
       var output = io.output;
-
+      let pname;
       for (var i in input) {
-        code += 'main_tb.' + input[i].name + (input[i].range ? input[i].range : '') + '\n';
+        pname = (input[i].name.charAt(0) === '@') ? input[i].name.substr(1) : input[i].name;
+        code += 'main_tb.' + pname + (input[i].range ? input[i].range : '') + '\n';
       }
       for (var o in output) {
-        code += 'main_tb.' + output[o].name + (output[o].range ? output[o].range : '') + '\n';
+        pname = (output[o].name.charAt(0) === '@') ? output[o].name.substr(1) : output[o].name;
+        code += 'main_tb.' + pname + (output[o].range ? output[o].range : '') + '\n';
       }
 
       return code;
@@ -1096,13 +1153,15 @@ angular.module('icestudio')
       var inputUnnamed = 0;
       var outputUnnamed = 0;
       var graph = project.design.graph;
+      let pname = '';
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === blocks.BASIC_INPUT) {
           if (block.data.name) {
+            pname = block.data.name.replace('@', '');
             input.push({
               id: utils.digestId(block.id),
-              name: block.data.name.replace(/ /g, '_'),
+              name: pname.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
@@ -1114,9 +1173,10 @@ angular.module('icestudio')
           }
         } else if (block.type === blocks.BASIC_OUTPUT) {
           if (block.data.name) {
+            pname = block.data.name.replace('@', '');
             output.push({
               id: utils.digestId(block.id),
-              name: block.data.name.replace(/ /g, '_'),
+              name: pname.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
@@ -1139,14 +1199,17 @@ angular.module('icestudio')
       var params = [];
       var paramsUnnamed = 0;
       var graph = project.design.graph;
+      let pname = '';
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === blocks.BASIC_CONSTANT) {
           if (!block.data.local) {
             if (block.data.name) {
+
+              pname = block.data.name.replace('@', '');
               params.push({
                 id: utils.digestId(block.id),
-                name: 'constant_' + block.data.name.replace(/ /g, '_'),
+                name: 'constant_' + pname.replace(/ /g, '_'),
                 value: block.data.value
               });
             } else {

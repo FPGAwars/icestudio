@@ -220,7 +220,7 @@ angular
       this.BUILD_DIR_TMP = this.BUILD_DIR_OBJ.name;
 
       this.PATTERN_PORT_LABEL =
-        /^\s*-?([A-Za-z_][A-Za-z_$0-9]*)?\s*(\[([0-9]+):([0-9]+)\])?\s*$/;
+        /^\s*(@*[A-Za-z_][A-Za-z_$0-9]*)?\s*(\[([0-9]+):([0-9]+)\])?\s*$/;
       this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
 
       //-- Check the port names. Ex. a[1:0], b

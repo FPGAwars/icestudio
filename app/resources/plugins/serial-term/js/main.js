@@ -6,32 +6,32 @@
 // Special thanks to Democrito which helped a lot with the debugging of this new version of the serial terminal
 
 function hasClass(el, className) {
-  if (el.classList)
-    return el.classList.contains(className);
+    if (el.classList)
+        return el.classList.contains(className);
 
-  return !!el.className.match(
-             new RegExp('(\\s|^)' + className + '(\\s|$)')
-           );
+    return !!el.className.match(
+        new RegExp('(\\s|^)' + className + '(\\s|$)')
+    );
 }
 
 function addClass(el, className) {
-  if (el.classList)
-    el.classList.add(className)
+    if (el.classList)
+        el.classList.add(className)
 
-  else if (!hasClass(el, className))
-    el.className += " " + className;
+    else if (!hasClass(el, className))
+        el.className += " " + className;
 }
 
 function removeClass(el, className) {
-  if (el.classList)
-    el.classList.remove(className)
-  else if (hasClass(el, className)) {
-    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-    el.className = el.className.replace(reg, ' ');
-  }
+    if (el.classList)
+        el.classList.remove(className)
+    else if (hasClass(el, className)) {
+        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        el.className = el.className.replace(reg, ' ');
+    }
 }
 
-let dummyUnplug = function() {
+let dummyUnplug = function () {
 
 }
 
@@ -91,22 +91,22 @@ var serialManager = function () {
     //-----------------------------------------------------------------------
     this.refreshDevices = function (callback) {
 
-      //-- Call the Serial Chrome API
-      //-- TODO: Chrome.Serial API is deprecatedd
-      //-- use Web Serial API instead:
-      //-- https://developer.chrome.com/docs/extensions/reference/serial/
-      //---------------------------------------------------------------------
-      //-- Callback(DeviceInfo)
-      //---------------------------------------------------------------------
-      chrome.serial.getDevices(function (devInfo) {
+        //-- Call the Serial Chrome API
+        //-- TODO: Chrome.Serial API is deprecatedd
+        //-- use Web Serial API instead:
+        //-- https://developer.chrome.com/docs/extensions/reference/serial/
+        //---------------------------------------------------------------------
+        //-- Callback(DeviceInfo)
+        //---------------------------------------------------------------------
+        chrome.serial.getDevices(function (devInfo) {
 
-        //-- Store the serial devices in the serial manager
-        this.devices = devInfo;
+            //-- Store the serial devices in the serial manager
+            this.devices = devInfo;
 
-        //-- Execute the callback function
-        callback(devInfo);
+            //-- Execute the callback function
+            callback(devInfo);
 
-      }.bind(this));
+        }.bind(this));
     }
 
 
@@ -114,19 +114,18 @@ var serialManager = function () {
     //-- Disconnect the serial device
     //-----------------------------------------------------------------------
     this.unplug = function (callback) {
-        
-      if(typeof callback === 'undefined') 
-        callback = dummyUnplug;
 
-      if(this.info.status !== false && 
-          this.info.dev !== -1 && 
-          this.info.conn !== false) 
-      {
-        chrome.serial.disconnect(this.info.conn.connectionId, callback);
-        this.info.status = false;
-        this.info.dev = -1;
-        this.info.conn = false;
-      }
+        if (typeof callback === 'undefined')
+            callback = dummyUnplug;
+
+        if (this.info.status !== false &&
+            this.info.dev !== -1 &&
+            this.info.conn !== false) {
+            chrome.serial.disconnect(this.info.conn.connectionId, callback);
+            this.info.status = false;
+            this.info.dev = -1;
+            this.info.conn = false;
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -138,68 +137,65 @@ var serialManager = function () {
     //--   * callback_onconnect: Executed when the conection is done
     //--   * callbacl_onreceive: Executed when data is received
     //-----------------------------------------------------------------------
-    this.plug = function (id, userOptions, 
-                          callback_onconnect, 
-                          callback_onreceive) {
+    this.plug = function (id, userOptions,
+        callback_onconnect,
+        callback_onreceive) {
 
-      //-- Default options
-      let options = {
-        bitrate: 115200,
-        dataBits: "eight",
-        parityBit: "no",
-        stopBits: "one"
-      };
+        //-- Default options
+        let options = {
+            bitrate: 115200,
+            dataBits: "eight",
+            parityBit: "no",
+            stopBits: "one"
+        };
 
-      //-- Add the parameters chosen by the user
-      if (typeof userOptions !== 'undefined') {
-        for (let prop in userOptions) {
-          options[prop] = userOptions[prop];
-        }
-      }
-
-      //-- Open the serial device
-      chrome.serial.connect(
-        this.devices[id].path,   //-- Path
-        options,                 //-- User options
-        function (connectionInfo) 
-      {
-
-        //-- If the connection was ok, configure the serial manager
-        if (typeof connectionInfo !== 'undefined' && 
-            connectionInfo !== false && 
-            typeof connectionInfo.connectionId !== 'undefined') 
-        {
-
-          //-- Connection stablished
-          this.info.status = true;
-
-          //-- Store the current devide id
-          this.info.dev = id;
-
-          //-- Store the connection Information
-          this.info.conn = connectionInfo;
-
-          //-- Set the callback function for the data received
-          let reader_callback = this.reader.bind(this);
-          if (typeof callback_onreceive !== 'undefined') {
-            this.receiverUserF = callback_onreceive;
-          } else {
-            this.receiverUserF = false;
-          }
-
-          if (typeof this.registeredCallbacks[reader_callback.name] === 
-              'undefined') 
-          {
-            chrome.serial.onReceive.addListener(reader_callback);
-            this.registeredCallbacks[reader_callback.name] = true;
-          }
-
-          //-- Set the callback function for the connection
-          if (typeof callback_onconnect !== 'undefined') 
-            callback_onconnect(connectionInfo);
+        //-- Add the parameters chosen by the user
+        if (typeof userOptions !== 'undefined') {
+            for (let prop in userOptions) {
+                options[prop] = userOptions[prop];
+            }
         }
 
-      }.bind(this));
+        //-- Open the serial device
+        chrome.serial.connect(
+            this.devices[id].path,   //-- Path
+            options,                 //-- User options
+            function (connectionInfo) {
+
+                //-- If the connection was ok, configure the serial manager
+                if (typeof connectionInfo !== 'undefined' &&
+                    connectionInfo !== false &&
+                    typeof connectionInfo.connectionId !== 'undefined') {
+
+                    //-- Connection stablished
+                    this.info.status = true;
+
+                    //-- Store the current devide id
+                    this.info.dev = id;
+
+                    //-- Store the connection Information
+                    this.info.conn = connectionInfo;
+
+                    //-- Set the callback function for the data received
+                    let reader_callback = this.reader.bind(this);
+                    if (typeof callback_onreceive !== 'undefined') {
+                        this.receiverUserF = callback_onreceive;
+                    } else {
+                        this.receiverUserF = false;
+                    }
+
+                    if (typeof this.registeredCallbacks[reader_callback.name] ===
+                        'undefined') {
+                        chrome.serial.onReceive.addListener(reader_callback);
+                        this.registeredCallbacks[reader_callback.name] = true;
+                    }
+
+                    //-- Set the callback function for the connection
+                    if (typeof callback_onconnect !== 'undefined')
+                        callback_onconnect(connectionInfo);
+                }
+
+            }.bind(this));
     }
 
     //-----------------------------------------------------------------------
@@ -207,47 +203,46 @@ var serialManager = function () {
     //-----------------------------------------------------------------------
     this.reader = function (info) {
 
-      if (typeof info.connectionId !== 'undefined' && 
-        info.connectionId !== false && 
-        info.connectionId == sm.info.conn.connectionId) 
-      {
-        if (this.receiverUserF !== false) {
+        if (typeof info.connectionId !== 'undefined' &&
+            info.connectionId !== false &&
+            info.connectionId == sm.info.conn.connectionId) {
+            if (this.receiverUserF !== false) {
 
-            //-- info.data is an arrayBuffer
-            //-- Convert it into an array of unsigned bytes
-            const bytearray = new Uint8Array(info.data);
+                //-- info.data is an arrayBuffer
+                //-- Convert it into an array of unsigned bytes
+                const bytearray = new Uint8Array(info.data);
 
-            //-- Call the user function with the received data
-            if (hexView) {
+                //-- Call the user function with the received data
+                if (hexView) {
 
-                //-- Received data as raw bytes
-                this.receiverUserF(bytearray);
-            }
-            else {
-                //-- Convert the data received to a string of characters
-                let string = this.decoder.decode(info.data);
+                    //-- Received data as raw bytes
+                    this.receiverUserF(bytearray);
+                }
+                else {
+                    //-- Convert the data received to a string of characters
+                    let string = this.decoder.decode(info.data);
 
-                //-- Replace all the \n characters by \n\r
-                string = string.replace(/(?:\\[n]|[\n])/g, "\n\r");
+                    //-- Replace all the \n characters by \n\r
+                    string = string.replace(/(?:\\[n]|[\n])/g, "\n\r");
 
-                //-- Receive data as characteres
-                this.receiverUserF(string);
+                    //-- Receive data as characteres
+                    this.receiverUserF(string);
+                }
             }
         }
-      }
     }
 
     //-----------------------------------------------------------------------
     //-- Send data to the serial device
     //-----------------------------------------------------------------------
     this.write = function (data) {
-      if (this.info.status === true) {
+        if (this.info.status === true) {
 
-        chrome.serial.send(this.info.conn.connectionId, 
-                            this.encoder.encode(data), 
-                            function (sendInfo) {});
+            chrome.serial.send(this.info.conn.connectionId,
+                this.encoder.encode(data),
+                function (sendInfo) { });
 
-      }
+        }
     }
 };
 
@@ -307,15 +302,15 @@ function renderSerialDevices(dev) {
         for (let i = dev.length - 1; i > -1; i--) {
             html += '<tr>' +
                 `<td class="border px-4 py-2">
-                  <input type="radio" name="serial-dev" value="` + 
-                    i + '" ' + checked + `>
+                  <input type="radio" name="serial-dev" value="` +
+                i + '" ' + checked + `>
                 </td>` +
-                '<td class="border px-4 py-2">' + 
-                   dev[i].displayName + '</td>' +
-                '<td class="border px-4 py-2">' + 
-                   dev[i].path + '</td>' +
-                '<td class="border px-4 py-2">' + 
-                  dev[i].productId + '</td>' +
+                '<td class="border px-4 py-2">' +
+                dev[i].displayName + '</td>' +
+                '<td class="border px-4 py-2">' +
+                dev[i].path + '</td>' +
+                '<td class="border px-4 py-2">' +
+                dev[i].productId + '</td>' +
                 '<td class="border px-4 py-2">' + dev[i].vendorId +
                 `</td>
                 </tr>`;
@@ -338,76 +333,76 @@ function renderSerialDevices(dev) {
 //---------------------------------------------------------------------------
 function renderRec(data) {
 
-  //-- The information in the terminal is shown either in ASCII
-  //-- or in hexadecimal, depending on the configured mode
+    //-- The information in the terminal is shown either in ASCII
+    //-- or in hexadecimal, depending on the configured mode
 
-  //-- Hexadecimal mode
-  
-  if (hexView) {
+    //-- Hexadecimal mode
 
-    //-- Convert the data to bytes
-    const buf = Buffer.from(data, 'utf8');
+    if (hexView) {
 
-    //-- Write the bytes to the terminal, using the
-    //-- corresponding colors
-    term.write(colorRx);
+        //-- Convert the data to bytes
+        const buf = Buffer.from(data, 'utf8');
 
-    for (byte of buf) 
-      term.write(`${byte.toString(16).padStart(2, '0')} `);
-    
-    //-- Back to the input color
-    term.write(colorinput);
-  }
-  
-  //-- ASCII mode
-  else {
-    term.write(colorRx + data + colorinput);
-    //  print( "<- "+colorRx + data + colorinput);  
-    
-  }
+        //-- Write the bytes to the terminal, using the
+        //-- corresponding colors
+        term.write(colorRx);
 
-  _receive_flag = true;
-  term.setOption('cursorStyle', 'underline');
-  term.setOption('cursorBlink', false);  
+        for (byte of buf)
+            term.write(`${byte.toString(16).padStart(2, '0')} `);
+
+        //-- Back to the input color
+        term.write(colorinput);
+    }
+
+    //-- ASCII mode
+    else {
+        term.write(colorRx + data + colorinput);
+        //  print( "<- "+colorRx + data + colorinput);  
+
+    }
+
+    _receive_flag = true;
+    term.setOption('cursorStyle', 'underline');
+    term.setOption('cursorBlink', false);
 }
 
 
-function handleTermWindowResized(){
-    
-        const parentElementHeight =  Math.max(0, window.innerHeight);
-        const parentElementWidth = Math.max(0, window.innerWidth);
-                
-        const MINIMUM_ROWS = 5 ;
-        const MINIMUM_COLS = 5 ;
-        
-        const elementPaddingVer = 4;
-        const elementPaddingHor = 4 ;
-        
-        const scrollbarWidth = 20 ;
-        const availableHeight =  parentElementHeight - elementPaddingVer - 145;
-        const availableWidth = parentElementWidth - elementPaddingHor - scrollbarWidth ;
-        
-        window_heigth_rows = Math.max(MINIMUM_ROWS, Math.floor(availableHeight / 17));       
-        window_width_cols = Math.max(MINIMUM_COLS, Math.floor(availableWidth / 9)-3);
-        
-      
-        if (_receive_flag) {
-              term.write("\r\n");
-              _receive_flag = false;
-              term.setOption('cursorStyle', 'bar');
-              term.setOption('cursorBlink', true);
-            }
-    
-        clearInput();
+function handleTermWindowResized() {
 
-       _termSize.cols =  window_width_cols ;       
-       _termSize.rows =  window_heigth_rows ; 
-       
-        term.reset();  //clear screen when resizing
-        term.resize(window_width_cols, window_heigth_rows);
-        
-  
-        setInput(_input, false);
+    const parentElementHeight = Math.max(0, window.innerHeight);
+    const parentElementWidth = Math.max(0, window.innerWidth);
+
+    const MINIMUM_ROWS = 5;
+    const MINIMUM_COLS = 5;
+
+    const elementPaddingVer = 4;
+    const elementPaddingHor = 4;
+
+    const scrollbarWidth = 20;
+    const availableHeight = parentElementHeight - elementPaddingVer - 145;
+    const availableWidth = parentElementWidth - elementPaddingHor - scrollbarWidth;
+
+    window_heigth_rows = Math.max(MINIMUM_ROWS, Math.floor(availableHeight / 17));
+    window_width_cols = Math.max(MINIMUM_COLS, Math.floor(availableWidth / 9) - 3);
+
+
+    if (_receive_flag) {
+        term.write("\r\n");
+        _receive_flag = false;
+        term.setOption('cursorStyle', 'bar');
+        term.setOption('cursorBlink', true);
+    }
+
+    clearInput();
+
+    _termSize.cols = window_width_cols;
+    _termSize.rows = window_heigth_rows;
+
+    term.reset();  //clear screen when resizing
+    term.resize(window_width_cols, window_heigth_rows);
+
+
+    setInput(_input, false);
 
 }
 
@@ -439,7 +434,7 @@ function renderPlug(connectionInfo) {
         this._posSPmod1 = [];
         this._nbOfSPs2 = [];
         this._activeCharPrompt = null,
-        this._termSize = {
+            this._termSize = {
                 cols: term.cols,
                 rows: term.rows,
             };
@@ -472,8 +467,8 @@ function renderPlug(connectionInfo) {
         });
 
         term.onData(function (data) {
-                                      
-            if (_receive_flag) {               
+
+            if (_receive_flag) {
                 if (flushOnEnter) term.write("\r\n");
                 _receive_flag = false;
                 term.setOption("cursorStyle", "bar");
@@ -590,7 +585,6 @@ confOnEnter.addEventListener(
                 break;
         }
 
-        console.log("CAMBIO", onEnterMode);
         term.focus();
         return false;
     },
@@ -709,16 +703,16 @@ function print(message) {
  * Modify input by replacing carriage return(\r) with Form Feed (\f , next page char) 
  */
 function replace_r_by_f(input) {
-   
+
     //return prompt + input.replace(/\n/g, "\n" + continuationPrompt);  //original
     // return prompt + ">"+ input.replace(/\r/g, "\f" + continuationPrompt);
     return input.replace(/\r/g, "\f"); // best for now
 }
- 
- 
- /**
- * calculate the cursor position  in the input string modified with the replacement of \r by \f 
- */ 
+
+
+/**
+* calculate the cursor position  in the input string modified with the replacement of \r by \f 
+*/
 function convertCursor2f(input, CursorPos) {
     const newInput = replace_r_by_f(input.substr(0, CursorPos));
     return newInput.length;
@@ -732,11 +726,11 @@ function convertCursor2f(input, CursorPos) {
  * and move the cursor in the beginning of the first line of the prompt.
  */
 function clearInput() {
-    
+
     const input_f = replace_r_by_f(_input);
-    const [cursorMod, PromptMod] = UpdateCursorwithReturns(input_f); 
-    const highestRow =  CursorPosToColRow(PromptMod, PromptMod.length).row;    // get cursor row when he is at the end of the string, = number of lines to clear    
-    const { col, row } = CursorPosToColRow(PromptMod, cursorMod);                    
+    const [cursorMod, PromptMod] = UpdateCursorwithReturns(input_f);
+    const highestRow = CursorPosToColRow(PromptMod, PromptMod.length).row;    // get cursor row when he is at the end of the string, = number of lines to clear    
+    const { col, row } = CursorPosToColRow(PromptMod, cursorMod);
 
     // First move on the last line
     const moveRows = highestRow - row;
@@ -763,7 +757,7 @@ function handleCursorShift(direction) {
  * then replaces them with the new input.
  */
 function setInput(newInput, clearInputF = true) {
-    
+
     const newInput_f = replace_r_by_f(newInput);
     const matches = newInput_f.matchAll(/\f/g);
     _ReturnsPosition = [];
@@ -776,14 +770,14 @@ function setInput(newInput, clearInputF = true) {
 
     // Move the cursor to the appropriate row/col
     [newCursor, newInput_f2] = UpdateCursorwithReturns(newInput_f);
-  
+
     print(newInput_f2.replace(/\n/g, "\f"));
-    
-    const newLines =  CursorPosToColRow(newInput_f2, newInput_f2.length).row;  // get cursor row when he is at the end of the string, = number of new lines  
-    const { col, row } = CursorPosToColRow( newInput_f2, newCursor);
+
+    const newLines = CursorPosToColRow(newInput_f2, newInput_f2.length).row;  // get cursor row when he is at the end of the string, = number of new lines  
+    const { col, row } = CursorPosToColRow(newInput_f2, newCursor);
 
     const moveUpRows = newLines - row;
- //   console.log(newInput_f2, moveUpRows, newLines, row);
+    //   console.log(newInput_f2, moveUpRows, newLines, row);
 
     if (newCursor > 0 && newInput_f2.length % _termSize.cols == 0) {
         term.write("\r\n"); //go to next line after reaching an end of line
@@ -800,7 +794,7 @@ function setInput(newInput, clearInputF = true) {
     _input = newInput_f;
 }
 
-  
+
 /**
  * This function:
  * - Converts the input string by adding to it, spaces after every return and up to the right side of the terminal
@@ -809,25 +803,25 @@ function setInput(newInput, clearInputF = true) {
 function UpdateCursorwithReturns(InputRetMod) {
     _nbOfSPs = Array(25).fill(0);
     _posSPmod = Array(25).fill(0);
-    cursormod =_cursor;
+    cursormod = _cursor;
     cpt = 0;
     _nbOfSPs2 = [];
     sum_nbOfSPs = 0;
     NbrsReturns = (InputRetMod.match(/\f/g) || []).length; //total number of \f which replace de \r   returns
-   
+
     for (var i = 1; i <= NbrsReturns; ++i) {
-        
+
         // prepare a table _nbOfSPs containing the number of spaces added up to the right side border of the terminal for a string between two successive returns
         // prepare a table _posSPmod containing the positions of the returns( starting position of the spaces addition)
-         
+
         if (i == 1) {
-            nbOfSPs = _termSize.cols - ((_ReturnsPosition[i] - 1) % _termSize.cols); 
+            nbOfSPs = _termSize.cols - ((_ReturnsPosition[i] - 1) % _termSize.cols);
             posSPmod = _ReturnsPosition[i] - 1 + nbOfSPs;
         } else {
             nbOfSPs = _termSize.cols - ((posSPmod + _ReturnsPosition[i] -
-                    _ReturnsPosition[i - 1] - 1) % _termSize.cols);
+                _ReturnsPosition[i - 1] - 1) % _termSize.cols);
             posSPmod = posSPmod + _ReturnsPosition[i] -
-                    _ReturnsPosition[i - 1] - 1 + nbOfSPs;
+                _ReturnsPosition[i - 1] - 1 + nbOfSPs;
         }
         _nbOfSPs[i - 1] = nbOfSPs;
         _posSPmod[i - 1] = posSPmod;
@@ -835,29 +829,29 @@ function UpdateCursorwithReturns(InputRetMod) {
         var n = posSPmod - nbOfSPs;
 
         if (i > 1) n = posSPmod - nbOfSPs - _posSPmod[i - 2];
-        
+
         // prepare the table _nbOfSPs2 containing the nb of spaces added up to the right side border of the terminal for each terminal row
 
         while (n >= _termSize.cols) {
-            _nbOfSPs2.push(0);      
+            _nbOfSPs2.push(0);
             n = n - _termSize.cols;
         }
         if (n > 0) _nbOfSPs2.push(_termSize.cols - n);
-        if ((_ReturnsPosition[i] - _ReturnsPosition[i - 1] - 1) % _termSize.cols == 0 )
+        if ((_ReturnsPosition[i] - _ReturnsPosition[i - 1] - 1) % _termSize.cols == 0)
             _nbOfSPs2.push(5);
 
         for (var i2 = 1; i2 <= nbOfSPs; ++i2) {
-            
+
             if (_cursor > _ReturnsPosition[i] - 1 && i2 > 1)            //-1 to remove the return char
                 cursormod++;
 
             if (i2 == 1)
                 InputRetMod =
                     InputRetMod.substr(0, posSPmod - nbOfSPs) + "|" +
-                    InputRetMod.substr( posSPmod - nbOfSPs + 1 ); //adds the | and deletes the /f (corresponding to /r ) on the first iteration of i2
+                    InputRetMod.substr(posSPmod - nbOfSPs + 1); //adds the | and deletes the /f (corresponding to /r ) on the first iteration of i2
             else
                 InputRetMod =
-                    InputRetMod.substr(0, posSPmod - nbOfSPs + i2 - 1) + " " + 
+                    InputRetMod.substr(0, posSPmod - nbOfSPs + i2 - 1) + " " +
                     InputRetMod.substr(posSPmod - nbOfSPs + i2 - 1); //adds " ", spaces/X up to the end of line
         }
         sum_nbOfSPs = sum_nbOfSPs + nbOfSPs;
@@ -866,27 +860,27 @@ function UpdateCursorwithReturns(InputRetMod) {
     _nbOfSPs2.push(0);
     return [cursormod, InputRetMod];
 }
- 
+
 
 /**
    * Move cursor at given direction
    */
-function MoveCursortoNewRow(dir) {   
+function MoveCursortoNewRow(dir) {
 
-    const input_f = replace_r_by_f(_input);    
-    const [cursormod,InputRetMod] = UpdateCursorwithReturns(input_f);  
-    const { col: prevCol, row: prevRow } =  CursorPosToColRow(InputRetMod, cursormod);
-    
-    if (dir==1)   {             
-            cursor =_cursor + Math.min (( _termSize.cols - (_nbOfSPs2[prevRow] || 0)), 
-                     2*_termSize.cols - prevCol -(_nbOfSPs2[prevRow] || 0)- (_nbOfSPs2[prevRow+1] || 0) );       //glue cursor to end of next row
-            if (_nbOfSPs2[prevRow]>0) cursor +=1      // +1 if return
-        }
+    const input_f = replace_r_by_f(_input);
+    const [cursormod, InputRetMod] = UpdateCursorwithReturns(input_f);
+    const { col: prevCol, row: prevRow } = CursorPosToColRow(InputRetMod, cursormod);
 
-    if ( (dir ==-1) &&  (prevRow > 0)) {
-           cursor = _cursor -  Math.max(( _termSize.cols - _nbOfSPs2[prevRow-1]), prevCol ); //move cursor to end of previous row              
-           if (_nbOfSPs2[prevRow-1]>0)  cursor-=1     //-1 if return 
-        }
+    if (dir == 1) {
+        cursor = _cursor + Math.min((_termSize.cols - (_nbOfSPs2[prevRow] || 0)),
+            2 * _termSize.cols - prevCol - (_nbOfSPs2[prevRow] || 0) - (_nbOfSPs2[prevRow + 1] || 0));       //glue cursor to end of next row
+        if (_nbOfSPs2[prevRow] > 0) cursor += 1      // +1 if return
+    }
+
+    if ((dir == -1) && (prevRow > 0)) {
+        cursor = _cursor - Math.max((_termSize.cols - _nbOfSPs2[prevRow - 1]), prevCol); //move cursor to end of previous row              
+        if (_nbOfSPs2[prevRow - 1] > 0) cursor -= 1     //-1 if return 
+    }
     setCursor(cursor);
 }
 
@@ -895,19 +889,19 @@ function MoveCursortoNewRow(dir) {
  * Move cursor at given direction
  */
 function setCursor(newCursor) {
- 
+
     if (newCursor < 0) newCursor = 0;
     if (newCursor > _input.length) newCursor = _input.length;
     var input_f = replace_r_by_f(_input);
 
     // Estimate previous/current cursor position
     const prevCursorPos = convertCursor2f(_input, _cursor);
-    const { col: prevCol, row: prevRow } = CursorPosToColRow( input_f, prevCursorPos);
+    const { col: prevCol, row: prevRow } = CursorPosToColRow(input_f, prevCursorPos);
 
     // Estimate new cursor position
     const newCursorPos = convertCursor2f(_input, newCursor);
-    const { col: newCol, row: newRow } = CursorPosToColRow( input_f, newCursorPos );   
-    
+    const { col: newCol, row: newRow } = CursorPosToColRow(input_f, newCursorPos);
+
     // Adjust cursor position vertically
     if (newRow > prevRow) {
         for (let i = prevRow; i < newRow; ++i) term.write("\x1B[B");
@@ -928,12 +922,12 @@ function setCursor(newCursor) {
 
 /**
  * Move cursor at given direction
- */ 
+ */
 function handleCursorMove(dir) {
 
     var num = Math.min(dir, _input.length - _cursor);    // if dir =  1   --> 
     if (dir == -1) {                                     // if dir = -1   <--
-         num = Math.max(dir, - _cursor);
+        num = Math.max(dir, - _cursor);
     }
     setCursor(_cursor + num);
 }
@@ -957,7 +951,7 @@ function handleCursorErase(backspace) {
     }
 }
 
-  
+
 /**
  * Insert character at cursor location
  */
@@ -967,8 +961,8 @@ function handleCursorInsert(data) {
     const newInput = _input.substr(0, _cursor) + data + _input.substr(_cursor);
     _cursorH = Math.max(0, this.entries.length - 1);
     this.entries[_cursorH] = newInput;
-    
-   // const newInput_f = replace_r_by_f(newInput);
+
+    // const newInput_f = replace_r_by_f(newInput);
 
     //update table with return positions
     //const matches = newInput_f.matchAll(/\f/g);
@@ -982,10 +976,9 @@ function handleCursorInsert(data) {
     }
     _cursor += data.length;
     setInput(newInput);
-    console.log(data, _cursor);
 }
 
-  
+
 /**
  * Handle a single piece of information from the terminal.
  */
@@ -1003,12 +996,12 @@ function handleData(data) {
 
             switch (data.substr(1)) {
                 case "[A": // Up arrow
-                    if (_cursor == 0 || _cursor == _input.length)  getPrevious();
+                    if (_cursor == 0 || _cursor == _input.length) getPrevious();
                     else MoveCursortoNewRow(-1); // move up  line (down row)                    
                     break;
 
                 case "[B": // Down arrow
-                    if (_cursor == 0 || _cursor == _input.length)  getNext();
+                    if (_cursor == 0 || _cursor == _input.length) getNext();
                     else MoveCursortoNewRow(1); // move Down line ( up row )
                     break;
 
@@ -1047,7 +1040,7 @@ function handleData(data) {
                 case "[1;5A": // ALT + UP
                     getPrevious();
                     break;
-                    
+
                 case "[1;5B": // ALT + DOWN
                     getNext();
                     break;
@@ -1058,7 +1051,7 @@ function handleData(data) {
                         clearInput();
                         setInput(
                             _input.substr(0, ofs) +
-                                _input.substr(_cursor)
+                            _input.substr(_cursor)
                         );
                         setCursor(ofs);
                     }
@@ -1073,26 +1066,26 @@ function handleData(data) {
                     break;
 
                 case "\r": // ENTER
-                
+
                     if (isIncompleteInput(_input)) {
                         handleCursorInsert("\r");
                     } else {
                         _finishedLastEntry = true;
-                                                                 
-                        push1 ("");
-                        _cursorH = this.entries.length-1; 
-                                    
+
+                        push1("");
+                        _cursorH = this.entries.length - 1;
+
                         clearInput(); // clear and go to "home"
                         _cursor = 0;
 
                         if (localEcho) {
                             term.write("-> ");
                             //print(colorTx + _input + colorinput );
-                            term.write( colorTx + _input.replace(/\f/g, "\r\n") +  colorinput );
+                            term.write(colorTx + _input.replace(/\f/g, "\r\n") + colorinput);
                             // term.write (colorTx + _input.replace(/\f/g, "\r") + colorinput );
                             // term.write (colorTx + _input + colorinput );
-                        }                        
-                        term.write("\r\n");                        
+                        }
+                        term.write("\r\n");
                         sm.write(_input.replace(/\f/g, "\r") + onEnterMode);
                         _input = "";
                         _ReturnsPosition = [];
@@ -1110,10 +1103,10 @@ function handleData(data) {
 
         if (data.charCodeAt(0) == 13) {     //enter key           
             sm.write(onEnterMode);
-                          
-            if (hexView) setTimeout(() => {  term.write("\r\n"); }, 15); // wait a bit to let the time to receive and display all (up to 3) the "OnEnterSend Mode" chars  
+
+            if (hexView) setTimeout(() => { term.write("\r\n"); }, 15); // wait a bit to let the time to receive and display all (up to 3) the "OnEnterSend Mode" chars  
             else term.write("\r\n");
-                
+
         } else {
             // terminal echoing of cursor movements avoided outside the "flush on enter" mode
             if (
@@ -1125,7 +1118,6 @@ function handleData(data) {
                 print(colorTx + data + colorinput);
             }
             sm.write(data);
-            console.log(data);
         }
     }
 }
@@ -1175,24 +1167,24 @@ function closestRightBoundary(input, CursorPos) {
  * the navigation on the terminal, wrapping when they reach the column width.
  */
 function CursorPosToColRow(input, CursorPos) {
-  let row = 0,
-    col = 0;
-
-  for (let i = 0; i < CursorPos; ++i) {
-    const chr = input.charAt(i);
-   // if (chr == "\n") {
-      if (chr == "\f") {
-      col = 0;
-      row += 1;
-    } else {
-      col += 1;
-      if (col >= _termSize.cols ) {
+    let row = 0,
         col = 0;
-        row += 1;
-      }
+
+    for (let i = 0; i < CursorPos; ++i) {
+        const chr = input.charAt(i);
+        // if (chr == "\n") {
+        if (chr == "\f") {
+            col = 0;
+            row += 1;
+        } else {
+            col += 1;
+            if (col >= _termSize.cols) {
+                col = 0;
+                row += 1;
+            }
+        }
     }
-  }  
-  return { col , row };
+    return { col, row };
 }
 
 
@@ -1208,19 +1200,19 @@ function CursorPosToColRow(input, CursorPos) {
  */
 function isIncompleteInput(input) {
     // Empty input is not incomplete
-    if (input.trim() == "")     return false ;
+    if (input.trim() == "") return false;
 
     // Check for dangling single-quote strings
-    if ((input.match(/'/g) || []).length % 2 !== 0)  return true ;
+    if ((input.match(/'/g) || []).length % 2 !== 0) return true;
 
     // Check for dangling double-quote strings
-    if ((input.match(/"/g) || []).length % 2 !== 0)  return true ;
-    
+    if ((input.match(/"/g) || []).length % 2 !== 0) return true;
+
     // Check for dangling boolean or pipe operations
-    if (input.split(/(\|\||\||&&)/g).pop().trim() == "" )  return true ;
-    
+    if (input.split(/(\|\||\||&&)/g).pop().trim() == "") return true;
+
     // Check for tailing slash
-    if (input.endsWith("\\") && !input.endsWith("\\\\"))  return true ;
+    if (input.endsWith("\\") && !input.endsWith("\\\\")) return true;
 
     return false;
 }
@@ -1231,7 +1223,7 @@ function isIncompleteInput(input) {
 /**
  * The history controller provides an ring-buffer
  */
- 
+
 this.HistorySize = 50; //number of entries stored in the an "history" ring buffer
 this.entries = [];
 
@@ -1253,7 +1245,6 @@ function push1(entry) {
         this.entries.pop(0);
     }
     this._cursorH = this.entries.length - 1; //Rewind history cursor on the last entry
-    console.log(_cursorH, this.entries);
 }
 
 
@@ -1283,7 +1274,7 @@ function getPrevious() {
         clearInput();
         _cursor = inputFromHistory.length;
         setInput(inputFromHistory);
-//      console.table(inputFromHistory); 
+        //      console.table(inputFromHistory); 
     }
 }
 
@@ -1292,7 +1283,7 @@ function getPrevious() {
  * Returns the next entry from the history ring buffer
  */
 function getNext() {
-    _cursorH = Math.min(this.entries.length-1, this._cursorH + 1);
+    _cursorH = Math.min(this.entries.length - 1, this._cursorH + 1);
     inputFromHistory = this.entries[_cursorH];
 
     if (!inputFromHistory) inputFromHistory = "";

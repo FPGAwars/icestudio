@@ -645,7 +645,7 @@ angular.module('icestudio')
 
           //-- Third: Get the Input block names as a list of strings
           let finalNames = text.split(',');
-
+          console.log(finalNames);
           //-- Return an array with the names
           return finalNames;
         }
@@ -867,7 +867,7 @@ angular.module('icestudio')
           //-- Values[0]: Input pin names
           //-- Parse the input names
           this.names = Form.parseNames(this.values[0]);
-
+          console.log('NAMES', this.names);
           //-- Values[1] indicates if it is a virtual pin or not
           this.virtual = !this.values[1];
         }
@@ -1672,7 +1672,7 @@ angular.module('icestudio')
 
               //-- Show a warning notification
               this.resultAlert = alertify.warning(
-                gettextCatalog.getString('**Wrong block name {{name}}',
+                gettextCatalog.getString('Wrong block name {{name}}',
                   { name: name }));
               return;
             }
