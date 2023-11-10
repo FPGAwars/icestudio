@@ -25,15 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-          ref: develop
-      
+          ref: develop 
       - name: Setup Nodejs version
         uses: actions/setup-node@v3
         with:
           node-version: '20.1.0'
       - name: Install npm dependencies
         run:   npm install --legacy-peer-deps 
-      -name: Install dmg bundle creator
+      - name: Install dmg bundle creator
         run:  npm install grunt-appdmg
       - name: Build OSX packages
         run:  | 
