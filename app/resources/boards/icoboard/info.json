@@ -1,5 +1,6 @@
 {
   "label": "icoBOARD 1.0",
+  "SysClkMhz":100,
   "datasheet": "http://icoboard.org/about-icoboard.html",
   "interface": "GPIO",
   "FPGAResources": {

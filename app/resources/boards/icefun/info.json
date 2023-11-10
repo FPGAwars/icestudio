@@ -1,5 +1,6 @@
 {
   "label": "iceFUN",
+  "SysClkMhz":12,
   "datasheet": "https://www.robot-electronics.co.uk/icefun.html",
   "interface": "Serial",
   "FPGAResources": {

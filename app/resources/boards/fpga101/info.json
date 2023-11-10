@@ -1,5 +1,6 @@
 {
   "label": "FPGA 101 Workshop Badge Board",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/mmicko/workshop_badge",
   "interface": "FTDI",
   "FPGAResources": {

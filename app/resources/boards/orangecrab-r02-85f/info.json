@@ -1,5 +1,6 @@
 {
   "label": "ORANGECRAB-r02-85F",
+  "SysClkMhz":48,
   "datasheet": "https://github.com/gregdavill/OrangeCrab",
   "interface": "FTDI",
   "arch" : "ecp5",

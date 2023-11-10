@@ -1,5 +1,6 @@
 {
   "label": "iCEBreaker bitsy v1",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
   "interface": "FTDI",
   "FPGAResources": {

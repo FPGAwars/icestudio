@@ -1,5 +1,6 @@
 {
   "label": "BlackIce MX",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/folknology/IceCore",
   "interface": "Serial",
   "FPGAResources": {

@@ -1,5 +1,6 @@
 {
   "label": "MCH2022",
+  "SysClkMhz":12,
   "datasheet": "https://badge.team/docs/badges/mch2022/",
   "interface": "usb",
   "FPGAResources": {

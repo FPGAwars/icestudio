@@ -1,5 +1,6 @@
 {
   "label": "Butterstick-r10-2g-85k_(FT232H)",
+  "SysClkMhz":30,
   "datasheet": "https://github.com/butterstick-fpga",
   "interface": "FTDI",
   "arch" : "ecp5",

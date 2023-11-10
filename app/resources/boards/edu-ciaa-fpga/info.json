@@ -1,5 +1,6 @@
 {
   "label": "EDU-CIAA-FPGA",
+  "SysClkMhz":12,
   "datasheet": "http://www.proyecto-ciaa.com.ar/devwiki/doku.php?id=desarrollo:edu-fpga",
   "interface": "FTDI",
   "FPGAResources": {

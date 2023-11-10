@@ -1,5 +1,6 @@
 {
   "label": "Alhambra II",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/FPGAwars/Alhambra-II-FPGA",
   "interface": "FTDI",
   "FPGAResources": {

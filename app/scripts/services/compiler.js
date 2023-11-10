@@ -216,12 +216,25 @@ angular.module('icestudio')
 
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-
+        
+        var boardClkfreq = common.selectedBoard.info.SysClkMhz;
+        boardClkfreq = (boardClkfreq == undefined) ? 12 : boardClkfreq;  // (default) boardClkfreq = 12 Mhz, if no sysClkMhz set in info.js of current board
+               
         if (block.type === blocks.BASIC_CONSTANT) {
-          params.push({
-            name: utils.digestId(block.id),
-            value: block.data.value
-          });
+            if (block.data.value==="SysClkMhz")  {
+                params.push({
+                   name: utils.digestId(block.id),               
+                   value: boardClkfreq
+                });                
+                
+            }else{
+                params.push({
+                    name: utils.digestId(block.id),
+                    value: block.data.value
+                });
+                                
+            }                    
+            
         } else if (block.type === blocks.BASIC_MEMORY) {
           let name = utils.digestId(block.id);
 

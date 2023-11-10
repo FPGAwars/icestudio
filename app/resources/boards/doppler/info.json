@@ -1,5 +1,6 @@
 {
   "label": "doppler",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/dadamachines/doppler/tree/master/hardware",
   "interface": "FTDI",
   "FPGAResources": {

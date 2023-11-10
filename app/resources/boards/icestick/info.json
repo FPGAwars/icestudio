@@ -1,5 +1,6 @@
 {
   "label": "iCEstick Evaluation Kit",
+  "SysClkMhz":12,
   "datasheet": "http://www.latticesemi.com/icestick",
   "interface": "FTDI",
   "FPGAResources": {
