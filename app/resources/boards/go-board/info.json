@@ -1,5 +1,6 @@
 {
   "label": "Nandland Go board",
+  "SysClkMhz":12,
   "datasheet": "https://www.nandland.com/goboard/introduction.html",
   "interface": "FTDI",
   "FPGAResources": {

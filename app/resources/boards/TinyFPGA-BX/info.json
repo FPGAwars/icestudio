@@ -1,5 +1,6 @@
 {
   "label": "TinyFPGA BX",
+  "SysClkMhz":16,
   "datasheet": "https://github.com/tinyfpga/TinyFPGA-BX",
   "interface": "Serial",
   "FPGAResources": {

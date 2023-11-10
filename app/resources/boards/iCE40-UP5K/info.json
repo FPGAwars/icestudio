@@ -1,5 +1,6 @@
 {
   "label": "iCE40 UltraPlus Breakout Board",
+  "SysClkMhz":12,
   "datasheet": "http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard",
   "interface": "FTDI",
   "FPGAResources": {

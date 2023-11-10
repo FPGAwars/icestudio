@@ -1,5 +1,6 @@
 {
   "label": "UPDuino v2.1",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/tinyvision-ai-inc/UPduino-v2.1",
   "interface": "FTDI",
   "FPGAResources": {

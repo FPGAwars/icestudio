@@ -1,5 +1,6 @@
 {
   "label": "ULX3S-85F",
+  "SysClkMhz":25,
   "datasheet": "https://github.com/emard/ulx3s",
   "interface": "FTDI",
   "arch" : "ecp5",

@@ -1,5 +1,6 @@
 {
   "label": "TinyFPGA B2",
+  "SysClkMhz":16,
   "datasheet": "http://tinyfpga.com/b-series-guide.html",
   "interface": "Serial",
   "FPGAResources": {

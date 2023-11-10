@@ -1,5 +1,6 @@
 {
   "label": "BlackIce II",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/mystorm-org/BlackIce-II",
   "interface": "Serial",
   "FPGAResources": {

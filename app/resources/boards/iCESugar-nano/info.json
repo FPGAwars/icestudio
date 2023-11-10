@@ -1,1 +1,1 @@
-{"label":"iCESugar-nano","datasheet":"https://github.com/wuxx/icesugar-nano/blob/master/README.md","interface":"FTDI","FPGAResources":{"ffs":1280,"luts":1280,"pios":14,"plbs":160,"brams":16}}
+{"label":"iCESugar-nano","SysClkMhz":12,"datasheet":"https://github.com/wuxx/icesugar-nano/blob/master/README.md","interface":"FTDI","FPGAResources":{"ffs":1280,"luts":1280,"pios":14,"plbs":160,"brams":16}}

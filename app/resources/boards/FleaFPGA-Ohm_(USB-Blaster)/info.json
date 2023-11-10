@@ -1,5 +1,6 @@
 {
 	"label": "FleaFPGA_Ohm_(USB-Blaster)",
+	"SysClkMhz":25,
 	"datasheet": "https://github.com/Basman74/FleaFPGA-Ohm",
 	"interface": "FTDI",
 	"arch": "ecp5",

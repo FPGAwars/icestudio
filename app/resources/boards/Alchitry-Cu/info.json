@@ -1,5 +1,6 @@
 {
   "label": "Alchitry Cu iCE40-HX8K",
+  "SysClkMhz":12,
   "datasheet": "https://alchitry.com/boards/cu",
   "interface": "FTDI",
   "FPGAResources": {

@@ -1,5 +1,6 @@
 {
   "label": "Kéfir I iCE40-HX4K",
+  "SysClkMhz":24,
   "datasheet": "http://fpgalibre.sourceforge.net/Kefir/",
   "interface": "",
   "FPGAResources": {

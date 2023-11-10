@@ -1,5 +1,6 @@
 {
   "label": "UPDuino v1.0",
+  "SysClkMhz":12,
   "datasheet": "https://github.com/gtjennings1/UPDuino_v1_0",
   "interface": "FTDI",
   "FPGAResources": {

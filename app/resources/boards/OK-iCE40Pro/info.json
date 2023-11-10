@@ -1,7 +1,8 @@
 {
 	"label": "OK-iCE40Pro", 
 	"device": "UP5K", 
-	"datasheet": "https://github.com/WiFiBoy/OK-iCE40Pro", 
+	"SysClkMhz":12,
+        "datasheet": "https://github.com/WiFiBoy/OK-iCE40Pro", 
 	"interface": "FTDI",
 	"FPGAResources": {
 		"ffs": 5280,

@@ -1,5 +1,6 @@
 {
   "label": "iCE40-HX8K Breakout Board",
+  "SysClkMhz":12,
   "datasheet": "http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard",
   "interface": "FTDI",
   "FPGAResources": {

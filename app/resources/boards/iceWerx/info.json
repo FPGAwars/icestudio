@@ -1,5 +1,6 @@
 {
   "label": "iceWerx",
+  "SysClkMhz":12,
   "datasheet": "https://www.robotshop.com/media/files/content/d/dev/pdf/icewerx-1.pdf",
   "interface": "Serial",
   "FPGAResources": {
