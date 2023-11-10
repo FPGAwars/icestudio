@@ -216,25 +216,32 @@ angular.module('icestudio')
 
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-        
-        var boardClkfreq = common.selectedBoard.info.SysClkMhz;
-        boardClkfreq = (boardClkfreq == undefined) ? 12 : boardClkfreq;  // (default) boardClkfreq = 12 Mhz, if no sysClkMhz set in info.js of current board
-               
+
+
+        // if no sysClkMhz is defined , no replacement is done, in this way the user is alerted because this empty parameter blocks
+        // needs a value and the user should filled depending the board clock.
+
+        let boardClkfreq = (typeof common.selectedBoard.info.SysClkMhz !== 'undefined' &&
+          common.selectedBoard.info.SysClkMhz.length !== false &&
+          common.selectedBoard.info.SysClkMhz.length > 0
+        ) ? common.selectedBoard.info.SysClkMhz.length : false;
+
+
         if (block.type === blocks.BASIC_CONSTANT) {
-            if (block.data.value==="SysClkMhz")  {
-                params.push({
-                   name: utils.digestId(block.id),               
-                   value: boardClkfreq
-                });                
-                
-            }else{
-                params.push({
-                    name: utils.digestId(block.id),
-                    value: block.data.value
-                });
-                                
-            }                    
-            
+          if (boardClkfreq && block.data.value === "SysClkMhz") {
+            params.push({
+              name: utils.digestId(block.id),
+              value: boardClkfreq
+            });
+
+          } else {
+            params.push({
+              name: utils.digestId(block.id),
+              value: block.data.value
+            });
+
+          }
+
         } else if (block.type === blocks.BASIC_MEMORY) {
           let name = utils.digestId(block.id);
 
