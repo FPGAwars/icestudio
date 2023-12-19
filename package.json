@@ -49,6 +49,6 @@
   },
  
   "optionalDependencies": {
-    "grunt-appdmg": "github:agoodney/grunt-appdmg"
+   "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
   }
 }
