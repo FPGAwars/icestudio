@@ -30,6 +30,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.1.0'
+      - name: Install pip distutils
+        run:  sudo -H pip install setuptools
       - name: Install npm dependencies
         run:   npm install --legacy-peer-deps 
       - name: Install dmg bundle creator
