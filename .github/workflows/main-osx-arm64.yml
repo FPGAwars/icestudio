@@ -1,4 +1,4 @@
-name: 'Icestudio OSX'
+name: 'Icestudio OSX ARM64'
 
 # Controls when the action will run. 
 on:
@@ -38,7 +38,7 @@ jobs:
       #  run:  npm install grunt-appdmg --save-dev --legacy-peer-deps
       - name: Build OSX packages
         run:  | 
-          npm run buildOSX
+          npm run buildOSXARM64
           ls dist/
           
        # Loading vars from icestudio package.json
@@ -54,22 +54,22 @@ jobs:
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
           
-      - name: 'Upload DMG/OSX64'
+      - name: 'Upload DMG/OSXARM64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: actions/upload-artifact@v3
         with:
-          name: "osx64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.dmg"
+          name: "osx-arm64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx-arm64.dmg"
           if-no-files-found: error
           
-      - name: 'Upload ZIP/OSX64'
+      - name: 'Upload ZIP/OSXARM64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: actions/upload-artifact@v3
         with:
-          name: "osx64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.zip"
+          name: "osx-arm64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx-arm64.zip"
           if-no-files-found: error
