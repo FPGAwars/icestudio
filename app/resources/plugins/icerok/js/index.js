@@ -123,7 +123,7 @@ function startCapture(button) {
 
         server.startUART(dev, false, function (data) {
           let z = Buffer.from(new Uint8Array(data));
-          nodeFs.write(captureFileFD, z, 0, z.length, null, function (err) {});
+          nodeFs.write(captureFileFD, z, 0, z.length, null, function (err) { });
 
         });
 
@@ -140,7 +140,7 @@ function startCapture(button) {
 
 window.addEventListener("message", (event) => {
 
-  if(typeof event.data !== 'undefined' && event.data !== null && event.data !== false ){
+  if (typeof event.data !== 'undefined' && event.data !== null && event.data !== false) {
 
     console.log(event.data);
 
@@ -152,7 +152,7 @@ window.addEventListener("message", (event) => {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-   server = new iceRok();
+  server = new iceRok();
 
   server.getUARTs(renderUARTs);
 
@@ -194,10 +194,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-function onLoad(params){
+function onLoad(params) {
 
-  console.log('Arrancando plugin',params);
-  if(typeof params.BUILD_DIR !== 'undefined' && params.BUILD_DIR.length > 0) captureFile=`${params.BUILD_DIR}${slashOS}icerok.raw`;
+  console.log('Arrancando plugin', params);
+  if (typeof params.BUILD_DIR !== 'undefined' && params.BUILD_DIR.length > 0) captureFile = `${params.BUILD_DIR}${slashOS}icerok.raw`;
 
 }
 

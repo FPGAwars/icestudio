@@ -509,6 +509,7 @@ angular
 
             //-- Check if the apio version is ok with the specification
             //-- in the package.json file
+
             toolchain.installed =
               toolchain.apio >= _package.apio.min &&
               toolchain.apio < _package.apio.max;
@@ -1431,17 +1432,20 @@ angular
           //-- Create the virtual python environment
           createVirtualenv,
 
+
           //-- Install apio through pip
           installOnlineApio,
 
+          repairPermissions,
           //--------- Install the apio packages
           //--------- apio install <pkg>
           //-- oss-cad-suite: Main toolchain: Yosys, nextpnr, programmers...
           apioInstallOssCadSuite,
-
+          repairPermissions,
           //-- Drivers
           apioInstallDrivers,
 
+          repairPermissions,
           //-- Finish installation!
           installationCompleted
         ]);
@@ -1544,6 +1548,18 @@ angular
         utils.installOnlineApio(callback);
       }
 
+      //------------------------------------------
+      //-- Repair OS permissions
+      //--
+      function repairPermissions(callback) {
+
+        iceConsole.log("**** STEP: Repair OS Permissions");
+
+        //-- Perform repair OS permissions
+        utils.repairPermissions(callback);
+      }
+
+
       //-------------------------------------------
       //-- Install the apio oss-cad-suite package
       //-- 
@@ -1580,6 +1596,7 @@ angular
           callback();
         }
       }
+
 
       //---------------------------------------------------
       //--

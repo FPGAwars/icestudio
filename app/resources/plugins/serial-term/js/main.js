@@ -4,6 +4,18 @@
 
 // A lot of added code inspired from localechocontroller.js. Thank to its authors (wavesoft,...)
 // Special thanks to Democrito which helped a lot with the debugging of this new version of the serial terminal
+const nodeFs = require('fs');
+var pluginUUID = 'serialConsoleUUID';
+var appEnv = false;
+function registerEvents() {
+    iceStudio.bus.events.subscribe('pluginManager.env', setupEnvironment, false, pluginUUID);
+    iceStudio.bus.events.subscribe('pluginManager.updateEnv', setupEnvironment, false, pluginUUID);
+}
+function setupEnvironment(data) {
+
+    console.log('ENV', data);
+    appEnv = data;
+}
 
 function hasClass(el, className) {
     if (el.classList)
@@ -35,6 +47,12 @@ let dummyUnplug = function () {
 
 }
 
+function getFilesizeInBytes(filename) {
+    let stats = nodeFs.statSync(filename);
+    let fileSizeInBytes = stats["size"];
+    return fileSizeInBytes;
+}
+
 
 var serialManager = function () {
 
@@ -45,6 +63,7 @@ var serialManager = function () {
     //--   * productId: USB product ID
     //--   * vendorId: number optional
     this.devices = [];
+    this.sessionBuffer = [];
 
     //-- Information about the current device state
     this.info = {
@@ -102,7 +121,7 @@ var serialManager = function () {
 
             //-- Store the serial devices in the serial manager
             this.devices = devInfo;
-
+            console.log(devInfo);
             //-- Execute the callback function
             callback(devInfo);
 
@@ -155,7 +174,7 @@ var serialManager = function () {
                 options[prop] = userOptions[prop];
             }
         }
-
+        let _this = this;
         //-- Open the serial device
         chrome.serial.connect(
             this.devices[id].path,   //-- Path
@@ -166,6 +185,7 @@ var serialManager = function () {
                 if (typeof connectionInfo !== 'undefined' &&
                     connectionInfo !== false &&
                     typeof connectionInfo.connectionId !== 'undefined') {
+
 
                     //-- Connection stablished
                     this.info.status = true;
@@ -197,7 +217,86 @@ var serialManager = function () {
 
             }.bind(this));
     }
+    this.dump = function () {
 
+
+
+        function concat(arrays) {
+            // sum of individual array lengths
+            let totalLength = arrays.reduce((acc, value) => acc + value.length, 0);
+
+            if (!arrays.length) return null;
+
+            let result = new Uint8Array(totalLength);
+
+            // for each array - copy it over result
+            // next array is copied right after the previous one
+            let length = 0;
+            for (let array of arrays) {
+                result.set(array, length);
+                length += array.length;
+            }
+
+            return result;
+        }
+
+        //Getting environment config, event that start everything inside the plugin
+        iceStudio.bus.events.publish('pluginManager.getEnvironment');
+
+
+
+        var captureFileFD = false;
+        var captureFileFD8 = false;
+        let workingPath = appEnv.BUILD_DIR;
+        console.log('ÁREA DE TRABAJO ' + workingPath);
+        let OS = require('os').platform();
+        let slashOS = (OS === 'win32') ? '\\' : '/';
+        let captureFile = workingPath + slashOS + 'icerok.raw';
+        let captureFile8 = workingPath + slashOS + 'icerok8bit.raw';
+
+        captureFileFD = nodeFs.openSync(captureFile, 'w+');
+        captureFileFD8 = nodeFs.openSync(captureFile8, 'w+');
+        let total = 0;
+        /* let z = false;
+         let i = 0, j = 0;
+         let str = '';
+       
+         for (i = 0; i < this.sessionBuffer.length; i++) {
+             total += this.sessionBuffer.length;
+             //  z = Buffer.from(this.sessionBuffer[i]);
+             //nodeFs.write(captureFileFD, z, 0, z.length, null, function (err) { });
+             for (j = 0; j < z.length; j++) {
+                 // console.log(typeof z[j]);
+                 // nodeFs.write(captureFileFD, Buffer.from(z[j]), 0, 1, null, function (err) { });
+                 //total++;
+ 
+                 //console.log(z[j]);
+                 // str = z[j].toString(2).padStart(8, '0') + '\n';
+                 // console.log(str);
+                 // nodeFs.write(captureFileFD, str, 0);
+ 
+             }
+         }*/
+        let dumpdata = concat(this.sessionBuffer);// new Uint8Array(total);
+
+        let wu16 = 0;
+        let stack = [];
+        for (let i = 0; i < dumpdata.length; i += 2) {
+            if ((i + 1) <= (dumpdata.length - 1)) {
+                wu16 = ((dumpdata[i] << 8) | dumpdata[i + 1]) << 4;
+                stack.push(wu16);
+                //console.log(wu16, dumpdata[i], dumpdata[i + 1], dumpdata[i + 1] << 8);
+            }
+        }
+        let dumpdata16 = new Uint16Array(stack);
+        nodeFs.write(captureFileFD, dumpdata16, 0, dumpdata16.length, null, function (err) { });
+        nodeFs.write(captureFileFD8, dumpdata, 0, dumpdata.length, null, function (err) { });
+
+
+        console.log('TOTAL', total);
+        nodeFs.close(captureFileFD);
+        nodeFs.close(captureFileFD8);
+    }
     //-----------------------------------------------------------------------
     //-- Data received from the serial device
     //-----------------------------------------------------------------------
@@ -211,7 +310,7 @@ var serialManager = function () {
                 //-- info.data is an arrayBuffer
                 //-- Convert it into an array of unsigned bytes
                 const bytearray = new Uint8Array(info.data);
-
+                this.sessionBuffer.push(bytearray);
                 //-- Call the user function with the received data
                 if (hexView) {
 
@@ -331,6 +430,7 @@ function renderSerialDevices(dev) {
 //-- Callback function. It is executed when data is received from the
 //-- serial device
 //---------------------------------------------------------------------------
+let prints = 0;
 function renderRec(data) {
 
     //-- The information in the terminal is shown either in ASCII
@@ -339,7 +439,6 @@ function renderRec(data) {
     //-- Hexadecimal mode
 
     if (hexView) {
-
         //-- Convert the data to bytes
         const buf = Buffer.from(data, 'utf8');
 
@@ -347,9 +446,10 @@ function renderRec(data) {
         //-- corresponding colors
         term.write(colorRx);
 
-        for (byte of buf)
+        for (byte of buf) {
             term.write(`${byte.toString(16).padStart(2, '0')} `);
-
+            prints++;
+        }
         //-- Back to the input color
         term.write(colorinput);
     }
@@ -660,6 +760,9 @@ cleanLe[0].addEventListener(
         e.preventDefault();
         term.reset();
         term.focus();
+        console.log('Cleaned =', prints);
+        prints = 0;
+        sm.sessionBuffer = [];
         return false;
     },
     false
@@ -680,6 +783,20 @@ disconnectLe[0].addEventListener(
     false
 );
 
+let dumpLe = document.querySelectorAll(
+    '[data-action="serial-dump"]'
+);
+
+dumpLe[0].addEventListener(
+    "click",
+    function (e) {
+        e.preventDefault();
+        sm.dump();
+
+        return false;
+    },
+    false
+);
 function onClose() {
     if (typeof sm !== "undefined" && sm !== false && sm !== null) {
         sm.unplug();
@@ -1292,4 +1409,11 @@ function getNext() {
     clearInput();
     _cursor = inputFromHistory.length;
     setInput(inputFromHistory);
+}
+
+function onIcestudioPluginLoaded() {
+
+    console.log('INICIADO ICESTUDIO SERIAL TERM!');
+    registerEvents();
+    iceStudio.bus.events.publish('pluginManager.getEnvironment');
 }

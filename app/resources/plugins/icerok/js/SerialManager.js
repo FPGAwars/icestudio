@@ -38,8 +38,8 @@ let SerialManager = function () {
     }
 
     this.unplug = function (callback) {
-        let dummyCallback = function(){};       
-        if(typeof callback === 'undefined') callback=dummyCallback;
+        let dummyCallback = function () { };
+        if (typeof callback === 'undefined') callback = dummyCallback;
 
         chrome.serial.disconnect(this.info.conn.connectionId, callback);
 
@@ -51,12 +51,12 @@ let SerialManager = function () {
     this.plug = function (id, userOptions, callback_onconnect, callback_onreceive) {
         let options = {
             //bitrate: 12000000,
-            bitrate: 115200,
+            bitrate: 460800,
             dataBits: "eight",
             parityBit: "no",
             stopBits: "one"
         };
-        if (typeof userOptions !== 'undefined' ) {
+        if (typeof userOptions !== 'undefined') {
             for (let prop in userOptions) {
                 options[prop] = userOptions[prop];
             }
@@ -86,7 +86,7 @@ let SerialManager = function () {
 
     this.reader = function (info) {
 
-        if (typeof info.connectionId !== 'undefined' && info.connectionId !== false ) {
+        if (typeof info.connectionId !== 'undefined' && info.connectionId !== false) {
             if (this.receiverUserF !== false) {
                 //this.receiverUserF(this.decoder.decode(info.data));
                 this.receiverUserF(info.data);
@@ -96,7 +96,7 @@ let SerialManager = function () {
 
     this.write = function (data) {
         if (this.info.status === true) {
-            chrome.serial.send(this.info.conn.connectionId, this.encoder.encode(data), function (sendInfo) {});
+            chrome.serial.send(this.info.conn.connectionId, this.encoder.encode(data), function (sendInfo) { });
         }
     }
 

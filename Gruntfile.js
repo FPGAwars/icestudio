@@ -150,10 +150,10 @@ module.exports = function (grunt) {
 
   //-- Constant for the TARGET architectures
   const TARGET_OSX64 = "osx64";
+  const TARGET_OSXARM64 = "osxarm64";
   const TARGET_LINUX64 = "linux64";
   const TARGET_WIN64 = "win64";
   const TARGET_AARCH64 = "aarch64";
-
   //-------------------------------------------------------------
   //-- Constants for the EXEC TASK
   //-------------------------------------------------------------
@@ -214,6 +214,9 @@ module.exports = function (grunt) {
 
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
+
+  //-- Folder for the OSX64 build package
+  const DIST_ICESTUDIO_OSXARM64 = DIST_ICESTUDIO + "/" + TARGET_OSXARM64;
 
   //---------------------------------------------------------------
   //-- Define the ICESTUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
@@ -383,6 +386,10 @@ module.exports = function (grunt) {
   const ICESTUDIO_PKG_NAME_OSX64 = ICESTUDIO_PKG_NAME + "-" +
     TARGET_OSX64;
 
+  //-- MAC
+  const ICESTUDIO_PKG_NAME_OSXARM64 = ICESTUDIO_PKG_NAME + "-" +
+    TARGET_OSXARM64;
+
   //-- ARM
   const ICESTUDIO_PKG_NAME_AARCH64 = ICESTUDIO_PKG_NAME + "-" +
     TARGET_AARCH64;
@@ -403,7 +410,12 @@ module.exports = function (grunt) {
   const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 +
     ".zip";
 
-  //-- MAC
+  //-- MAC ARM64
+  const DIST_TARGET_OSXARM64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSXARM64 +
+    ".zip";
+
+
+  //-- Linux ARM64
   const DIST_TARGET_AARCH64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_AARCH64 +
     ".zip";
 
@@ -429,10 +441,18 @@ module.exports = function (grunt) {
     "docs/resources/images/installation/installer-background.png";
 
   //-- MAC executable filename (inside the DMG image folder)
-  const MAC_EXEC_FILE = DIST_ICESTUDIO_OSX64 + "/icestudio.app";
+  let MAC_EXEC_FILE = DIST_ICESTUDIO_OSX64 + "/icestudio.app";
 
   //-- MAC final DMG image
-  const MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + ".dmg";
+  let MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + ".dmg";
+
+
+  //-- MAC executable filename (inside the DMG image folder)
+  //  const MAC_ARM_EXEC_FILE = DIST_ICESTUDIO_OSXARM64 + "/icestudio.app";
+
+  //-- MAC final DMG image
+  //  const MAC_ARM_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSXARM64 + ".dmg";
+
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -485,6 +505,13 @@ module.exports = function (grunt) {
       "appdmg"           //-- Build the Icestudio appmdg package
     ],
 
+    //-- TARGET_OSX64
+    "osxarm64": [
+      "exec:repairOSX",  //-- Execute a script for MAC
+      "compress:osxarm64",  //-- Create the Icestudio .zip package
+      "appdmg"            //-- Build the Icestudio appmdg package
+    ],
+
 
     //-- TARGET_AARCH64
     "aarch64": [
@@ -505,15 +532,29 @@ module.exports = function (grunt) {
   //--- Read if there is a platform argument set
   //--- If not, the default target is Linux64
   let platform = grunt.option("platform") || TARGET_LINUX64;
-
+  //let cpu = grunt.option("cpu") || false;
+  let cpu = process.arch || false;
+  const cpuIsARM = (cpu === 'arm64');
+  console.log('CPU', cpu);
   //-- Aditional options for the platforms
   let options = { scope: ["devDependencies"] };
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
   if (DARWIN || platform === "darwin") {
-    platform = TARGET_OSX64;
-    options["scope"].push("darwinDependencies");
+    if (cpuIsARM) {
+      platform = TARGET_OSXARM64;
+      options["scope"].push("darwinDependencies");
+      //-- MAC executable filename (inside the DMG image folder)
+      MAC_EXEC_FILE = DIST_ICESTUDIO_OSXARM64 + "/icestudio.app";
+
+      //-- MAC final DMG image
+      MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSXARM64 + ".dmg";
+
+    } else {
+      platform = TARGET_OSX64;
+      options["scope"].push("darwinDependencies");
+    }
   }
 
   //-- Get the specific task to perform for the current platform
@@ -550,6 +591,7 @@ module.exports = function (grunt) {
   console.log("* NW Version: " + NW_VERSION);
   console.log("* APPIMAGE: " + LINUX_APPIMAGE_FILE);
   console.log("* DMGIMAGE: " + MAC_DMG_IMAGE);
+  console.log("* DMGARM64IMAGE: " + MAC_DMG_IMAGE);
   console.log("* Target platform: " + platform);
   console.log("* SubTASK for the DIST task:");
   console.table(DIST_TASKS);
@@ -579,6 +621,11 @@ module.exports = function (grunt) {
   if (platform === TARGET_OSX64) {
     grunt.loadNpmTasks('grunt-appdmg');
   }
+  //-- Load an additional task for MAC ARM64
+  if (platform === TARGET_OSXARM64) {
+    grunt.loadNpmTasks('grunt-appdmg');
+  }
+
 
   //-- grunt gettext
   //-- Extract the English text and write them into the
@@ -1026,6 +1073,33 @@ module.exports = function (grunt) {
         ],
       },
 
+      //-- TARGET OSXARM64:
+      osxarm64: {
+
+        options: {
+          //-- Target .zip file
+          archive: DIST_TARGET_OSXARM64_ZIP,
+        },
+
+        //-- Files and folders to include in the ZIP file
+        files: [
+          {
+            expand: true,
+
+            //-- Working directory. Path relative to this folder
+            cwd: DIST_ICESTUDIO_OSXARM64,
+
+            //-- Files to include in the ZIP file
+            //-- All the files and folders inside icestudio.app
+            src: ["icestudio.app/**"],
+
+            //-- Folder name inside the ZIP archive
+            dest: ICESTUDIO_PKG_NAME_OSXARM64,
+          },
+        ],
+      },
+
+
       //-- TARGET AARCH64 ( ARM64 ∫)
       Aarch64: {
         options: {
@@ -1090,7 +1164,7 @@ module.exports = function (grunt) {
     },
 
 
-    //-- TASK: APPIMAGE
+    //-- TASK: APPDMG
     //-- ONLY MAC: generate a DMG package
     //-- More information: https://www.npmjs.com/package/grunt-appdmg
     appdmg: {
@@ -1130,7 +1204,47 @@ module.exports = function (grunt) {
         dest: MAC_DMG_IMAGE
       },
     },
-
+    /*  //-- TASK: APPDMGARM64
+      //-- ONLY MAC: generate a DMG package
+      //-- More information: https://www.npmjs.com/package/grunt-appdmg
+      appdmgarm64: {
+  
+        //-- Information to be included in the DMG image
+        options: {
+          basepath: ".",
+          title: "Icestudio Installer",
+          icon: MAC_ICON,
+          background: MAC_DMG_BACKGROUND_IMAGE,
+          window: {
+            size: {
+              width: 512,
+              height: 385,
+            },
+          },
+          contents: [
+            {
+              x: 345,
+              y: 250,
+              type: "link",
+              path: "/Applications",
+            },
+            {
+              x: 170,
+              y: 250,
+  
+              //-- Executable file
+              type: "file",
+              path: MAC_ARM_EXEC_FILE,
+            },
+          ],
+        },
+  
+        //-- Final DMG image
+        target: {
+          dest: MAC_ARM_DMG_IMAGE
+        },
+      },
+  */
     //-- TASK: WATCH
     //-- Watch files for changes and run tasks based on the changed files
     //-- More info: https://www.npmjs.com/package/grunt-contrib-watch

@@ -332,6 +332,17 @@ angular.module('icestudio')
 
     };
 
+    //-----------------------------------------------------
+    //-- Repair OS permissions. 
+    //--
+    //
+    this.repairPermissions = function (callback) {
+
+      if (iceStudio.env.DARWIN === true) {
+        this.executeCommand(['osascript -e \'do shell script "cd ~/.icestudio;sudo find . -exec xattr -d com.apple.quarantine {} \\\\;" with administrator privileges\''], null, true, callback);
+      }
+    };
+
 
     //-----------------------------------------------------
     //-- Install the Apio toolchain. The version to install is taken
@@ -363,6 +374,7 @@ angular.module('icestudio')
       //-- Run the pip command!
       this.executeCommand([executable, params], null, true, callback);
       console.log('Fin installOnlineApio');
+
     };
 
 
