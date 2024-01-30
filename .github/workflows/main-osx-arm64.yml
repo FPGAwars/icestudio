@@ -29,7 +29,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v3
         with:
-          node-version: '21.1.0'
+          node-version: '20.1.0'
       - name: Install pip distutils
         run:  pip install setuptools
       - name: Install npm dependencies
