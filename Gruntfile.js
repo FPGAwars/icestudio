@@ -531,7 +531,8 @@ module.exports = function (grunt) {
 
   //--- Read if there is a platform argument set
   //--- If not, the default target is Linux64
-  let platform = grunt.option("platform") || TARGET_LINUX64;
+
+  let platform = grunt.option("platform") || false;
   let ocpu = grunt.option("cpu");
   let cpu = (typeof ocpu !== 'undefined' && ocpu !== false && ocpu !== '') ? ocpu : process.arch;
   const cpuIsARM = (cpu === 'arm64');
@@ -541,7 +542,7 @@ module.exports = function (grunt) {
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
-  if (DARWIN || platform === "darwin") {
+  if ((platform === false && DARWIN) || platform === "darwin") {
     if (cpuIsARM) {
       platform = TARGET_OSXARM64;
       options["scope"].push("darwinDependencies");
@@ -556,6 +557,11 @@ module.exports = function (grunt) {
       options["scope"].push("darwinDependencies");
     }
   }
+  if (platform === false) {
+
+    platform = TARGET_LINUX64;
+  }
+
 
   //-- Get the specific task to perform for the current platform
   let distPlatformTasks = DIST_PLATFORM_TASKS[platform];

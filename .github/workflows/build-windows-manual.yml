@@ -12,7 +12,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     
       # Checkout the develop branch
       - uses: actions/checkout@v3
         with:
@@ -21,7 +20,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.1.0'
+          node-version: '21.1.0'
       
       - name: Install npm dependencies
         run:   npm install --legacy-peer-deps  
@@ -61,7 +60,7 @@ jobs:
           echo "icestudio_timestamp=${timestamp}" >> $GITHUB_OUTPUT
 
       # Timestamp for the build
-      - id: build_date
+      - id: buildjson_date
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
