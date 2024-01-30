@@ -532,8 +532,8 @@ module.exports = function (grunt) {
   //--- Read if there is a platform argument set
   //--- If not, the default target is Linux64
   let platform = grunt.option("platform") || TARGET_LINUX64;
-  //let cpu = grunt.option("cpu") || false;
-  let cpu = process.arch || false;
+  let ocpu = grunt.option("cpu");
+  let cpu = (typeof ocpu !== 'undefined' && ocpu !== false && ocpu !== '') ? ocpu : process.arch;
   const cpuIsARM = (cpu === 'arm64');
   console.log('CPU', cpu);
   //-- Aditional options for the platforms
