@@ -491,7 +491,7 @@ module.exports = function (grunt) {
 
     //-- TARGET_WIN64
     "win64": [
-      "copy:winico",
+      "shell:winico",
       "compress:win64",  //-- Create the Icestudio zip package
       "wget:python64",   //-- Download the python package for windows
 
@@ -863,6 +863,20 @@ module.exports = function (grunt) {
     //-- More info: https://github.com/sindresorhus/grunt-shell#readme
     shell: {
 
+
+      winico: {
+        command: [
+
+          //-- Create a temp DIR
+          `mkdir -p ${DIST_ICESTUDIO_WIN64}/resources/images`,
+
+          //-- Uncompress the NW-dist package
+          `cp ${WIN_ICON} ${DIST_ICESTUDIO_WIN64}/resources/images`
+
+        ].join(' && ')
+
+      },
+
       //-- Uncompress the NW for arm, and merge the files
       //-- with the linux build
       mergeAarch64: {
@@ -975,28 +989,7 @@ module.exports = function (grunt) {
           },
         ],
       },
-      //-- Copy the windows ico
-      winico: {
-        files: [
-          {
-            expand: true,
-            options: {
 
-              //-- Copy the files and directory permissions
-              mode: true,
-            },
-
-            //-- Current working directory (Linux)
-            cwd: WIN_ICON,
-
-            //-- Set the destination folder (Arm64)
-            dest: DIST_ICESTUDIO_WIN64 + '/resources/images/',
-
-            //-- Copy all the files in the working directory
-            src: ALL,
-          },
-        ],
-      },
     },
 
     //-- TASK: json-minify
