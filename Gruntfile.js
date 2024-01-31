@@ -177,8 +177,8 @@ module.exports = function (grunt) {
   //--------------------------------------------------------------------------
   //-- Python executable. Used for generating the Windows installer
   //--------------------------------------------------------------------------
-  const PYTHON_EXE = "python-3.9.9-amd64.exe";
-  const PYTHON_URL = "https://www.python.org/ftp/python/3.9.9/" + PYTHON_EXE;
+  const PYTHON_EXE = "python-3.12.1-amd64.exe";
+  const PYTHON_URL = "https://www.python.org/ftp/python/3.12.1/" + PYTHON_EXE;
 
   //-- Destination folder where to download the python executable
   const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE;
@@ -309,14 +309,12 @@ module.exports = function (grunt) {
   //-- You should copy & paste the release ID from Github:
   //-- https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases
   //-- Ej: nw60-arm64_2022-01-08 
-  const NWJS_ARM_RELEASE_NAME = "nw60_2022-01-07";
+  const NWJS_ARM_RELEASE_NAME = "nw60-arm64_2022-01-08";
 
-  //-- Name of the NW tarball. It is created from the NW_VERSION, BUT...
-  //-- its name change between releases....so CHECK IT!!!!!
-  //-- unpack the seconf number of the version: Ex "0.58.0" --> v2 = 58
-  let [, v2,] = NW_VERSION.split('.');
-  //-- Filename for the NW ARM
-  const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm`;
+  //-- Name of the NW tarball. The project is abandoned by author
+  //-- for the moment linux arm 64 bits is  stucked at 0.60 nwjs version
+
+  const NWJS_ARM_NAME = `nwjs-v0.60.1-linux-arm64`;
 
   //-- Folder and filename for the NW ARM
   const NWJS_ARM_FILENAME =
@@ -567,31 +565,41 @@ module.exports = function (grunt) {
   let distPlatformTasks = DIST_PLATFORM_TASKS[platform];
 
   //-- Special case: For the AARCH64, the platform is set to Linux64
-  if (platform === TARGET_AARCH64) {
+  /*if (platform === TARGET_AARCH64) {
     platform = TARGET_LINUX64;
-  }
+  }*/
+
+  let NWJS_PLATFORM = 'linux';
+  let NWJS_ARCH = 'x64';
 
 
   let DIST_BUILD = false;
   switch (platform) {
     case TARGET_AARCH64:
+      NWJS_PLATFORM = 'linux';
+      NWJS_ARCH = 'x64';
 
       DIST_BUILD = DIST_ICESTUDIO_AARCH64;
       break;
     case TARGET_LINUX64:
-
+      NWJS_PLATFORM = 'linux';
+      NWJS_ARCH = 'x64';
       DIST_BUILD = DIST_ICESTUDIO_LINUX64;
       break;
     case TARGET_OSX64:
-
+      NWJS_PLATFORM = 'osx';
+      NWJS_ARCH = 'x64';
       DIST_BUILD = DIST_ICESTUDIO_OSX64;
       break;
     case TARGET_OSXARM64:
-
+      NWJS_PLATFORM = 'osx';
+      NWJS_ARCH = 'arm64';
       DIST_BUILD = DIST_ICESTUDIO_OSXARM64;
       break;
 
     case TARGET_WIN64:
+      NWJS_PLATFORM = 'win';
+      NWJS_ARCH = 'x64';
 
       DIST_BUILD = DIST_ICESTUDIO_WIN64;
       break;
@@ -857,7 +865,7 @@ module.exports = function (grunt) {
       //-- with the linux build
       mergeAarch64: {
         command: [
-
+          `sync`,
           //-- Create a temp DIR
           `mkdir -p ${DIST_TMP_ARM}`,
 
@@ -998,8 +1006,10 @@ module.exports = function (grunt) {
 
         //-- Only one platform at a time (defined by the argument  
         //-- passed to grunt when invoked)
-        platforms: [platform],
 
+        //platforms: [platform],
+        platform: NWJS_PLATFORM,
+        arch: NWJS_ARCH,
         //-- Use "sdk" for development and "normal" for stable release
         flavor: NW_FLAVOR,
 

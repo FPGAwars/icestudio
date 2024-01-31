@@ -9,7 +9,7 @@
 !define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
 !ifndef PYTHON
-  !define PYTHON     "python-3.9.9-amd64.exe"
+  !define PYTHON     "python-3.12.1-amd64.exe"
 !endif
 !define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
@@ -116,7 +116,7 @@ Section "Install Python"
 
   ${If} $R0 != "0"
     MessageBox MB_YESNO \
-    "Python 3.9.9 will be installed. Do you want to continue?" \
+    "Python 3.12.1 will be installed. Do you want to continue?" \
     IDYES continue
     Quit
 
