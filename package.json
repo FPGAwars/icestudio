@@ -51,10 +51,5 @@
   "darwinDependencies": {
     "fs-xattr": "^0.4.0",
     "grunt-appdmg": "github:agoodney/grunt-appdmg"
-  },
-  "dependencies": {
-    "appdmg": "^0.6.6",
-    "fs-xattr": "^0.4.0",
-    "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
 }
