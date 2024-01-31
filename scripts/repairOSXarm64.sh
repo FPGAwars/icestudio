@@ -7,7 +7,7 @@ RED="\033[1;31m"
 GREEN="\033[1;32m"
 
 #-- Start repairing
-APPDIR="dist/icestudio/osx64"
+APPDIR="dist/icestudio/osxarm642"
 if [ -d $APPDIR ]; then
 echo "${BLUE}Cleaning OSX bundle${NC}"
 BASE_DIR=`find ${APPDIR} -d -name "nwjs Framework.framework"`
@@ -31,7 +31,9 @@ rm -rf "$BASE_DIR"/Versions/Current
 cp -R "$BASE_DIR"/Versions/A "$BASE_DIR"/Versions/Current
 
 echo "    =>${BLUE}OSX bundle ${GREEN}OK${NC}"
+
+
 else
 
-echo "    =>${RED} OSX bundle not found"
+echo "    =>${RED} OSX ARM64 bundle not found"
 fi

@@ -186,13 +186,13 @@ module.exports = function (grunt) {
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
   //-- before creating the MAC package
   const SCRIPT_OSX = "scripts/repairOSX.sh";
+  const SCRIPT_OSXARM64 = "scripts/repairOSXarm64.sh";
 
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
   //-- platforms are stored
   //------------------------------------------------------------------
-  const DIST = "dist";
-
+  const DIST = "./dist";
   //-- Temp folder for building the packages
   const DIST_TMP = DIST + "/tmp";
 
@@ -217,6 +217,9 @@ module.exports = function (grunt) {
 
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSXARM64 = DIST_ICESTUDIO + "/" + TARGET_OSXARM64;
+
+
+
 
   //---------------------------------------------------------------
   //-- Define the ICESTUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
@@ -285,9 +288,6 @@ module.exports = function (grunt) {
   //-- Get the NW version from the package (the one that is installed)
   const NW_VERSION = topPkg.devDependencies["nw"];
 
-  //-- They have been previsouly copied from APPDIR to DIST_TMP
-  //-- SRC files used for building the app
-  const DIST_SRC_FILES = DIST_TMP + "/**";
 
   //-- Select the NW build flavor
   //-- Currently the "sdk" flavour is selected always
@@ -507,7 +507,7 @@ module.exports = function (grunt) {
 
     //-- TARGET_OSX64
     "osxarm64": [
-      "exec:repairOSX",  //-- Execute a script for MAC
+      "exec:repairOSXARM64",  //-- Execute a script for MAC
       "compress:osxarm64",  //-- Create the Icestudio .zip package
       "appdmg"            //-- Build the Icestudio appmdg package
     ],
@@ -571,6 +571,32 @@ module.exports = function (grunt) {
     platform = TARGET_LINUX64;
   }
 
+
+  let DIST_BUILD = false;
+  switch (platform) {
+    case TARGET_AARCH64:
+
+      DIST_BUILD = DIST_ICESTUDIO_AARCH64;
+      break;
+    case TARGET_LINUX64:
+
+      DIST_BUILD = DIST_ICESTUDIO_LINUX64;
+      break;
+    case TARGET_OSX64:
+
+      DIST_BUILD = DIST_ICESTUDIO_OSX64;
+      break;
+    case TARGET_OSXARM64:
+
+      DIST_BUILD = DIST_ICESTUDIO_OSXARM64;
+      break;
+
+    case TARGET_WIN64:
+
+      DIST_BUILD = DIST_ICESTUDIO_WIN64;
+      break;
+
+  }
   //------------------------------------------------------------------
   //-- CLEAN:tmp
   //-- Add the "clean:tmp" command to the list of commands to execute
@@ -591,7 +617,7 @@ module.exports = function (grunt) {
   //-- Display information on the console, for debuging 
   //-- purposes
   //------------------------------------------------------------
-  console.log();
+
   console.log("------------ INFORMATION FOR DEBUGING -------------------");
   console.log("* Package name: " + ICESTUDIO_PKG_NAME);
   console.log("* NW Version: " + NW_VERSION);
@@ -864,6 +890,7 @@ module.exports = function (grunt) {
       stopNW: NWJS_STOP,        //-- Stop NWjs       
       nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
       repairOSX: SCRIPT_OSX,    //-- Shell script for mac
+      repairOSXARM64: SCRIPT_OSXARM64,    //-- Shell script for mac
     },
 
     //-- TASK: jshint: Check the .js files
@@ -980,20 +1007,27 @@ module.exports = function (grunt) {
         zip: false,
 
         //-- Release folder where to place the final target release
-        buildDir: DIST,
+        outDir: DIST_BUILD,
+
+        mode: "build",
 
         //-- Only windows Path to the ICO icon file
         //-- (It needs wine installed if building from Linux)
-        winIco: WIN_ICON,
 
         //-- Only MAC: Path to the ICNS icon file
-        macIcns: MAC_ICON,
-        macPlist: { CFBundleIconFile: "app" },
+        icon: MAC_ICON,
+        app: {
+          CFBundleIconFile: "app",
+          icon: WIN_ICON
+        },
+
+        //-- Where the Icestudio NW app is located
+        //-- It was previously copied from APPDIR
+        srcDir: DIST_TMP,
+        glob: false
       },
 
-      //-- Where the Icestudio NW app is located
-      //-- It was previously copied from APPDIR
-      src: [DIST_SRC_FILES],
+      src: ''
     },
 
     //-- TASK: COMPRESS. Compress the Release dir into a .zip file
