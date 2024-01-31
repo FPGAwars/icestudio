@@ -26,7 +26,7 @@
     "jshint": "grunt jshint",
     "clean": "grunt clean",
     "getcollection": "grunt getcollection",
-    "postinstall": "grunt getcollection && npmpd && cd app && npm install"
+    "postinstall": "scripts/postInstall.sh && grunt getcollection && npmpd && cd app && npm install"
   },
   "devDependencies": {
     "grunt": "^1.4.1",
@@ -49,6 +49,10 @@
     "nw-builder": "^4.5.4"
   },
   "darwinDependencies": {
+    "fs-xattr": "^0.4.0",
+    "grunt-appdmg": "github:agoodney/grunt-appdmg"
+  },
+  "dependencies": {
     "fs-xattr": "^0.4.0",
     "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
