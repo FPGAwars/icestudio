@@ -1026,6 +1026,7 @@ module.exports = function (grunt) {
 
         //-- Only MAC: Path to the ICNS icon file
         icon: MAC_ICON,
+        winico: WIN_ICON,
         app: {
           CFBundleIconFile: "app",
           icon: WIN_ICON
