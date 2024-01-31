@@ -491,8 +491,10 @@ module.exports = function (grunt) {
 
     //-- TARGET_WIN64
     "win64": [
+      "copy:winico",
       "compress:win64",  //-- Create the Icestudio zip package
       "wget:python64",   //-- Download the python package for windows
+
       "exec:nsis64",     //-- Build the Windows installer
     ],
 
@@ -967,6 +969,28 @@ module.exports = function (grunt) {
 
             //-- Set the destination folder (Arm64)
             dest: DIST_ICESTUDIO_AARCH64,
+
+            //-- Copy all the files in the working directory
+            src: ALL,
+          },
+        ],
+      },
+      //-- Copy the windows ico
+      winico: {
+        files: [
+          {
+            expand: true,
+            options: {
+
+              //-- Copy the files and directory permissions
+              mode: true,
+            },
+
+            //-- Current working directory (Linux)
+            cwd: WIN_ICON,
+
+            //-- Set the destination folder (Arm64)
+            dest: DIST_ICESTUDIO_WIN64 + '/resources/images/',
 
             //-- Copy all the files in the working directory
             src: ALL,
