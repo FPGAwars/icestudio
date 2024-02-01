@@ -343,7 +343,7 @@ angular.module('icestudio')
       } else {
         //-- Comand finished with errors. Call the callback function
         if (typeof callback !== 'undefined' && callback !== null) {
-          callback(true, 'This OS not need repair permissions');
+          callback();
         }
       }
     };
