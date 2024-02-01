@@ -292,6 +292,7 @@ module.exports = function (grunt) {
   //-- Select the NW build flavor
   //-- Currently the "sdk" flavour is selected always
   //-- for Either WIP or stable versions
+  //const NW_FLAVOR = "sdk";
   const NW_FLAVOR = "sdk";
 
   //-- Path to the Windows ICO icon file for Icestudio
