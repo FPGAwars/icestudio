@@ -1246,26 +1246,32 @@ module.exports = function (grunt) {
         background: MAC_DMG_BACKGROUND_IMAGE,
         window: {
           size: {
-            width: 512,
-            height: 385,
+            width: 640,
+            height: 480,
           },
         },
         contents: [
           {
-            x: 345,
-            y: 250,
+            x: 430,
+            y: 320,
             type: "link",
             path: "/Applications",
           },
           {
-            x: 170,
-            y: 250,
+            x: 200,
+            y: 320,
 
             //-- Executable file
             type: "file",
             path: MAC_EXEC_FILE,
           },
         ],
+        /* -- For code oficial packages of icestudio, for developers maintain commented 
+
+        "code-sign": {
+          "signing-identity": "XXXX",
+        }
+        -- */
       },
 
       //-- Final DMG image
