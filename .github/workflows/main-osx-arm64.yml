@@ -45,11 +45,10 @@ jobs:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         run: |   
-          mkdir dist
           cd dist
           wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg
           wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.zip
-          ls dist/      
+          ls  
 
       - name: 'Upload DMG/OSX64'
         env:
