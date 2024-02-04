@@ -26,7 +26,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: develop 
-          
+      - name: Build OSX ARM64 packages
+        run: |
+          mkdir dist
+          ls
       # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
@@ -37,12 +40,17 @@ jobs:
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
-      - name: "Download signed DMG and ZIP ARM 64 Icestudio bundle"
-        run: |
+      - name: Build OSX ARM64 packages
+        env:
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
+        run: |   
           mkdir dist
           cd dist
           wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg
           wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.zip
+          ls dist/      
+
       - name: 'Upload DMG/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"

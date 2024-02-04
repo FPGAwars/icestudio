@@ -62,7 +62,7 @@ jobs:
           version=$(jq -r '.version' package.json)
           echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
     
-       # Timestamp for the build
+      # Timestamp for the build
       - id: build_date
         run: |
           timestamp=$(jq -r '.ts' app/buildinfo.json)
