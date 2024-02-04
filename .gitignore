@@ -12,7 +12,6 @@
 *.swp
 *~
 app/icerok.capture.raw
-app/buildinfo.json
 .tmp
 dist
 cache
@@ -32,5 +31,6 @@ app/resources/locale/statistics.txt
 app/resources/locale/readme_table.txit
 statistics.txt
 readme_table.txt
-
+icerok.raw
+icerok.capture.raw
 
