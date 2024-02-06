@@ -21,7 +21,6 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
@@ -41,7 +40,7 @@ jobs:
           npm run buildOSX
           ls dist/
           
-       # Loading vars from icestudio package.json
+      # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`

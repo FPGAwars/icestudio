@@ -35,8 +35,8 @@ set_io --warn-no-port CDONE  M10  # output
 
 # ------------ FTDI 1 ---------------------------------------------------------
 # UART
-set_io --warn-no-port TX  P14  # output
-set_io --warn-no-port RX  M9  # input
+set_io --warn-no-port TX  M9  # output
+set_io --warn-no-port RX  P14  # input
 
 # ------------ RESET BUTTON ---------------------------------------------------
 set_io --warn-no-port RESET P8 #input
