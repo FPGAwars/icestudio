@@ -1,0 +1,1 @@
+{"label":"Theta Machines ETH4K","SysClkMhz":25,"datasheet":"https://github.com/theta-machines/eth4k-hardware","interface":"FTDI","FPGAResources":{"ffs":7680,"luts":7680,"pios":107,"plbs":960,"brams":32}}

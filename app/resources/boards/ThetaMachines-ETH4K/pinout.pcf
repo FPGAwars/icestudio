@@ -1,0 +1,131 @@
+# -----------------------------------------------------------------------------
+#- Theta Machines ETH4K constraint file (.pcf)
+# -----------------------------------------------------------------------------
+
+
+# W5500 Ethernet IC
+set_io --warn-no-port ETH_RST 42  # output
+set_io --warn-no-port ETH_INT 43  # input
+set_io --warn-no-port ETH_MOSI 44  # output
+set_io --warn-no-port ETH_MISO 45  # input
+set_io --warn-no-port ETH_SCK 47  # output
+set_io --warn-no-port ETH_CS 48  # output
+
+# Reset Button (can be used for other things)
+set_io --warn-no-port BTN_RST 49  # input
+
+# 25MHz Clock
+set_io --warn-no-port CLK_25 52  # input
+
+# ADS1015 ADC IC
+set_io --warn-no-port ADC_RDY 55  # input
+set_io --warn-no-port ADC_SCL 56  # inout [OPEN DRAIN! DO NOT DRIVE HIGH!]
+set_io --warn-no-port ADC_SDA 60  # inout [OPEN DRAIN! DO NOT DRIVE HIGH!]
+
+# UART from USB FTDI
+set_io --warn-no-port UART_TX 61  # output
+set_io --warn-no-port UART_RX 62  # input
+
+# Flash (used for configuration)
+set_io --warn-no-port FLASH_MOSI 67  # output
+set_io --warn-no-port FLASH_MISO 68  # input
+set_io --warn-no-port FLASH_SCK 70  # output
+set_io --warn-no-port FLASH_CS 71  # output
+
+# LEDs
+set_io --warn-no-port 41_A_LED1 41  # inout
+set_io --warn-no-port 39_A_LED2 39  # inout
+set_io --warn-no-port 38_A_LED3 38  # inout
+set_io --warn-no-port 37_A_LED4 37  # inout
+
+# Header A GPIO
+set_io --warn-no-port 1_A 1  # inout
+set_io --warn-no-port 2_A 2  # inout
+set_io --warn-no-port 3_A 3  # inout
+set_io --warn-no-port 4_A 4  # inout
+set_io --warn-no-port 7_A 7  # inout
+set_io --warn-no-port 8_A 8  # inout
+set_io --warn-no-port 9_A 9  # inout
+set_io --warn-no-port 10_A 10  # inout
+set_io --warn-no-port 11_A 11  # inout
+set_io --warn-no-port 12_A 12  # inout
+set_io --warn-no-port 15_A 15  # inout
+set_io --warn-no-port 16_A 16  # inout
+set_io --warn-no-port 17_A 17  # inout
+set_io --warn-no-port 18_A 18  # inout
+set_io --warn-no-port 19_A 19  # inout
+set_io --warn-no-port 20_A_GBIN7 20  # inout
+set_io --warn-no-port 21_A_GBIN6 21  # inout
+set_io --warn-no-port 22_A 22  # inout
+set_io --warn-no-port 23_A 23  # inout
+set_io --warn-no-port 24_A 24  # inout
+set_io --warn-no-port 25_A 25  # inout
+set_io --warn-no-port 26_A 26  # inout
+set_io --warn-no-port 28_A 28  # inout
+set_io --warn-no-port 29_A 29  # inout
+set_io --warn-no-port 31_A 31  # inout
+set_io --warn-no-port 32_A 32  # inout
+set_io --warn-no-port 33_A 33  # inout
+set_io --warn-no-port 34_A 34  # inout
+
+# Header B GPIO
+set_io --warn-no-port 63_B_CBSEL0 63  # inout
+set_io --warn-no-port 64_B_CBSEL1 64  # inout
+set_io --warn-no-port 110_B 110  # inout
+set_io --warn-no-port 112_B 112  # inout
+set_io --warn-no-port 113_B 113  # inout
+set_io --warn-no-port 114_B 114  # inout
+set_io --warn-no-port 115_B 115  # inout
+set_io --warn-no-port 116_B 116  # inout
+set_io --warn-no-port 117_B 117  # inout
+set_io --warn-no-port 118_B 118  # inout
+set_io --warn-no-port 119_B 119  # inout
+set_io --warn-no-port 120_B 120  # inout
+set_io --warn-no-port 121_B 121  # inout
+set_io --warn-no-port 122_B 122  # inout
+set_io --warn-no-port 124_B 124  # inout
+set_io --warn-no-port 125_B 125  # inout
+set_io --warn-no-port 128_B_GBIN1 128  # inout
+set_io --warn-no-port 129_B_GBIN0 129  # inout
+set_io --warn-no-port 130_B 130  # inout
+set_io --warn-no-port 134_B 134  # inout
+set_io --warn-no-port 135_B 135  # inout
+set_io --warn-no-port 136_B 136  # inout
+set_io --warn-no-port 137_B 137  # inout
+set_io --warn-no-port 138_B 138  # inout
+set_io --warn-no-port 139_B 139  # inout
+set_io --warn-no-port 141_B 141  # inout
+set_io --warn-no-port 142_B 142  # inout
+set_io --warn-no-port 143_B 143  # inout
+set_io --warn-no-port 144_B 144  # inout
+
+# Header C GPIO
+set_io --warn-no-port 73_C 73  # inout
+set_io --warn-no-port 74_C 74  # inout
+set_io --warn-no-port 75_C 75  # inout
+set_io --warn-no-port 76_C 76  # inout
+set_io --warn-no-port 78_C 78  # inout
+set_io --warn-no-port 79_C 79  # inout
+set_io --warn-no-port 80_C 80  # inout
+set_io --warn-no-port 81_C 81  # inout
+set_io --warn-no-port 82_C 82  # inout
+set_io --warn-no-port 83_C 83  # inout
+set_io --warn-no-port 84_C 84  # inout
+set_io --warn-no-port 85_C 85  # inout
+set_io --warn-no-port 87_C 87  # inout
+set_io --warn-no-port 88_C 88  # inout
+set_io --warn-no-port 90_C 90  # inout
+set_io --warn-no-port 91_C 91  # inout
+set_io --warn-no-port 93_C_GBIN3 93  # inout
+set_io --warn-no-port 94_C_GBIN2 94  # inout
+set_io --warn-no-port 95_C 95  # inout
+set_io --warn-no-port 96_C 96  # inout
+set_io --warn-no-port 97_C 97  # inout
+set_io --warn-no-port 98_C 98  # inout
+set_io --warn-no-port 99_C 99  # inout
+set_io --warn-no-port 101_C 101  # inout
+set_io --warn-no-port 102_C 102  # inout
+set_io --warn-no-port 104_C 104  # inout
+set_io --warn-no-port 105_C 105  # inout
+set_io --warn-no-port 106_C 106  # inout
+set_io --warn-no-port 107_C 107  # inout
