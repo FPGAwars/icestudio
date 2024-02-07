@@ -184,9 +184,13 @@ module.exports = function (grunt) {
   const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE;
 
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
-  //-- before creating the MAC package
+  //-- before creating the OSX package
   const SCRIPT_OSX = "scripts/repairOSX.sh";
   const SCRIPT_OSXARM64 = "scripts/repairOSXarm64.sh";
+  //-- after creating the OSX package
+  const SCRIPT_OSX_DMG = "scripts/repairOSXdmg.sh";
+  const SCRIPT_OSXARM64_DMG = "scripts/repairOSXarm64dmg.sh";
+
 
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
@@ -503,14 +507,16 @@ module.exports = function (grunt) {
     "osx64": [
       "exec:repairOSX",  //-- Execute a script for MAC
       "compress:osx64",  //-- Create the Icestudio .zip package
-      "appdmg"           //-- Build the Icestudio appmdg package
+      "appdmg",           //-- Build the Icestudio appmdg package
+      "exec:repairOSXdmg"  //-- Execute a script for MAC
     ],
 
     //-- TARGET_OSX64
     "osxarm64": [
       "exec:repairOSXARM64",  //-- Execute a script for MAC
       "compress:osxarm64",  //-- Create the Icestudio .zip package
-      "appdmg"            //-- Build the Icestudio appmdg package
+      "appdmg",           //-- Build the Icestudio appmdg package
+      "exec:repairOSXARM64dmg"  //-- Execute a script for MAC
     ],
 
 
@@ -916,6 +922,9 @@ module.exports = function (grunt) {
       nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
       repairOSX: SCRIPT_OSX,    //-- Shell script for mac
       repairOSXARM64: SCRIPT_OSXARM64,    //-- Shell script for mac
+      repairOSXdmg: SCRIPT_OSX_DMG,    //-- Shell script for mac
+      repairOSXARM64dmg: SCRIPT_OSXARM64_DMG,    //-- Shell script for mac
+
     },
 
     //-- TASK: jshint: Check the .js files
