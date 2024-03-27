@@ -10,13 +10,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
 "            Unlock to edit the block!"
 msgstr ""
+"<b>Lecture seule</b><br>\n"
+"            Déverouiller pour modifier le bloc !"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:633
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -31,6 +33,12 @@ msgid ""
 "        using<br>\n"
 "        <b>Edit → Clone</b>."
 msgstr ""
+"<b>ATTENTION !</b><br>\n"
+"        Les changements effectués ici seront aussi appliquées à tous les\n"
+"        blocs [<b>{{ information.name }}</b>] dans le design actuel. Si\n"
+"        vous ne VOULEZ PAS les propager, créez plutôt un clone du bloc\n"
+"        avec<br>\n"
+"        <b>Edition → Cloner</b>."
 
 #: app/views/menu.html:891
 msgid "About Icestudio"
@@ -38,7 +46,7 @@ msgstr "À propos d'Icestudio"
 
 #: app/views/version.html:33
 msgid "Acknowledgment"
-msgstr ""
+msgstr "Remerciements"
 
 #: app/views/menu.html:726
 msgid "Add"
@@ -67,7 +75,7 @@ msgstr ""
 
 #: app/scripts/services/tools.js:1500
 msgid "At least Python 3.7 is required"
-msgstr ""
+msgstr "Une version de Python supérieure à 3.7 est nécessaire"
 
 #: app/scripts/services/utils.js:638
 msgid "Author"
@@ -87,7 +95,7 @@ msgstr "Binaire"
 
 #: app/scripts/services/tools.js:159
 msgid "Bitstream not found: build your project first"
-msgstr ""
+msgstr "Bitstream introuvable : veuillez d'abord compiler votre projet"
 
 #: app/scripts/services/blockforms.js:1082
 #: app/scripts/services/blockforms.js:1206
@@ -333,7 +341,7 @@ msgstr "Défaut"
 
 #: app/views/menu.html:296
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: app/scripts/services/utils.js:637
 msgid "Description"
@@ -493,11 +501,11 @@ msgstr "Ressources FPGA"
 
 #: app/views/version.html:51
 msgid "FPGAwars community"
-msgstr ""
+msgstr "Communauté FPGAWwars"
 
 #: app/views/version.html:43
 msgid "FPGAwars community."
-msgstr ""
+msgstr "Communauté FPGAWwars."
 
 #: app/views/menu.html:76
 msgid "File"
@@ -615,7 +623,7 @@ msgstr "Entrer les paramètres"
 
 #: app/scripts/services/forms.js:987
 msgid "Input port name:"
-msgstr ""
+msgstr "Nom du port d'entrée :"
 
 #: app/scripts/services/forms.js:1565
 #, fuzzy
@@ -624,11 +632,11 @@ msgstr "Entrer les ports d'entrée"
 
 #: app/views/menu.html:653
 msgid "Install (Stable)"
-msgstr ""
+msgstr "Installer la version stable"
 
 #: app/views/menu.html:674
 msgid "Install Development version"
-msgstr ""
+msgstr "Installer la version de développement"
 
 #: app/scripts/services/tools.js:1229
 msgid ""
@@ -636,6 +644,9 @@ msgid ""
 "connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
+"Installer la <b>toolchain STABLE</b>. Cette opération nécessite une "
+"connexion Internet <br><p><b>NOTE :</b> Vous devez déconnecter votre VPN "
+"pour installer correctement la toolchain</p> <p>Voulez-vous continuer ?</p>"
 
 #: app/scripts/services/tools.js:1255
 msgid ""
@@ -714,7 +725,7 @@ msgstr "Espagnol"
 
 #: app/views/languages.html:98
 msgid "Korean"
-msgstr ""
+msgstr "Coréen"
 
 #: app/views/menu.html:328
 msgid "Label Finder"
@@ -731,7 +742,7 @@ msgstr "Langue"
 
 #: app/views/uithemes.html:26
 msgid "Light"
-msgstr ""
+msgstr "Clair"
 
 #: app/scripts/services/forms.js:448 app/views/design.html:255
 #, fuzzy
@@ -753,15 +764,15 @@ msgstr "Paramètre local"
 
 #: app/views/menu.html:422
 msgid "Logging enabled"
-msgstr ""
+msgstr "Log activé"
 
 #: app/views/menu.html:431
 msgid "Logging file"
-msgstr ""
+msgstr "Fichier de log"
 
 #: app/scripts/controllers/menu.js:741
 msgid "Logging file updated"
-msgstr ""
+msgstr "Fichier de log mis à jour"
 
 #: app/scripts/services/utils.js:955
 msgid "Maximum bus size: 96 bits"
@@ -787,7 +798,7 @@ msgstr "Nom"
 
 #: app/scripts/services/forms.js:1493
 msgid "Name of the paired labels"
-msgstr ""
+msgstr "Nom des labels appairés"
 
 #: app/scripts/services/forms.js:445 app/views/design.html:248
 msgid "Navy"
@@ -808,7 +819,7 @@ msgstr "Nouveau Nom:"
 
 #: app/views/design.html:71
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: app/scripts/controllers/menu.js:1452
 msgid "No collections stored"
@@ -866,7 +877,7 @@ msgstr "Label de sortie"
 
 #: app/views/design.html:299 app/views/menu.html:796
 msgid "Paired labels"
-msgstr ""
+msgstr "Labels appairés"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -887,7 +898,7 @@ msgstr "Préférences"
 
 #: app/views/design.html:68
 msgid "Prev."
-msgstr ""
+msgstr "Précédent"
 
 #: app/views/menu.html:440
 msgid "Project information"
@@ -907,11 +918,11 @@ msgstr "Projet {{name}} sauvegardé"
 
 #: app/scripts/controllers/menu.js:864
 msgid "Python Environment updated"
-msgstr ""
+msgstr "Environnement Python mis à jour"
 
 #: app/views/menu.html:407
 msgid "Python environment"
-msgstr ""
+msgstr "Environnement Python"
 
 #: app/views/menu.html:202
 msgid "Quit"
@@ -927,7 +938,7 @@ msgstr "Refaire"
 
 #: app/views/version.html:29
 msgid "Release History WIKI"
-msgstr ""
+msgstr "Wiki historique des releases"
 
 #: app/views/menu.html:733
 msgid "Reload"
@@ -972,19 +983,19 @@ msgstr "Russe"
 
 #: app/views/menu.html:141
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Enregistrer"
 
 #: app/scripts/services/utils.js:693
 msgid "Save SVG"
-msgstr "Sauvegarder le SVG"
+msgstr "Enregistrer le SVG"
 
 #: app/views/menu.html:151
 msgid "Save as"
-msgstr "Sauvegarder sous"
+msgstr "Enregistrer sous"
 
 #: app/scripts/controllers/menu.js:348
 msgid "Save submodule"
-msgstr "Sauvegarder le sous-module"
+msgstr "Enregistrer le sous-module"
 
 #: app/views/menu.html:520
 msgid "Select"
@@ -1043,7 +1054,7 @@ msgstr "Synchroniser les fichiers distants ..."
 
 #: app/views/menu.html:495
 msgid "System Info"
-msgstr ""
+msgstr "Informations système"
 
 #: app/views/languages.html:62
 #, fuzzy
@@ -1056,7 +1067,7 @@ msgstr "Testbench"
 
 #: app/views/version.html:45
 msgid "Thank you very much!"
-msgstr ""
+msgstr "Merci beaucoup !"
 
 #: app/scripts/services/tools.js:1733
 msgid "The collection {{name}} already exists."
@@ -1100,6 +1111,8 @@ msgid ""
 "This release has been possible thanks to the great work \n"
 "              done by an emerging team from"
 msgstr ""
+"Cette release a été rendue possible grâce à l'immense travail \n"
+"              réalisé par une équipe de"
 
 #: app/scripts/services/graph.js:532
 #, fuzzy
@@ -1156,7 +1169,7 @@ msgstr "Outils"
 
 #: app/views/languages.html:104
 msgid "Turkish"
-msgstr ""
+msgstr "Turc"
 
 #: app/scripts/services/forms.js:433 app/views/design.html:220
 msgid "Turquoise"
@@ -1164,7 +1177,7 @@ msgstr "Turquoise"
 
 #: app/views/menu.html:372
 msgid "UI theme"
-msgstr ""
+msgstr "Thème interface graphique"
 
 #: app/views/menu.html:228
 msgid "Undo"
@@ -1184,7 +1197,7 @@ msgstr "Sans titre"
 
 #: app/views/menu.html:657
 msgid "Update (Latest stable)"
-msgstr ""
+msgstr "Mettre à jour (dernière version stable)"
 
 #: app/scripts/controllers/menu.js:1370 app/views/design.html:514
 #: app/views/menu.html:633
@@ -1253,7 +1266,7 @@ msgstr "Mauvais nom d'hôte distant {{name}}"
 
 #: app/scripts/controllers/menu.js:1828
 msgid "Wrong search name!"
-msgstr ""
+msgstr "Nom de recherche incorrect !"
 
 #: app/scripts/services/forms.js:412 app/views/design.html:164
 msgid "Yellow"
@@ -1276,6 +1289,10 @@ msgid ""
 "you need to go back                      to the top-level. If you want to "
 "export this module as new file, unlock the module and use \"Save as\""
 msgstr ""
+"Vous naviguez dans le design : si vous voulez sauvegarder le design entier, "
+"vous devez remonter                      au plus haut-niveau. Si vous voulez "
+"exporter ce module en tant que nouveau fichier, déverouillez le module et "
+"utilisez \"Enregistrer sous\""
 
 #: app/scripts/services/project.js:103
 #, fuzzy
@@ -1303,7 +1320,7 @@ msgstr ""
 
 #: app/views/version.html:23
 msgid "You can read the release notes on the"
-msgstr ""
+msgstr "Vous pouvez lire les notes de release sur le"
 
 #: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
