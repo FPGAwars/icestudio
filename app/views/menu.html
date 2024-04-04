@@ -378,42 +378,24 @@
 
                   <!-- Divisor line between sections of the menu -->
                   <li class="divider"></li>
-                  
-                  <!-- Edit/Preferences/Board rules -->
-                  <li>
-                    <a href ng-click="toggleBoardRules()">
-                      {{ 'Board rules' | translate }}&ensp;
 
-                      <span ng-show="profile.data.boardRules" 
-                            class="glyphicon glyphicon-ok-circle"></span>
+                  <!-- Edit/Preferences/Advanced features sub-menu -->
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                       {{ 'Advanced features' | translate }}
                     </a>
+
+                    <ul uib-dropdown-menu 
+                        ng-include="'views/advanced.html'"></ul>
                   </li>
+
+                  <!-- Divisor line between sections of the menu -->
+                  <li class="divider"></li>
 
                   <!-- Edit/Preferences/External collections -->
                   <li>
                     <a href ng-click="setExternalCollections()">
                        {{ 'External collections' | translate }}</a>
-                  </li>
-
-                  <!-- Edit/Preferences/External plugins -->
-                  <li>
-                    <a href ng-click="setExternalPlugins()">
-                       {{ 'External plugins' | translate }}</a>
-                  </li>
-
-                  <!-- Edit/Preferences/Python environment -->
-                  <li>
-                    <a href ng-click="setPythonEnv()">
-                       {{ 'Python environment' | translate }}</a>
-                  </li>
-
-                  <!-- Edit/Preferences/Remote host -->
-                  <li>
-                    <a href ng-click="setRemoteHostname()">
-                      {{ 'Remote hostname' | translate }}
-                      <span ng-show="profile.data.remoteHostname" 
-                            class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
                   </li>
 
                   <!-- Edit/Preferences/Logging enable -->

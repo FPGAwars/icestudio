@@ -107,7 +107,10 @@ angular.module('icestudio')
       //--   * Particular information:
       //--      -clock: (bool). If the port is a clock or not
       //--         * true: It is a clock signal
-      //--         * False: Normal signal
+      //--         * false: Normal signal
+      //--      -inout: (bool). If the port is inout or normal
+      //--         * true: It is tri-state
+      //--         * false: It is normal two-state
       //-------------------------------------------------------------------------
       class InputPortBlock extends PortBlock {
 
@@ -118,7 +121,6 @@ angular.module('icestudio')
 
           //-- Particular information
           this.data.clock = clock;    //-- Optional. Is the port a clock input?
-
           this.data.inout = inout;
         }
       }
@@ -128,7 +130,10 @@ angular.module('icestudio')
       //-- Class: Output port. The information goes from the FPGA to the 
       //--        outside. Or from one block to another the upper level
       //--
-      //--   NO particular information
+      //--   * Particular information:
+      //--      -inout: (bool). If the port is inout or normal
+      //--         * true: It is tri-state
+      //--         * false: It is normal two-state
       //-------------------------------------------------------------------------
       class OutputPortBlock extends PortBlock {
 

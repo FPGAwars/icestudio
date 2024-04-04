@@ -1,0 +1,52 @@
+<!-- HTML file for rendering the Edit/Preferences/Advanced features menu 
+     It is included in the menu.html file 
+-->
+
+<!-- The properties set by the user are located in profile.data for Global access
+-->
+
+<!-- To include more features, you should edit this file -->
+
+<!DOCTYPE html>
+
+<li>
+  <!-- Edit/Preferences/Advanced features/Board rules -->
+  <a href ng-click="toggleBoardRules()">
+    {{ 'Board rules' | translate }}&ensp;
+
+    <span ng-show="profile.data.boardRules" 
+          class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+
+<li>
+  <!-- Edit/Preferences/Advanced features/Allow tri-state connections -->
+  <a href ng-click="toggleInoutPorts()">
+    {{ 'Allow tri-state connections' | translate }}&ensp;
+
+    <span ng-show="profile.data.inoutPorts"
+          class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+
+<!-- Edit/Preferences/Advanced features/External plugins -->
+<li>
+  <a href ng-click="setExternalPlugins()">
+      {{ 'External plugins' | translate }}</a>
+</li>
+
+<!-- Edit/Preferences/Advanced features/Python environment -->
+<li>
+  <a href ng-click="setPythonEnv()">
+      {{ 'Python environment' | translate }}</a>
+</li>
+
+<!-- Edit/Preferences/Advanced features/Remote hostname -->
+<li>
+  <a href ng-click="setRemoteHostname()">
+    {{ 'Remote hostname' | translate }}&ensp;
+
+    <span ng-show="profile.data.remoteHostname" 
+          class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>

@@ -522,8 +522,7 @@ angular.module('icestudio')
                         if (type.indexOf('basic.') !== -1) {
                             // Edit basic blocks
                             if (paper.options.enabled) {
-                                blockforms.editBasic(type, cellView, addCell);
-
+                                blockforms.editBasic(type, !!profile.get('inoutPorts'), cellView, addCell);
                             }
                         }
                         else if (common.allDependencies[type]) {
@@ -1041,7 +1040,7 @@ angular.module('icestudio')
             };
 
             this.createBasicBlock = function (type) {
-                blockforms.newBasic(type, function (cells) {
+                blockforms.newBasic(type, !!profile.get('inoutPorts'), function (cells) {
                     self.addDraggableCells(cells);
                 });
             };

@@ -54,16 +54,18 @@ angular.module('icestudio')
       //--      the OK button and all the data is ok.
       //--      -cells: Array of blocks passed as arguments
       //-------------------------------------------------------------------------
-      function newBasic(type, callback) {
+      function newBasic(type, inoutPorts, callback) {
 
+        let name = '';      //-- Port name by default
+        let clock = false;  //-- Clock checkbox not checked by default
+        let inoutDefault;
         let form;
 
         //-- If inside a module, the FPGA-pin option is disabled
-        //-- The pins are always virtual
         let disabled = common.isEditingSubmodule;
+
+        //-- The pins are always virtual
         let virtual = disabled;
-        let clock = false;  //-- Clock checkbox no checked by default
-        let name = '';      //-- Port name by default
 
         //-- Create the block by calling the corresponding function
         //-- according to the given type
@@ -72,14 +74,24 @@ angular.module('icestudio')
           //-- Input port
           case blocks.BASIC_INPUT:
 
-            form = new forms.FormBasicInput(name, virtual, clock, disabled);
+            //-- InOut-pin option is present or not, and if present, it defaults to false
+            if (inoutPorts) {
+              inoutDefault = false;
+            }
+
+            form = new forms.FormBasicInput(name, virtual, clock, disabled, inoutDefault);
             newBasicPort(form, callback);
             break;
 
           //-- Output port
           case blocks.BASIC_OUTPUT:
 
-            form = new forms.FormBasicOutput(name, virtual, disabled);
+            //-- InOut-pin option is present or not, and if present, it defaults to false
+            if (inoutPorts) {
+              inoutDefault = false;
+            }
+
+            form = new forms.FormBasicOutput(name, virtual, disabled, inoutDefault);
             newBasicPort(form, callback);
             break;
 
@@ -912,7 +924,7 @@ angular.module('icestudio')
       //--   * cellView: Access to the graphics library
       //--   * callback: Function to call when the block is Edited
       //-----------------------------------------------------------------------
-      function editBasic(type, cellView, callback) {
+      function editBasic(type, inoutPorts, cellView, callback) {
 
         //-- Get information from the joint graphics library
         let block = cellView.model.attributes;
@@ -921,7 +933,7 @@ angular.module('icestudio')
         let name = block.data.name + (block.data.range || '');
         let virtual = block.data.virtual;
         let clock = block.data.clock;
-        let inout = (typeof block.data.inout === 'undefined') ? false : block.data.inout;
+        let inoutValue;
         let form;
         let color = block.data.blockColor;
 
@@ -933,6 +945,11 @@ angular.module('icestudio')
           virtual = true;
         }
 
+        //-- InOut-pin option is present or not
+        if (inoutPorts) {
+          inoutValue = (typeof block.data.inout === 'undefined') ? false : !!block.data.inout;
+        }
+
         //-- Call the corresponding function depending on the type of block
         switch (type) {
 
@@ -940,7 +957,7 @@ angular.module('icestudio')
           case blocks.BASIC_INPUT:
 
             //-- Build the form, and pass the actual block data
-            form = new forms.FormBasicInput(name, virtual, clock, disabled, inout);
+            form = new forms.FormBasicInput(name, virtual, clock, disabled, inoutValue);
             editBasicPort(form, cellView, callback);
             break;
 
@@ -948,7 +965,7 @@ angular.module('icestudio')
           case blocks.BASIC_OUTPUT:
 
             //-- Build the form, and pass the actual block data
-            form = new forms.FormBasicOutput(name, virtual, disabled, inout);
+            form = new forms.FormBasicOutput(name, virtual, disabled, inoutValue);
             editBasicPort(form, cellView, callback);
             break;
 
@@ -977,7 +994,7 @@ angular.module('icestudio')
             break;
 
           case blocks.BASIC_CODE:
-            editBasicCode(cellView, callback);
+            editBasicCode(inoutPorts, cellView, callback);
             break;
 
           case blocks.BASIC_INFO:
@@ -1380,7 +1397,7 @@ angular.module('icestudio')
       }
 
 
-      function editBasicCode(cellView, callback) {
+      function editBasicCode(inoutPorts, cellView, callback) {
 
         //-- Get information from the joint graphics library
         let block = cellView.model.attributes;
@@ -1390,6 +1407,7 @@ angular.module('icestudio')
           block.data.ports.inoutLeft = [];
           block.data.ports.inoutRight = [];
         }
+
         //-- Get the input port names as a string
         let inPortNames = blocks.portsInfo2Str(block.data.ports.in);
 
@@ -1399,14 +1417,18 @@ angular.module('icestudio')
         //-- Get the input param names as a string
         let inParamNames = blocks.portsInfo2Str(block.data.params);
 
+        //-- Get the optional left/right InputOutput port names as strings
+        let inoutLeftPortNames;
+        let inoutRightPortNames;
 
+        //-- InputOutput port name fields are present or not, and if present, are initialized to strings
+        if (inoutPorts) {
+          //-- Get the left side InputOutput port names as a string
+          inoutLeftPortNames = blocks.portsInfo2Str(block.data.ports.inoutLeft);
 
-        //-- Get the input/output port names at left side of block  as a string
-        let inoutLeftPortNames = blocks.portsInfo2Str(block.data.ports.inoutLeft);
-
-        //-- Get the input/output port names at right side of block  as a string
-        let inoutRightPortNames = blocks.portsInfo2Str(block.data.ports.inoutRight);
-
+          //-- Get the right side InputOutput port names as a string
+          inoutRightPortNames = blocks.portsInfo2Str(block.data.ports.inoutRight);
+        }
 
         //-- Create the form
         let form = new forms.FormBasicCode(
@@ -1467,7 +1489,7 @@ angular.module('icestudio')
             //-- Get all the wires of the current block
             let connectedWires = graph.getConnectedLinks(cellView.model);
 
-            //---------- Chage the block
+            //---------- Change the block
             graph.startBatch('change');
 
             //-- Remove the current block
