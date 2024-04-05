@@ -235,6 +235,8 @@ angular.module('icestudio')
         //--   * inPortsInfo: Array of PortInfos
         //--   * outPortsInfo: Array of PortInfos
         //--   * inParamsInfo: Array of PortInfos
+        //--   * inoutLeftPortsInfo: Optional Array of PortInfos
+        //--   * inoutRightPortsInfo: Optional Array of PortInfos
         //--
         //--  PortInfos:
         //--    * name: String
@@ -302,28 +304,33 @@ angular.module('icestudio')
             this.data.params.push(info);
 
           });
-          //-- Insert the InputOutput portInfo
-          inoutLeftPortsInfo.forEach(portInfo => {
 
-            let info = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              size: portInfo.size > 1 ? portInfo.size : undefined
-            };
+          //-- Insert the InputOutput portInfo, left and/or right
+          if (inoutLeftPortsInfo) {
+            inoutLeftPortsInfo.forEach(portInfo => {
 
-            this.data.ports.inoutLeft.push(info);
-          });
-          //-- Insert the InputOutput portInfo
-          inoutRightPortsInfo.forEach(portInfo => {
+              let info = {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                size: portInfo.size > 1 ? portInfo.size : undefined
+              };
 
-            let info = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              size: portInfo.size > 1 ? portInfo.size : undefined
-            };
+              this.data.ports.inoutLeft.push(info);
+            });
+          }
 
-            this.data.ports.inoutRight.push(info);
-          });
+          if (inoutRightPortsInfo) {
+            inoutRightPortsInfo.forEach(portInfo => {
+
+              let info = {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                size: portInfo.size > 1 ? portInfo.size : undefined
+              };
+
+              this.data.ports.inoutRight.push(info);
+            });
+          }
         }
       }
 

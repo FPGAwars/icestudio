@@ -732,6 +732,7 @@ angular.module('icestudio')
         }
         for (o in instance.data.ports.inoutRight) {
           port = instance.data.ports.inoutRight[o];
+          // (there's no port default rule for right side, output)
           rightPorts.push({
             id: port.name,
             name: port.name,
