@@ -54,7 +54,7 @@ angular.module('icestudio')
       //--      the OK button and all the data is ok.
       //--      -cells: Array of blocks passed as arguments
       //-------------------------------------------------------------------------
-      function newBasic(type, inoutPorts, callback) {
+      function newBasic(type, allowInoutPorts, callback) {
 
         let name = '';      //-- Port name by default
         let clock = false;  //-- Clock checkbox not checked by default
@@ -75,7 +75,7 @@ angular.module('icestudio')
           case blocks.BASIC_INPUT:
 
             //-- InOut-pin option is present or not, and if present, it defaults to false
-            if (inoutPorts) {
+            if (allowInoutPorts) {
               inoutDefault = false;
             }
 
@@ -87,7 +87,7 @@ angular.module('icestudio')
           case blocks.BASIC_OUTPUT:
 
             //-- InOut-pin option is present or not, and if present, it defaults to false
-            if (inoutPorts) {
+            if (allowInoutPorts) {
               inoutDefault = false;
             }
 
@@ -925,7 +925,7 @@ angular.module('icestudio')
       //--   * cellView: Access to the graphics library
       //--   * callback: Function to call when the block is Edited
       //-----------------------------------------------------------------------
-      function editBasic(type, inoutPorts, cellView, callback) {
+      function editBasic(type, allowInoutPorts, cellView, callback) {
 
         //-- Get information from the joint graphics library
         let block = cellView.model.attributes;
@@ -947,7 +947,7 @@ angular.module('icestudio')
         }
 
         //-- InOut-pin option is present or not
-        if (inoutPorts) {
+        if (allowInoutPorts) {
           inoutValue = (typeof block.data.inout === 'undefined') ? false : !!block.data.inout;
         }
 
@@ -995,7 +995,7 @@ angular.module('icestudio')
             break;
 
           case blocks.BASIC_CODE:
-            editBasicCode(inoutPorts, cellView, callback);
+            editBasicCode(allowInoutPorts, cellView, callback);
             break;
 
           case blocks.BASIC_INFO:
@@ -1398,7 +1398,7 @@ angular.module('icestudio')
       }
 
 
-      function editBasicCode(inoutPorts, cellView, callback) {
+      function editBasicCode(allowInoutPorts, cellView, callback) {
 
         //-- Get information from the joint graphics library
         let block = cellView.model.attributes;
@@ -1423,7 +1423,7 @@ angular.module('icestudio')
         let inoutRightPortNames;
 
         //-- InputOutput port name fields are present or not, and if present, are initialized to strings
-        if (inoutPorts) {
+        if (allowInoutPorts) {
           //-- Get the left side InputOutput port names as a string
           inoutLeftPortNames = blocks.portsInfo2Str(block.data.ports.inoutLeft);
 

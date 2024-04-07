@@ -1028,8 +1028,8 @@ angular
       };
 
       $scope.toggleInoutPorts = function () {
-        const newState = !profile.get("inoutPorts");
-        profile.set("inoutPorts", newState);
+        const newState = !profile.get("allowInoutPorts");
+        profile.set("allowInoutPorts", newState);
         if (newState) {
           alertify.success(gettextCatalog.getString("Tri-state connections (inout ports) enabled"));
         } else {

@@ -20,7 +20,7 @@ angular.module('icestudio')
 
       'board': '',                  //-- Selected board
       'boardRules': true,           //-- Boardrules (active by default)
-      'inoutPorts': false,          //-- Inout ports (tri-state) (not included by default)
+      'allowInoutPorts': false,     //-- Tri-state (inout ports) available (not included by default)
       'collection': '',             //-- Selected collection
       'externalCollections': '',    //-- Path for the external collections
       'externalPlugins': '',        //-- Path for the external paths
@@ -55,7 +55,7 @@ angular.module('icestudio')
           self.data = {
             'board': data.board || '',
             'boardRules': data.boardRules !== false,
-            'inoutPorts': data.inoutPorts === true,
+            'allowInoutPorts': data.allowInoutPorts === true,
             'collection': data.collection || '',
             'language': data.language || 'en',
             'uiTheme': data.uiTheme || 'dark',
