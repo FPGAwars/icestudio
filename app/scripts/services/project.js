@@ -706,9 +706,10 @@ angular.module('icestudio')
 
     this.addBlock = function (block) {
       return new Promise((resolve, reject) => {
-        return approveBlockImport(block).then((result) => {
+        return approveProjectBlock(block).then((result) => {
           if (result === 'cancel') {
-            reject();
+            reject('cancelImport');
+            return;
           }
 
           block = pruneBlock(block);
@@ -751,9 +752,8 @@ angular.module('icestudio')
     // Check for Advanced block being opened or added: If it has tri-state, and user does not have
     // Advanced profile setting for tri-state, user needs to approve or cancel
     //
-    // Return 'cancel', return 'ok' or a variant of 'ok', because tri-state can be approved permanently
-    // or for this session only
-    function approveBlockImport(block) {
+    // Return 'cancel' or return 'ok' or a variant of 'ok'
+    function approveProjectBlock(block) {
       if (profile.get('allowInoutPorts') || common.allowProjectInoutPorts) {
         return Promise.resolve('ok');
       }
@@ -766,7 +766,7 @@ angular.module('icestudio')
       // user can approve by either updating profile 'allowInoutPorts' or setting
       // flag common.allowProjectInoutPorts
       return new Promise((resolve) => {
-        alertify.confirm('Project has tri-state. Allow tri-state connections... Do you want to proceed?', () => {
+        alertify.confirm(gettextCatalog.getString('You are adding a block that uses "tri-state". You can only do this if you accept that tri-state, or inout, ports are not recommended in standard designs.<br /><br />You will have the choice to update your Preferences:<br />&nbsp;&nbsp;&nbsp;<b>Advanced features -> Allow tri-state connections</b><br />or just open this design on a preview basis.<br /><br />Continue?'), () => {
           resolve('ok');
         }, () => {
           resolve('cancel');
@@ -778,7 +778,8 @@ angular.module('icestudio')
         }
 
         return new Promise((resolve) => {
-          alertify.confirm('Click "Yes" to allow tri-state connections (change the setting in Preferences).<br />Click "This time" to view tri-state connections for this design (do not change Preferences)', () => {
+          alertify.set('confirm', 'defaultFocus', 'cancel');
+          alertify.confirm(gettextCatalog.getString('Click "Yes" to allow tri-state and change your Preferences. Click "This time" to view tri-state for this design only.'), () => {
             profile.set('allowInoutPorts', true);
             alertify.warning(gettextCatalog.getString('Changed Preferences: Allow tri-state connections'));
             resolve('ok_advanced');
@@ -792,6 +793,7 @@ angular.module('icestudio')
           });
         })
         .then((result) => {
+          alertify.set('confirm', 'defaultFocus', 'ok');
           alertify.set('confirm', 'labels', {
             ok: gettextCatalog.getString('OK'),
             cancel: gettextCatalog.getString('Cancel')
