@@ -1033,6 +1033,7 @@ angular
         if (newState) {
           alertify.success(gettextCatalog.getString("Tri-state connections (inout ports) enabled"));
         } else {
+          common.allowProjectInoutPorts = true; // if tri-state in current design, keep behaviour unchanged
           alertify.success(gettextCatalog.getString("Tri-state connections (inout ports) disabled"));
         }
       };

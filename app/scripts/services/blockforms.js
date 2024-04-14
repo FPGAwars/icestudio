@@ -732,7 +732,7 @@ angular.module('icestudio')
         }
         for (o in instance.data.ports.inoutRight) {
           port = instance.data.ports.inoutRight[o];
-          // (there's no port default rule for right side, output)
+          // (there's no port default rule for the right side, output)
           rightPorts.push({
             id: port.name,
             name: port.name,
@@ -1400,28 +1400,33 @@ angular.module('icestudio')
 
       function editBasicCode(allowInoutPorts, cellView, callback) {
 
+        let inPortNames = [];
+        let outPortNames = [];
+        let inoutLeftPortNames;
+        let inoutRightPortNames;
+
         //-- Get information from the joint graphics library
         let block = cellView.model.attributes;
 
-        // Backward compatibility
+        // Compatibility between tri-state/non-tri-state project formats
         if (typeof block.data.ports.inoutLeft === 'undefined') {
           block.data.ports.inoutLeft = [];
           block.data.ports.inoutRight = [];
         }
 
         //-- Get the input port names as a string
-        let inPortNames = blocks.portsInfo2Str(block.data.ports.in);
-
+        if (block.data.ports.in) {
+          inPortNames = blocks.portsInfo2Str(block.data.ports.in);
+        }
         //-- Get the output port names as a string
-        let outPortNames = blocks.portsInfo2Str(block.data.ports.out);
+        if (block.data.ports.out) {
+          outPortNames = blocks.portsInfo2Str(block.data.ports.out);
+        }
 
         //-- Get the input param names as a string
         let inParamNames = blocks.portsInfo2Str(block.data.params);
 
         //-- Get the optional left/right InputOutput port names as strings
-        let inoutLeftPortNames;
-        let inoutRightPortNames;
-
         //-- InputOutput port name fields are present or not, and if present, are initialized to strings
         if (allowInoutPorts) {
           //-- Get the left side InputOutput port names as a string

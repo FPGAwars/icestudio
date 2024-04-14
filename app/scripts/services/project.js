@@ -91,7 +91,7 @@ angular.module('icestudio')
       if (!checkVersion(data.version)) {
         return;
       }
-      project = _safeLoad(data, name);
+      project = _safeUpgradeVersion(data, name);
       if (project.design.board !== common.selectedBoard.name) {
         var projectBoard = boards.boardLabel(project.design.board);
         alertify.set('confirm', 'labels', {
@@ -191,7 +191,7 @@ angular.module('icestudio')
       return true;
     }
 
-    function _safeLoad(data, name) {
+    function _safeUpgradeVersion(data, name) {
       // Backwards compatibility
       var project = {};
       switch (data.version) {
@@ -241,6 +241,7 @@ angular.module('icestudio')
         }
         // Add current dependency
         block = pruneBlock(block);
+
         delete block.design.deps;
         block.package.name = block.package.name || key;
         block.package.description = block.package.description || key;
@@ -451,10 +452,10 @@ angular.module('icestudio')
           if (!checkVersion(data.version)) {
             return;
           }
-          var name = utils.basename(filepath);
           
-          var block = _safeLoad(data, name);
-           if (block) {
+          var name = utils.basename(filepath);
+          var block = _safeUpgradeVersion(data, name);
+          if (block) {
             var origPath = utils.dirname(filepath);
             var destPath = utils.dirname(self.path);
             // 1. Parse and find included files
@@ -500,10 +501,11 @@ angular.module('icestudio')
           }
 
           function doImportBlock() {
-            self.addBlock(block);
-            if (notification) {
-              alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
-            }
+            self.addBlock(block).then(() => {
+              if (notification) {
+                alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
+              }
+            });
           }
         })
         .catch(function () {
@@ -571,7 +573,15 @@ angular.module('icestudio')
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
             case blocks.BASIC_INPUT:
+              if (block.data.inout === false) {
+                delete block.data.inout;
+              }
+              break;
             case blocks.BASIC_OUTPUT:
+              if (block.data.inout === false) {
+                delete block.data.inout;
+              }
+              break;
             case blocks.BASIC_OUTPUT_LABEL:
             case blocks.BASIC_INPUT_LABEL:
             case blocks.BASIC_CONSTANT:
@@ -580,6 +590,12 @@ angular.module('icestudio')
             case blocks.BASIC_CODE:
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
+              }
+              if (block.data.ports.inoutLeft && !block.data.ports.inoutLeft.length) {
+                delete block.data.ports.inoutLeft;
+              }
+              if (block.data.ports.inoutRight && !block.data.ports.inoutRight.length) {
+                delete block.data.ports.inoutRight;
               }
               break;
             case blocks.BASIC_INFO:
@@ -594,6 +610,44 @@ angular.module('icestudio')
       }
 
       return _project;
+    }
+
+    function checkIsAnyInout(project) {
+      if (_checkIsAnyInout(project)) {
+        return true;
+      }
+      for (var d in project.dependencies) {
+        if (_checkIsAnyInout(project.dependencies[d])) {
+          return true;
+        }
+      }
+
+      function _checkIsAnyInout(_project) {
+        for (var i in _project.design.graph.blocks) {
+          var block = _project.design.graph.blocks[i];
+          switch (block.type) {
+            case blocks.BASIC_INPUT:
+            case blocks.BASIC_OUTPUT:
+              if (block.data.inout) {
+                return true;
+              }
+              break;
+            case blocks.BASIC_CODE:
+              if (block.data.ports.inoutLeft && block.data.ports.inoutLeft.length) {
+                return true;
+              }
+              if (block.data.ports.inoutRight && block.data.ports.inoutRight.length) {
+                return true;
+              }
+              break;
+            default:
+              // Generic block
+              break;
+          }
+        }
+        return false;
+      }
+      return false;
     }
 
     this.snapshot = function () {
@@ -651,17 +705,24 @@ angular.module('icestudio')
     };
 
     this.addBlock = function (block) {
-      if (block) {
-        block = pruneBlock(block);
-        if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
-          var dat = new Date();
-          var seq = dat.getTime();
-          block.package.otid = seq;
-        }
-        var type = utils.dependencyID(block);
-        utils.mergeDependencies(type, block);
-        graph.createBlock(type, block);
-      }
+      return new Promise((resolve, reject) => {
+        return approveBlockImport(block).then((result) => {
+          if (result === 'cancel') {
+            reject();
+          }
+
+          block = pruneBlock(block);
+          if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
+            var dat = new Date();
+            var seq = dat.getTime();
+            block.package.otid = seq;
+          }
+          var type = utils.dependencyID(block);
+          utils.mergeDependencies(type, block);
+          graph.createBlock(type, block);
+          resolve();
+        });
+      });
     };
 
     function pruneBlock(block) {
@@ -685,6 +746,59 @@ angular.module('icestudio')
         }
       }
       return block;
+    }
+
+    // Check for Advanced block being opened or added: If it has tri-state, and user does not have
+    // Advanced profile setting for tri-state, user needs to approve or cancel
+    //
+    // Return 'cancel', return 'ok' or a variant of 'ok', because tri-state can be approved permanently
+    // or for this session only
+    function approveBlockImport(block) {
+      if (profile.get('allowInoutPorts') || common.allowProjectInoutPorts) {
+        return Promise.resolve('ok');
+      }
+
+      const hasInoutPorts = checkIsAnyInout(block);
+      if (!hasInoutPorts) {
+        return Promise.resolve('ok');
+      }
+
+      // user can approve by either updating profile 'allowInoutPorts' or setting
+      // flag common.allowProjectInoutPorts
+      return new Promise((resolve) => {
+        alertify.confirm('Project has tri-state. Allow tri-state connections... Do you want to proceed?', () => {
+          resolve('ok');
+        }, () => {
+          resolve('cancel');
+        });
+      })
+      .then((result) => {
+        if (result === 'cancel') {
+          return result;
+        }
+
+        return new Promise((resolve) => {
+          alertify.confirm('Click "Yes" to allow tri-state connections (change the setting in Preferences).<br />Click "This time" to view tri-state connections for this design (do not change Preferences)', () => {
+            profile.set('allowInoutPorts', true);
+            alertify.warning(gettextCatalog.getString('Changed Preferences: Allow tri-state connections'));
+            resolve('ok_advanced');
+          }, () => {
+            common.allowProjectInoutPorts = true;
+            alertify.warning(gettextCatalog.getString('Viewing tri-state'));
+            resolve('ok_this_time');
+          }).set('labels', {
+            ok: gettextCatalog.getString('Yes'),
+            cancel: gettextCatalog.getString('This time')
+          });
+        })
+        .then((result) => {
+          alertify.set('confirm', 'labels', {
+            ok: gettextCatalog.getString('OK'),
+            cancel: gettextCatalog.getString('Cancel')
+          });
+          return result;
+        });
+      });
     }
 
     this.clear = function () {

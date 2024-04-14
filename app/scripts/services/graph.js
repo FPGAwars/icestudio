@@ -522,7 +522,8 @@ angular.module('icestudio')
                         if (type.indexOf('basic.') !== -1) {
                             // Edit basic blocks
                             if (paper.options.enabled) {
-                                blockforms.editBasic(type, !!profile.get('allowInoutPorts'), cellView, addCell);
+                                const allowInoutPorts = profile.get('allowInoutPorts') || common.allowProjectInoutPorts;
+                                blockforms.editBasic(type, allowInoutPorts, cellView, addCell);
                             }
                         }
                         else if (common.allDependencies[type]) {
@@ -1040,7 +1041,8 @@ angular.module('icestudio')
             };
 
             this.createBasicBlock = function (type) {
-                blockforms.newBasic(type, !!profile.get('allowInoutPorts'), function (cells) {
+                const allowInoutPorts = profile.get('allowInoutPorts') || common.allowProjectInoutPorts;
+                blockforms.newBasic(type, allowInoutPorts, function (cells) {
                     self.addDraggableCells(cells);
                 });
             };
