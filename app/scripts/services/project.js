@@ -652,7 +652,6 @@ angular.module('icestudio')
 
     this.addBlock = function (block) {
       if (block) {
-        block = _safeLoad(block);
         block = pruneBlock(block);
         if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
           var dat = new Date();
