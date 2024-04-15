@@ -89,37 +89,46 @@ angular.module('icestudio')
     this.load = function (name, data) {
       var self = this;
       if (!checkVersion(data.version)) {
+        utils.endBlockingTask();
         return;
       }
+
       project = _safeUpgradeVersion(data, name);
-      if (project.design.board !== common.selectedBoard.name) {
-        var projectBoard = boards.boardLabel(project.design.board);
-        alertify.set('confirm', 'labels', {
-          'ok': gettextCatalog.getString('Load'),
-          'cancel': gettextCatalog.getString('Convert')
-        });
-        alertify.confirm(
-          gettextCatalog.getString('This project is designed for the {{name}} board.', { name: utils.bold(projectBoard) }) + '<br>' +
-          gettextCatalog.getString('You can load it as it is or convert it to use the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
-          function () {
-            // Load
-            setTimeout(function(){
-              _load();
-            },100);
-          },
-          function () {
+      approveProjectBlock(project).then((result) => {
+        if (result === 'cancel') {
+          console.log('cancelLoad');
+          utils.endBlockingTask();
+          return;
+        }
 
-            setTimeout(function(){
-            // Convert
-            project.design.board = common.selectedBoard.name;
-
-            _load(true, boardMigration(projectBoard, common.selectedBoard.name));
-            },100);
+        if (project.design.board !== common.selectedBoard.name) {
+          var projectBoard = boards.boardLabel(project.design.board);
+          alertify.set('confirm', 'labels', {
+            'ok': gettextCatalog.getString('Load'),
+            'cancel': gettextCatalog.getString('Convert')
           });
-      }
-      else {
-        _load();
-      }
+          alertify.confirm(
+            gettextCatalog.getString('This project is designed for the {{name}} board.', { name: utils.bold(projectBoard) }) + '<br>' +
+            gettextCatalog.getString('You can load it as it is or convert it to use the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
+            function () {
+              // Load
+              setTimeout(function(){
+                _load();
+              },100);
+            },
+            function () {
+              // Convert
+              setTimeout(function(){
+                project.design.board = common.selectedBoard.name;
+
+                _load(true, boardMigration(projectBoard, common.selectedBoard.name));
+              },100);
+            });
+        }
+        else {
+          _load();
+        }
+      });
 
       function _load(reset, originalBoard) {
         common.allDependencies = project.dependencies;
@@ -137,7 +146,6 @@ angular.module('icestudio')
         }
 
         var ret = graph.loadDesign(project.design, opt, function () {
-
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -452,7 +460,7 @@ angular.module('icestudio')
           if (!checkVersion(data.version)) {
             return;
           }
-          
+
           var name = utils.basename(filepath);
           var block = _safeUpgradeVersion(data, name);
           if (block) {
@@ -468,40 +476,27 @@ angular.module('icestudio')
             if (files.length > 0) {
               // 2. Check project's directory
               if (self.path) {
-                // 3. Copy the included files
-                copyIncludedFiles(files, origPath, destPath, function (success) {
-                  if (success) {
-                    // 4. Success: import block
-                    doImportBlock();
-                  }
-                });
+                // 3. Block will be imported if copying the included files is successful
+                doImportBlock(files, origPath, destPath);
               }
               else {
                 alertify.confirm(gettextCatalog.getString('This import operation requires a project path. You need to save the current project. Do you want to continue?'),
                   function () {
                     $rootScope.$emit('saveProjectAs', function () {
-                      
-                      // 3. Copy the included files
-                      
-                        copyIncludedFiles(files, origPath, destPath, function (success) {
-                          if (success) {
-                            // 4. Success: import block
-                            doImportBlock();
-                          }
-                        });
+                      // 3. Block will be imported if copying the included files is successful
+                      doImportBlock(files, origPath, destPath);
                     });
                   });
               }
             }
             else {
               // No included files to copy
-              // 4. Import block
               doImportBlock();
             }
           }
 
-          function doImportBlock() {
-            self.addBlock(block).then(() => {
+          function doImportBlock(files, origPath, destPath) {
+            self.addBlock(block, files, origPath, destPath).then(() => {
               if (notification) {
                 alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
               }
@@ -704,7 +699,7 @@ angular.module('icestudio')
       graph.createBasicBlock(type);
     };
 
-    this.addBlock = function (block) {
+    this.addBlock = function (block, files, origPath, destPath) {
       return new Promise((resolve, reject) => {
         return approveProjectBlock(block).then((result) => {
           if (result === 'cancel') {
@@ -712,16 +707,30 @@ angular.module('icestudio')
             return;
           }
 
-          block = pruneBlock(block);
-          if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
-            var dat = new Date();
-            var seq = dat.getTime();
-            block.package.otid = seq;
+          if (files) {
+            copyIncludedFiles(files, origPath, destPath, function (success) {
+              if (success) {
+                _createBlock();
+              } else {
+                reject('copyIncludedFiles');
+              }
+            });
+          } else {
+            _createBlock();
           }
-          var type = utils.dependencyID(block);
-          utils.mergeDependencies(type, block);
-          graph.createBlock(type, block);
-          resolve();
+
+          function _createBlock() {
+            block = pruneBlock(block);
+            if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
+              var dat = new Date();
+              var seq = dat.getTime();
+              block.package.otid = seq;
+            }
+            var type = utils.dependencyID(block);
+            utils.mergeDependencies(type, block);
+            graph.createBlock(type, block);
+            resolve();
+          }
         });
       });
     };
