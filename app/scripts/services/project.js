@@ -90,7 +90,7 @@ angular.module('icestudio')
       }
 
       project = _safeUpgradeVersion(data, name);
-      approveProjectBlock(project).then((result) => {
+      utils.approveProjectBlock(profile, project, true).then((result) => {
         if (result === 'cancel') {
           console.log('cancelLoad');
           utils.endBlockingTask();
@@ -603,44 +603,6 @@ angular.module('icestudio')
       return _project;
     }
 
-    function checkIsAnyInout(project) {
-      if (_checkIsAnyInout(project)) {
-        return true;
-      }
-      for (var d in project.dependencies) {
-        if (_checkIsAnyInout(project.dependencies[d])) {
-          return true;
-        }
-      }
-
-      function _checkIsAnyInout(_project) {
-        for (var i in _project.design.graph.blocks) {
-          var block = _project.design.graph.blocks[i];
-          switch (block.type) {
-            case blocks.BASIC_INPUT:
-            case blocks.BASIC_OUTPUT:
-              if (block.data.inout) {
-                return true;
-              }
-              break;
-            case blocks.BASIC_CODE:
-              if (block.data.ports.inoutLeft && block.data.ports.inoutLeft.length) {
-                return true;
-              }
-              if (block.data.ports.inoutRight && block.data.ports.inoutRight.length) {
-                return true;
-              }
-              break;
-            default:
-              // Generic block
-              break;
-          }
-        }
-        return false;
-      }
-      return false;
-    }
-
     this.snapshot = function () {
       this.backup = utils.clone(project);
     };
@@ -697,7 +659,7 @@ angular.module('icestudio')
 
     this.addBlock = function (block, files, origPath, destPath) {
       return new Promise((resolve, reject) => {
-        return approveProjectBlock(block, true).then((result) => {
+        return utils.approveProjectBlock(profile, block).then((result) => {
           if (result === 'cancel') {
             reject('cancelImport');
             return;
@@ -752,65 +714,6 @@ angular.module('icestudio')
         }
       }
       return block;
-    }
-
-    // Check for Advanced block being opened or added: If it has tri-state, and user does not have
-    // Advanced profile setting for tri-state, user needs to approve or cancel
-    //
-    // Return 'cancel' or return 'ok' or a variant of 'ok'
-    function approveProjectBlock(block, isAdd) {
-      if (profile.get('allowInoutPorts') || common.allowProjectInoutPorts) {
-        return Promise.resolve('ok');
-      }
-
-      const hasInoutPorts = checkIsAnyInout(block);
-      if (!hasInoutPorts) {
-        return Promise.resolve('ok');
-      }
-
-      // user can approve by either updating profile 'allowInoutPorts' or setting
-      // flag common.allowProjectInoutPorts
-      const prompt = (isAdd ?
-        gettextCatalog.getString('You are adding a block that uses "tri-state".') :
-        gettextCatalog.getString('You are loading a design that uses "tri-state".')) +
-        ' ' +
-        gettextCatalog.getString('Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in standard designs.<br /><br />You will be asked to update your Preferences (Advanced user setting) or you can just open this design on a preview basis.<br /><br />Continue?');
-      return new Promise((resolve) => {
-        alertify.confirm(prompt, () => {
-          resolve('ok');
-        }, () => {
-          resolve('cancel');
-        });
-      })
-      .then((result) => {
-        if (result === 'cancel') {
-          return result;
-        }
-
-        return new Promise((resolve) => {
-          alertify.set('confirm', 'defaultFocus', 'cancel');
-          alertify.confirm(gettextCatalog.getString('Click "Yes" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;&nbsp;<b>Advanced features -> Allow tri-state connections</b><br /><br />Click "This time" to view tri-state for this design only.'), () => {
-            profile.set('allowInoutPorts', true);
-            alertify.warning(gettextCatalog.getString('Changed Preferences: Allow tri-state connections'));
-            resolve('ok_advanced');
-          }, () => {
-            common.allowProjectInoutPorts = true;
-            alertify.warning(gettextCatalog.getString('Viewing tri-state'));
-            resolve('ok_this_time');
-          }).set('labels', {
-            ok: gettextCatalog.getString('Yes'),
-            cancel: gettextCatalog.getString('This time')
-          });
-        })
-        .then((result) => {
-          alertify.set('confirm', 'defaultFocus', 'ok');
-          alertify.set('confirm', 'labels', {
-            ok: gettextCatalog.getString('OK'),
-            cancel: gettextCatalog.getString('Cancel')
-          });
-          return result;
-        });
-      });
     }
 
     this.clear = function () {

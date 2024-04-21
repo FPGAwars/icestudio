@@ -1266,57 +1266,51 @@ angular.module('icestudio')
             this.pasteSelected = function () {
                 if (document.activeElement.tagName === 'A' ||
                     document.activeElement.tagName === 'BODY') {
-                    utils.pasteFromClipboard(function (object) {
-                        if (object.version === common.VERSION) {
-                            self.appendDesign(object.design, object.dependencies);
-                        }
+                    utils.pasteFromClipboard(profile, function (object) {
+                        self.appendDesign(object.design, object.dependencies);
                     });
                 }
             };
             this.pasteAndCloneSelected = function () {
                 if (document.activeElement.tagName === 'A' ||
                     document.activeElement.tagName === 'BODY') {
-                    utils.pasteFromClipboard(function (object) {
-                        if (object.version === common.VERSION) {
+                    utils.pasteFromClipboard(profile, function (object) {
+                        let hash = {};
+                        // We will clone all dependencies
+                        if (typeof object.dependencies !== false &&
+                            object.dependencies !== false &&
+                            object.dependencies !== null) {
 
-                            let hash = {};
-                            // We will clone all dependencies
-                            if (typeof object.dependencies !== false &&
-                                object.dependencies !== false &&
-                                object.dependencies !== null) {
+                            var dependencies = utils.clone(object.dependencies);
+                            object.dependencies = {};
+                            let hId = false;
+                            let dep = false;
+                            let dat = false;
+                            let seq = false;
+                            let oldversion = false;
 
-                                var dependencies = utils.clone(object.dependencies);
-                                object.dependencies = {};
-                                let hId = false;
-                                let dep = false;
-                                let dat = false;
-                                let seq = false;
-                                let oldversion = false;
+                            for (dep in dependencies) {
+                                dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
+                                dat = new Date();
+                                seq = dat.getTime();
+                                oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, '$1');
+                                dependencies[dep].package.version = oldversion + '-c' + seq;
 
-                                for (dep in dependencies) {
-                                    dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
-                                    dat = new Date();
-                                    seq = dat.getTime();
-                                    oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, '$1');
-                                    dependencies[dep].package.version = oldversion + '-c' + seq;
-
-                                    hId = utils.dependencyID(dependencies[dep]);
-                                    object.dependencies[hId] = dependencies[dep];
-                                    hash[dep] = hId;
-                                }
-
-                                //reassign dependencies
-
-                                object.design.graph.blocks = object.design.graph.blocks.map(function (e) {
-                                    if (typeof e.type !== 'undefined' &&
-                                        typeof hash[e.type] !== 'undefined') {
-                                        e.type = hash[e.type];
-                                    }
-                                    return e;
-                                });
+                                hId = utils.dependencyID(dependencies[dep]);
+                                object.dependencies[hId] = dependencies[dep];
+                                hash[dep] = hId;
                             }
-                            self.appendDesign(object.design, object.dependencies);
+
+                            //reassign dependencies
+                            object.design.graph.blocks = object.design.graph.blocks.map(function (e) {
+                                if (typeof e.type !== 'undefined' &&
+                                    typeof hash[e.type] !== 'undefined') {
+                                    e.type = hash[e.type];
+                                }
+                                return e;
+                            });
                         }
+                        self.appendDesign(object.design, object.dependencies);
                     });
                 }
             };
@@ -1324,9 +1318,7 @@ angular.module('icestudio')
             this.duplicateSelected = function() {
                 if (hasSelection()) {
                     utils.duplicateSelected(selection, graph, function (object) {
-                        if (object.version === common.VERSION) {
-                            self.appendDesign(object.design, object.dependencies);
-                        }
+                        self.appendDesign(object.design, object.dependencies);
                     });
                 }
             };
@@ -1657,7 +1649,7 @@ angular.module('icestudio')
                 });
 
                 if (isMigrated) {
-                    alertify.warning(gettextCatalog.getString("If you see blank IN/OUT pins, it is because equivalent pins do not exist on this board"));
+                    alertify.warning(gettextCatalog.getString('If you see blank IN/OUT pins, it is because equivalent pins do not exist on this board'));
                 }
 
 
