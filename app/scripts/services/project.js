@@ -66,7 +66,6 @@ angular.module('icestudio')
 
     this._decoupledOpen = function(filepath,emptyPath){
       var self = this;
-       
       self.path = emptyPath ? '' : filepath;
       self.filepath = filepath;
       utils.readFile(filepath)

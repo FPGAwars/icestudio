@@ -127,7 +127,12 @@ angular.module('icestudio')
           //-- Code block
           case blocks.BASIC_CODE:
 
-            form = new forms.FormBasicCode();
+            //-- Inout ports are present or not, and if present, the value is just initialized to empty string
+            if (allowInoutPorts) {
+              inoutDefault = '';
+            }
+
+            form = new forms.FormBasicCode('', '', '', inoutDefault, inoutDefault);
             newBasicCode(form, callback);
             break;
 
@@ -1400,8 +1405,8 @@ angular.module('icestudio')
 
       function editBasicCode(allowInoutPorts, cellView, callback) {
 
-        let inPortNames = [];
-        let outPortNames = [];
+        let inPortNames = '';
+        let outPortNames = '';
         let inoutLeftPortNames;
         let inoutRightPortNames;
 
