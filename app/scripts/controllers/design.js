@@ -140,9 +140,14 @@ angular
         }
       };
 
+      function loadSelectedGraph() {
+        utils.beginBlockingTask(); 
+        setTimeout(function(){
+          _decoupledLoadSelectedGraph();
+        },500);
+      }
+
       function _decoupledLoadSelectedGraph() {
-      
-        
         var n = graph.breadcrumbs.length;
         var opt = { disabled: true };
         var design = false;
@@ -166,8 +171,7 @@ angular
           graph.resetView();
           graph.loadDesign(design, opt, function () {
             $scope.isNavigating = false;
-             graph.fitContent();
-
+            utils.endBlockingTask();
           });
           $scope.topModule = true;
         }
@@ -191,22 +195,11 @@ angular
           graph.fitContent();
           graph.resetView();
           graph.loadDesign(dependency.design, opt, function () {
-            graph.fitContent();
             $scope.isNavigating = false;
-
+            utils.endBlockingTask();
           });
           $scope.information = dependency.package;
         }
-      }
-
-
-      
-      function loadSelectedGraph() {
-      
-        utils.beginBlockingTask(); 
-        setTimeout(function(){
-          _decoupledLoadSelectedGraph();
-        },500);
       }
 
       $rootScope.$on('navigateProject', function (event, args) {
@@ -230,9 +223,7 @@ angular
           graph.resetView();
           project.update({ deps: false }, function () {
             graph.loadDesign(args.project.design, opt, function () {
-
               utils.endBlockingTask();
-            
             });
 
           });

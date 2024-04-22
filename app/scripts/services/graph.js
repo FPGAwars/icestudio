@@ -1451,7 +1451,7 @@ angular.module('icestudio')
 
                     let cells = graphToCells(design.graph, opt);
 
-                      self.fitContent();
+                    self.fitContent();
 
                     graph.addCells(cells);
 
@@ -1463,23 +1463,14 @@ angular.module('icestudio')
                     }
 
                     if (callback) {
-
-
                         callback();
-
-                        utils.endBlockingTask();
-                        
-                         self.fitContent();
-                    } else {
-
-                        utils.endBlockingTask();
-                   
-                         self.fitContent();
-
                     }
-                   
+
+                    self.fitContent();
                     return true;
                 }
+
+                return false;
             };
 
             function graphToCells(_graph, opt) {
