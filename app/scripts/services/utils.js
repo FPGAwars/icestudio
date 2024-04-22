@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('utils', function ($rootScope,
     gettextCatalog,
     common,
+    blocks,
     forms,
     _package,
     window,
@@ -1146,7 +1147,8 @@ angular.module('icestudio')
       });
     };
 
-    this.pasteFromClipboard = function (callback) {
+    this.pasteFromClipboard = function (profile, callback) {
+      var _this = this;
       nodeCP.paste(function (err, text) {
         if (err) {
           if (common.LINUX) {
@@ -1184,7 +1186,19 @@ angular.module('icestudio')
           // Parse the global clipboard
           var clipboard = JSON.parse(text);
           if (callback && clipboard && clipboard.icestudio) {
-            callback(clipboard.icestudio);
+            const block = clipboard.icestudio;
+            if (block.version === common.VERSION) {
+              _this.approveProjectBlock(profile, block).then((result) => {
+                if (result === 'cancel') {
+                  console.log('cancelPaste');
+                  return;
+                }
+
+                callback(block);
+              });
+            } else {
+              alertify.error(gettextCatalog.getString('Cannot paste from a different project format ({{version}})', { version: block.version }), 5);
+            }
           }
         }
       });
@@ -1232,7 +1246,7 @@ angular.module('icestudio')
       // - design.graph
       // - dependencies
 
-      var blocks = [];
+      var _blocks = [];
       var wires = [];
       var p = {
         version: common.VERSION,
@@ -1263,7 +1277,7 @@ angular.module('icestudio')
             cell.type === 'ice.Memory') {
             block.size = cell.size;
           }
-          blocks.push(block);
+          _blocks.push(block);
         } else if (cell.type === 'ice.Wire') {
           var wire = {};
           wire.source = {
@@ -1282,7 +1296,7 @@ angular.module('icestudio')
 
       p.design.board = common.selectedBoard.name;
       p.design.graph = {
-        blocks: blocks,
+        blocks: _blocks,
         wires: wires
       };
 
@@ -1300,9 +1314,8 @@ angular.module('icestudio')
     this.findSubDependencies = function (dependency) {
       var subDependencies = [];
       if (dependency) {
-        var blocks = dependency.design.graph.blocks;
-        for (var i in blocks) {
-          var type = blocks[i].type;
+        for (var i in dependency.design.graph.blocks) {
+          var type = dependency.design.graph.blocks[i].type;
           if (type.indexOf('basic.') === -1) {
             subDependencies.push(type);
             var newSubDependencies = this.findSubDependencies(common.allDependencies[type]);
@@ -1313,6 +1326,103 @@ angular.module('icestudio')
       }
       return subDependencies;
     };
+
+    // Check for Advanced block being opened or imported: If it has tri-state, and user does not have
+    // Advanced profile setting for tri-state, user needs to approve or cancel
+    //
+    // Return 'cancel' or return 'ok' or a variant of 'ok'
+    this.approveProjectBlock = function (profile, block, isLoad) {
+      if (profile.get('allowInoutPorts') || common.allowProjectInoutPorts) {
+        return Promise.resolve('ok');
+      }
+
+      const hasInoutPorts = checkIsAnyInout(block);
+      if (!hasInoutPorts) {
+        return Promise.resolve('ok');
+      }
+
+      // user can approve by either updating profile 'allowInoutPorts' or setting
+      // flag common.allowProjectInoutPorts
+      const prompt = (isLoad ?
+        gettextCatalog.getString('You are loading a design that uses "tri-state".') :
+        gettextCatalog.getString('You are importing a block that uses "tri-state".')) +
+        ' ' +
+        gettextCatalog.getString('Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in standard designs.<br /><br />You will be asked to update your Preferences (Advanced user setting) or you can just open this design on a preview basis.<br /><br />Continue?');
+      return new Promise((resolve) => {
+        alertify.confirm(prompt, () => {
+          resolve('ok');
+        }, () => {
+          resolve('cancel');
+        });
+      })
+      .then((result) => {
+        if (result === 'cancel') {
+          return result;
+        }
+
+        return new Promise((resolve) => {
+          alertify.set('confirm', 'defaultFocus', 'cancel');
+          alertify.confirm(gettextCatalog.getString('Click "Yes" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;&nbsp;<b>Advanced features -> Allow tri-state connections</b><br /><br />Click "This time" to view tri-state for this design only.'), () => {
+            profile.set('allowInoutPorts', true);
+            alertify.warning(gettextCatalog.getString('Changed Preferences: Allow tri-state connections'));
+            resolve('ok_advanced');
+          }, () => {
+            common.allowProjectInoutPorts = true;
+            alertify.warning(gettextCatalog.getString('Viewing tri-state'));
+            resolve('ok_this_time');
+          }).set('labels', {
+            ok: gettextCatalog.getString('Yes'),
+            cancel: gettextCatalog.getString('This time')
+          });
+        })
+        .then((result) => {
+          alertify.set('confirm', 'defaultFocus', 'ok');
+          alertify.set('confirm', 'labels', {
+            ok: gettextCatalog.getString('OK'),
+            cancel: gettextCatalog.getString('Cancel')
+          });
+          return result;
+        });
+      });
+    };
+
+    function checkIsAnyInout(project) {
+      if (_checkIsAnyInout(project)) {
+        return true;
+      }
+      for (var d in project.dependencies) {
+        if (_checkIsAnyInout(project.dependencies[d])) {
+          return true;
+        }
+      }
+
+      function _checkIsAnyInout(_project) {
+        for (var i in _project.design.graph.blocks) {
+          var block = _project.design.graph.blocks[i];
+          switch (block.type) {
+            case blocks.BASIC_INPUT:
+            case blocks.BASIC_OUTPUT:
+              if (block.data.inout) {
+                return true;
+              }
+              break;
+            case blocks.BASIC_CODE:
+              if (block.data.ports.inoutLeft && block.data.ports.inoutLeft.length) {
+                return true;
+              }
+              if (block.data.ports.inoutRight && block.data.ports.inoutRight.length) {
+                return true;
+              }
+              break;
+            default:
+              // Generic block
+              break;
+          }
+        }
+        return false;
+      }
+      return false;
+    }
 
     this.hasInputRule = function (port, apply) {
       apply = (apply === undefined) ? true : apply;

@@ -834,7 +834,7 @@ angular.module('icestudio')
           //-- Field 0: Text input
           let field0 = new TextField(
             msg,     //-- Top message
-            name,   //-- Default value
+            name,    //-- Default value
             0        //-- Field id
           );
 
@@ -974,14 +974,16 @@ angular.module('icestudio')
         //--                                      |
         //--    [✅️] FPGA pin                     |
         //--    [  ] Show clock                   |
-        //--    [  ] InOut pin                    |
+        //--    [  ] InOut pin (*Optional)        |
         //----------------------------------------+
         //-- INPUTS:
         //--   * name: Default port name
         //--   * virtual: Is this a virtual or real port?
-        //--   * Clock: The input pin carries a clock signal
+        //--   * clock: The input pin carries a clock signal
         //--   * disabled: FPGA-pin checkbox disabled
-        constructor(name = '', virtual = false, clock = false, disabled = false, inout = false) {
+        //--   * inoutValue: If undefined, InOut-pin checkbox is hidden
+        //       Otherwise, it is a boolean value to initialize the checkbox
+        constructor(name = '', virtual = false, clock = false, disabled = false, inoutValue = undefined) {
 
           //-- Create a blank BasicPortForm (calling the upper Class)
           super(gettextCatalog.getString('Input port name:'),
@@ -1005,17 +1007,17 @@ angular.module('icestudio')
           //-- Add the fields to the form
           this.addField(field2);
 
-          //-- Field 3: Checkbox for configuring the pi as inout
+          //-- Field 3: Checkbox for configuring the pin as inout
+          if (inoutValue !== undefined) {
+            let field3 = new CheckboxField(
+              gettextCatalog.getString('InOut pin'),
+              inoutValue,  //-- Default value
+              3            //-- Field id
+            );
 
-          let field3 = new CheckboxField(
-            gettextCatalog.getString('InOut pin'),
-            inout,  //-- Default value
-            3       //-- Field id
-          );
-
-          //-- Add the fields to the form
-          this.addField(field3);
-
+            //-- Add the fields to the form
+            this.addField(field3);
+          }
 
           //-- Store the initial values
           //-- (For comparing it later with the new ones and detect if
@@ -1023,7 +1025,9 @@ angular.module('icestudio')
           this.nameIni = name;
           this.virtualIni = virtual;
           this.clockIni = clock;
-          this.inoutIni = inout;
+          if (inoutValue !== undefined) {
+            this.inoutIni = inoutValue;
+          }
         }
 
         //------------------------------------------------
@@ -1040,10 +1044,9 @@ angular.module('icestudio')
           //-- it indicates if this is a clock input
           this.clock = this.values[2];
 
-          //-- Input port have the inout property
-          //-- it indicates if this pin is an inout pin
+          //-- There may be no inout field in Values (undefined)
+          //-- If inout field is present, it indicates if this pin is an inout type
           this.inout = this.values[3];
-
 
           //-- Check all ports again... There could be no data buses defined
           //-- as clocks (it is only for 1-wire ports)
@@ -1065,10 +1068,10 @@ angular.module('icestudio')
 
           //-- There have been no errors. Detect if there have been some
           //-- changes in the values
-          this.changed = (this.nameIni !== this.values[0] ||
+          this.changed = this.nameIni !== this.values[0] ||
             this.virtualIni !== this.virtual ||
-            this.inoutIni !== this.inout ||
-            this.clockIni !== this.clock);
+            this.clockIni !== this.clock ||
+            this.hasOwnProperty('inoutIni') && this.inoutIni !== this.inout;
         }
 
         //-------------------------------------------------------------
@@ -1118,13 +1121,15 @@ angular.module('icestudio')
         //--    +--------------------------+      |
         //--                                      |
         //--    [✅️] FPGA pin                     |
-        //--    [ ] InOut pin                     |
+        //--    [  ] InOut pin (*Optional)        |
         //----------------------------------------+
         //-- INPUTS:
-        //--   * msg: Message above the text box
         //--   * name: Default port name
         //--   * virtual: Is this a virtual or real port?
-        constructor(name = '', virtual = false, disabled = false, inout = false) {
+        //--   * disabled: FPGA-pin checkbox disabled
+        //--   * inoutValue: If undefined, InOut-pin checkbox is hidden
+        //       Otherwise, it is a boolean value to initialize the checkbox
+        constructor(name = '', virtual = false, disabled = false, inoutValue = undefined) {
 
           //-- Create a blank BasicPortForm (calling the upper Class)
           super(gettextCatalog.getString('Output port name'),
@@ -1135,20 +1140,28 @@ angular.module('icestudio')
           //-- Store the type of block associated with the Form
           this.type = blocks.BASIC_OUTPUT;
 
-          let field2 = new CheckboxField(
-            gettextCatalog.getString('InOut pin'),
-            inout,  //-- Default value
-            2       //-- Field id
-          );
+          //-------- Add the particular fields
 
-          //-- Add the fields to the form
-          this.addField(field2);
+          //-- Field 2: Checkbox for configuring the pin as inout
+          if (inoutValue !== undefined) {
+            let field2 = new CheckboxField(
+              gettextCatalog.getString('InOut pin'),
+              inoutValue,  //-- Default value
+              2            //-- Field id
+            );
+
+            //-- Add the field to the form
+            this.addField(field2);
+          }
+
           //-- Store the initial values
           //-- (For comparing it later with the new ones and detect if
           //--  there have been changes)
           this.nameIni = name;
           this.virtualIni = virtual;
-          this.inoutIni = inout;
+          if (inoutValue !== undefined) {
+            this.inoutIni = inoutValue;
+          }
         }
 
         process(evt) {
@@ -1156,15 +1169,15 @@ angular.module('icestudio')
           //-- Process the form as an BasicPort
           super.process(evt);
 
-          //-- Input port have the inout property
-          //-- it indicates if this pin is an inout pin
+          //-- There may be no inout field in Values (undefined)
+          //-- If inout field is present, it indicates if this pin is an inout type
           this.inout = this.values[2];
 
           //-- There have been no errors. Detect if there have been some
           //-- changes in the values
-          this.changed = (this.nameIni !== this.values[0] ||
+          this.changed = this.nameIni !== this.values[0] ||
             this.virtualIni !== this.virtual ||
-            this.inoutIni !== this.inout);
+            this.hasOwnProperty('inoutIni') && this.inoutIni !== this.inout;
         }
 
         //-------------------------------------------------------------
@@ -1584,9 +1597,13 @@ angular.module('icestudio')
         //-- INPUTS:
         //--   * portsIn: Input port names (separated by commas)
         //--   * portsOut: Output port names (separated by commas)
-        //--   * paramsIn: Input parameters names (separataed by commas)
+        //--   * paramsIn: Input parameters names (separated by commas)
+        //--   * portsInOutLeft: If undefined, InputOutput port names field is hidden
+        //       Otherwise, it is string of port names (separated by commas) to populate the field
+        //--   * portsInOutRight: If undefined, InputOutput port names field is hidden
+        //       Otherwise, it is string of port names (separated by commas) to populate the field
         //-----------------------------------------------------------------
-        constructor(portsIn = '', portsOut = '', paramsIn = '', portsInOutLeft = '', portsInOutRight = '') {
+        constructor(portsIn = '', portsOut = '', paramsIn = '', portsInOutLeft = undefined, portsInOutRight = undefined) {
 
           //-- Create a blank Form (calling the upper Class)
           super();
@@ -1614,25 +1631,37 @@ angular.module('icestudio')
             2
           );
 
-          //-- Field 3: InputOutput port names at the left
-          let field3 = new TextField(
-            gettextCatalog.getString('InOut Left ports'), //-- Top message
-            portsInOutLeft,   //-- Default InputOutput port names at the left
-            3          //-- Field id
-          );
-
-          //-- Field 4: InputOutput port names at the right
-          let field4 = new TextField(
-            gettextCatalog.getString('InOut Right ports'), //-- Top message
-            portsInOutRight,  //-- Default InputOutput port names at the right
-            4          //-- Field id
-          );
-          //-- Add the fields to the form
           this.addField(field0);
           this.addField(field1);
           this.addField(field2);
-          this.addField(field3);
-          this.addField(field4);
+
+          //-- Optional fields
+          let field3;
+          let field4;
+
+          //-- Field 3: InputOutput port names at the left
+          if (portsInOutLeft !== undefined) {
+            field3 = new TextField(
+              gettextCatalog.getString('InOut Left ports'), //-- Top message
+              portsInOutLeft,   //-- Default InputOutput port names at the left
+              3                 //-- Field id
+            );
+
+            //-- Add the field to the form
+            this.addField(field3);
+          }
+
+          //-- Field 4: InputOutput port names at the right
+          if (portsInOutRight !== undefined) {
+            field4 = new TextField(
+              gettextCatalog.getString('InOut Right ports'), //-- Top message
+              portsInOutRight,  //-- Default InputOutput port names at the right
+              4                 //-- Field id
+            );
+
+            //-- Add the field to the form
+            this.addField(field4);
+          }
 
           //-- Control the notifications generated by 
           //-- the errors when processing the form
@@ -1640,12 +1669,14 @@ angular.module('icestudio')
 
           //-- Store the initial values used for creating the form
           //-- They will be used later for detecting a change in 
-          //-- the vaues introduced by the user
+          //-- the values introduced by the user
           this.iniPortsIn = portsIn;
           this.iniPortsOut = portsOut;
           this.iniParamsIn = paramsIn;
-          this.iniPortsInOutLeft = portsInOutLeft;
-          this.iniPortsInOutRight = portsInOutRight;
+          if (portsInOutLeft !== undefined && portsInOutRight !== undefined) {
+            this.iniPortsInOutLeft = portsInOutLeft;
+            this.iniPortsInOutRight = portsInOutRight;
+          }
         }
 
         //-----------------------------------------------------------------------
@@ -1714,14 +1745,17 @@ angular.module('icestudio')
           //-- Parse the input parameters
           this.inParams = Form.parseNames(this.values[2]);
 
-          //-- Values[3]: Input port names at the right of the block
-          //-- Parse the input/output port names
-          this.inoutLeftPorts = Form.parseNames(this.values[3]);
+          //-- Values[3]: InputOutput port names at the left of the block
+          //-- If field is present in Values, then parse the inout port names
+          if (this.values[3]) {
+            this.inoutLeftPorts = Form.parseNames(this.values[3]);
+          }
 
-          //-- Values[4]: input/Output port names at the right of the block
-          //-- Parse the input/output port names
-          this.inoutRightPorts = Form.parseNames(this.values[4]);
-
+          //-- Values[4]: InputOutput port names at the right of the block
+          //-- If field is present in Values, then parse the inout port names
+          if (this.values[4]) {
+            this.inoutRightPorts = Form.parseNames(this.values[4]);
+          }
 
         }
 
@@ -1742,8 +1776,12 @@ angular.module('icestudio')
           this.inPortsInfo = this.getPortInfo(this.inPorts, evt);
           this.outPortsInfo = this.getPortInfo(this.outPorts, evt);
           this.inParamsInfo = this.getPortInfo(this.inParams, evt);
-          this.inoutLeftPortsInfo = this.getPortInfo(this.inoutLeftPorts, evt);
-          this.inoutRightPortsInfo = this.getPortInfo(this.inoutRightPorts, evt);
+          if (this.hasOwnProperty('inoutLeftPorts')) {
+            this.inoutLeftPortsInfo = this.getPortInfo(this.inoutLeftPorts, evt);
+          }
+          if (this.hasOwnProperty('inoutRightPorts')) {
+            this.inoutRightPortsInfo = this.getPortInfo(this.inoutRightPorts, evt);
+          }
 
           //-- Validate values entered by the user
           //-- There cannot be inputs, outputs and params with the same name
@@ -1752,11 +1790,16 @@ angular.module('icestudio')
           //-- Array for storing all the port names created
           let allPortnames = [];
 
-          //-- Array with the input/output given by the user
-          let userPorts = this.inPortsInfo.concat(this.outPortsInfo, this.inoutLeftPortsInfo, this.inoutRightPortsInfo);
+          //-- Array with the inputs and outputs given by the user
+          let userPorts = this.inPortsInfo.concat(this.outPortsInfo);
 
           //-- Add the array with the input parameters
           userPorts = userPorts.concat(this.inParamsInfo);
+
+          //-- Add the optional arrays with the left/right InputOutput ports
+          if (this.inoutLeftPortsInfo && this.inoutRightPortsInfo) {
+            userPorts = userPorts.concat(this.inoutLeftPortsInfo, this.inoutRightPortsInfo);
+          }
 
           //-- Analyze all the port names, one by one
           for (let portInfo of userPorts) {
@@ -1804,21 +1847,24 @@ angular.module('icestudio')
           //-- Get the input param names as a string
           let inParamNames = blocks.portsInfo2Str(this.inParamsInfo);
 
-          //-- Get the input/output port names as a string
-          let inoutLeftPortNames = blocks.portsInfo2Str(this.inoutLeftPortsInfo);
+          //-- Get the optional left/right InputOutput port names as strings
+          let inoutLeftPortNames;
+          let inoutRightPortNames;
 
-          //-- Get the input/output port names as a string
-          let inoutRightPortNames = blocks.portsInfo2Str(this.inoutRightPortsInfo);
+          if (this.inoutLeftPortsInfo && this.inoutRightPortsInfo) {
+            inoutLeftPortNames = blocks.portsInfo2Str(this.inoutLeftPortsInfo);
 
+            inoutRightPortNames = blocks.portsInfo2Str(this.inoutRightPortsInfo);
+          }
 
           //-- Compare these values with the initial ones
           //-- to detec if there has been a change
           //-- All the items compared are Strings
-          let changed = inPortNames !== this.iniPortsIn ||
-            outPortNames !== this.iniPortsOut ||
-            inoutLeftPortNames !== this.iniPortsInOutLeft ||
-            inoutRightPortNames !== this.iniPortsInOutRight ||
-            inParamNames !== this.iniParamsIn;
+          let changed = this.iniPortsIn !== inPortNames ||
+            this.iniPortsOut !== outPortNames ||
+            this.iniParamsIn !== inParamNames ||
+            this.hasOwnProperty('iniPortsInOutLeft') && this.iniPortsInOutLeft !== inoutLeftPortNames ||
+            this.hasOwnProperty('iniPortsInOutRight') && this.iniPortsInOutRight !== inoutRightPortNames;
 
           //-- Return a boolean value
           return changed;
@@ -1839,8 +1885,8 @@ angular.module('icestudio')
           //-- Field 0: Memory block names
           let field0 = new TextField(
             gettextCatalog.getString('Memory blocks'), //-- Top message
-            names,   //-- Default Input port names
-            0          //-- Field id
+            names,   //-- Default names
+            0        //-- Field id
           );
 
           //-------- Field 1: Combobox
@@ -2058,7 +2104,7 @@ angular.module('icestudio')
             0        //-- Field id
           );
 
-          //-- Field 2: Checkbox for selecting if the constant is a 
+          //-- Field 1: Checkbox for selecting if the constant is a 
           //-- local parameter or not
           let field1 = new CheckboxField(
             gettextCatalog.getString('Local parameter'),

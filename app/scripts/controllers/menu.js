@@ -1027,6 +1027,17 @@ angular
         }
       };
 
+      $scope.toggleInoutPorts = function () {
+        const newState = !profile.get("allowInoutPorts");
+        profile.set("allowInoutPorts", newState);
+        if (newState) {
+          alertify.success(gettextCatalog.getString("Tri-state connections (inout ports) enabled"));
+        } else {
+          common.allowProjectInoutPorts = true; // if tri-state in current design, keep behaviour unchanged
+          alertify.success(gettextCatalog.getString("Tri-state connections (inout ports) disabled"));
+        }
+      };
+
       $(document).on("langChanged", function (evt, lang) {
         $scope.selectLanguage(lang);
       });

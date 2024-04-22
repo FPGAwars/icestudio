@@ -107,7 +107,10 @@ angular.module('icestudio')
       //--   * Particular information:
       //--      -clock: (bool). If the port is a clock or not
       //--         * true: It is a clock signal
-      //--         * False: Normal signal
+      //--         * false: Normal signal
+      //--      -inout: (bool). If the port is inout or normal
+      //--         * true: It is tri-state
+      //--         * false: It is normal two-state
       //-------------------------------------------------------------------------
       class InputPortBlock extends PortBlock {
 
@@ -118,7 +121,6 @@ angular.module('icestudio')
 
           //-- Particular information
           this.data.clock = clock;    //-- Optional. Is the port a clock input?
-
           this.data.inout = inout;
         }
       }
@@ -128,7 +130,10 @@ angular.module('icestudio')
       //-- Class: Output port. The information goes from the FPGA to the 
       //--        outside. Or from one block to another the upper level
       //--
-      //--   NO particular information
+      //--   * Particular information:
+      //--      -inout: (bool). If the port is inout or normal
+      //--         * true: It is tri-state
+      //--         * false: It is normal two-state
       //-------------------------------------------------------------------------
       class OutputPortBlock extends PortBlock {
 
@@ -230,6 +235,8 @@ angular.module('icestudio')
         //--   * inPortsInfo: Array of PortInfos
         //--   * outPortsInfo: Array of PortInfos
         //--   * inParamsInfo: Array of PortInfos
+        //--   * inoutLeftPortsInfo: Optional Array of PortInfos
+        //--   * inoutRightPortsInfo: Optional Array of PortInfos
         //--
         //--  PortInfos:
         //--    * name: String
@@ -297,28 +304,33 @@ angular.module('icestudio')
             this.data.params.push(info);
 
           });
-          //-- Insert the InputOutput portInfo
-          inoutLeftPortsInfo.forEach(portInfo => {
 
-            let info = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              size: portInfo.size > 1 ? portInfo.size : undefined
-            };
+          //-- Insert the InputOutput portInfo, left and/or right
+          if (inoutLeftPortsInfo) {
+            inoutLeftPortsInfo.forEach(portInfo => {
 
-            this.data.ports.inoutLeft.push(info);
-          });
-          //-- Insert the InputOutput portInfo
-          inoutRightPortsInfo.forEach(portInfo => {
+              let info = {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                size: portInfo.size > 1 ? portInfo.size : undefined
+              };
 
-            let info = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              size: portInfo.size > 1 ? portInfo.size : undefined
-            };
+              this.data.ports.inoutLeft.push(info);
+            });
+          }
 
-            this.data.ports.inoutRight.push(info);
-          });
+          if (inoutRightPortsInfo) {
+            inoutRightPortsInfo.forEach(portInfo => {
+
+              let info = {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                size: portInfo.size > 1 ? portInfo.size : undefined
+              };
+
+              this.data.ports.inoutRight.push(info);
+            });
+          }
         }
       }
 

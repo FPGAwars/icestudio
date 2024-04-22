@@ -31,6 +31,9 @@ angular
 
       // Project status: Has it change from the previous build or not?
       this.hasChangesSinceBuild = false;
+      // Tri-state ports: Are they present in any opened designs or blocks, and is this approved?
+      //                  (User profile "allowInoutPorts" is false)
+      this.allowProjectInoutPorts = false;
 
       // All project dependencies
       this.allDependencies = {};
