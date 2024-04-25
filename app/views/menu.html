@@ -542,8 +542,7 @@
 
                 <ul uib-dropdown-menu>
 
-                  <!-- Default collection -->
-                  <data ng-init="collection = common.defaultCollection"/>
+                  <!-- Default collection obsolete...
                   <li>
                     <a href ng-click="selectCollection(collection)" 
                        ng-show="collection.name == ''">
@@ -552,10 +551,10 @@
                             class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
+                  <li class="divider" 
+                      ng-show="common.internalCollections.length > 0"></li> -->
 
                   <!-- Internal collections -->
-                  <li class="divider" 
-                      ng-show="common.internalCollections.length > 0"></li>
                   <li ng-repeat="collection in common.internalCollections">
                     <a href ng-click="selectCollection(collection)" 
                        ng-hide="collection.name == ''">
