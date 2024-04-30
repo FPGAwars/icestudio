@@ -118,7 +118,8 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
   * use `scripts/update_translations.sh` to update current existing `*.po` language files based on the template (before editing them)
   * use `grunt compiletext` to regenerate `*.json` language files (these are what the IDE really need) to test them
 
-*Developer note*: use `export NWJS_BUILD_TYPE=sdk` after npm install to enable the chrome web console.
+*Developer note*:
+  * for Windows, use `npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"` or equivalent so the postinstall script can run during npm install
 
 ## Contributors
 
