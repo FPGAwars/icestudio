@@ -542,8 +542,9 @@
 
                 <ul uib-dropdown-menu>
 
-                  <!-- Default collection obsolete...
-                  <li>
+                  <!-- Default collection obsolete... -->
+                  <!-- Will be removed in the future...  -->
+                  <li ng-init="collection = common.defaultCollection">
                     <a href ng-click="selectCollection(collection)" 
                        ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
@@ -552,7 +553,7 @@
                     </a>
                   </li>
                   <li class="divider" 
-                      ng-show="common.internalCollections.length > 0"></li> -->
+                      ng-show="common.internalCollections.length > 0"></li>
 
                   <!-- Internal collections -->
                   <li ng-repeat="collection in common.internalCollections">
