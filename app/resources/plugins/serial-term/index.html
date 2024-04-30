@@ -215,58 +215,52 @@
     </div>
 
 
+    <p><br><strong>Terminal color coding:</strong></p>
+    <p>&nbsp;</p>
+    <p style="color:#FFFFFF" ;> White: Text being edited (to be sent on Enter)<br>
+    <p style="color:#edd20d" ;> Yellow: Text sent to the serial port<br>
+    <p style="color:#99fb04" ;> Green: Text received from the serial port<br><br></p>
 
-
-    <p><br><strong>Terminal Color code:</strong></p>
-    <p style="color:#FFFFFF" ;> white : text under edition (to be sent on enter) <br>
-    <p style="color:#edd20d" ;> Yellow : text sent to the serial port<br>
-    <p style="color:#99fb04" ;> green : text received from the serial port<br><br></p>
-
-
-    <!-- Show the some serial monitor info -->
+    <!-- Show info and instructions -->
 
     <textarea rows="45" cols="130">
 =========== User Manual ===========
 
-Serial Monitor Options:
+Serial Terminal options:
 
-- Local echo : prints on terminal the data sent to the serial port
-- Flush on enter(Checked): sent all the data only when enter is pressed.
-- Flush on enter(Unchecked): sent every character just after the press on the corresponding.
-- Hex view (checked); convert the RX received ASCII data to hexadecimal. And prints it on terminal
-- On enter sends: On enter key press, adds the selected special ascii char at the end of the Ascii TX stream and sent it to the serial port
+- Local echo: Print the data sent to serial port on the terminal also
+- Flush on Enter (Checked): Send all the data only when Enter is pressed
+- Flush on Enter (Unchecked): Send every character when key is pressed
+- Hex view (Checked): Convert the RX received ASCII data to hexadecimal to print it on the terminal
+- On Enter sends: On Enter key press, add the selected special ASCII char to the end of the TX stream that is sent to serial port
 
 -------------------------------------------------------------------------------------------------------
 Keyboard shortcuts when editing:
 
-- LEFT and RIGHT arrows : Move left and right for editing input
-- UP and DOWN arrows : Move up and down for editing input (in Multi-line continuation mode)
-- DELETE and BACKSPACE : one char deletion
-- HOME and END : cursor jump to the beginning or the end of the input text
-- Alt + UP arrow , Alt + DOWN arrow : access the commands you previously typed (Command History just like bash)
-remark: when cursor is at the beginning or at the end of the entered text, using up and down arrows also navigates trough command history.
-- Alt + LEFT arrow , Alt + RIGHT arrow : Word-boundary navigation, jump between words (separated by spaces " " char)
-- Alt + BACKspace : Word-boundary deletion, to delete a full word
+- LEFT and RIGHT arrows: Move left and right for editing input
+- UP and DOWN arrows: Move up and down for editing input (in Multi-line continuation mode)
+- DELETE and BACKSPACE: Delete one char
+- HOME and END: Jump to beginning or end of the input text
+- Alt + UP arrow, Alt + DOWN arrow: Access the commands previously typed (command history like bash)
+  Remark: When cursor is at the beginning or end of entered text, using UP and DOWN arrows also navigates through command history
+- Alt + LEFT arrow, Alt + RIGHT arrow: Word-boundary navigate (jump between words separated by space char)
+- Alt + BACKSPACE: Word-boundary delete (delete full word)
 
-Multi-line continuation mode: Break command to multiple lines if they contain incomplete quotation marks, boolean operators (&& or ||), pipe operator (|), or new-line escape sequence (\).
+Multi-line continuation mode: One command can be edited in multiple lines if it contains incomplete quotation marks, boolean operator (&& or ||), pipe operator (|), or new-line escape sequence (\)
 
 -------------------------------------------------------------------------------------------------------
 
-- To select text in terminal with mouse :
-Left click and move mouse OR double click on left button (word selection) OR triple click (select all text block)
+- To select text in terminal with mouse:
+Left click and drag mouse OR double click left button (word-select) OR triple click (select the full text block)
 
-- To copy text in terminal select the text and then:
-Press ctrl+Insert OR right click and select copy
+- To copy text in terminal, select the text then:
+Press Ctrl + INSERT OR right click and select Copy
 
 - To paste text in terminal:
-Press shift+Insert OR right click and select paste
+Press Shift + INSERT OR right click and select Paste
 
-
-remark : do not copy the text in the white (editing) section (the carriage returns were replace by "|" and spaces characters) so there will be no carriage returns in your copied text !
-
-          
-     </textarea>
-
+Remark: Do not copy the text in the white (editing) section. Carriage returns are substituted by "|" and space characters, so there will be no carriage returns in your copied text!
+</textarea>
 
 
     <div>
@@ -282,9 +276,6 @@ remark : do not copy the text in the white (editing) section (the carriage retur
         </div>
       </form>
     </div>
-
-
-
 
   </div>
 
@@ -325,7 +316,7 @@ remark : do not copy the text in the white (editing) section (the carriage retur
     <!-- Flush buffer on "Enter" key -->
     <span>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <label for="sconf-flushenter">Flush&nbsp;on&nbsp;enter</label>
+      <label for="sconf-flushenter">Flush&nbsp;on&nbsp;Enter</label>
       <input type="checkbox" name="sconf-flushenter" id="sconf-flushenter" checked />
     </span>
 
@@ -338,7 +329,7 @@ remark : do not copy the text in the white (editing) section (the carriage retur
     <!-- On enter -->
     <span>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <label for="sconf-onenter">On&nbsp;enter&nbsp;sends:</label>
+      <label for="sconf-onenter">On&nbsp;Enter&nbsp;sends:</label>
       <select id="sconf-onenter" size="1">
         <option selected value="CRLF">CRLF</option>
         <option value="CR">CR</option>
