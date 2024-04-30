@@ -1,3 +1,4 @@
+<a name="main-page"></a>  
 [![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-github.svg)](https://github.com/FPGAwars/icestudio/wiki)
 
 
