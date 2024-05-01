@@ -159,8 +159,8 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.10-blue.svg
-[version-image-wip]: https://img.shields.io/badge/version-v0.10.1w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.11-blue.svg
+[version-image-wip]: https://img.shields.io/badge/version-v0.11.3w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
