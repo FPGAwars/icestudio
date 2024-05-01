@@ -77,7 +77,7 @@
 let os = require("os");
 os.tmpDir = os.tmpdir;
 
-//-- This is for debuging...
+//-- This is for debugging...
 console.log("Executing Gruntfile.js...");
 
 //---------------------------------------------------------------------------
@@ -631,11 +631,11 @@ module.exports = function (grunt) {
 
   //------------------------------------------------------------
   //-- DEBUG
-  //-- Display information on the console, for debuging 
+  //-- Display information on the console, for debugging 
   //-- purposes
   //------------------------------------------------------------
 
-  console.log("------------ INFORMATION FOR DEBUGING -------------------");
+  console.log("------------ INFORMATION FOR DEBUGGING -------------------");
   console.log("* Package name: " + ICESTUDIO_PKG_NAME);
   console.log("* NW Version: " + NW_VERSION);
   console.log("* APPIMAGE: " + LINUX_APPIMAGE_FILE);
