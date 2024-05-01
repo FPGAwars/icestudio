@@ -1310,7 +1310,7 @@ msgstr ""
 
 #: app/scripts/services/utils.js:1348
 msgid "You are importing a block that uses \"tri-state\"."
-msgstr "Estás importando un bloque que usa \"tri-estados\""
+msgstr "Estás importando un bloque que usa \"tri-estados\"."
 
 #: app/scripts/services/utils.js:1347
 msgid "You are loading a design that uses \"tri-state\"."

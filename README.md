@@ -90,23 +90,23 @@ Icestudio is a design tool focused on new comers to the FPGA world
 <!-- START Language table -->
 |  Language  | Translated strings |
 |:----------:|:------------------:|
-| Spanish (es_ES) | ![Progress](http://progress-bar.dev/100) |
 | English (en) | ![Progress](http://progress-bar.dev/100) |
-| German (de_DE) | ![Progress](http://progress-bar.dev/86) |
-| Russian (ru_RU) | ![Progress](http://progress-bar.dev/75) |
-| Japanese (ja_JP) | ![Progress](http://progress-bar.dev/75) |
-| French (fr_FR) | ![Progress](http://progress-bar.dev/72) |
-| Taiwanese (zh_TW) | ![Progress](http://progress-bar.dev/71) |
-| Italian (it_IT) | ![Progress](http://progress-bar.dev/71) |
-| Chinese (zh_CN) | ![Progress](http://progress-bar.dev/67) |
-| Turkish (tr_TR) | ![Progress](http://progress-bar.dev/67) |
-| Korean (ko_KR) | ![Progress](http://progress-bar.dev/67) |
-| Basque (eu_ES) | ![Progress](http://progress-bar.dev/67) |
-| Czech (cs_CZ) | ![Progress](http://progress-bar.dev/67) |
-| Catalonian (ca_ES) | ![Progress](http://progress-bar.dev/65) |
-| Greek (el_GR) | ![Progress](http://progress-bar.dev/61) |
-| Dutch (nl_NL) | ![Progress](http://progress-bar.dev/60) |
-| Galician (gl_ES) | ![Progress](http://progress-bar.dev/60) |
+| Spanish (es_ES) | ![Progress](http://progress-bar.dev/100) |
+| Czech (cs_CZ) | ![Progress](http://progress-bar.dev/94) |
+| German (de_DE) | ![Progress](http://progress-bar.dev/82) |
+| French (fr_FR) | ![Progress](http://progress-bar.dev/79) |
+| Japanese (ja_JP) | ![Progress](http://progress-bar.dev/79) |
+| Russian (ru_RU) | ![Progress](http://progress-bar.dev/71) |
+| Italian (it_IT) | ![Progress](http://progress-bar.dev/67) |
+| Taiwanese (zh_TW) | ![Progress](http://progress-bar.dev/67) |
+| Basque (eu_ES) | ![Progress](http://progress-bar.dev/64) |
+| Chinese (zh_CN) | ![Progress](http://progress-bar.dev/64) |
+| Korean (ko_KR) | ![Progress](http://progress-bar.dev/64) |
+| Turkish (tr_TR) | ![Progress](http://progress-bar.dev/64) |
+| Catalonian (ca_ES) | ![Progress](http://progress-bar.dev/61) |
+| Greek (el_GR) | ![Progress](http://progress-bar.dev/58) |
+| Dutch (nl_NL) | ![Progress](http://progress-bar.dev/57) |
+| Galician (gl_ES) | ![Progress](http://progress-bar.dev/57) |
 
 
 **Contribute!**

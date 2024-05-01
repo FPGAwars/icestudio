@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: app/views/design.html:18
 msgid ""
@@ -32,7 +32,7 @@ msgid ""
 "        <b>Edit → Clone</b>."
 msgstr ""
 
-#: app/views/menu.html:891
+#: app/views/menu.html:873
 msgid "About Icestudio"
 msgstr "關於 Icestudio"
 
@@ -40,11 +40,11 @@ msgstr "關於 Icestudio"
 msgid "Acknowledgment"
 msgstr "致謝"
 
-#: app/views/menu.html:726
+#: app/views/menu.html:708
 msgid "Add"
 msgstr "新增"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1422
 msgid "Add a block to start"
 msgstr "新增區塊並開始"
 
@@ -52,28 +52,36 @@ msgstr "新增區塊並開始"
 msgid "Add as block"
 msgstr "新增為區塊"
 
-#: app/scripts/services/forms.js:1795
+#: app/scripts/services/forms.js:1912
 msgid "Address format"
 msgstr "地址格式"
 
-#: app/scripts/services/tools.js:1918
+#: app/views/menu.html:385
+msgid "Advanced features"
+msgstr ""
+
+#: app/scripts/services/tools.js:1939
 msgid "All collections removed"
 msgstr "已刪除全部選集"
 
-#: app/scripts/controllers/menu.js:1441
+#: app/scripts/controllers/menu.js:1462
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "儲存的選集會全部消失，是否要繼續?"
 
-#: app/scripts/services/tools.js:1500
+#: app/views/advanced.html:25
+msgid "Allow tri-state connections"
+msgstr ""
+
+#: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
 msgstr "至少需要 Python3.5版"
 
-#: app/scripts/services/utils.js:638
+#: app/scripts/services/utils.js:671
 msgid "Author"
 msgstr "作者"
 
-#: app/views/menu.html:771
+#: app/views/menu.html:753
 msgid "Basic"
 msgstr "基本區塊"
 
@@ -81,24 +89,24 @@ msgstr "基本區塊"
 msgid "Basque"
 msgstr "Basque"
 
-#: app/scripts/services/forms.js:1781
+#: app/scripts/services/forms.js:1898
 msgid "Binary"
 msgstr "Binary"
 
-#: app/scripts/services/tools.js:159
+#: app/scripts/services/tools.js:171
 msgid "Bitstream not found: build your project first"
 msgstr ""
 
-#: app/scripts/services/blockforms.js:1082
-#: app/scripts/services/blockforms.js:1206
-#: app/scripts/services/blockforms.js:1249
-#: app/scripts/services/blockforms.js:1299
-#: app/scripts/services/blockforms.js:1352
-#: app/scripts/services/blockforms.js:1492
+#: app/scripts/services/blockforms.js:1130
+#: app/scripts/services/blockforms.js:1254
+#: app/scripts/services/blockforms.js:1297
+#: app/scripts/services/blockforms.js:1347
+#: app/scripts/services/blockforms.js:1400
+#: app/scripts/services/blockforms.js:1568
 msgid "Block updated"
 msgstr "區塊已更新"
 
-#: app/scripts/services/project.js:505
+#: app/scripts/services/project.js:496
 msgid "Block {{name}} imported"
 msgstr "區塊 {{name}}已導入"
 
@@ -106,54 +114,61 @@ msgstr "區塊 {{name}}已導入"
 msgid "Blocks"
 msgstr "區塊"
 
-#: app/views/menu.html:526
+#: app/views/menu.html:508
 msgid "Board"
 msgstr "開發板"
 
-#: app/views/menu.html:385 app/views/menu.html:476
+#: app/views/advanced.html:15 app/views/menu.html:458
 msgid "Board rules"
 msgstr "開發板規則"
 
-#: app/scripts/controllers/menu.js:1016
+#: app/scripts/controllers/menu.js:1026
 msgid "Board rules disabled"
 msgstr "開發板規則停用"
 
-#: app/scripts/controllers/menu.js:1014
+#: app/scripts/controllers/menu.js:1024
 msgid "Board rules enabled"
 msgstr "開發板規則啟用"
 
-#: app/scripts/services/tools.js:759
+#: app/scripts/services/tools.js:766
 msgid "Board {{name}} disconnected"
 msgstr "開發板 {{name}}斷線"
 
-#: app/scripts/services/tools.js:718 app/scripts/services/tools.js:744
+#: app/scripts/services/tools.js:725 app/scripts/services/tools.js:751
 msgid "Board {{name}} not available"
 msgstr "開發板 {{name}}無法使用"
 
-#: app/scripts/services/tools.js:696
+#: app/scripts/services/tools.js:703
 msgid "Board {{name}} not connected"
 msgstr "開發板 {{name}} 未連線"
 
-#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1323
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1344
 msgid "Board {{name}} selected"
 msgstr "開發板{{name}} 已選中"
 
-#: app/scripts/services/tools.js:707 app/scripts/services/tools.js:737
+#: app/scripts/services/tools.js:714 app/scripts/services/tools.js:744
 msgid "Bootloader not active"
 msgstr "Bootloader 未啟動"
 
-#: app/scripts/controllers/menu.js:1345 app/views/design.html:506
-#: app/views/menu.html:625
+#: app/scripts/controllers/menu.js:1366 app/views/design.html:506
+#: app/views/menu.html:607
 msgid "Build"
 msgstr "建構"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1376
 msgid "Build done"
 msgstr "建構完成"
 
-#: app/scripts/app.js:58 app/scripts/services/project.js:158
+#: app/scripts/app.js:58 app/scripts/services/project.js:161
+#: app/scripts/services/utils.js:1382
 msgid "Cancel"
 msgstr "取消"
+
+#: app/scripts/services/utils.js:1200
+#, fuzzy
+#| msgid "Unsupported project format {{version}}"
+msgid "Cannot paste from a different project format ({{version}})"
+msgstr "不支援的專案格式  {{version}}"
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -165,11 +180,15 @@ msgstr "Catalan"
 msgid "Change Color"
 msgstr "選擇顏色"
 
-#: app/scripts/services/tools.js:1455
+#: app/scripts/services/utils.js:1367
+msgid "Changed Preferences: Allow tri-state connections"
+msgstr ""
+
+#: app/scripts/services/tools.js:1463
 msgid "Check Internet connection..."
 msgstr "檢查網路連接..."
 
-#: app/scripts/services/tools.js:1489
+#: app/scripts/services/tools.js:1497
 msgid "Check Python..."
 msgstr "檢查Python..."
 
@@ -177,29 +196,36 @@ msgstr "檢查Python..."
 msgid "Chinese"
 msgstr "中文(簡)"
 
-#: app/scripts/services/forms.js:1199
+#: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
 msgstr "選擇顏色"
 
-#: app/scripts/services/project.js:182
+#: app/scripts/services/utils.js:1365
+msgid ""
+"Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
+"&nbsp;<b>Advanced features -> Allow tri-state connections</b><br /><br /"
+">Click \"This time\" to view tri-state for this design only."
+msgstr ""
+
+#: app/scripts/services/project.js:185
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "點按這裡<b>下載新版本</b> 的 Icestudio"
 
-#: app/scripts/services/tools.js:1629
+#: app/scripts/services/tools.js:1650
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "點按這裡 <b>安裝驅動程式</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:539
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "點按這裡安裝"
 
-#: app/scripts/controllers/menu.js:956
+#: app/scripts/controllers/menu.js:966
 msgid "Click here to view"
 msgstr "點按這裡瀏覽"
 
-#: app/scripts/services/forms.js:1041
+#: app/scripts/services/forms.js:1062
 msgid "Clock not allowed for data buses"
 msgstr "時脈不合於資料匯流排線"
 
@@ -207,72 +233,72 @@ msgstr "時脈不合於資料匯流排線"
 msgid "Clone"
 msgstr "Clone"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:581 app/views/version.html:80
 msgid "Close"
 msgstr "關閉"
 
-#: app/views/design.html:314 app/views/menu.html:809
+#: app/views/design.html:314 app/views/menu.html:791
 msgid "Code"
 msgstr "程式碼區塊"
 
-#: app/views/menu.html:559
+#: app/views/menu.html:541
 msgid "Collection"
 msgstr "選集"
 
-#: app/views/menu.html:483
+#: app/views/menu.html:465
 msgid "Collection info"
 msgstr "選集資訊"
 
-#: app/scripts/controllers/menu.js:1232
+#: app/scripts/controllers/menu.js:1253
 msgid "Collection {{collection}} info not defined"
 msgstr "選集 {{collection}} 資訊未定義"
 
-#: app/scripts/services/tools.js:1771
+#: app/scripts/services/tools.js:1792
 msgid "Collection {{name}} added"
 msgstr "已新增 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1758
+#: app/scripts/services/tools.js:1779
 msgid "Collection {{name}} not replaced"
 msgstr "沒替換 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1909
+#: app/scripts/services/tools.js:1930
 msgid "Collection {{name}} removed"
 msgstr "已移除 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1747
+#: app/scripts/services/tools.js:1768
 msgid "Collection {{name}} replaced"
 msgstr "已替換 {{name}} 選集"
 
-#: app/scripts/controllers/menu.js:1278
+#: app/scripts/controllers/menu.js:1299
 msgid "Collection {{name}} selected"
 msgstr "選中 {{name}} 選集"
 
-#: app/views/menu.html:718
+#: app/views/menu.html:700
 msgid "Collections"
 msgstr "範例選集組"
 
-#: app/scripts/controllers/menu.js:1248 app/views/menu.html:489
+#: app/scripts/controllers/menu.js:1269 app/views/menu.html:471
 msgid "Command output"
 msgstr "查看執行結果"
 
-#: app/views/menu.html:882
+#: app/views/menu.html:864
 msgid "Community forum"
 msgstr "社群論壇"
 
-#: app/scripts/services/tools.js:787
+#: app/scripts/services/tools.js:794
 msgid "Configuration not completed"
 msgstr "設定未完成"
 
-#: app/views/design.html:304 app/views/menu.html:801
+#: app/views/design.html:304 app/views/menu.html:783
 msgid "Constant"
 msgstr "常數"
 
-#: app/scripts/services/forms.js:1985
+#: app/scripts/services/forms.js:2102
 #, fuzzy
 msgid "Constant names"
 msgstr "常數"
 
-#: app/scripts/services/project.js:99
+#: app/scripts/services/project.js:103
 msgid "Convert"
 msgstr "轉換"
 
@@ -280,11 +306,11 @@ msgstr "轉換"
 msgid "Copy"
 msgstr "複製"
 
-#: app/scripts/services/forms.js:400 app/views/design.html:136
+#: app/scripts/services/forms.js:399 app/views/design.html:136
 msgid "Coral"
 msgstr "珊瑚色"
 
-#: app/scripts/services/tools.js:1519
+#: app/scripts/services/tools.js:1527
 msgid "Create virtualenv..."
 msgstr "編譯 virtualenv..."
 
@@ -300,35 +326,35 @@ msgstr "Czech"
 msgid "Dark (default)"
 msgstr "深色模式(預設)"
 
-#: app/scripts/services/forms.js:424 app/views/design.html:199
+#: app/scripts/services/forms.js:423 app/views/design.html:199
 #, fuzzy
 msgid "Dark Green"
 msgstr "深綠色"
 
-#: app/scripts/services/forms.js:406 app/views/design.html:150
+#: app/scripts/services/forms.js:405 app/views/design.html:150
 #, fuzzy
 msgid "Dark Orange"
 msgstr "深橘色"
 
-#: app/views/menu.html:470
+#: app/views/menu.html:452
 msgid "Datasheet"
 msgstr "規格書"
 
-#: app/scripts/services/forms.js:1785
+#: app/scripts/services/forms.js:1902
 msgid "Decimal"
 msgstr "十進位"
 
-#: app/scripts/services/forms.js:394 app/views/design.html:122
+#: app/scripts/services/forms.js:393 app/views/design.html:122
 #, fuzzy
 msgid "Deep Pink"
 msgstr "暗粉紅色"
 
-#: app/scripts/services/forms.js:439 app/views/design.html:234
+#: app/scripts/services/forms.js:438 app/views/design.html:234
 #, fuzzy
 msgid "Deep Sky Blue"
 msgstr "深天空藍色"
 
-#: app/views/menu.html:568
+#: app/views/menu.html:550
 msgid "Default"
 msgstr "預設"
 
@@ -336,27 +362,27 @@ msgstr "預設"
 msgid "Delete"
 msgstr ""
 
-#: app/scripts/services/utils.js:637
+#: app/scripts/services/utils.js:670
 msgid "Description"
 msgstr "說明"
 
-#: app/views/menu.html:706
+#: app/views/menu.html:688
 msgid "Disable"
 msgstr "取消"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:586
 msgid "Do you want to close the application?"
 msgstr "您是否關閉應用程式?"
 
-#: app/scripts/controllers/menu.js:1424
+#: app/scripts/controllers/menu.js:1445
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是是否要移除這 {{name}} 選集?"
 
-#: app/scripts/services/tools.js:1740
+#: app/scripts/services/tools.js:1761
 msgid "Do you want to replace it?"
 msgstr "您是否要替換?"
 
-#: app/views/menu.html:863
+#: app/views/menu.html:845
 msgid "Documentation"
 msgstr "說明文件"
 
@@ -364,7 +390,7 @@ msgstr "說明文件"
 msgid "Don't display"
 msgstr "不再顯示"
 
-#: app/views/menu.html:693
+#: app/views/menu.html:675
 msgid "Drivers"
 msgstr "驅動程式"
 
@@ -383,11 +409,11 @@ msgstr "啟用驅動程式"
 msgid "Duplicate"
 msgstr "輸出標籤"
 
-#: app/scripts/services/tools.js:805
+#: app/scripts/services/tools.js:812
 msgid "Duplicated FPGA I/O ports"
 msgstr "重複的 FPGA I/O 接腳"
 
-#: app/scripts/services/forms.js:1712
+#: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicated port name:"
 msgstr "輸出標籤"
@@ -400,11 +426,11 @@ msgstr "Dutch"
 msgid "Edit"
 msgstr "編輯"
 
-#: app/scripts/services/tools.js:1719
+#: app/scripts/services/tools.js:1740
 msgid "Edit the collection name"
 msgstr "編輯選集名稱"
 
-#: app/views/menu.html:699
+#: app/views/menu.html:681
 msgid "Enable"
 msgstr "開啟"
 
@@ -412,39 +438,39 @@ msgstr "開啟"
 msgid "English"
 msgstr "英文"
 
-#: app/scripts/services/forms.js:2368
+#: app/scripts/services/forms.js:2485
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "輸入外部選集的路徑"
 
-#: app/scripts/services/forms.js:2265
+#: app/scripts/services/forms.js:2382
 msgid "Enter the external plugins path"
 msgstr "輸入外掛路徑"
 
-#: app/scripts/services/forms.js:2219
+#: app/scripts/services/forms.js:2336
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "填寫輸出區塊名稱"
 
-#: app/scripts/services/forms.js:2320
+#: app/scripts/services/forms.js:2437
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "填寫輸入埠名稱"
 
-#: app/scripts/services/forms.js:2312
+#: app/scripts/services/forms.js:2429
 #, fuzzy
 msgid "Enter the python path"
 msgstr "輸入 python 版本 > 3.8 的路徑"
 
-#: app/scripts/controllers/menu.js:1003
+#: app/scripts/controllers/menu.js:1013
 msgid "Enter the remote hostname user@host"
 msgstr "輸入遠端主機 用戶名@主機名"
 
-#: app/scripts/services/utils.js:841
+#: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
 msgstr "錯誤: {{error}}"
 
-#: app/scripts/services/tools.js:911
+#: app/scripts/services/tools.js:918
 msgid "Errors detected in the design"
 msgstr "設計中檢測到錯誤"
 
@@ -452,7 +478,7 @@ msgstr "設計中檢測到錯誤"
 msgid "Examples"
 msgstr "範例"
 
-#: app/scripts/services/tools.js:577
+#: app/scripts/services/tools.js:584
 msgid "Execute remote {{label}} ..."
 msgstr "遠端執行 {{label}} ..."
 
@@ -464,31 +490,31 @@ msgstr "導出"
 msgid "Export submodule"
 msgstr "輸出子模組"
 
-#: app/views/menu.html:395
+#: app/views/menu.html:398
 msgid "External collections"
 msgstr "外部選集"
 
-#: app/scripts/controllers/menu.js:928
+#: app/scripts/controllers/menu.js:938
 msgid "External collections updated"
 msgstr "外部選集已更新"
 
-#: app/views/menu.html:401
+#: app/views/advanced.html:35
 msgid "External plugins"
 msgstr "外部外掛"
 
-#: app/scripts/controllers/menu.js:799
+#: app/scripts/controllers/menu.js:810
 msgid "External plugins updated"
 msgstr "外部外掛已更新"
 
-#: app/scripts/services/tools.js:798
+#: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O 埠未定義"
 
-#: app/scripts/services/forms.js:845
+#: app/scripts/services/forms.js:844
 msgid "FPGA pin"
 msgstr "FPGA 接腳"
 
-#: app/views/menu.html:504
+#: app/views/menu.html:486
 msgid "FPGA resources"
 msgstr "FPGA 資源"
 
@@ -504,16 +530,16 @@ msgstr ""
 msgid "File"
 msgstr "檔案"
 
-#: app/scripts/services/project.js:519
+#: app/scripts/services/project.js:511
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "檔案 {{file}} 在目錄中已存在. 是否要覆寫?"
 
-#: app/scripts/services/tools.js:433
+#: app/scripts/services/tools.js:445
 msgid "File {{file}} does not exist"
 msgstr "檔案 {{file}} 不存在"
 
-#: app/scripts/services/project.js:552
+#: app/scripts/services/project.js:544
 msgid "File {{file}} imported"
 msgstr "檔案 {{file}} 導入了"
 
@@ -529,7 +555,7 @@ msgstr "縮放以適應視窗"
 msgid "French"
 msgstr "French"
 
-#: app/scripts/services/forms.js:385 app/views/design.html:171
+#: app/scripts/services/forms.js:384 app/views/design.html:171
 #: app/views/design.html:97
 msgid "Fuchsia"
 msgstr "洋紅色"
@@ -542,7 +568,7 @@ msgstr "Galician"
 msgid "German"
 msgstr "German"
 
-#: app/scripts/services/forms.js:409 app/views/design.html:157
+#: app/scripts/services/forms.js:408 app/views/design.html:157
 msgid "Gold"
 msgstr "金色"
 
@@ -550,16 +576,16 @@ msgstr "金色"
 msgid "Greek"
 msgstr "Greek"
 
-#: app/scripts/services/forms.js:418 app/views/design.html:185
+#: app/scripts/services/forms.js:417 app/views/design.html:185
 #, fuzzy
 msgid "Green Yellow"
 msgstr "黃綠色"
 
-#: app/views/menu.html:827
+#: app/views/menu.html:809
 msgid "Help"
 msgstr "輔助說明"
 
-#: app/scripts/services/forms.js:1789
+#: app/scripts/services/forms.js:1906
 msgid "Hexadecimal"
 msgstr "十六進位"
 
@@ -567,97 +593,112 @@ msgstr "十六進位"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1659
+#: app/scripts/services/graph.js:1643
 #, fuzzy
 msgid ""
 "If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
 "this board"
 msgstr "若您看到空的輸入輸出接腳，這是因為這塊開發板上沒有對應的腳位"
 
-#: app/scripts/services/utils.js:651
+#: app/scripts/services/utils.js:684
 msgid "Image"
 msgstr "圖像"
 
-#: app/scripts/controllers/menu.js:2125
+#: app/scripts/controllers/menu.js:2164
 msgid "Image {{name}} saved"
 msgstr "圖像 {{name}} 已儲存"
 
-#: app/scripts/services/forms.js:388 app/views/design.html:108
+#: app/scripts/services/forms.js:1645
+#, fuzzy
+msgid "InOut Left ports"
+msgstr "填寫輸入埠名稱"
+
+#: app/scripts/services/forms.js:1657
+#, fuzzy
+msgid "InOut Right ports"
+msgstr "填寫輸入埠名稱"
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+#, fuzzy
+msgid "InOut pin"
+msgstr "填寫輸入埠名稱"
+
+#: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
 msgid "Indian Red"
 msgstr "印地安紅色"
 
-#: app/views/design.html:319 app/views/menu.html:813
+#: app/views/design.html:319 app/views/menu.html:795
 msgid "Information"
 msgstr "資訊"
 
-#: app/views/design.html:279 app/views/menu.html:778
+#: app/views/design.html:279 app/views/menu.html:760
 msgid "Input"
 msgstr "輸入"
 
-#: app/views/design.html:289 app/views/menu.html:787
+#: app/views/design.html:289 app/views/menu.html:769
 msgid "Input label"
 msgstr "輸入標籤"
 
-#: app/scripts/services/forms.js:1431
+#: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
 msgstr "輸入標籤"
 
-#: app/scripts/services/forms.js:1579
+#: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
 msgstr "輸入參數"
 
-#: app/scripts/services/forms.js:987
+#: app/scripts/services/forms.js:989
 msgid "Input port name:"
 msgstr ""
 
-#: app/scripts/services/forms.js:1565
+#: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
 msgstr "填寫輸入埠名稱"
 
-#: app/views/menu.html:653
+#: app/views/menu.html:635
 #, fuzzy
 msgid "Install (Stable)"
 msgstr "安裝"
 
-#: app/views/menu.html:674
+#: app/views/menu.html:656
 msgid "Install Development version"
 msgstr ""
 
-#: app/scripts/services/tools.js:1229
+#: app/scripts/services/tools.js:1235
 msgid ""
 "Install the <b>STABLE Toolchain</b>. This operation requires Internet "
 "connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 
-#: app/scripts/services/tools.js:1255
+#: app/scripts/services/tools.js:1260
 #, fuzzy
 msgid ""
 "Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
 msgstr "工具鏈將被更新，這需要連上 Internet , 是否繼續?"
 
-#: app/scripts/services/tools.js:1277
+#: app/scripts/services/tools.js:1282
 #, fuzzy
 msgid ""
 "Install the LATEST STABLE toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
 msgstr "工具鏈將被更新，這需要連上 Internet , 是否繼續?"
 
-#: app/scripts/services/tools.js:1607
+#: app/scripts/services/tools.js:1628
 msgid "Installation completed"
 msgstr "安裝完成"
 
-#: app/scripts/services/tools.js:1385
+#: app/scripts/services/tools.js:1390
 #, fuzzy
 msgid "Installing"
 msgstr "安裝"
 
-#: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1473
+#: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
 msgstr "需要連接 Internet"
 
@@ -676,7 +717,7 @@ msgstr "無效的 <i>上拉</i> 連接:<br>只有 <i>輸入</i> 區塊才能被�
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "無效的區塊連接:<br><i>上拉</i> 已經使用"
 
-#: app/scripts/services/tools.js:1784
+#: app/scripts/services/tools.js:1805
 msgid "Invalid collection {{name}}"
 msgstr "無效的選集 {{name}}"
 
@@ -693,7 +734,7 @@ msgstr "無效的連接: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "無效的多輸入連接"
 
-#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
+#: app/scripts/services/project.js:502 app/scripts/services/project.js:80
 msgid "Invalid project format"
 msgstr "無效的專案格式"
 
@@ -714,7 +755,7 @@ msgstr "Korean"
 msgid "Label Finder"
 msgstr ""
 
-#: app/scripts/services/blockforms.js:991
+#: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
 msgstr "區塊已更新"
@@ -727,64 +768,64 @@ msgstr "語言"
 msgid "Light"
 msgstr "淺色模式"
 
-#: app/scripts/services/forms.js:448 app/views/design.html:255
+#: app/scripts/services/forms.js:447 app/views/design.html:255
 #, fuzzy
 msgid "Light Gray"
 msgstr "淺色模式"
 
-#: app/scripts/services/forms.js:430 app/views/design.html:213
+#: app/scripts/services/forms.js:429 app/views/design.html:213
 #, fuzzy
 msgid "Light Sea Green"
 msgstr "淺海藍色"
 
-#: app/scripts/services/project.js:98
+#: app/scripts/services/project.js:102
 msgid "Load"
 msgstr "載入"
 
-#: app/scripts/services/forms.js:1803 app/scripts/services/forms.js:1993
+#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
 msgid "Local parameter"
 msgstr "本地參數"
 
-#: app/views/menu.html:422
+#: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
 msgstr "啟用驅動程式"
 
-#: app/views/menu.html:431
+#: app/views/menu.html:413
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:741
+#: app/scripts/controllers/menu.js:752
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:955
+#: app/scripts/services/utils.js:988
 msgid "Maximum bus size: 96 bits"
 msgstr "最大的匯流排大小：96位元"
 
-#: app/scripts/services/forms.js:397 app/views/design.html:129
+#: app/scripts/services/forms.js:396 app/views/design.html:129
 #, fuzzy
 msgid "Medium Violet Red"
 msgstr "中度紫紅色"
 
-#: app/views/design.html:309 app/views/menu.html:805
+#: app/views/design.html:309 app/views/menu.html:787
 msgid "Memory"
 msgstr "記憶體"
 
-#: app/scripts/services/forms.js:1770
+#: app/scripts/services/forms.js:1887
 #, fuzzy
 msgid "Memory blocks"
 msgstr "輸入記憶體區塊"
 
-#: app/scripts/services/utils.js:635
+#: app/scripts/services/utils.js:668
 msgid "Name"
 msgstr "名稱"
 
-#: app/scripts/services/forms.js:1493
+#: app/scripts/services/forms.js:1539
 msgid "Name of the paired labels"
 msgstr ""
 
-#: app/scripts/services/forms.js:445 app/views/design.html:248
+#: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
 msgstr "海軍藍色"
 
@@ -805,16 +846,16 @@ msgstr "名稱"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1452
+#: app/scripts/controllers/menu.js:1473
 msgid "No collections stored"
 msgstr "沒有儲存的選集"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
-#: app/scripts/services/project.js:157
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:601
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
 msgid "OK"
 msgstr "確定"
 
-#: app/scripts/services/forms.js:427 app/views/design.html:206
+#: app/scripts/services/forms.js:426 app/views/design.html:206
 #, fuzzy
 msgid "Olive Drab"
 msgstr "橄欖綠色"
@@ -823,43 +864,43 @@ msgstr "橄欖綠色"
 msgid "Open"
 msgstr "開啟"
 
-#: app/scripts/services/utils.js:692
+#: app/scripts/services/utils.js:725
 msgid "Open SVG"
 msgstr "開啟 SVG"
 
-#: app/scripts/services/forms.js:403 app/views/design.html:143
+#: app/scripts/services/forms.js:402 app/views/design.html:143
 #, fuzzy
 msgid "Orange Red"
 msgstr "橘紅色"
 
-#: app/scripts/services/project.js:555
+#: app/scripts/services/project.js:547
 msgid "Original file {{file}} does not exist"
 msgstr "原始檔案 {{file}} 不存在"
 
-#: app/views/design.html:284 app/views/menu.html:782
+#: app/views/design.html:284 app/views/menu.html:764
 msgid "Output"
 msgstr "輸出"
 
-#: app/views/design.html:294 app/views/menu.html:791
+#: app/views/design.html:294 app/views/menu.html:773
 msgid "Output label"
 msgstr "輸出標籤"
 
-#: app/scripts/services/forms.js:1350
+#: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
 msgstr "輸出標籤"
 
-#: app/scripts/services/forms.js:1109
+#: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
 msgstr "輸出標籤"
 
-#: app/scripts/services/forms.js:1572
+#: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
 msgstr "輸出標籤"
 
-#: app/views/design.html:299 app/views/menu.html:796
+#: app/views/design.html:299 app/views/menu.html:778
 msgid "Paired labels"
 msgstr ""
 
@@ -867,12 +908,12 @@ msgstr ""
 msgid "Paste"
 msgstr "貼上"
 
-#: app/scripts/controllers/menu.js:750 app/scripts/controllers/menu.js:807
-#: app/scripts/controllers/menu.js:872 app/scripts/controllers/menu.js:936
+#: app/scripts/controllers/menu.js:761 app/scripts/controllers/menu.js:818
+#: app/scripts/controllers/menu.js:882 app/scripts/controllers/menu.js:946
 msgid "Path {{path}} does not exist"
 msgstr "路徑 {{path}} 不存在"
 
-#: app/scripts/services/utils.js:1137
+#: app/scripts/services/utils.js:1177
 msgid "Please run: {{cmd}}"
 msgstr "請執行: {{cmd}}"
 
@@ -884,27 +925,27 @@ msgstr "偏好設定"
 msgid "Prev."
 msgstr ""
 
-#: app/views/menu.html:440
+#: app/views/menu.html:422
 msgid "Project information"
 msgstr "專案資訊"
 
-#: app/scripts/controllers/menu.js:954 app/scripts/controllers/menu.js:980
+#: app/scripts/controllers/menu.js:964 app/scripts/controllers/menu.js:990
 msgid "Project information updated"
 msgstr "專案資訊已更新"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:145
 msgid "Project {{name}} loaded"
 msgstr "專案 {{name}} 已載入"
 
-#: app/scripts/services/project.js:416
+#: app/scripts/services/project.js:420
 msgid "Project {{name}} saved"
 msgstr "專案 {{name}} 已儲存"
 
-#: app/scripts/controllers/menu.js:864
+#: app/scripts/controllers/menu.js:874
 msgid "Python Environment updated"
 msgstr "Python 環境已更新"
 
-#: app/views/menu.html:407
+#: app/views/advanced.html:41
 msgid "Python environment"
 msgstr "Python 環境"
 
@@ -912,7 +953,7 @@ msgstr "Python 環境"
 msgid "Quit"
 msgstr "結束程式"
 
-#: app/scripts/services/forms.js:391 app/views/design.html:115
+#: app/scripts/services/forms.js:390 app/views/design.html:115
 msgid "Red"
 msgstr "紅色"
 
@@ -924,23 +965,23 @@ msgstr "重做"
 msgid "Release History WIKI"
 msgstr ""
 
-#: app/views/menu.html:733
+#: app/views/menu.html:715
 msgid "Reload"
 msgstr "重載"
 
-#: app/scripts/services/tools.js:980
+#: app/scripts/services/tools.js:987
 msgid "Remote host {{name}} not connected"
 msgstr "遠端主機 {{name}} 未連接"
 
-#: app/views/menu.html:413
+#: app/views/advanced.html:47
 msgid "Remote hostname"
 msgstr "遠端主機名"
 
-#: app/views/menu.html:665 app/views/menu.html:740
+#: app/views/menu.html:647 app/views/menu.html:722
 msgid "Remove"
 msgstr "移除"
 
-#: app/views/menu.html:756
+#: app/views/menu.html:738
 msgid "Remove all"
 msgstr "全部移除"
 
@@ -952,11 +993,11 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:694
+#: app/scripts/services/utils.js:727
 msgid "Reset SVG"
 msgstr "重載SVG"
 
-#: app/scripts/services/forms.js:442 app/views/design.html:241
+#: app/scripts/services/forms.js:441 app/views/design.html:241
 #, fuzzy
 msgid "Royal Blue"
 msgstr "皇家藍色"
@@ -969,7 +1010,7 @@ msgstr "Russian"
 msgid "Save"
 msgstr "儲存"
 
-#: app/scripts/services/utils.js:693
+#: app/scripts/services/utils.js:726
 msgid "Save SVG"
 msgstr "儲存SVG"
 
@@ -981,7 +1022,7 @@ msgstr "另存為"
 msgid "Save submodule"
 msgstr "儲存子模組"
 
-#: app/views/menu.html:520
+#: app/views/menu.html:502
 msgid "Select"
 msgstr "選擇"
 
@@ -989,20 +1030,20 @@ msgstr "選擇"
 msgid "Select all"
 msgstr "全選"
 
-#: app/scripts/services/forms.js:2174
+#: app/scripts/services/forms.js:2291
 msgid "Select your board"
 msgstr "選定開發板"
 
-#: app/scripts/services/forms.js:1000
+#: app/scripts/services/forms.js:1002
 msgid "Show clock"
 msgstr "顯示時脈"
 
-#: app/scripts/services/forms.js:415 app/views/design.html:178
+#: app/scripts/services/forms.js:414 app/views/design.html:178
 #, fuzzy
 msgid "Slate Blue"
 msgstr "板藍色"
 
-#: app/views/menu.html:871
+#: app/views/menu.html:853
 msgid "Source code"
 msgstr "原始程式"
 
@@ -1010,33 +1051,33 @@ msgstr "原始程式"
 msgid "Spanish"
 msgstr "Spanish"
 
-#: app/scripts/services/forms.js:421 app/views/design.html:192
+#: app/scripts/services/forms.js:420 app/views/design.html:192
 #, fuzzy
 msgid "Spring Green"
 msgstr "春天綠色"
 
-#: app/scripts/controllers/menu.js:1354
+#: app/scripts/controllers/menu.js:1375
 msgid "Start build"
 msgstr "開始編譯"
 
-#: app/scripts/controllers/menu.js:1380
+#: app/scripts/controllers/menu.js:1401
 msgid "Start upload"
 msgstr "開始上傳"
 
-#: app/scripts/controllers/menu.js:1331
+#: app/scripts/controllers/menu.js:1352
 msgid "Start verification"
 msgstr "開始驗證"
 
-#: app/scripts/services/forms.js:436 app/views/design.html:227
+#: app/scripts/services/forms.js:435 app/views/design.html:227
 #, fuzzy
 msgid "Steel Blue"
 msgstr "鋼鐵藍色"
 
-#: app/scripts/services/tools.js:554
+#: app/scripts/services/tools.js:561
 msgid "Synchronize remote files ..."
 msgstr "遠端檔案同步..."
 
-#: app/views/menu.html:495
+#: app/views/menu.html:477
 msgid "System Info"
 msgstr ""
 
@@ -1054,36 +1095,36 @@ msgstr "測試平台"
 msgid "Thank you very much!"
 msgstr ". 非常感謝"
 
-#: app/scripts/services/tools.js:1733
+#: app/scripts/services/tools.js:1754
 msgid "The collection {{name}} already exists."
 msgstr "選集 {{name}} 已存在."
 
-#: app/scripts/controllers/menu.js:1303
+#: app/scripts/controllers/menu.js:1324
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "the {{name}} board?"
 msgstr "目前 FPGA 的 I/O 設定將丟失. 您是否確定換用 {{name}} 開發板?"
 
-#: app/scripts/services/tools.js:1295
+#: app/scripts/services/tools.js:1300
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "工具鏈將會移除，是否繼續?"
 
-#: app/scripts/services/tools.js:1953
+#: app/scripts/services/tools.js:1974
 msgid "There is a new nightly version available"
 msgstr "有新的測試版了"
 
-#: app/scripts/services/tools.js:1945
+#: app/scripts/services/tools.js:1966
 msgid "There is a new stable version available"
 msgstr "有新的穩定版本了"
 
-#: app/scripts/services/project.js:479
+#: app/scripts/services/project.js:478
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr "這導入操作需要專案路徑，您必須保存目前專案，是否繼續?"
 
-#: app/scripts/services/project.js:102
+#: app/scripts/services/project.js:106
 msgid "This project is designed for the {{name}} board."
 msgstr "此專案為開發板 {{name}} 所設計."
 
@@ -1091,6 +1132,10 @@ msgstr "此專案為開發板 {{name}} 所設計."
 msgid ""
 "This release has been possible thanks to the great work \n"
 "              done by an emerging team from"
+msgstr ""
+
+#: app/scripts/services/utils.js:1375
+msgid "This time"
 msgstr ""
 
 #: app/scripts/services/graph.js:532
@@ -1119,36 +1164,52 @@ msgstr ""
 msgid "Toolbox"
 msgstr "工具"
 
-#: app/views/menu.html:645
+#: app/views/menu.html:627
 msgid "Toolchain"
 msgstr "工具鏈"
 
-#: app/scripts/services/tools.js:1617
+#: app/scripts/services/tools.js:1638
 msgid "Toolchain installed"
 msgstr "工具鏈已安裝"
 
 #: app/scripts/services/drivers.js:625 app/scripts/services/drivers.js:644
-#: app/scripts/services/tools.js:300 app/scripts/services/tools.js:480
+#: app/scripts/services/tools.js:312 app/scripts/services/tools.js:489
 msgid "Toolchain not installed"
 msgstr "工具鏈未安裝"
 
-#: app/scripts/services/tools.js:1313
+#: app/scripts/services/tools.js:1318
 msgid "Toolchain removed"
 msgstr "工具鏈移除了"
 
-#: app/scripts/services/tools.js:523
+#: app/scripts/services/tools.js:530
 msgid "Toolchain version does not match"
 msgstr "工具鏈版本不符合"
 
-#: app/views/menu.html:610
+#: app/views/menu.html:592
 msgid "Tools"
 msgstr "工具"
+
+#: app/scripts/services/utils.js:1350
+msgid ""
+"Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
+"standard designs.<br /><br />You will be asked to update your Preferences "
+"(Advanced user setting) or you can just open this design on a preview basis."
+"<br /><br />Continue?"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:1037
+msgid "Tri-state connections (inout ports) disabled"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:1034
+msgid "Tri-state connections (inout ports) enabled"
+msgstr ""
 
 #: app/views/languages.html:104
 msgid "Turkish"
 msgstr ""
 
-#: app/scripts/services/forms.js:433 app/views/design.html:220
+#: app/scripts/services/forms.js:432 app/views/design.html:220
 msgid "Turquoise"
 msgstr "綠松色"
 
@@ -1160,57 +1221,61 @@ msgstr "介面主題風格"
 msgid "Undo"
 msgstr "還原"
 
-#: app/scripts/services/tools.js:726
+#: app/scripts/services/tools.js:733
 msgid "Unknown board"
 msgstr "未知的開發板"
 
-#: app/scripts/services/project.js:181
+#: app/scripts/services/project.js:184
 msgid "Unsupported project format {{version}}"
 msgstr "不支援的專案格式  {{version}}"
 
-#: app/scripts/app.js:209
+#: app/scripts/app.js:215
 msgid "Untitled"
 msgstr "未命名"
 
-#: app/views/menu.html:657
+#: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
 msgstr "更新區塊名稱"
 
-#: app/scripts/controllers/menu.js:1370 app/views/design.html:514
-#: app/views/menu.html:633
+#: app/scripts/controllers/menu.js:1391 app/views/design.html:514
+#: app/views/menu.html:615
 msgid "Upload"
 msgstr "上傳"
 
-#: app/scripts/controllers/menu.js:1381
+#: app/scripts/controllers/menu.js:1402
 msgid "Upload done"
 msgstr "上傳完成"
 
-#: app/scripts/controllers/menu.js:1332
+#: app/scripts/controllers/menu.js:1353
 msgid "Verification done"
 msgstr "驗證完成"
 
-#: app/views/design.html:498 app/views/menu.html:617
+#: app/views/design.html:498 app/views/menu.html:599
 msgid "Verify"
 msgstr "驗證"
 
-#: app/scripts/services/utils.js:636 app/views/menu.html:850
+#: app/scripts/services/utils.js:669 app/views/menu.html:832
 msgid "Version"
 msgstr "版本"
 
-#: app/views/menu.html:844
+#: app/views/menu.html:826
 msgid "Version notes"
 msgstr "版本通知"
 
-#: app/views/menu.html:452
+#: app/views/menu.html:434
 msgid "View"
 msgstr "查看"
 
-#: app/views/menu.html:837
+#: app/views/menu.html:819
 msgid "View license"
 msgstr "查看版權說明"
 
-#: app/scripts/services/tools.js:917
+#: app/scripts/services/utils.js:1371
+msgid "Viewing tri-state"
+msgstr ""
+
+#: app/scripts/services/tools.js:924
 msgid "Warnings detected in the design"
 msgstr "設計中發現警告"
 
@@ -1219,45 +1284,57 @@ msgstr "設計中發現警告"
 msgid "Welcome to Icestudio!"
 msgstr "關於 Icestudio"
 
-#: app/scripts/services/blockforms.js:517
+#: app/scripts/services/blockforms.js:535
 msgid "Wrong block format: {{type}}"
 msgstr "區塊格式錯誤: {{type}}"
 
-#: app/scripts/services/forms.js:1258 app/scripts/services/forms.js:1625
-#: app/scripts/services/forms.js:1870 app/scripts/services/forms.js:2054
-#: app/scripts/services/forms.js:903
+#: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
+#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "區塊名稱錯誤 {{name}}"
 
-#: app/scripts/controllers/menu.js:1924
+#: app/scripts/controllers/menu.js:1948
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "埠名稱錯誤 {{name}}"
 
-#: app/scripts/services/project.js:154
+#: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
 msgstr "專案格式錯誤: {{name}}"
 
-#: app/scripts/services/tools.js:973
+#: app/scripts/services/tools.js:980
 msgid "Wrong remote hostname {{name}}"
 msgstr "遠端主機名稱錯誤 {{name}}"
 
-#: app/scripts/controllers/menu.js:1828
+#: app/scripts/controllers/menu.js:1852
 msgid "Wrong search name!"
 msgstr ""
 
-#: app/scripts/services/forms.js:412 app/views/design.html:164
+#: app/scripts/services/forms.js:411 app/views/design.html:164
 msgid "Yellow"
 msgstr "黃色"
+
+#: app/scripts/services/utils.js:1374
+msgid "Yes"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "您正在編輯子模組，如果您儲存它，只有子模組會儲存，用「另存為」可以導出模組，"
 "請問還要繼續嗎？"
+
+#: app/scripts/services/utils.js:1348
+msgid "You are importing a block that uses \"tri-state\"."
+msgstr ""
+
+#: app/scripts/services/utils.js:1347
+msgid "You are loading a design that uses \"tri-state\"."
+msgstr ""
 
 #: app/scripts/controllers/menu.js:396
 msgid ""
@@ -1266,19 +1343,19 @@ msgid ""
 "export this module as new file, unlock the module and use \"Save as\""
 msgstr ""
 
-#: app/scripts/services/project.js:103
+#: app/scripts/services/project.js:107
 #, fuzzy
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "您可以載入原始專案，或轉換成適合開發板 {{name}} ."
 
-#: app/scripts/controllers/menu.js:1346
+#: app/scripts/controllers/menu.js:1367
 #, fuzzy
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr "您可以只建構最上層的設計，子模組內只要 <strong>驗證。</strong>"
 
-#: app/scripts/controllers/menu.js:1371
+#: app/scripts/controllers/menu.js:1392
 #, fuzzy
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
@@ -1289,7 +1366,7 @@ msgstr "您可以只建構最上層的設計，子模組內只要 <strong>驗證
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:590
 msgid "Your changes will be lost if you don’t save them"
 msgstr "如果不儲存，更改內容將消失"
 
@@ -1297,23 +1374,23 @@ msgstr "如果不儲存，更改內容將消失"
 msgid "back"
 msgstr "後退"
 
-#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1117
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1157
 msgid "{{app}} is required."
 msgstr "需要{{app}}"
 
-#: app/scripts/controllers/menu.js:1118
+#: app/scripts/controllers/menu.js:1139
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} 數據表未定義"
 
-#: app/scripts/controllers/menu.js:1104
+#: app/scripts/controllers/menu.js:1125
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} 接腳未定義"
 
-#: app/scripts/controllers/menu.js:1144
+#: app/scripts/controllers/menu.js:1165
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 規則未定義"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:499 app/scripts/controllers/menu.js:532
 msgid "{{name}} exported"
 msgstr "{{name}} 已導出"
 
