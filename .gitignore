@@ -11,7 +11,6 @@
 *.code-workspace
 *.swp
 *~
-app/icerok.capture.raw
 .tmp
 dist
 cache
@@ -19,18 +18,13 @@ docs/_build
 node_modules
 bower_components
 .vscode
+.idea
 app/resources/collection
 app/resources/locale/**/*.json
 ice-build/
-# WebStorm IDE project folder
-.idea
-## Temp file for translation process
-# From update_translations.sh
-app/resources/locale/statistics.txt
-# From table_translations.sh
-app/resources/locale/readme_table.txit
+# Temp files for translation process
 statistics.txt
 readme_table.txt
+# Other
 icerok.raw
 icerok.capture.raw
-

@@ -142,12 +142,12 @@ this.sigrok = function (cmd) {
   switch (cmd.trim()) {
 
     case 'version':
-      //  return "Icestudio sigrok v1.0\n\r";
-      return "BeagleLogic 1.0\r\n";
+      //  return "Icestudio sigrok v1.0\n";
+      return "BeagleLogic 1.0\n";
     case 'samplerate':
       return '12000000';
     default:
-      return "OK\n\r";
+      return "OK\n";
 
   }
 }

@@ -7,29 +7,32 @@
 //------------------------------------------------------
 //-- HOW to invoke the tasks defined in Grunt:
 //--
-//--  $ grunt serve -->   Start icestudio
+//--  $ grunt serve -->   Start Icestudio
 //--  $ grunt dist  -->   Create the Icestudio package for all
 //--                      the architectures
 //--  $ grunt jshint -->  Validate the Javascript files
-//--  $ grunt clean  -->  Clean all the generated files during
-//--                      the dist TASK (building packages)
+//--  $ grunt clean  -->  Clean all the generated files from
+//--                      the dist tasks (building packages)
 //--  $ grunt gettext-->  Extract all the English strings and  
-//--       write them in the  app/resources/locale/template.pot
-//--       for being translated into other languajes later
+//--       write them in the app/resources/locale/template.pot
+//--       for being translated into other languages later
 //--------------------------------------------------------------
 
 //--------------------------------------------------------------------
 //-- How the translation process works
 //--
-//-- * The texts in the .js Javascript files are in English
+//-- * The text strings in the .js Javascript files are in English
 //-- * When 'grunt gettext' is invoked, the English texts are extracted  
 //--   to the app/resources/locale/template.pot file
+//--   (an additional step 'msgmerge' is provided externally, which is
+//--   required to re-baseline all the language .po files to the latest
+//--   template.pot structure & contents)
 //-- * The human translator imports the template.pot file (in PoEdit) and
-//--   write the translation into their language, in the corresponding
+//--   writes the translation into their language, in the corresponding
 //--   .po file
-//-- * When 'grunt serve' is invoked, the .po files are converted into
+//-- * When 'grunt compiletext' is invoked, the .po files are converted into
 //--   .json
-//-- * When icestudio starts, the .json files are read
+//-- * When Icestudio starts ('grunt serve'), the .json files are read
 //--------------------------------------------------------------------
 
 //--------------------------------------------------------------------
@@ -98,7 +101,7 @@ module.exports = function (grunt) {
   //-- WIP = false --> Stable release
   const WIP = true;
 
-  //-- ICestudio App dir
+  //-- Icestudio App dir
   const APPDIR = "app";
 
   //-- Icestudio package.json
@@ -230,13 +233,13 @@ module.exports = function (grunt) {
   //-- is created as target, for the DIST TASK
   //---------------------------------------------------------------
 
-  //-- Read the icestudio json package 
+  //-- Read the Icestudio json package 
   let pkg = grunt.file.readJSON(APP_PACKAGE_JSON);
 
-  //-- Read the timestamp. It is added to the icestudio package version
+  //-- Read the timestamp. It is added to the Icestudio package version
   let timestamp = grunt.template.today("yyyymmddhhmm");
 
-  //-- In the Stables Releases there is NO timestamp
+  //-- In the Stable Releases there is NO timestamp
   if (!WIP) {
     timestamp = "";
   }
@@ -246,7 +249,7 @@ module.exports = function (grunt) {
   //-- WIP: with timestamp
   pkg.version = pkg.version.replace(/w/, "w" + timestamp);
 
-  //-- Icestudio package name: (with version)
+  //-- Icestudio package name (with version)
   //-- Ex. icestudio-0.9.1w202203161003
   const ICESTUDIO_PKG_NAME = `${pkg.name}-${pkg.version}`;
 
@@ -254,7 +257,7 @@ module.exports = function (grunt) {
   //-- Constants for the WGET TASK
   //-------------------------------------------------------------
 
-  //-- Default collection source zip filename (Ej. v0.3.3.zip)
+  //-- Default collection source .zip filename (Ej. v0.3.3.zip)
   const DEFAULT_COLLECTION_ZIP_FILE = `v${pkg.collection}.zip`;
 
   //-- The collection .zip file contains all the files in 
@@ -275,7 +278,7 @@ module.exports = function (grunt) {
   //-- EXEC TASK: 
   //-------------------------------------------------------------------------
   //-- Command for making the Windows installer
-  //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
+  //-- Execute NSIS, for creating the Icestudio Windows installer (.exe)
   //-- The installation script is located in scripts/windows_installer.nsi   
   const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
     -DVERSION=${pkg.version} \
@@ -286,7 +289,7 @@ module.exports = function (grunt) {
   //---------------------------------------------------------------
 
   //-- Read the top level package.json 
-  //-- (**not** the icestudio package, but the one in the top level)
+  //-- (**not** the Icestudio package, but the one in the top level)
   let topPkg = grunt.file.readJSON(PACKAGE_JSON);
 
   //-- Get the NW version from the package (the one that is installed)
@@ -461,7 +464,7 @@ module.exports = function (grunt) {
   //-- Create the TIMESTAMP FILE
   //----------------------------------------------------------------------
   //-- Write the timestamp information in a file
-  //-- It will be read by icestudio to add the timestamp to the version
+  //-- It will be read by Icestudio to add the timestamp to the version
   grunt.file.write(APP_TIMESTAMP_FILE, JSON.stringify({ ts: timestamp }));
 
   //-----------------------------------------------------------------------
@@ -485,21 +488,20 @@ module.exports = function (grunt) {
   ];
 
   //-- Specific tasks to be executed depending on the target architecture
-  //-- They are exectuted after the COMMON tasks
+  //-- They are executed after the COMMON tasks
   const DIST_PLATFORM_TASKS = {
 
     //-- TARGET_LINUX64
     "linux64": [
-      "compress:linux64",  //-- Create the Icestudio zip package
+      "compress:linux64",  //-- Create the Icestudio .zip package
       "appimage:linux64",  //-- Create the Icestudio appimage package
     ],
 
     //-- TARGET_WIN64
     "win64": [
       "shell:winico",
-      "compress:win64",  //-- Create the Icestudio zip package
+      "compress:win64",  //-- Create the Icestudio .zip package
       "wget:python64",   //-- Download the python package for windows
-
       "exec:nsis64",     //-- Build the Windows installer
     ],
 
@@ -679,7 +681,7 @@ module.exports = function (grunt) {
   //-- grunt gettext
   //-- Extract the English text and write them into the
   //-- template file (app/resources/localte/template.pot)
-  //-- Moreinformation: https://www.npmjs.com/package/grunt-angular-gettext
+  //-- More information: https://www.npmjs.com/package/grunt-angular-gettext
   grunt.registerTask("gettext", [
     "nggettext_extract"
   ]);
@@ -701,11 +703,11 @@ module.exports = function (grunt) {
   ]);
 
   //-- grunt server
-  //-- Start icestudio
+  //-- Start Icestudio
   grunt.registerTask("serve", [
     "nggettext_compile", //-- Get the translation in json files
     "watch:scripts", //-- Watch the given files. When there is change
-    //-- icestudio is restarted
+                     //-- Icestudio is restarted
   ]);
 
   // grunt dist: Create the app package
@@ -845,8 +847,8 @@ module.exports = function (grunt) {
     },
 
     //-- Install the Default collection
-    //-- The .zip file is unzip in the destination folder
-    //-  https://www.npmjs.com/package/grunt-zip
+    //-- The .zip file is unzipped in the destination folder
+    //-- https://www.npmjs.com/package/grunt-zip
     unzip: {
 
       'using-router': {
@@ -861,7 +863,7 @@ module.exports = function (grunt) {
         src: CACHE_DEFAULT_COLLECTION_FILE,
 
         //-- Destination folder for its installation
-        //-- The collection is unzip on the folder APP_RESOURCES/collection
+        //-- The collection is unzipped in folder APP_RESOURCES/collection
         dest: APP_RESOURCES
       }
     },
@@ -1015,7 +1017,7 @@ module.exports = function (grunt) {
     },
 
     //-- TASK: NWJS
-    //-- Build the icestudio NWjs app (Executable) for different platforms
+    //-- Build the Icestudio NWjs app (Executable) for different platforms
     //-- It will download the pre-build binaries and create a release folder
     //-- The downloaded binaries are stored in the 'icestudio/cache' folder
     //-- The release folder is DIST/icestudio/{platform} 
@@ -1275,7 +1277,7 @@ module.exports = function (grunt) {
             path: MAC_EXEC_FILE,
           },
         ],
-        /* -- For code oficial packages of icestudio, for developers maintain commented 
+        /* -- For code oficial packages of Icestudio, for developers maintain commented 
 
         "code-sign": {
           "signing-identity": "XXXX",
