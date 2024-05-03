@@ -21,7 +21,7 @@
     "buildWindows": "grunt dist --platform=win64",
     "buildOSX": "grunt dist --platform=darwin",
     "buildOSXARM64": "grunt dist --platform=darwin --cpu=arm64",
-    "gettext": "grunt gettext",
+    "preptext": "grunt gettext && scripts/update_translations.sh",
     "compiletext": "grunt compiletext",
     "jshint": "grunt jshint",
     "clean": "grunt clean",

@@ -1538,7 +1538,7 @@ angular
           '<a class="action-open-url-external-browser" href="https://twitter.com/JesusArroyo89"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
           'who started this project and was the main developer from 2016/Jan/28 to 2019/Oct',
           "</p>",
-          '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio#main-page">contributors</a></p>',
+          '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio#user-content-main-page">contributors</a></p>',
           '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="https://fpgawars.github.io">FPGAwars</a> 2016-2024</p>',
           '<img src="resources/images/fpgawars-logo.png">',
           "  </div>",

@@ -43,7 +43,7 @@ angular
 
       // Breadcrumbs
 
-      $scope.breadcrumbsNavitate = function (selectedItem) {
+      $scope.breadcrumbsNavigate = function (selectedItem) {
         var item;
         if (common.isEditingSubmodule) {
           alertify.warning(
