@@ -3,6 +3,7 @@
 
 
 [![Build Status][build-image]][build-url]
+[![Build Windows][build-win-image]][build-win-url]  
 [![Build Mac][build-mac-image]][build-mac-url]  
 
 ![Version (Stable)][version-image]
@@ -170,6 +171,9 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 [build-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml
 
+[build-win-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-windows.yml/badge.svg
+
+[build-win-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-windows.yml
 
 [build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
 
