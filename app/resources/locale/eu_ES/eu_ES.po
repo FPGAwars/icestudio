@@ -413,12 +413,12 @@ msgid "Duplicate"
 msgstr "Irteera-etiketa"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "FPGAren E/S portuak bikoiztu dira"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Irteera-etiketa"
 
 #: app/views/languages.html:44
@@ -1359,7 +1359,6 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
-#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "

@@ -404,12 +404,12 @@ msgid "Duplicate"
 msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
 #: app/views/languages.html:44

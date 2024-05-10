@@ -404,12 +404,12 @@ msgid "Duplicate"
 msgstr "Dubbele FPGA I/O poorten"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Dubbele FPGA I/O poorten"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Dubbele FPGA I/O poorten"
 
 #: app/views/languages.html:44

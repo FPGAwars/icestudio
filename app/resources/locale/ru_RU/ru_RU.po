@@ -412,12 +412,12 @@ msgid "Duplicate"
 msgstr "Метка вывода:"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Дублирование портов ввода/вывода платы"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Метка вывода:"
 
 #: app/views/languages.html:44

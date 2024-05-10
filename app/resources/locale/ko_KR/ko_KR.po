@@ -414,12 +414,12 @@ msgid "Duplicate"
 msgstr "출력 라벨"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "복사된 FPGA I/O 포트"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "출력 라벨"
 
 #: app/views/languages.html:44

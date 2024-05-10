@@ -405,12 +405,12 @@ msgid "Duplicate"
 msgstr "Os portos E/S da FPGA están duplicados"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Os portos E/S da FPGA están duplicados"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Os portos E/S da FPGA están duplicados"
 
 #: app/views/languages.html:44

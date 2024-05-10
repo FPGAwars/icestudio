@@ -408,11 +408,11 @@ msgid "Duplicate"
 msgstr "Duplikat bei der Beschriftung:"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Doppelte FPGA I/O Schnittstellen"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Duplikat bei der Beschriftung:"
 
 #: app/views/languages.html:44

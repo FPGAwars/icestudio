@@ -410,12 +410,12 @@ msgid "Duplicate"
 msgstr "輸出標籤"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "重複的 FPGA I/O 接腳"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "輸出標籤"
 
 #: app/views/languages.html:44

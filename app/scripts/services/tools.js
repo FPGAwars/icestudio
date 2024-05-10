@@ -809,7 +809,7 @@ angular
                 stdout.indexOf("fatal error: duplicate pin constraints") !== -1
               ) {
                 resultAlert = alertify.error(
-                  gettextCatalog.getString("Duplicated FPGA I/O ports"),
+                  gettextCatalog.getString("Duplicate FPGA I/O ports"),
                   30
                 );
               } else {

@@ -407,12 +407,12 @@ msgid "Duplicate"
 msgstr "Etiqueta d'eixida"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'E/S de la FPGA duplicats"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Etiqueta d'eixida"
 
 #: app/views/languages.html:44

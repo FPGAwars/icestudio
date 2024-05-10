@@ -420,12 +420,12 @@ msgid "Duplicate"
 msgstr "Label de sortie"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'entrée/sortie FPGA dupliqués"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Label de sortie"
 
 #: app/views/languages.html:44

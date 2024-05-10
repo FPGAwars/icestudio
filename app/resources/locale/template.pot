@@ -409,11 +409,11 @@ msgid "Duplicate"
 msgstr ""
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr ""
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr ""
 
 #: app/views/languages.html:44

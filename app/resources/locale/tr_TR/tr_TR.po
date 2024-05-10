@@ -413,12 +413,12 @@ msgid "Duplicate"
 msgstr "Çıktı etiketi"
 
 #: app/scripts/services/tools.js:812
-msgid "Duplicated FPGA I/O ports"
+msgid "Duplicate FPGA I/O ports"
 msgstr "Çoğaltılmış FPGA I/O bağlantı noktalaı"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicated port name:"
+msgid "Duplicate port name:"
 msgstr "Çıktı etiketi"
 
 #: app/views/languages.html:44
