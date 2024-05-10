@@ -773,14 +773,14 @@ angular
                       );
                     } else {
                       resultAlert = alertify.error(
-                        gettextCatalog.getString(stdout),
+                        stdout,
                         30
                       );
                     }
                     break;
                   default:
                     resultAlert = alertify.error(
-                      gettextCatalog.getString(stdout),
+                      stdout,
                       30
                     );
                 }
