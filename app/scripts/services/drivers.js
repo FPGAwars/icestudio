@@ -436,7 +436,7 @@ angular.module('icestudio')
           if (error) {
             if ((stderr.indexOf('brew: command not found') !== -1) ||
               (stderr.indexOf('brew: No such file or directory') !== -1)) {
-              alertify.warning(gettextCatalog.getString('{{app}} is required.', {app: '<b>Homebrew</b>'}) + '<br>' +
+              alertify.warning(gettextCatalog.getString('{{app}} is required.', { app: '<b>Homebrew</b>' }) + '<br>' +
                 '<u>' + gettextCatalog.getString('Click here to install it') + '</u>', 30)
                 .callback = function (isClicked) {
                 if (isClicked) {
@@ -466,7 +466,7 @@ angular.module('icestudio')
           const fs = require('fs');
           fs.appendFileSync(common.LOGFILE, 'Error installing driver: ' + error + "\n");
         }
-        alertify.error('Error installing driver: ' + "\n" + error);
+        alertify.error(gettextCatalog.getString('Error installing driver:') + "\n" + error);
         utils.endBlockingTask();
       }
     }

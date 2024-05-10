@@ -261,7 +261,7 @@ angular.module('icestudio')
     };
 
     //------------------------------------------
-    //-- Return a String with the Apio version
+    //-- Return standard (English) string for Apio version
     //
     this.printApioVersion = function (version) {
       let msg = "";
@@ -280,7 +280,7 @@ angular.module('icestudio')
           break;
 
         default:
-          msg = "UNKNOWN apio Version (ERROR)";
+          msg = "UNKNOWN Apio Version (ERROR)";
           break;
       }
 
@@ -365,7 +365,7 @@ angular.module('icestudio')
     //
     this.installOnlineApio = function (callback) {
 
-      console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
+      console.log("InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
@@ -379,7 +379,7 @@ angular.module('icestudio')
       console.log(pipExec, executable, params);
       //-- Run the pip command!
       this.executeCommand([executable, params], null, true, callback);
-      console.log('Fin installOnlineApio');
+      console.log('Finished InstallOnlineApio');
 
     };
 
@@ -431,7 +431,7 @@ angular.module('icestudio')
     };
 
     //------------------------------------------------------------------
-    //-- Install an APIO package
+    //-- Install an Apio package
     //-- apio install <pkg>
     //--
     this.apioInstall = function (pkg, callback) {
@@ -460,7 +460,7 @@ angular.module('icestudio')
 
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.message('Using external apio: ' + candidateApio, 5);
+          alertify.message(gettextCatalog.getString('Using external Apio:') + ' ' + candidateApio, 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);
@@ -1344,8 +1344,8 @@ angular.module('icestudio')
       // user can approve by either updating profile 'allowInoutPorts' or setting
       // flag common.allowProjectInoutPorts
       const prompt = (isLoad ?
-        gettextCatalog.getString('You are loading a design that uses "tri-state".') :
-        gettextCatalog.getString('You are importing a block that uses "tri-state".')) +
+        gettextCatalog.getString('You are loading a design that uses \"tri-state\".') :
+        gettextCatalog.getString('You are importing a block that uses \"tri-state\".')) +
         ' ' +
         gettextCatalog.getString('Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in standard designs.<br /><br />You will be asked to update your Preferences (Advanced user setting) or you can just open this design on a preview basis.<br /><br />Continue?');
       return new Promise((resolve) => {
@@ -1362,7 +1362,7 @@ angular.module('icestudio')
 
         return new Promise((resolve) => {
           alertify.set('confirm', 'defaultFocus', 'cancel');
-          alertify.confirm(gettextCatalog.getString('Click "Yes" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;&nbsp;<b>Advanced features -> Allow tri-state connections</b><br /><br />Click "This time" to view tri-state for this design only.'), () => {
+          alertify.confirm(gettextCatalog.getString('Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br />Click \"This time\" to view tri-state for this design only.'), () => {
             profile.set('allowInoutPorts', true);
             alertify.warning(gettextCatalog.getString('Changed Preferences: Allow tri-state connections'));
             resolve('ok_advanced');
