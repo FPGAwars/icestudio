@@ -47,7 +47,7 @@ msgstr ""
 msgid "Add"
 msgstr "더하기"
 
-#: app/scripts/controllers/menu.js:1422
+#: app/scripts/controllers/menu.js:1421
 msgid "Add a block to start"
 msgstr "시작하기 위해 블럭 더하기"
 
@@ -67,7 +67,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "선택한 것들 모두 지우기"
 
-#: app/scripts/controllers/menu.js:1462
+#: app/scripts/controllers/menu.js:1461
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습니까? "
 
@@ -125,11 +125,11 @@ msgstr "보드 "
 msgid "Board rules"
 msgstr "보드 규칙"
 
-#: app/scripts/controllers/menu.js:1026
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules disabled"
 msgstr "보드 규칙이 지켜지지 않았습니다"
 
-#: app/scripts/controllers/menu.js:1024
+#: app/scripts/controllers/menu.js:1023
 msgid "Board rules enabled"
 msgstr "보드 룰을 사용할 수 있습니다"
 
@@ -145,7 +145,7 @@ msgstr "보드 {{name}} 불가능"
 msgid "Board {{name}} not connected"
 msgstr "보드 {{name}} 연결되지 않았음"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1344
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
 msgid "Board {{name}} selected"
 msgstr "보드 {{name}} 선택됨 "
 
@@ -153,12 +153,12 @@ msgstr "보드 {{name}} 선택됨 "
 msgid "Bootloader not active"
 msgstr "부트로더가 활성화되지 않음 "
 
-#: app/scripts/controllers/menu.js:1366 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1365 app/views/design.html:506
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "만들기"
 
-#: app/scripts/controllers/menu.js:1376
+#: app/scripts/controllers/menu.js:1375
 msgid "Build done"
 msgstr "만들기 완료 "
 
@@ -168,10 +168,8 @@ msgid "Cancel"
 msgstr "취소 "
 
 #: app/scripts/services/utils.js:1200
-#, fuzzy
-#| msgid "Unsupported project format {{version}}"
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "지원되지 않는 프로젝트 형식 {{version}}"
+msgstr ""
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -207,7 +205,7 @@ msgstr "색깔을 선택하세요"
 #: app/scripts/services/utils.js:1365
 msgid ""
 "Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
-"&nbsp;<b>Advanced features -> Allow tri-state connections</b><br /><br /"
+"&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
 ">Click \"This time\" to view tri-state for this design only."
 msgstr ""
 
@@ -220,11 +218,12 @@ msgid "Click here to <b>setup the drivers</b>"
 msgstr "여기를 클릭하여 <b>드라이버를 설정하세요.</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:546
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
+#: app/scripts/services/tools.js:1982 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "설치하려면 여기를 클릭하세요"
 
-#: app/scripts/controllers/menu.js:966
+#: app/scripts/controllers/menu.js:965
 msgid "Click here to view"
 msgstr "확인하려면 여기를 클릭하세요"
 
@@ -236,7 +235,7 @@ msgstr "데이터 버스에는 클럭이 허용되지 않습니다"
 msgid "Clone"
 msgstr "복제 "
 
-#: app/scripts/controllers/menu.js:581 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:80
 msgid "Close"
 msgstr "닫기"
 
@@ -252,7 +251,7 @@ msgstr "컬렉션 "
 msgid "Collection info"
 msgstr "컬렉션 정보"
 
-#: app/scripts/controllers/menu.js:1253
+#: app/scripts/controllers/menu.js:1252
 msgid "Collection {{collection}} info not defined"
 msgstr "컬렉션 {{collection}} 정보가 정의되지 않았습니다"
 
@@ -272,7 +271,7 @@ msgstr "컬렉션 {{name}}  삭제 "
 msgid "Collection {{name}} replaced"
 msgstr "컬렉션 {{name}}  교체"
 
-#: app/scripts/controllers/menu.js:1299
+#: app/scripts/controllers/menu.js:1298
 msgid "Collection {{name}} selected"
 msgstr "컬렉션 {{name}} 선택 "
 
@@ -280,7 +279,7 @@ msgstr "컬렉션 {{name}} 선택 "
 msgid "Collections"
 msgstr "컬렉션들 "
 
-#: app/scripts/controllers/menu.js:1269 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
 msgid "Command output"
 msgstr "명령 출력"
 
@@ -374,11 +373,11 @@ msgstr "설명"
 msgid "Disable"
 msgstr "불가"
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr "응용 프로그램을 닫으시겠습니까?"
 
-#: app/scripts/controllers/menu.js:1445
+#: app/scripts/controllers/menu.js:1444
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} 컬렉션을 삭제하시겠습니까?"
 
@@ -391,7 +390,8 @@ msgid "Documentation"
 msgstr "문ㅅ"
 
 #: app/views/version.html:69
-msgid "Don't display"
+#, fuzzy
+msgid "Don’t display"
 msgstr "표시 안 함"
 
 #: app/views/menu.html:675
@@ -467,7 +467,7 @@ msgstr "입력 포트 입력"
 msgid "Enter the python path"
 msgstr "외부 수집 경로 입력"
 
-#: app/scripts/controllers/menu.js:1013
+#: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "원격 호스트 이름 user@host를 입력하십시오"
 
@@ -499,7 +499,7 @@ msgstr "서브모듈을 추출하기"
 msgid "External collections"
 msgstr "외부의 콜렉션들"
 
-#: app/scripts/controllers/menu.js:938
+#: app/scripts/controllers/menu.js:937
 msgid "External collections updated"
 msgstr "외부의 콜렉션들이 업데이트 되었습니다"
 
@@ -508,7 +508,7 @@ msgstr "외부의 콜렉션들이 업데이트 되었습니다"
 msgid "External plugins"
 msgstr "외부의 콜렉션들"
 
-#: app/scripts/controllers/menu.js:810
+#: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
 msgstr "외부의 콜렉션들이 업데이트 되었습니다"
@@ -679,7 +679,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1235
 msgid ""
 "Install the <b>STABLE Toolchain</b>. This operation requires Internet "
-"connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
+"connection.<br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 
@@ -716,12 +716,12 @@ msgstr "인터넷 연결 필요"
 
 #: app/scripts/services/graph.js:298
 #, fuzzy
-msgid "Invalid <i>Pull-up</i> connection:<br>block already connected"
+msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
 msgstr "잘못된 <i>풀 업 </i> 연결: <br> 블록이 이미 연결됨"
 
 #: app/scripts/services/graph.js:312
 #, fuzzy
-msgid "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
 msgstr "잘못된 <i>풀 업 </i> 연결: <i>만 허용됨"
 
 #: app/scripts/services/graph.js:304
@@ -746,9 +746,17 @@ msgstr "잘못된 연결: {{a} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "잘못된 다중 입력 연결"
 
+#: app/scripts/controllers/menu.js:1948
+msgid "Invalid new name!"
+msgstr ""
+
 #: app/scripts/services/project.js:502 app/scripts/services/project.js:80
 msgid "Invalid project format"
 msgstr "잘못된 프로젝트 형식"
+
+#: app/scripts/controllers/menu.js:1852
+msgid "Invalid search name!"
+msgstr ""
 
 #: app/views/languages.html:32
 msgid "Italian"
@@ -807,7 +815,7 @@ msgstr "드라이버 가능"
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:752
+#: app/scripts/controllers/menu.js:751
 msgid "Logging file updated"
 msgstr ""
 
@@ -858,11 +866,11 @@ msgstr "이름"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1473
+#: app/scripts/controllers/menu.js:1472
 msgid "No collections stored"
 msgstr "저장된 컬렉션 없음"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:601
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
 msgid "OK"
 msgstr "알겠습니다"
@@ -920,8 +928,8 @@ msgstr ""
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: app/scripts/controllers/menu.js:761 app/scripts/controllers/menu.js:818
-#: app/scripts/controllers/menu.js:882 app/scripts/controllers/menu.js:946
+#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
+#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
 msgid "Path {{path}} does not exist"
 msgstr "경로 {{path}} 가 존재하지 않습니다"
 
@@ -941,7 +949,7 @@ msgstr ""
 msgid "Project information"
 msgstr "프로젝트 정보"
 
-#: app/scripts/controllers/menu.js:964 app/scripts/controllers/menu.js:990
+#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
 msgid "Project information updated"
 msgstr "프로젝트 정보가 업데이트되었습니다"
 
@@ -953,12 +961,12 @@ msgstr "프로젝트 {{name}}이 로드되었습니다"
 msgid "Project {{name}} saved"
 msgstr "프로젝트 {{name}}이 저장되었습니다"
 
-#: app/scripts/controllers/menu.js:874
-msgid "Python Environment updated"
-msgstr ""
-
 #: app/views/advanced.html:41
 msgid "Python environment"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:873
+msgid "Python environment updated"
 msgstr ""
 
 #: app/views/menu.html:202
@@ -1068,15 +1076,15 @@ msgstr "스페인어"
 msgid "Spring Green"
 msgstr "봄 초록"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1374
 msgid "Start build"
 msgstr "빌드 시작"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1400
 msgid "Start upload"
 msgstr "업로드 시작"
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1351
 msgid "Start verification"
 msgstr "검증 시작"
 
@@ -1110,7 +1118,7 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr "컬렉션 {{name}}이(가) 이미 존재합니다."
 
-#: app/scripts/controllers/menu.js:1324
+#: app/scripts/controllers/menu.js:1323
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
@@ -1121,7 +1129,7 @@ msgstr "현재 FPGA I/O 구성이 손실됩ㄴ다. {{name}}보드로 변경하�
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "툴체인이 제거됩니다. 계속하시겠습니까?"
 
-#: app/scripts/services/tools.js:1974
+#: app/scripts/services/tools.js:1978
 msgid "There is a new nightly version available"
 msgstr "새로운 야간 버전이 출시되었다"
 
@@ -1154,14 +1162,15 @@ msgstr ""
 #: app/scripts/services/graph.js:532
 #, fuzzy
 msgid ""
-"To enter \"edit mode\" in a deeper block, you need to finish first the "
-"current one by locking the padlock."
+"To enter \"edit mode\" in a deeper block, you need to finish the current "
+"level by locking the padlock."
 msgstr ""
 "\"편집 모드\"의 깊은 블락에 들어가기위해서, 현재 \"편집모드\"를 키 락으로 잠"
 "가야 합니다"
 
 #: app/scripts/controllers/design.js:50
-msgid "To navigate through design, you need to close \"edit mode\"."
+#, fuzzy
+msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr "디자인을 보기위해서는, \"편집모드\"를 닫아야합니다."
 
 #: app/scripts/controllers/menu.js:349
@@ -1213,11 +1222,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1037
+#: app/scripts/controllers/menu.js:1036
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1034
+#: app/scripts/controllers/menu.js:1033
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1254,16 +1263,16 @@ msgstr "제목이 없음"
 msgid "Update (Latest stable)"
 msgstr "블럭 이름 업데이트"
 
-#: app/scripts/controllers/menu.js:1391 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "업로드"
 
-#: app/scripts/controllers/menu.js:1402
+#: app/scripts/controllers/menu.js:1401
 msgid "Upload done"
 msgstr "업로드 완료"
 
-#: app/scripts/controllers/menu.js:1353
+#: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "검증 완료"
 
@@ -1310,11 +1319,6 @@ msgstr "잘못된 블록 형식: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "잘못된 블럭 이름{{name}}"
 
-#: app/scripts/controllers/menu.js:1948
-#, fuzzy
-msgid "Wrong new name!"
-msgstr "잘못 된 포트 이름{{name}}"
-
 #: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
 msgstr "잘못된 프로젝트 형식: {{name}}"
@@ -1322,10 +1326,6 @@ msgstr "잘못된 프로젝트 형식: {{name}}"
 #: app/scripts/services/tools.js:980
 msgid "Wrong remote hostname {{name}}"
 msgstr "잘못된 원격 호스트 이름 {{name}}"
-
-#: app/scripts/controllers/menu.js:1852
-msgid "Wrong search name!"
-msgstr ""
 
 #: app/scripts/services/forms.js:411 app/views/design.html:164
 msgid "Yellow"
@@ -1338,8 +1338,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "서브모듈을 편집하는 중에 서브모듈만 저장하면(이 경우 \"추출 된 모듈\"과 같은 "
 "\"저장\"이 작동함), 계속하시겠습니까?"
@@ -1354,9 +1354,9 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:396
 msgid ""
-"You are navigating into the design: if you want to save the entire design, "
+"You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
-"export this module as new file, unlock the module and use \"Save as\""
+"export this module as new file, unlock the module and use \"Save as\"."
 msgstr ""
 
 #: app/scripts/services/project.js:107
@@ -1364,7 +1364,7 @@ msgstr ""
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "그대로 로드하거나 {{name}}보드로 변환 할 수 있다."
 
-#: app/scripts/controllers/menu.js:1367
+#: app/scripts/controllers/menu.js:1366
 #, fuzzy
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
@@ -1373,7 +1373,7 @@ msgstr ""
 "최상위 레벨 디자인만을 빌드할 수 있습니다.서브모듈은 오직 입증만 <strong> 가"
 "능합니다"
 
-#: app/scripts/controllers/menu.js:1392
+#: app/scripts/controllers/menu.js:1391
 #, fuzzy
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
@@ -1386,7 +1386,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:590
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입니다"
 
@@ -1398,19 +1398,19 @@ msgstr "뒤로가기"
 msgid "{{app}} is required."
 msgstr "{{앱}}이 필요합니다."
 
-#: app/scripts/controllers/menu.js:1139
+#: app/scripts/controllers/menu.js:1138
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}}데이터시트가 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:1125
+#: app/scripts/controllers/menu.js:1124
 msgid "{{board}} pinout not defined"
 msgstr "{{board}}핀아웃이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:1165
+#: app/scripts/controllers/menu.js:1164
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 규칙이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:499 app/scripts/controllers/menu.js:532
+#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr "{{name}} 이 추출되었습니다"
 

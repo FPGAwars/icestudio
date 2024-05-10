@@ -37,7 +37,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1422
+#: app/scripts/controllers/menu.js:1421
 msgid "Add a block to start"
 msgstr ""
 
@@ -57,7 +57,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1462
+#: app/scripts/controllers/menu.js:1461
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr ""
 
@@ -115,11 +115,11 @@ msgstr ""
 msgid "Board rules"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1026
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1024
+#: app/scripts/controllers/menu.js:1023
 msgid "Board rules enabled"
 msgstr ""
 
@@ -137,7 +137,7 @@ msgid "Board {{name}} not connected"
 msgstr ""
 
 #: app/scripts/app.js:190
-#: app/scripts/controllers/menu.js:1344
+#: app/scripts/controllers/menu.js:1343
 msgid "Board {{name}} selected"
 msgstr ""
 
@@ -146,13 +146,13 @@ msgstr ""
 msgid "Bootloader not active"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1365
 #: app/views/design.html:506
 #: app/views/menu.html:607
 msgid "Build"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1376
+#: app/scripts/controllers/menu.js:1375
 msgid "Build done"
 msgstr ""
 
@@ -209,11 +209,13 @@ msgstr ""
 #: app/scripts/services/drivers.js:440
 #: app/scripts/services/drivers.js:625
 #: app/scripts/services/drivers.js:644
+#: app/scripts/services/tools.js:1970
+#: app/scripts/services/tools.js:1982
 #: app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:966
+#: app/scripts/controllers/menu.js:965
 msgid "Click here to view"
 msgstr ""
 
@@ -225,7 +227,7 @@ msgstr ""
 msgid "Clone"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:581
+#: app/scripts/controllers/menu.js:580
 #: app/views/version.html:80
 msgid "Close"
 msgstr ""
@@ -243,7 +245,7 @@ msgstr ""
 msgid "Collection info"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1253
+#: app/scripts/controllers/menu.js:1252
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
@@ -263,7 +265,7 @@ msgstr ""
 msgid "Collection {{name}} replaced"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1299
+#: app/scripts/controllers/menu.js:1298
 msgid "Collection {{name}} selected"
 msgstr ""
 
@@ -271,7 +273,7 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1269
+#: app/scripts/controllers/menu.js:1268
 #: app/views/menu.html:471
 msgid "Command output"
 msgstr ""
@@ -366,11 +368,11 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1445
+#: app/scripts/controllers/menu.js:1444
 msgid "Do you want to remove the {{name}} collection?"
 msgstr ""
 
@@ -454,7 +456,7 @@ msgstr ""
 msgid "Enter the python path"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1013
+#: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr ""
 
@@ -487,7 +489,7 @@ msgstr ""
 msgid "External collections"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:938
+#: app/scripts/controllers/menu.js:937
 msgid "External collections updated"
 msgstr ""
 
@@ -495,7 +497,7 @@ msgstr ""
 msgid "External plugins"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:810
+#: app/scripts/controllers/menu.js:809
 msgid "External plugins updated"
 msgstr ""
 
@@ -711,6 +713,10 @@ msgstr ""
 msgid "Invalid multiple input connections"
 msgstr ""
 
+#: app/scripts/controllers/menu.js:1948
+msgid "Invalid new name!"
+msgstr ""
+
 #: app/scripts/services/project.js:502
 #: app/scripts/services/project.js:80
 msgid "Invalid project format"
@@ -775,7 +781,7 @@ msgstr ""
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:752
+#: app/scripts/controllers/menu.js:751
 msgid "Logging file updated"
 msgstr ""
 
@@ -826,12 +832,12 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1473
+#: app/scripts/controllers/menu.js:1472
 msgid "No collections stored"
 msgstr ""
 
 #: app/scripts/app.js:57
-#: app/scripts/controllers/menu.js:601
+#: app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:160
 #: app/scripts/services/utils.js:1381
 msgid "OK"
@@ -890,10 +896,10 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:761
-#: app/scripts/controllers/menu.js:818
-#: app/scripts/controllers/menu.js:882
-#: app/scripts/controllers/menu.js:946
+#: app/scripts/controllers/menu.js:760
+#: app/scripts/controllers/menu.js:817
+#: app/scripts/controllers/menu.js:881
+#: app/scripts/controllers/menu.js:945
 msgid "Path {{path}} does not exist"
 msgstr ""
 
@@ -913,8 +919,8 @@ msgstr ""
 msgid "Project information"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:964
-#: app/scripts/controllers/menu.js:990
+#: app/scripts/controllers/menu.js:963
+#: app/scripts/controllers/menu.js:989
 msgid "Project information updated"
 msgstr ""
 
@@ -930,7 +936,7 @@ msgstr ""
 msgid "Python environment"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:874
+#: app/scripts/controllers/menu.js:873
 msgid "Python environment updated"
 msgstr ""
 
@@ -1043,15 +1049,15 @@ msgstr ""
 msgid "Spring Green"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1374
 msgid "Start build"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1400
 msgid "Start upload"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1351
 msgid "Start verification"
 msgstr ""
 
@@ -1084,7 +1090,7 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1324
+#: app/scripts/controllers/menu.js:1323
 msgid "The current FPGA I/O configuration will be lost. Do you want to change to the {{name}} board?"
 msgstr ""
 
@@ -1092,7 +1098,7 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1974
+#: app/scripts/services/tools.js:1978
 msgid "There is a new nightly version available"
 msgstr ""
 
@@ -1165,11 +1171,11 @@ msgstr ""
 msgid "Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in standard designs.<br /><br />You will be asked to update your Preferences (Advanced user setting) or you can just open this design on a preview basis.<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1037
+#: app/scripts/controllers/menu.js:1036
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1034
+#: app/scripts/controllers/menu.js:1033
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1206,17 +1212,17 @@ msgstr ""
 msgid "Update (Latest stable)"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1390
 #: app/views/design.html:514
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1402
+#: app/scripts/controllers/menu.js:1401
 msgid "Upload done"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1353
+#: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr ""
 
@@ -1266,10 +1272,6 @@ msgstr ""
 msgid "Wrong block name {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1948
-msgid "Invalid new name!"
-msgstr ""
-
 #: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
 msgstr ""
@@ -1300,18 +1302,18 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
-msgid "You are navigating into the design: If you want to save the entire design, you need to go back                      to the top-level. If you want to export this module as new file, unlock the module and use \"Save as\""
+msgid "You are navigating into the design: If you want to save the entire design, you need to go back                      to the top-level. If you want to export this module as new file, unlock the module and use \"Save as\"."
 msgstr ""
 
 #: app/scripts/services/project.js:107
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1367
+#: app/scripts/controllers/menu.js:1366
 msgid "You can only build at the top-level design. Inside submodules, you can <strong>Verify</strong>"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1392
+#: app/scripts/controllers/menu.js:1391
 msgid "You can only upload at the top-level design. Inside submodules, you can <strong>Verify</strong>"
 msgstr ""
 
@@ -1319,7 +1321,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:590
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr ""
 
@@ -1332,19 +1334,19 @@ msgstr ""
 msgid "{{app}} is required."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1139
+#: app/scripts/controllers/menu.js:1138
 msgid "{{board}} datasheet not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1125
+#: app/scripts/controllers/menu.js:1124
 msgid "{{board}} pinout not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1165
+#: app/scripts/controllers/menu.js:1164
 msgid "{{board}} rules not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:499
-#: app/scripts/controllers/menu.js:532
+#: app/scripts/controllers/menu.js:498
+#: app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr ""
