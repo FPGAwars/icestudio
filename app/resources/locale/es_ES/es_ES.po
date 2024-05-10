@@ -183,7 +183,7 @@ msgstr "Cancelar"
 
 #: app/scripts/services/utils.js:1200
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "No se puede pegar desde un formato de proyecto diferente {{version}}"
+msgstr "No se puede pegar desde un formato de proyecto diferente ({{version}})"
 
 #: app/views/languages.html:92
 msgid "Catalonian"
@@ -221,14 +221,13 @@ msgid ""
 ">Click \"This time\" to view tri-state for this design only."
 msgstr ""
 "Clica en \"Si\" para permitr tri-estado y actualizar las preferencias: <br /"
-">&nbsp;&nbsp;&nbsp;<b>Opciones avanzadas -> Permitir conexiones tri-estado</"
-"b><br /><br />Clica en \"esta vez\" para ver los tri-estado sólo para este "
+">&nbsp;&nbsp;&nbsp;<b>Opciones avanzadas → Permitir conexiones tri-estado</"
+"b><br /><br />Clica en \"Esta vez\" para ver los tri-estado sólo para este "
 "diseño."
 
 #: app/scripts/services/project.js:185
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr ""
-"Haz clic aquí para <b>descargar una versión más nueva</ b> de Icestudio"
+msgstr "Haz clic aquí para <b>descargar una versión más nueva</b> de Icestudio"
 
 #: app/scripts/services/tools.js:1650
 msgid "Click here to <b>setup the drivers</b>"
@@ -456,8 +455,9 @@ msgid "Enter the external collection path"
 msgstr "Introduce la ruta de las colecciones externas"
 
 #: app/scripts/services/forms.js:2381
+#, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Introduce la ruta del plugin externo"
+msgstr "Introduce la ruta del plugins externo"
 
 #: app/scripts/services/forms.js:2335
 msgid "Enter the log filename"
@@ -683,7 +683,7 @@ msgid ""
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 "Instalar la <b>Toolchain ESTABLE</b>. Esta operación requiere conexión a "
-"internet<br><p><b>NOTA:</b> Debes desconectar la VPN (si la usas) para "
+"internet.<br><p><b>NOTA:</b> Debes desconectar la VPN (si la usas) para "
 "permitir la instalación de la Toolchain</p> <p>¿Quieres continuar?</p>"
 
 #: app/scripts/services/tools.js:1260
@@ -806,8 +806,9 @@ msgid "Local parameter"
 msgstr "Parámetro local"
 
 #: app/views/menu.html:404
+#, fuzzy
 msgid "Logging enabled"
-msgstr "Logging avtivado"
+msgstr "Logging habilitado"
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -854,8 +855,9 @@ msgid "New Color:"
 msgstr "Nuevo Color:"
 
 #: app/views/design.html:80
+#, fuzzy
 msgid "New Name"
-msgstr "Nuevo nombre"
+msgstr "Nuevo Nombre"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -958,7 +960,7 @@ msgstr "Entorno de Python"
 #: app/scripts/controllers/menu.js:873
 #, fuzzy
 msgid "Python environment updated"
-msgstr "Entorno de python actualizado"
+msgstr "Entorno de Python actualizado"
 
 #: app/views/menu.html:202
 msgid "Quit"
@@ -1210,10 +1212,10 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 "No se recomiendo el uso de los Puertos Tri-estado (también conocidos como "
-"alta impedancia, bidireccional, o entrada/salida)  en diseño normales.<br /"
+"alta impedancia, bidireccional, o entrada/salida) en diseño normales.<br /"
 "><br />Se te pedirá que actualices tus preferencias (Preferencias de usuario "
 "avanzado) o simplemente puedes abrir este diseño en modo previsualización."
-"<br /><br />¡Continuar?"
+"<br /><br />¿Continuar?"
 
 #: app/scripts/controllers/menu.js:1036
 msgid "Tri-state connections (inout ports) disabled"
@@ -1293,8 +1295,9 @@ msgid "View license"
 msgstr "Ver licencia"
 
 #: app/scripts/services/utils.js:1371
+#, fuzzy
 msgid "Viewing tri-state"
-msgstr "Visualizando Tri-estado"
+msgstr "Visualizando tri-estado"
 
 #: app/scripts/services/tools.js:924
 msgid "Warnings detected in the design"
@@ -1336,7 +1339,7 @@ msgid ""
 "\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estás editando un submódulo, aquí que guardarás solamente este submódulo "
-"(“Guardar como\" funciona como “Exportar módulo”). ¿Quieres continuar?"
+"(\"Guardar como\" funciona como \"Exportar módulo\"). ¿Quieres continuar?"
 
 #: app/scripts/services/utils.js:1348
 msgid "You are importing a block that uses \"tri-state\"."
@@ -1353,9 +1356,9 @@ msgid ""
 "you need to go back                      to the top-level. If you want to "
 "export this module as new file, unlock the module and use \"Save as\"."
 msgstr ""
-"Estás navegando dentro del diseño: si quieres guardar el diseño entero, "
+"Estás navegando dentro del diseño: Si quieres guardar el diseño entero, "
 "tienes que retroceder al nivel superior. Si quieres exportar este módulo "
-"como un archivo nuevo, desbloquea el módulo y utiliza “Guardar como”"
+"como un archivo nuevo, desbloquea el módulo y utiliza \"Guardar como\"."
 
 #: app/scripts/services/project.js:107
 msgid "You can load it as it is or convert it to use the {{name}} board."

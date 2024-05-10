@@ -18,7 +18,7 @@ msgid ""
 "            Unlock to edit the block!"
 msgstr ""
 "<b>Read only</b><br>\n"
-"Unlock to edit the block!"
+"            Unlock to edit the block!"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:633
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -82,11 +82,11 @@ msgstr "Allow tri-state connections"
 
 #: app/scripts/services/tools.js:1581
 msgid "Apio install"
-msgstr ""
+msgstr "Apio install"
 
 #: app/scripts/services/tools.js:1593
 msgid "Apio install drivers"
-msgstr ""
+msgstr "Apio install drivers"
 
 #: app/scripts/services/tools.js:1508
 msgid "At least Python 3.7 is required"
@@ -471,7 +471,7 @@ msgstr "Enter the remote hostname user@host"
 
 #: app/scripts/services/drivers.js:469
 msgid "Error installing driver:"
-msgstr ""
+msgstr "Error installing driver:"
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
