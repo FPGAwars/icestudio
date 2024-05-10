@@ -53,7 +53,7 @@ msgstr "Добавить блок в начало"
 msgid "Add as block"
 msgstr "Добавить как блок"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "Формат адреса"
 
@@ -73,6 +73,14 @@ msgstr "Все сохраненные коллеции будут удалены
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
@@ -90,7 +98,7 @@ msgstr "Базовый"
 msgid "Basque"
 msgstr "Баскский"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "Бинарный"
 
@@ -233,7 +241,7 @@ msgstr "Сигнал тактирования не разрешен для ши�
 msgid "Clone"
 msgstr "Клонировать"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "Закрыть"
 
@@ -293,7 +301,7 @@ msgstr "Конфигурация неполна"
 msgid "Constant"
 msgstr "Константа"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
 msgstr "Константа"
@@ -341,7 +349,7 @@ msgstr "Тёмно-оранжевый"
 msgid "Datasheet"
 msgstr "Даташит"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "Десятичный"
 
@@ -387,7 +395,7 @@ msgstr "Заменить ?"
 msgid "Documentation"
 msgstr "Документация"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "Не показывать"
@@ -440,27 +448,27 @@ msgstr "Включить"
 msgid "English"
 msgstr "English"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Путь до сторонней коллекции"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
 msgstr "Путь до сторонней коллекции"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "Выходные блоки"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "Входные порты"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
 msgstr "Путь до сторонней коллекции"
@@ -468,6 +476,10 @@ msgstr "Путь до сторонней коллекции"
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "Удаленный хост в формате user@host"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -523,11 +535,11 @@ msgstr "Пин FPGA"
 msgid "FPGA resources"
 msgstr "Ресурсы FPGA"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -590,11 +602,11 @@ msgstr "Зелёно-жёлтый"
 msgid "Help"
 msgstr "Помощь"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "Шестнадцатеричный"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
 msgstr "Icestudio Inception"
@@ -807,7 +819,7 @@ msgstr "Светлая морская волна"
 msgid "Load"
 msgstr "Загрузить"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "Локальный параметр"
 
@@ -837,7 +849,7 @@ msgstr "Умеренный красно-фиолетовый"
 msgid "Memory"
 msgstr "Память"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Блоки памяти"
@@ -1056,7 +1068,7 @@ msgstr "Выбрать"
 msgid "Select all"
 msgstr "Выбрать все"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "Выберите плату"
 
@@ -1116,7 +1128,7 @@ msgstr "Тайваньский"
 msgid "Testbench"
 msgstr "Тестбенч"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr "Большое спасибо!"
 
@@ -1159,8 +1171,8 @@ msgstr "Этот проект был разработан для платы {{na
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1281,6 +1293,10 @@ msgstr "Загрузка"
 msgid "Upload done"
 msgstr "Загрузка завершена"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Проверка завершена"
@@ -1323,7 +1339,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Неправильный формат блока: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Неправильное имя блока  {{name}}"

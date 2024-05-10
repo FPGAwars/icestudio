@@ -60,7 +60,7 @@ msgstr "Add a block to start"
 msgid "Add as block"
 msgstr "Add as block"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "Address format"
 
@@ -80,6 +80,14 @@ msgstr "All stored collections will be lost. Do you want to continue?"
 msgid "Allow tri-state connections"
 msgstr "Allow tri-state connections"
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 msgid "At least Python 3.7 is required"
 msgstr "At least Python 3.7 is required"
@@ -96,7 +104,7 @@ msgstr "Basic"
 msgid "Basque"
 msgstr "Basque"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "Binary"
 
@@ -239,7 +247,7 @@ msgstr "Clock not allowed for data buses"
 msgid "Clone"
 msgstr "Clone"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "Close"
 
@@ -299,7 +307,7 @@ msgstr "Configuration not completed"
 msgid "Constant"
 msgstr "Constant"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 msgid "Constant names"
 msgstr "Constant names"
 
@@ -343,7 +351,7 @@ msgstr "Dark Orange"
 msgid "Datasheet"
 msgstr "Datasheet"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "Decimal"
 
@@ -387,7 +395,7 @@ msgstr "Do you want to replace it?"
 msgid "Documentation"
 msgstr "Documentation"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 msgid "Don’t display"
 msgstr "Don’t display"
 
@@ -437,29 +445,33 @@ msgstr "Enable"
 msgid "English"
 msgstr "English"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 msgid "Enter the external collection path"
 msgstr "Enter the external collections path"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 msgid "Enter the external plugins path"
 msgstr "Enter the external plugins path"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 msgid "Enter the log filename"
 msgstr "Enter the log filename"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 msgid "Enter the pip path"
 msgstr "Enter the pip path"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 msgid "Enter the python path"
 msgstr "Enter the python path"
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "Enter the remote hostname user@host"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -513,11 +525,11 @@ msgstr "FPGA pin"
 msgid "FPGA resources"
 msgstr "FPGA resources"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr "FPGAwars community"
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr "FPGAwars community."
 
@@ -580,11 +592,11 @@ msgstr "Green Yellow"
 msgid "Help"
 msgstr "Help"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "Hexadecimal"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 msgid "Icestudio is part of"
 msgstr "Icestudio is part of"
 
@@ -775,7 +787,7 @@ msgstr "Light Sea Green"
 msgid "Load"
 msgstr "Load"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "Local parameter"
 
@@ -803,7 +815,7 @@ msgstr "Medium Violet Red"
 msgid "Memory"
 msgstr "Memory"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 msgid "Memory blocks"
 msgstr "Memory blocks"
 
@@ -1013,7 +1025,7 @@ msgstr "Select"
 msgid "Select all"
 msgstr "Select all"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "Select your board"
 
@@ -1069,7 +1081,7 @@ msgstr "Taiwanese"
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr "Thank you very much!"
 
@@ -1111,11 +1123,11 @@ msgstr "This project is designed for the {{name}} board."
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 
 #: app/scripts/services/utils.js:1375
 msgid "This time"
@@ -1233,6 +1245,10 @@ msgstr "Upload"
 msgid "Upload done"
 msgstr "Upload done"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr "Using external Apio:"
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Verification done"
@@ -1274,7 +1290,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Wrong block format: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Wrong block name {{name}}"

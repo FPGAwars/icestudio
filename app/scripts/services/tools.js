@@ -455,7 +455,7 @@ angular
       this.checkToolchain = checkToolchain;
 
       //----------------------------------------------------------------------------------
-      //-- Check if APIO is available. The apio version is read and stored in the
+      //-- Check if Apio is available. The Apio version is read and stored in the
       //-- toolchain.apio global object
       //-- It is also checked if the version is correct (with the version given in the  
       //-- package.json package)
@@ -710,7 +710,7 @@ angular
                   if (common.selectedBoard.name.startsWith("TinyFPGA-B")) {
                     // TinyFPGA bootloader notification
                     errorMessage +=
-                      "</br>(" +
+                      "<br>(" +
                       gettextCatalog.getString("Bootloader not active") +
                       ")";
                   }
@@ -1241,7 +1241,7 @@ angular
             //-- Remove the toolchain for starting a fresh installation
             utils.removeToolchain();
 
-            //-- Install APIO STABLE version
+            //-- Install Apio STABLE version
             installOnlineToolchain(common.APIO_VERSION_STABLE);
           }
         );
@@ -1389,10 +1389,10 @@ angular
           '  <p id="progress-message">' +
           gettextCatalog.getString("Installing") + ' ' + utils.printApioVersion(version) +
           '  </p>',
-          '  </br>',
+          '  <br>',
           '  <div class="progress">',
           '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-          '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+          '      aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
           '    </div>',
           '  </div>',
           '</div>'
@@ -1578,7 +1578,7 @@ angular
           pkgName += ("@" + common.APIO_PKG_OSS_CAD_SUITE_VERSION);
         }
 
-        updateProgress("apio install " + pkgName, 60);
+        updateProgress(gettextCatalog.getString("Apio install") + " " + pkgName, 60);
         utils.apioInstall(pkgName, callback);
       }
 
@@ -1590,7 +1590,7 @@ angular
 
           iceConsole.log("**** STEP: APIO install drivers");
 
-          updateProgress("apio install drivers", 80);
+          updateProgress(gettextCatalog.getString("Apio install drivers"), 80);
           utils.apioInstall("drivers", callback);
         } else {
           callback();
@@ -1602,7 +1602,7 @@ angular
       //--
       function installationCompleted(callback) {
 
-        iceConsole.log("**** FINAL STEP: Checking the installed apio");
+        iceConsole.log("**** FINAL STEP: Checking the installed APIO");
 
         //------- Create the CACHE folders
         //------- They were removed before installing the toolchain

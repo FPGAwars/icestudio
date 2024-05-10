@@ -280,7 +280,7 @@ angular.module('icestudio')
           break;
 
         default:
-          msg = "UNKNOWN apio Version (ERROR)";
+          msg = "UNKNOWN Apio Version (ERROR)";
           break;
       }
 
@@ -365,7 +365,7 @@ angular.module('icestudio')
     //
     this.installOnlineApio = function (callback) {
 
-      console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
+      console.log("InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
@@ -379,7 +379,7 @@ angular.module('icestudio')
       console.log(pipExec, executable, params);
       //-- Run the pip command!
       this.executeCommand([executable, params], null, true, callback);
-      console.log('Fin installOnlineApio');
+      console.log('Finished InstallOnlineApio');
 
     };
 
@@ -431,7 +431,7 @@ angular.module('icestudio')
     };
 
     //------------------------------------------------------------------
-    //-- Install an APIO package
+    //-- Install an Apio package
     //-- apio install <pkg>
     //--
     this.apioInstall = function (pkg, callback) {
@@ -460,7 +460,7 @@ angular.module('icestudio')
 
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.message('Using external apio: ' + candidateApio, 5);
+          alertify.message(gettextCatalog.getString('Using external Apio:') + ' ' + candidateApio, 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);

@@ -52,7 +52,7 @@ msgstr "添加图块并开始"
 msgid "Add as block"
 msgstr "添加为图块"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "地址格式"
 
@@ -72,6 +72,14 @@ msgstr "所有存储的集合将会丢失。是否继续？"
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
@@ -89,7 +97,7 @@ msgstr "基础"
 msgid "Basque"
 msgstr "Basque"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "二进制"
 
@@ -232,7 +240,7 @@ msgstr "数据总线上不可以使用时钟"
 msgid "Clone"
 msgstr "克隆"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "关闭"
 
@@ -292,7 +300,7 @@ msgstr "配置未完成"
 msgid "Constant"
 msgstr "常量"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
 msgstr "常量"
@@ -340,7 +348,7 @@ msgstr "深橙"
 msgid "Datasheet"
 msgstr "数据表"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "十进制"
 
@@ -386,7 +394,7 @@ msgstr "您是否要替换？"
 msgid "Documentation"
 msgstr "文档"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "不再显示"
@@ -439,27 +447,27 @@ msgstr "开启"
 msgid "English"
 msgstr "English"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "输入新集合路径"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
 msgstr "输入新集合路径"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "输入输出图块名称"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "输入输入端口名称"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
 msgstr "输入新集合路径"
@@ -467,6 +475,10 @@ msgstr "输入新集合路径"
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "输入远程主机 用户名@主机名"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -522,11 +534,11 @@ msgstr "FPGA 引脚"
 msgid "FPGA resources"
 msgstr "FPGA 资源"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -589,11 +601,11 @@ msgstr "黄绿"
 msgid "Help"
 msgstr "帮助"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "十六进制"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 msgid "Icestudio is part of"
 msgstr ""
 
@@ -794,7 +806,7 @@ msgstr "亮海绿"
 msgid "Load"
 msgstr "载入"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "本地参数"
 
@@ -824,7 +836,7 @@ msgstr "紫红"
 msgid "Memory"
 msgstr "内存"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 #, fuzzy
 msgid "Memory blocks"
 msgstr "输入内存图块名称"
@@ -1042,7 +1054,7 @@ msgstr "选择"
 msgid "Select all"
 msgstr "全选"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "选择开发板"
 
@@ -1102,7 +1114,7 @@ msgstr "中文"
 msgid "Testbench"
 msgstr "测试平台"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr ""
 
@@ -1141,8 +1153,8 @@ msgstr "该项目为开发板 {{name}} 设计使用。"
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1261,6 +1273,10 @@ msgstr "上传"
 msgid "Upload done"
 msgstr "上传成功"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "验证成功"
@@ -1303,7 +1319,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "图块格式错误： {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "图块名称错误 {{name}}"

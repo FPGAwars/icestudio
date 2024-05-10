@@ -52,7 +52,7 @@ msgstr "Aggiungere un blocco per iniziare"
 msgid "Add as block"
 msgstr "Aggiungi come blocco"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "Codifica dell'indirizzo"
 
@@ -72,6 +72,14 @@ msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
@@ -89,7 +97,7 @@ msgstr "Base"
 msgid "Basque"
 msgstr "Basco"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "Binario"
 
@@ -232,7 +240,7 @@ msgstr "Segnale di clock non permesso nei segnali di bus"
 msgid "Clone"
 msgstr "Clona"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "Chiudi"
 
@@ -293,7 +301,7 @@ msgstr "Configurazione non completata"
 msgid "Constant"
 msgstr "Costante"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
 msgstr "Costante"
@@ -340,7 +348,7 @@ msgstr "ArancioneScuro"
 msgid "Datasheet"
 msgstr "Scheda tecnica"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "Decimale"
 
@@ -386,7 +394,7 @@ msgstr "Vuoi sostituirlo?"
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "Non mostrare"
@@ -439,26 +447,26 @@ msgstr "Abilita"
 msgid "English"
 msgstr "Inglese"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Inserisci il percorso della collezione esterna"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 msgid "Enter the external plugins path"
 msgstr "Immettere il percorso dei plugin esterni"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "Inserire il nome dei blocchi di uscita"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "Inserire il nome delle porte di ingresso"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
 msgstr "Inserisci il percorso file di python con versione > 3.8"
@@ -466,6 +474,10 @@ msgstr "Inserisci il percorso file di python con versione > 3.8"
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "Inserisci il nome dell'host remoto user@host"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -519,11 +531,11 @@ msgstr "Pin FPGA"
 msgid "FPGA resources"
 msgstr "Risorse FPGA"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -586,11 +598,11 @@ msgstr "VerdeAcido"
 msgid "Help"
 msgstr "Aiuto"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "Esadecimale"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 msgid "Icestudio is part of"
 msgstr ""
 
@@ -798,7 +810,7 @@ msgstr "VerdeAcqua"
 msgid "Load"
 msgstr "Carica"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "Parametri locali"
 
@@ -828,7 +840,7 @@ msgstr "RossoViolaceo"
 msgid "Memory"
 msgstr "Memoria"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Inserire il nome dei blocchi di memoria"
@@ -1047,7 +1059,7 @@ msgstr "Seleziona"
 msgid "Select all"
 msgstr "Seleziona tutto"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "Seleziona la scheda"
 
@@ -1107,7 +1119,7 @@ msgstr "Cinese"
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 #, fuzzy
 msgid "Thank you very much!"
 msgstr ". Grazie mille"
@@ -1151,8 +1163,8 @@ msgstr "Questo progetto è stato progettato per la scheda {{name}}"
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1275,6 +1287,10 @@ msgstr "Carica"
 msgid "Upload done"
 msgstr "Caricamento completato"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Verifica completata"
@@ -1317,7 +1333,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Formato del blocco erratot: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Nome del blocco {{name}} errato"

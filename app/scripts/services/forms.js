@@ -1814,8 +1814,7 @@ angular.module('icestudio')
                 //-- Show an error and return
                 evt.cancel = true;
                 this.resultAlert = alertify.warning(
-                  gettextCatalog.getString('Duplicate port name: ') +
-                  portInfo.name
+                  gettextCatalog.getString('Duplicate port name:') + ' ' + portInfo.name
                 );
                 return;
               }

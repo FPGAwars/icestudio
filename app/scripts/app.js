@@ -168,7 +168,7 @@ angular
         "common.ENV_BIN_DIR: Executable files: " + common.ENV_BIN_DIR
       );
       iceConsole.log("common.ENV_PIP: PIP executable:  " + common.ENV_PIP);
-      iceConsole.log("common.APIO_CMD: Apio command: " + common.APIO_CMD);
+      iceConsole.log("common.APIO_CMD: APIO command: " + common.APIO_CMD);
       iceConsole.log("Common.APP: Icestudio APP folder: " + common.APP);
       iceConsole.log(
         "common.APP_DIR: Icestudio execution folder: " + common.APP_DIR

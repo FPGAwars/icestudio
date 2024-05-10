@@ -61,7 +61,7 @@ msgstr "ブロックを追加して始める"
 msgid "Add as block"
 msgstr "ブロックとして追加"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "アドレスフォーマット"
 
@@ -81,6 +81,14 @@ msgstr "保存されているコレクションはすべて失われます。継
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 msgid "At least Python 3.7 is required"
 msgstr "Python 3.7 以上が必要です"
@@ -97,7 +105,7 @@ msgstr "基本ブロック"
 msgid "Basque"
 msgstr ""
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "バイナリ"
 
@@ -237,7 +245,7 @@ msgstr "データバスにクロックを使用不可"
 msgid "Clone"
 msgstr "複製"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "閉じる"
 
@@ -297,7 +305,7 @@ msgstr "設定が完了していません"
 msgid "Constant"
 msgstr "定数"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 msgid "Constant names"
 msgstr "定数名"
 
@@ -341,7 +349,7 @@ msgstr ""
 msgid "Datasheet"
 msgstr "データシート"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "10進数"
 
@@ -385,7 +393,7 @@ msgstr "置き換えますか？"
 msgid "Documentation"
 msgstr "ドキュメント"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "表示しない"
@@ -436,29 +444,33 @@ msgstr "有効化"
 msgid "English"
 msgstr "英語"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 msgid "Enter the external collection path"
 msgstr "外部コレクションへのパスを入力"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 msgid "Enter the external plugins path"
 msgstr "外部プラグインのパスを入力"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 msgid "Enter the log filename"
 msgstr "ログのファイル名を入力"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 msgid "Enter the pip path"
 msgstr "pipへのパスを入力"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 msgid "Enter the python path"
 msgstr "Pythonへのパスを入力"
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "リモートホスト名を入力 user@host"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -512,11 +524,11 @@ msgstr "FPGA ピン"
 msgid "FPGA resources"
 msgstr "FPGA リソース"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -579,11 +591,11 @@ msgstr ""
 msgid "Help"
 msgstr "ヘルプ"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "16進数"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 msgid "Icestudio is part of"
 msgstr ""
 
@@ -779,7 +791,7 @@ msgstr ""
 msgid "Load"
 msgstr "ロード"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "ローカルパラメタ"
 
@@ -807,7 +819,7 @@ msgstr ""
 msgid "Memory"
 msgstr "メモリ"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 msgid "Memory blocks"
 msgstr "メモリブロック"
 
@@ -1018,7 +1030,7 @@ msgstr "選択"
 msgid "Select all"
 msgstr "全て選択"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "ボードを選択"
 
@@ -1074,7 +1086,7 @@ msgstr ""
 msgid "Testbench"
 msgstr ""
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr ""
 
@@ -1114,8 +1126,8 @@ msgstr "このプロジェクトはボード {{name}} 向けです。"
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1232,6 +1244,10 @@ msgstr "アップロード"
 msgid "Upload done"
 msgstr "アップロード完了"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "検証完了"
@@ -1273,7 +1289,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "誤ったブロックフォーマット：{{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "誤ったブロック名：{{name}}"

@@ -53,7 +53,7 @@ msgstr "Başlamak için bir blok ekleyin"
 msgid "Add as block"
 msgstr "Blok olarak ekle"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "Adres biçimi"
 
@@ -73,6 +73,14 @@ msgstr "Saklanan tüm koleksiyonlar kaybolacaktır. Devam etmek istiyor musunuz?
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
@@ -90,7 +98,7 @@ msgstr "Temel"
 msgid "Basque"
 msgstr "Baskça"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "İkili"
 
@@ -234,7 +242,7 @@ msgstr "Veri yolları için saat izin verilmiyor"
 msgid "Clone"
 msgstr "Klon"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "Kapat"
 
@@ -294,7 +302,7 @@ msgstr "Yapılandırma tamamlanmadı"
 msgid "Constant"
 msgstr "Sürekli"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
 msgstr "Sürekli"
@@ -342,7 +350,7 @@ msgstr "KoyuTuruncu"
 msgid "Datasheet"
 msgstr "Verisayfası"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "Ondalık"
 
@@ -388,7 +396,7 @@ msgstr "Onu değiştirmek ister misin?"
 msgid "Documentation"
 msgstr "Dokümantasyon"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "Gösterme"
@@ -441,27 +449,27 @@ msgstr "Aktif"
 msgid "English"
 msgstr "İngilizce"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Garici koleksiyonlar yolunu girin"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
 msgstr "Garici koleksiyonlar yolunu girin"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "Enter the block's label"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "Giriş bağlantı noktalarını girin"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
 msgstr "Garici koleksiyonlar yolunu girin"
@@ -469,6 +477,10 @@ msgstr "Garici koleksiyonlar yolunu girin"
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "Uzaktan ev ana bilgisayar adını girin @anabilgisayar"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -524,11 +536,11 @@ msgstr "FPGA raptiye"
 msgid "FPGA resources"
 msgstr "FPGA kaynaklar"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -592,11 +604,11 @@ msgstr "YeşilSarı"
 msgid "Help"
 msgstr "Yardım"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "Onaltılı"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
 msgstr "Icestudio Başlangıç"
@@ -806,7 +818,7 @@ msgstr "AçıkDenizYeşili"
 msgid "Load"
 msgstr "Yük"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "Yerel parametre"
 
@@ -836,7 +848,7 @@ msgstr "OrtaMorAl"
 msgid "Memory"
 msgstr "Bellek"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Import block"
@@ -1054,7 +1066,7 @@ msgstr "Seçilen"
 msgid "Select all"
 msgstr "Tümünü seç"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "Sizin seçili panonuz"
 
@@ -1114,7 +1126,7 @@ msgstr "Çince"
 msgid "Testbench"
 msgstr "Testbankası"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr ""
 
@@ -1157,8 +1169,8 @@ msgstr "Bu proje {{name}} panosu için tasarlanmıştır."
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1278,6 +1290,10 @@ msgstr "Yükle"
 msgid "Upload done"
 msgstr "Yükleme tamamlandı"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Doğrulama yapıldı"
@@ -1320,7 +1336,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Yanlış blok biçimi: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Yanlış blok adı {{name}}"

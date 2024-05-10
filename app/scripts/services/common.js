@@ -156,13 +156,13 @@ angular
       //-- Get the Icestudio Version
       this.ICESTUDIO_VERSION = _package.version;
 
-      //-- APIO version values
+      //-- Apio version values
       this.APIO_VERSION_STABLE = 0; //-- Use the stable version
       this.APIO_VERSION_LATEST_STABLE = 1; //-- Use the latest stable (available in the pypi repo)
       this.APIO_VERSION_DEV = 2; //-- Use the development apio version (from the github repo)
       this.APIO_VERSION = this.APIO_VERSION_STABLE; //-- Default apio version: STABLE
 
-      //-- APIO PACKAGES VERSION to install for the Stable Version
+      //-- Apio PACKAGES VERSION to install for the Stable Version
       this.APIO_PKG_OSS_CAD_SUITE_VERSION = "0.0.9";
 
       //-- Get the System PATH
@@ -210,7 +210,7 @@ angular
           //-- Add the virtual env PATH in the begining of the PATH env. variable
           'PATH="' + this.ENV_BIN_DIR + ':' + this.PATH + '" ' +
 
-          //-- APIO executable
+          //-- Apio executable
           '"' + this.ENV_APIO + '"';
 
       }

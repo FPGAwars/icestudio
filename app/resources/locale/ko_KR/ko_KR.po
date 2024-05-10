@@ -55,7 +55,7 @@ msgstr "시작하기 위해 블럭 더하기"
 msgid "Add as block"
 msgstr "블럭으로 더하기"
 
-#: app/scripts/services/forms.js:1912
+#: app/scripts/services/forms.js:1911
 msgid "Address format"
 msgstr "주소 구성 방식 "
 
@@ -75,6 +75,14 @@ msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습
 msgid "Allow tri-state connections"
 msgstr ""
 
+#: app/scripts/services/tools.js:1581
+msgid "Apio install"
+msgstr ""
+
+#: app/scripts/services/tools.js:1593
+msgid "Apio install drivers"
+msgstr ""
+
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
@@ -92,7 +100,7 @@ msgstr "기초 "
 msgid "Basque"
 msgstr "바스크"
 
-#: app/scripts/services/forms.js:1898
+#: app/scripts/services/forms.js:1897
 msgid "Binary"
 msgstr "2진수 "
 
@@ -235,7 +243,7 @@ msgstr "데이터 버스에는 클럭이 허용되지 않습니다"
 msgid "Clone"
 msgstr "복제 "
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:76
 msgid "Close"
 msgstr "닫기"
 
@@ -295,7 +303,7 @@ msgstr "구성이 완료되지 않음"
 msgid "Constant"
 msgstr "정수"
 
-#: app/scripts/services/forms.js:2102
+#: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
 msgstr "정수"
@@ -343,7 +351,7 @@ msgstr "다크오렌지"
 msgid "Datasheet"
 msgstr "데이터시트"
 
-#: app/scripts/services/forms.js:1902
+#: app/scripts/services/forms.js:1901
 msgid "Decimal"
 msgstr "10진수"
 
@@ -389,7 +397,7 @@ msgstr "교체하시겠습니까?"
 msgid "Documentation"
 msgstr "문ㅅ"
 
-#: app/views/version.html:69
+#: app/views/version.html:65
 #, fuzzy
 msgid "Don’t display"
 msgstr "표시 안 함"
@@ -442,27 +450,27 @@ msgstr "가능"
 msgid "English"
 msgstr "영어"
 
-#: app/scripts/services/forms.js:2485
+#: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "외부 수집 경로 입력"
 
-#: app/scripts/services/forms.js:2382
+#: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
 msgstr "외부 수집 경로 입력"
 
-#: app/scripts/services/forms.js:2336
+#: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "출력 블록 입력"
 
-#: app/scripts/services/forms.js:2437
+#: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
 msgstr "입력 포트 입력"
 
-#: app/scripts/services/forms.js:2429
+#: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
 msgstr "외부 수집 경로 입력"
@@ -470,6 +478,10 @@ msgstr "외부 수집 경로 입력"
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
 msgstr "원격 호스트 이름 user@host를 입력하십시오"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr ""
 
 #: app/scripts/services/utils.js:874
 msgid "Error: {{error}}"
@@ -525,11 +537,11 @@ msgstr "FPGA 핀"
 msgid "FPGA resources"
 msgstr "FPGA 리소스들"
 
-#: app/views/version.html:51
+#: app/views/version.html:47
 msgid "FPGAwars community"
 msgstr ""
 
-#: app/views/version.html:43
+#: app/views/version.html:39
 msgid "FPGAwars community."
 msgstr ""
 
@@ -592,11 +604,11 @@ msgstr "녹노랑"
 msgid "Help"
 msgstr "도움"
 
-#: app/scripts/services/forms.js:1906
+#: app/scripts/services/forms.js:1905
 msgid "Hexadecimal"
 msgstr "16진수의"
 
-#: app/views/version.html:49
+#: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
 msgstr "Icestudio 시작"
@@ -802,7 +814,7 @@ msgstr "밝은 바다 초록"
 msgid "Load"
 msgstr "로드"
 
-#: app/scripts/services/forms.js:1920 app/scripts/services/forms.js:2110
+#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
 msgid "Local parameter"
 msgstr "지역 변수"
 
@@ -832,7 +844,7 @@ msgstr "미디엄 바이올렛 레드"
 msgid "Memory"
 msgstr "메모리"
 
-#: app/scripts/services/forms.js:1887
+#: app/scripts/services/forms.js:1886
 #, fuzzy
 msgid "Memory blocks"
 msgstr "메모리 블록 입력"
@@ -1050,7 +1062,7 @@ msgstr "선택"
 msgid "Select all"
 msgstr "모두 선택"
 
-#: app/scripts/services/forms.js:2291
+#: app/scripts/services/forms.js:2290
 msgid "Select your board"
 msgstr "보드를 선택하세요"
 
@@ -1110,7 +1122,7 @@ msgstr "중국"
 msgid "Testbench"
 msgstr "테스트벤치"
 
-#: app/views/version.html:45
+#: app/views/version.html:41
 msgid "Thank you very much!"
 msgstr ""
 
@@ -1151,8 +1163,8 @@ msgstr "이 프로젝트는 {{name}}보드에 맞게 설계되었다."
 
 #: app/views/version.html:36
 msgid ""
-"This release has been possible thanks to the great work \n"
-"              done by an emerging team from"
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
 msgstr ""
 
 #: app/scripts/services/utils.js:1375
@@ -1272,6 +1284,10 @@ msgstr "업로드"
 msgid "Upload done"
 msgstr "업로드 완료"
 
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio:"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "검증 완료"
@@ -1314,7 +1330,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "잘못된 블록 형식: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2171
+#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "잘못된 블럭 이름{{name}}"
