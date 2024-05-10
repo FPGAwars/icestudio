@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "需要安装 Python 2.7"
+msgstr "需要安装 Python 3.7"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -455,22 +455,22 @@ msgstr "输入新集合路径"
 #: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "输入新集合路径"
+msgstr ""
 
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "输入输出图块名称"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "输入输入端口名称"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "输入新集合路径"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -627,17 +627,17 @@ msgstr "镜像 {{name}} 已保存"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "输入输入端口名称"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "输入输入端口名称"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "输入输入端口名称"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -769,20 +769,22 @@ msgstr "Italian"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Spanish"
+msgstr ""
 
 #: app/views/languages.html:98
+#, fuzzy
 msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
+#, fuzzy
 msgid "Label Finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "图块已更新"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -813,7 +815,7 @@ msgstr "本地参数"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "驱动开启"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1233,7 +1235,7 @@ msgstr ""
 
 #: app/views/languages.html:104
 msgid "Turkish"
-msgstr ""
+msgstr "Turkish"
 
 #: app/scripts/services/forms.js:432 app/views/design.html:220
 msgid "Turquoise"
@@ -1262,7 +1264,7 @@ msgstr "未命名"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "更新图块名称"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Icestudio 0.3.3\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Xoan Sampaiño <xoansampainho@gmail.com>\n"
@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Requírese Python 2.7"
+msgstr "Requírese Python 3.7"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -175,7 +175,7 @@ msgstr "Cancelar"
 #: app/scripts/services/utils.js:1200
 #, fuzzy
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "Non está soportado o formato {{version}} do proxecto."
+msgstr ""
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -454,17 +454,17 @@ msgstr "Introduza a ruta ás coleccións externas"
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Introduza os bloques de saída"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Introduza os portos de entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Introduza a ruta ás coleccións externas"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -503,8 +503,9 @@ msgid "External collections"
 msgstr "Coleccións externas"
 
 #: app/scripts/controllers/menu.js:937
+#, fuzzy
 msgid "External collections updated"
-msgstr "Colecións externas actualizadas"
+msgstr "Coleccións externas actualizadas"
 
 #: app/views/advanced.html:35
 #, fuzzy
@@ -619,17 +620,17 @@ msgstr "Gardouse a imaxe {{name}}"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Introduza os portos de entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Introduza os portos de entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Introduza os portos de entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
@@ -768,7 +769,7 @@ msgstr ""
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Castelán"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -781,7 +782,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Bloque actualizado"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -810,7 +811,7 @@ msgstr "Parámetro local"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Habilitáronse os controladores"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1249,7 +1250,7 @@ msgstr "Sen título"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Actualizar o nome do bloque"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615

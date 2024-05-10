@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Η Python 2.7 είναι απαραίτητη"
+msgstr "Η Python 3.7 είναι απαραίτητη"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -214,11 +214,11 @@ msgstr ""
 
 #: app/scripts/services/project.js:185
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr "Πατήστε εδώ <b>για να κατεβάσετε την νέα έκδοση</b> του icestudio"
+msgstr "Πατήστε εδώ <b>για να κατεβάσετε την νέα έκδοση</b> του Icestudio"
 
 #: app/scripts/services/tools.js:1650
 msgid "Click here to <b>setup the drivers</b>"
-msgstr "Πατήστε εδώ <b>για να εγκαταστήσετε τους νέους οδηγούς"
+msgstr "Πατήστε εδώ <b>για να εγκαταστήσετε τους νέους οδηγούς</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
 #: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
@@ -301,7 +301,7 @@ msgstr "Σταθερά"
 #: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
-msgstr "Σταθερά"
+msgstr ""
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -453,17 +453,17 @@ msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής �
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Εισαγάγετε τα blocks εξόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Εισαγάγετε τις θύρες εισόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής βιβλιοθήκης"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -620,17 +620,17 @@ msgstr "H eικόνα {{name}} αποθηκεύτηκε"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Εισαγάγετε τις θύρες εισόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Εισαγάγετε τις θύρες εισόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Εισαγάγετε τις θύρες εισόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
@@ -717,13 +717,13 @@ msgstr "Είναι απαραίτητη η συνδεσιμότητα στο δ�
 #: app/scripts/services/graph.js:298
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
-msgstr "Μη έγκυρη <i>Pull up</i> σύνδεση:<br>το block είναι ήδη συνδεδεμένο"
+msgstr "Μη έγκυρη <i>Pull up</i> σύνδεση:<br>Το block είναι ήδη συνδεδεμένο"
 
 #: app/scripts/services/graph.js:312
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
 msgstr ""
-"Μη έγκυρη <i>Pull up</i> σύνδεση:<br>μόνο block <i>εισόδου</i>επιτρέπονται"
+"Μη έγκυρη <i>Pull up</i> σύνδεση:<br>Μόνο block <i>εισόδου</i> επιτρέπονται"
 
 #: app/scripts/services/graph.js:304
 #, fuzzy
@@ -766,7 +766,7 @@ msgstr ""
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Ισπανικά"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -808,7 +808,7 @@ msgstr "Τοπική παράμετρος"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Οι οδηγοί ενεργοποιήθηκαν"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -891,7 +891,7 @@ msgstr ""
 
 #: app/scripts/services/project.js:547
 msgid "Original file {{file}} does not exist"
-msgstr "Το αρχικό αρχείο {{file}}  δεν υπάρχει"
+msgstr "Το αρχικό αρχείο {{file}} δεν υπάρχει"
 
 #: app/views/design.html:284 app/views/menu.html:764
 msgid "Output"
@@ -1116,12 +1116,13 @@ msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "the {{name}} board?"
 msgstr ""
-"Η τωρινές ρυθμίσεις εισόδου/εξόδου της FPGA  θα χαθούν. Θέλετε να αλλάξετε "
+"Η τωρινές ρυθμίσεις εισόδου/εξόδου της FPGA θα χαθούν. Θέλετε να αλλάξετε "
 "την πλακέτα σε {{name}}?"
 
 #: app/scripts/services/tools.js:1300
+#, fuzzy
 msgid "The toolchain will be removed. Do you want to continue?"
-msgstr "Το toolchan θα διαγραφεί. Θέλετε να συνεχίσετε?"
+msgstr "Το toolchain θα διαγραφεί. Θέλετε να συνεχίσετε?"
 
 #: app/scripts/services/tools.js:1978
 msgid "There is a new nightly version available"
@@ -1132,11 +1133,12 @@ msgid "There is a new stable version available"
 msgstr ""
 
 #: app/scripts/services/project.js:478
+#, fuzzy
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr ""
-"Αυτή η διαδικασία εισαγωγής χρειάζεται μια διαδρομή έργου.Θα πρέπει να "
+"Αυτή η διαδικασία εισαγωγής χρειάζεται μια διαδρομή έργου. Θα πρέπει να "
 "σώσετε το τρέχων έργο. Θέλετε να συνεχίσετε?"
 
 #: app/scripts/services/project.js:106
@@ -1237,6 +1239,7 @@ msgid "Unknown board"
 msgstr "Άγνωστη πλακέτα"
 
 #: app/scripts/services/project.js:184
+#, fuzzy
 msgid "Unsupported project format {{version}}"
 msgstr "Μη υποστηριζόμενη μορφοποίηση έργου {{version}}"
 
@@ -1247,7 +1250,7 @@ msgstr "Άτιτλο"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Ενημερώστε το όνομα του block"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615

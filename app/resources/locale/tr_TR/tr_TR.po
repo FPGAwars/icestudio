@@ -1,17 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: icestudio\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: Ümit SLMZ , u2slmz@pm.me\n"
+"Last-Translator: Ümit SLMZ, u2slmz@pm.me\n"
+"Language-Team: \n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: app/views/design.html:18
 msgid ""
@@ -82,9 +81,8 @@ msgid "Apio install drivers"
 msgstr ""
 
 #: app/scripts/services/tools.js:1508
-#, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 gerekli"
+msgstr "Python 3.7 gerekli"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -204,9 +202,8 @@ msgid "Chinese"
 msgstr "Çince"
 
 #: app/scripts/services/forms.js:1245
-#, fuzzy
 msgid "Choose a color:"
-msgstr "Bir renk seçin"
+msgstr "Bir renk seçin:"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -452,7 +449,7 @@ msgstr "İngilizce"
 #: app/scripts/services/forms.js:2484
 #, fuzzy
 msgid "Enter the external collection path"
-msgstr "Garici koleksiyonlar yolunu girin"
+msgstr "Harici koleksiyonlar yolunu girin"
 
 #: app/scripts/services/forms.js:2381
 #, fuzzy
@@ -611,7 +608,7 @@ msgstr "Onaltılı"
 #: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Başlangıç"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -781,7 +778,7 @@ msgstr "İtalyanca"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "İspanyolca"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -807,7 +804,7 @@ msgstr ""
 #: app/scripts/services/forms.js:447 app/views/design.html:255
 #, fuzzy
 msgid "Light Gray"
-msgstr "AçıkDenizYeşili"
+msgstr ""
 
 #: app/scripts/services/forms.js:429 app/views/design.html:213
 #, fuzzy

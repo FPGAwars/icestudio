@@ -458,12 +458,12 @@ msgstr "輸入外掛路徑"
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "填寫輸出區塊名稱"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "填寫輸入埠名稱"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
@@ -623,17 +623,17 @@ msgstr "圖像 {{name}} 已儲存"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "填寫輸入埠名稱"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "填寫輸入埠名稱"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "填寫輸入埠名稱"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -765,20 +765,21 @@ msgstr "Italian"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Spanish"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr "Korean"
 
 #: app/views/menu.html:328
+#, fuzzy
 msgid "Label Finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "區塊已更新"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -809,7 +810,7 @@ msgstr "本地參數"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "啟用驅動程式"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1258,7 +1259,7 @@ msgstr "未命名"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "更新區塊名稱"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615

@@ -395,6 +395,7 @@ msgid "Documentation"
 msgstr "Dokumentace"
 
 #: app/views/version.html:65
+#, fuzzy
 msgid "Don’t display"
 msgstr "Nezobrazovat"
 
@@ -526,11 +527,11 @@ msgstr "FPGA prostředky"
 
 #: app/views/version.html:47
 msgid "FPGAwars community"
-msgstr "komunity FPGAwars"
+msgstr "Komunity FPGAwars"
 
 #: app/views/version.html:39
 msgid "FPGAwars community."
-msgstr "komunity FPGAwars."
+msgstr "Komunity FPGAwars."
 
 #: app/views/menu.html:76
 msgid "File"
@@ -651,10 +652,12 @@ msgid "Input parameters"
 msgstr "Vstupní parametry"
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port name:"
 msgstr "Název vstupu:"
 
 #: app/scripts/services/forms.js:1615
+#, fuzzy
 msgid "Input ports"
 msgstr "Vstupy"
 
@@ -739,9 +742,8 @@ msgid "Invalid multiple input connections"
 msgstr "Neplatné vícenásobná vstupní připojení"
 
 #: app/scripts/controllers/menu.js:1948
-#, fuzzy
 msgid "Invalid new name!"
-msgstr "Špatný název!"
+msgstr ""
 
 #: app/scripts/services/project.js:502 app/scripts/services/project.js:80
 msgid "Invalid project format"
@@ -893,10 +895,12 @@ msgid "Output labels"
 msgstr "Popisky výstupů"
 
 #: app/scripts/services/forms.js:1135
+#, fuzzy
 msgid "Output port name"
 msgstr "Název výstupu"
 
 #: app/scripts/services/forms.js:1622
+#, fuzzy
 msgid "Output ports"
 msgstr "Výstupy"
 
@@ -1339,9 +1343,9 @@ msgid ""
 "you need to go back                      to the top-level. If you want to "
 "export this module as new file, unlock the module and use \"Save as\"."
 msgstr ""
-"Procházíte návrhem: pokud chcete uložit celý návrh, musíte jít "
+"Procházíte návrhem: Pokud chcete uložit celý návrh, musíte jít "
 "zpět                      ne nejvyšší úroveň. Pokud chcete exportovat tento "
-"modul jako nový soubor, odemkněte modul a použijte \"Uložit jako\""
+"modul jako nový soubor, odemkněte modul a použijte \"Uložit jako\"."
 
 #: app/scripts/services/project.js:107
 msgid "You can load it as it is or convert it to use the {{name}} board."

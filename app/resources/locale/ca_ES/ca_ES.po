@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "És necessari Python 2.7"
+msgstr "És necessari Python 3.7"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -205,7 +205,7 @@ msgstr "Xinès"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Selecciona un color"
+msgstr "Selecciona un color:"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -303,7 +303,7 @@ msgstr "Constant"
 #: app/scripts/services/forms.js:2101
 #, fuzzy
 msgid "Constant names"
-msgstr "Constant"
+msgstr ""
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -412,7 +412,7 @@ msgstr "Drivers habilitats"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "Etiqueta d'eixida"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
@@ -451,22 +451,22 @@ msgstr "Introdueix la ruta de les col·leccions externes"
 #: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Introdueix la ruta de les col·leccions externes"
+msgstr "Introdueix la ruta de les plugins externes"
 
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Introdueix els blocs de sortida"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Introdueix els ports d'entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Introdueix la ruta de les col·leccions externes"
+msgstr "Introdueix la ruta de python"
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -511,12 +511,12 @@ msgstr "Col·leccions externes actualitzades"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Col·leccions externes"
+msgstr "Plugins externes"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Col·leccions externes actualitzades"
+msgstr "Plugins externes actualitzades"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -605,7 +605,7 @@ msgstr "Hexadecimal"
 #: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Inception"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -627,17 +627,17 @@ msgstr "Imatge {{name}} desada"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Introdueix els ports d'entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Introdueix els ports d'entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Introdueix els ports d'entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
@@ -724,13 +724,13 @@ msgstr "És necessari connexió a Internet"
 #: app/scripts/services/graph.js:298
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
-msgstr "Connexió de <i>Pull up</i> no vàlida: bloc ja connectat"
+msgstr "Connexió de <i>Pull up</i> no vàlida: Bloc ja connectat"
 
 #: app/scripts/services/graph.js:312
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
 msgstr ""
-"Connexió <i>Pull up</i> no vàlida: <br>només blocs <i>Entrada</i> són "
+"Connexió <i>Pull up</i> no vàlida: <br>Només blocs <i>Entrada</i> són "
 "permitits"
 
 #: app/scripts/services/graph.js:304
@@ -775,7 +775,7 @@ msgstr "Italià"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Espanyol"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -817,7 +817,7 @@ msgstr "Paràmetre local"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Drivers habilitats"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1186,7 +1186,7 @@ msgid ""
 msgstr ""
 "Per desar el teu disseny cal bloquejar el cadenat i anar al disseny de "
 "nivell superior.<br/><br/>Si vols exportar aquest submòdul a un fitxer, "
-"executeu l'ordre «Anomena i desa» per fer-ho."
+"executeu l'ordre \"Anomena i desa\" per fer-ho."
 
 #: app/views/menu.html:338
 #, fuzzy
@@ -1265,7 +1265,7 @@ msgstr "Sense títol"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Actualitza el nom del bloc"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615
@@ -1325,7 +1325,7 @@ msgstr "Format de bloc incorrecte: {{type}}"
 #: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
-msgstr "Nom de bloc incorrecte"
+msgstr "Nom de bloc incorrecte {{name}}"
 
 #: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
@@ -1362,6 +1362,7 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
+#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "

@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 is vereist"
+msgstr "Python 3.7 is vereist"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -214,7 +214,7 @@ msgstr ""
 
 #: app/scripts/services/project.js:185
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr "Klik hier om <b>een nieuwe versie van IceStudio te downloaden</b>"
+msgstr "Klik hier om <b>een nieuwe versie van Icestudio te downloaden</b>"
 
 #: app/scripts/services/tools.js:1650
 msgid "Click here to <b>setup the drivers</b>"
@@ -453,17 +453,17 @@ msgstr "Voer het pad naar de externe collectie in"
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Voer de uitgangsblokken in"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Voer de ingangspoorten in"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Voer het pad naar de externe collectie in"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -618,17 +618,17 @@ msgstr "Afbeelding {{name}} opgeslagen"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Voer de ingangspoorten in"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Voer de ingangspoorten in"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Voer de ingangspoorten in"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
@@ -649,7 +649,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Voer de ingangsblokken in"
+msgstr ""
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
@@ -765,7 +765,7 @@ msgstr ""
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Spaans"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -807,7 +807,7 @@ msgstr "Lokale parameter"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Drivers geactiveerd"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1248,7 +1248,7 @@ msgstr "Naamloos"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Werk de bloknaam bij"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615

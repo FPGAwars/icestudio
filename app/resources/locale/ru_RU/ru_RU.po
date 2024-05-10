@@ -456,7 +456,7 @@ msgstr "Путь до сторонней коллекции"
 #: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Путь до сторонней коллекции"
+msgstr ""
 
 #: app/scripts/services/forms.js:2335
 #, fuzzy
@@ -466,12 +466,12 @@ msgstr "Выходные блоки"
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Входные порты"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Путь до сторонней коллекции"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -609,7 +609,7 @@ msgstr "Шестнадцатеричный"
 #: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Inception"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -629,17 +629,17 @@ msgstr "Изображение {{name}} сохранено"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Входные порты"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Входные порты"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Входные порты"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -694,7 +694,7 @@ msgid ""
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 "Установите <b>стабильный набор инструментов</b>. Требуется подключение к "
-"сети <br><p><b>ВАЖНО:</b> Отключите VPN-сервис (если он активен), чтобы "
+"сети.<br><p><b>ВАЖНО:</b> Отключите VPN-сервис (если он активен), чтобы "
 "разрешить установку</p> <p>Продолжить ?</p>"
 
 #: app/scripts/services/tools.js:1260
@@ -782,20 +782,21 @@ msgstr "Итальянский"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Испанский"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr "Корейский"
 
 #: app/views/menu.html:328
+#, fuzzy
 msgid "Label Finder"
-msgstr "Поиск блока"
+msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Блок обновлен"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -826,7 +827,7 @@ msgstr "Локальный параметр"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Драйвера подключены"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"

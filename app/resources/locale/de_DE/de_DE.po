@@ -82,7 +82,7 @@ msgstr ""
 
 #: app/scripts/services/tools.js:1508
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 wird benötigt"
+msgstr "Python 3.7 wird benötigt"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -660,7 +660,7 @@ msgstr "Eingangs-Anschlüsse"
 
 #: app/views/menu.html:635
 msgid "Install (Stable)"
-msgstr "Installiere (stabile Version)"
+msgstr "Installiere (Stabile Version)"
 
 #: app/views/menu.html:656
 msgid "Install Development version"
@@ -673,8 +673,8 @@ msgid ""
 "connection.<br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
-"Installiere die <b>stabile Toolchain</b>. Dies benötigt eine "
-"Internetverbindung <br><p><b>HINWEIS:</b> Bitte gegebenenfalls all VPN "
+"Installiere die <b>Stabile Toolchain</b>. Dies benötigt eine "
+"Internetverbindung.<br><p><b>HINWEIS:</b> Bitte gegebenenfalls all VPN "
 "Verbindungen vor der Installation trennen</p> <p>Fortfahren?</p>"
 
 #: app/scripts/services/tools.js:1260
@@ -1255,6 +1255,7 @@ msgid "Untitled"
 msgstr "Unbenannt"
 
 #: app/views/menu.html:639
+#, fuzzy
 msgid "Update (Latest stable)"
 msgstr "Aktualisiere"
 
@@ -1351,6 +1352,7 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
+#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "

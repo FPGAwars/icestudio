@@ -721,8 +721,9 @@ msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "無効なブロック接続：<br><I>プルアップ</i> が既に接続されています"
 
 #: app/scripts/services/tools.js:1805
+#, fuzzy
 msgid "Invalid collection {{name}}"
-msgstr "無効な接続 {{name}}"
+msgstr ""
 
 #: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
 #: app/scripts/services/graph.js:276

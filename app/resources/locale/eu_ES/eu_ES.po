@@ -83,7 +83,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 behar da"
+msgstr "Python 3.7 behar da"
 
 #: app/scripts/services/utils.js:671
 msgid "Author"
@@ -112,7 +112,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1400
 #: app/scripts/services/blockforms.js:1568
 msgid "Block updated"
-msgstr "Etiketa freskatua dago"
+msgstr ""
 
 #: app/scripts/services/project.js:496
 msgid "Block {{name}} imported"
@@ -175,7 +175,7 @@ msgstr "Utzi"
 #: app/scripts/services/utils.js:1200
 #, fuzzy
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "{{version}} formatua duen proiektua ez da onartzen"
+msgstr ""
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -206,7 +206,7 @@ msgstr "Txinera"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Kolorea hauta ezazu"
+msgstr "Kolorea hauta ezazu:"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -418,7 +418,7 @@ msgstr "Driverrak gaitu dira"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "Irteera-etiketa"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
@@ -427,7 +427,7 @@ msgstr "FPGAren E/S portuak bikoiztu dira"
 #: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicate port name:"
-msgstr "Irteera-etiketa"
+msgstr "Irteera-etiketa:"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -457,22 +457,22 @@ msgstr "Kanpoko bildumen bidea sar ezazu"
 #: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Kanpoko bildumen bidea sar ezazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:2335
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Irteera-blokeak sar itzazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Kanpoko bildumen bidea sar ezazu"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -517,12 +517,12 @@ msgstr "Kanpoko bildumak eguneratu dira"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Kanpoko bildumak"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Kanpoko bildumak eguneratu dira"
+msgstr ""
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -612,7 +612,7 @@ msgstr "Hamaseitarra"
 #: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudioren hastapenak"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -632,17 +632,17 @@ msgstr "{{name}} izeneko irudia gorde da"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -743,7 +743,7 @@ msgstr ""
 #, fuzzy
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr ""
-"Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
+"Bloke konexio baliogabeak:<br><i>Pull up</i>-a dagoeneko konektatua dago"
 
 #: app/scripts/services/tools.js:1805
 msgid "Invalid collection {{name}}"
@@ -781,7 +781,7 @@ msgstr "Italiera"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Gaztelera"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -807,12 +807,12 @@ msgstr ""
 #: app/scripts/services/forms.js:447 app/views/design.html:255
 #, fuzzy
 msgid "Light Gray"
-msgstr "\"\""
+msgstr ""
 
 #: app/scripts/services/forms.js:429 app/views/design.html:213
 #, fuzzy
 msgid "Light Sea Green"
-msgstr "\"\""
+msgstr ""
 
 #: app/scripts/services/project.js:102
 msgid "Load"
@@ -825,7 +825,7 @@ msgstr "Parametro lokala"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Driverrak gaitu dira"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -863,7 +863,7 @@ msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
-msgstr "\"\""
+msgstr ""
 
 #: app/views/menu.html:88
 msgid "New"
@@ -929,12 +929,12 @@ msgstr "Irteera-etiketa"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Irteera-etiketa"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Irteera-etiketa"
+msgstr ""
 
 #: app/views/design.html:299 app/views/menu.html:778
 msgid "Paired labels"
@@ -1159,7 +1159,7 @@ msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr ""
-"Inportazio operazioak proiektu-bidea behar du.  Uneko proiektua gorde ezazu. "
+"Inportazio operazioak proiektu-bidea behar du. Uneko proiektua gorde ezazu. "
 "Jarraitu nahi al duzu?"
 
 #: app/scripts/services/project.js:106
@@ -1198,7 +1198,7 @@ msgid ""
 "submodule to a file, use the \"Save as\" command."
 msgstr ""
 "Diseinua gordetzeko kandadua blokea ezazu eta goi mailako diseinura joan. "
-"Azpimodulua diseinu batera esportatu nahi baduzu, \"Gorde honela..\" agindua "
+"Azpimodulua diseinu batera esportatu nahi baduzu, \"Gorde honela\" agindua "
 "exekuta ezazu."
 
 #: app/views/menu.html:338
@@ -1278,7 +1278,7 @@ msgstr "Izenik gabe"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Blokearen izena egunera ezazu"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615
@@ -1363,7 +1363,7 @@ msgid ""
 "\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Azpi modulua editatzen ari zara, gordetzen baduzu, azpimodulua gordeko duzu "
-"soilik (hala bada,  Gorde honela\" \"modulua esportatu\"ren antzera lan "
+"soilik (hala bada, \"Gorde honela\" \"modulua esportatu\"ren antzera lan "
 "egiten du). Jarraitu nahi duzu?"
 
 #: app/scripts/services/utils.js:1348

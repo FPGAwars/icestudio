@@ -185,7 +185,7 @@ msgstr "Annuler"
 #: app/scripts/services/utils.js:1200
 #, fuzzy
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "Format {{version}} de projet non supporté"
+msgstr ""
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -215,7 +215,7 @@ msgstr "Chinois"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Choisir une couleur"
+msgstr "Choisir une couleur :"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -423,18 +423,16 @@ msgid "Drivers enabled"
 msgstr "Pilote activé"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
-msgstr "Label de sortie"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'entrée/sortie FPGA dupliqués"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
 msgid "Duplicate port name:"
-msgstr "Label de sortie"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -473,12 +471,12 @@ msgstr "Entrer les blocs de sortie"
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Entrer les ports d'entrée"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Entrer les ports d'entrée"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -616,7 +614,7 @@ msgstr "Hexadécimal"
 #: app/views/version.html:45
 #, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Inception"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -638,17 +636,17 @@ msgstr "Image {{name}} sauvegardée"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Entrer les ports d'entrée"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Entrer les ports d'entrée"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Entrer les ports d'entrée"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -702,7 +700,7 @@ msgid ""
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 "Installer la <b>toolchain STABLE</b>. Cette opération nécessite une "
-"connexion Internet <br><p><b>NOTE :</b> Vous devez déconnecter votre VPN "
+"connexion Internet.<br><p><b>NOTE :</b> Vous devez déconnecter votre VPN "
 "pour installer correctement la toolchain</p> <p>Voulez-vous continuer ?</p>"
 
 #: app/scripts/services/tools.js:1260
@@ -711,7 +709,7 @@ msgid ""
 "requires Internet connection. Do you want to continue?"
 msgstr ""
 "La toolchain va être mise à jour. Cette opération a besoin d'une connexion "
-"Internet.Voulez-vous continuer ?"
+"Internet. Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1282
 msgid ""
@@ -719,7 +717,7 @@ msgid ""
 "requires Internet connection. Do you want to continue?"
 msgstr ""
 "Installer la derniere toolchain stable. Cette opération a besoin d'une "
-"connexion Internet.Voulez-vous continuer ?"
+"connexion Internet. Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1628
 msgid "Installation completed"
@@ -736,19 +734,19 @@ msgstr "Une connexion Internet est requise"
 #: app/scripts/services/graph.js:298
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
-msgstr "Connexion de <i>Pull up</i> invalide:<br>le bloc est déjà connecté"
+msgstr "Connexion de <i>Pull up</i> invalide :<br>Le bloc est déjà connecté"
 
 #: app/scripts/services/graph.js:312
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
 msgstr ""
-"Connexion de <i>Pull up</i> invalide:<br>seules les <i>entrées</i> sont "
+"Connexion de <i>Pull up</i> invalide :<br>Seules les <i>entrées</i> sont "
 "autorisées"
 
 #: app/scripts/services/graph.js:304
 #, fuzzy
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
-msgstr "Connexion de bloc invalide:<br> <i>Pull up</i> déjà connectée"
+msgstr "Connexion de bloc invalide :<br> <i>Pull up</i> déjà connectée"
 
 #: app/scripts/services/tools.js:1805
 msgid "Invalid collection {{name}}"
@@ -761,7 +759,7 @@ msgstr "Connexion invalide"
 
 #: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
-msgstr "Connexion invalide: {{a}} → {{b}}"
+msgstr "Connexion invalide : {{a}} → {{b}}"
 
 #: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
@@ -787,7 +785,7 @@ msgstr "Italien"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Espagnol"
+msgstr "Japonais"
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -881,7 +879,7 @@ msgstr "New Couleur:"
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name"
-msgstr "Nouveau Nom:"
+msgstr "Nouveau Nom :"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -934,12 +932,12 @@ msgstr "Label de sortie"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Label de sortie"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Label de sortie"
+msgstr ""
 
 #: app/views/design.html:299 app/views/menu.html:778
 msgid "Paired labels"
@@ -1147,7 +1145,7 @@ msgid ""
 "the {{name}} board?"
 msgstr ""
 "La configuration actuelle des entrées/sorties du FPGA va être perdue. Voulez-"
-"vous changer pour la carte {{name}}?"
+"vous changer pour la carte {{name}} ?"
 
 #: app/scripts/services/tools.js:1300
 msgid "The toolchain will be removed. Do you want to continue?"
@@ -1340,7 +1338,7 @@ msgstr "À propos d'Icestudio"
 
 #: app/scripts/services/blockforms.js:535
 msgid "Wrong block format: {{type}}"
-msgstr "Mauvais format de bloc: {{type}}"
+msgstr "Mauvais format de bloc : {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
 #: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
@@ -1350,7 +1348,7 @@ msgstr "Mauvais nom de bloc {{name}}"
 
 #: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
-msgstr "Mauvais format de projet: {{name}}"
+msgstr "Mauvais format de projet : {{name}}"
 
 #: app/scripts/services/tools.js:980
 msgid "Wrong remote hostname {{name}}"
@@ -1390,10 +1388,10 @@ msgid ""
 "you need to go back                      to the top-level. If you want to "
 "export this module as new file, unlock the module and use \"Save as\"."
 msgstr ""
-"Vous naviguez dans le design : si vous voulez sauvegarder le design entier, "
+"Vous naviguez dans le design : Si vous voulez sauvegarder le design entier, "
 "vous devez remonter                      au plus haut-niveau. Si vous voulez "
 "exporter ce module en tant que nouveau fichier, déverouillez le module et "
-"utilisez \"Enregistrer sous\""
+"utilisez \"Enregistrer sous\"."
 
 #: app/scripts/services/project.js:107
 #, fuzzy
@@ -1635,7 +1633,7 @@ msgstr "{{name}} exporté"
 #~ msgstr ""
 #~ "Parce que Icestudio est en développement actif, il est important de "
 #~ "vérifier que votre Icestudio dans la dernière version. Maintenant, nous "
-#~ "vous prévenons!"
+#~ "vous prévenons !"
 
 #~ msgid "Chrome Dev Tools"
 #~ msgstr "Outils Chrome Dev"
@@ -1652,7 +1650,7 @@ msgstr "{{name}} exporté"
 #~ "vous continuer ?"
 
 #~ msgid "Error: default toolchain not found in '{{dir}}'"
-#~ msgstr "Erreur: La toolchain par défaut n'a pas été trouvée dans '{{dir}}'"
+#~ msgstr "Erreur : La toolchain par défaut n'a pas été trouvée dans '{{dir}}'"
 
 #~ msgid "Extract default apio files..."
 #~ msgstr "Extraction des fichiers apio par défaut..."

@@ -205,7 +205,7 @@ msgstr "Cinese"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Scegli un colore"
+msgstr "Scegli un colore:"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -464,7 +464,7 @@ msgstr "Inserire il nome dei blocchi di uscita"
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Inserire il nome delle porte di ingresso"
+msgstr ""
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
@@ -625,17 +625,17 @@ msgstr "Immagine {{name}} salvata"
 #: app/scripts/services/forms.js:1645
 #, fuzzy
 msgid "InOut Left ports"
-msgstr "Inserire il nome delle porte di ingresso"
+msgstr ""
 
 #: app/scripts/services/forms.js:1657
 #, fuzzy
 msgid "InOut Right ports"
-msgstr "Inserire il nome delle porte di ingresso"
+msgstr ""
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
 #, fuzzy
 msgid "InOut pin"
-msgstr "Inserire il nome delle porte di ingresso"
+msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
@@ -773,7 +773,7 @@ msgstr "Italiano"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Spagnolo"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
@@ -786,7 +786,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Aggiorna blocco"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -817,7 +817,7 @@ msgstr "Parametri locali"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Drivers abilitati"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -1276,7 +1276,7 @@ msgstr "Senza titolo"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Aggiorna il nome del blocco"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:514
 #: app/views/menu.html:615
@@ -1373,6 +1373,7 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
+#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
