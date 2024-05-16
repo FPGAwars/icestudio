@@ -1,0 +1,13 @@
+{
+  "label": "IceCream 1.2",
+  "SysClkMhz": 12,
+  "datasheet": "https://github.com/FPGAwars/Alhambra-II-FPGA",
+  "interface": "usb",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 107,
+    "plbs": 960,
+    "brams": 32
+  }
+}

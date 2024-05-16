@@ -1,0 +1,13 @@
+# -----------------------------------------------------------------------------
+#- iceCream constraint file (.pcf)
+#- By Carlos Venegas (twitter: @cavearr fpgawars: charliva@gmail.com)
+#- Feb - 2024
+#- GPL license
+#- Repo: https://github.com/FPGAwars/Alhambra-II-FPGA
+# -----------------------------------------------------------------------------
+
+
+# ------------ User Leds ------------------------------------------------------
+set_io --warn-no-port LED0 78  # output
+set_io --warn-no-port LED1 79  # output
+set_io --warn-no-port LED2 80  # output
