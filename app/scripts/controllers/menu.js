@@ -349,7 +349,7 @@ angular
             gettextCatalog.getString(
               'To save your design you need to lock the padlock and \
               go to the top-level design.<br/><br/>If you want to export \
-              this submodule to a file, use the "Save as" command.'
+              this submodule to a file, use the \"Save as\" command.'
             ),
             function () { }
           );
@@ -394,8 +394,8 @@ angular
           alertify.alert(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-              'You are navigating into the design: if you want to save the entire design, you need to go back \
-                     to the top-level. If you want to export this module as new file, unlock the module and use "Save as"'
+              'You are navigating into the design: If you want to save the entire design, you need to go back \
+                     to the top-level. If you want to export this module as new file, unlock the module and use \"Save as\".'
             ),
             function () { }
           );
@@ -407,9 +407,8 @@ angular
             alertify.confirm(
               gettextCatalog.getString("Export submodule"),
               gettextCatalog.getString(
-                'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
-                module"). Do you want to continue?'
-
+                'You are editing a submodule, so you will save just this submodule (\"Save as\" works like \"Export \
+                module\"). Do you want to continue?'
               ),
               function () {
                 $scope.doSaveProjectAs(localCallback);
@@ -871,7 +870,7 @@ angular
 
             //-- Notify to the user
             alertify.success(
-              gettextCatalog.getString("Python Environment updated")
+              gettextCatalog.getString("Python environment updated")
             );
           }
           //-- The file is not valid 
@@ -1489,60 +1488,61 @@ angular
       };
 
       $scope.about = function () {
+        // English un-translated description:
         var content = [
           '<div class="row">',
           '  <div class="col-sm-4">',
-          '   <img width="220px" src="resources/images/icestudio-github.svg">',
-          "  </div>",
+          '    <img width="220px" src="resources/images/icestudio-github.svg">',
+          '  </div>',
           '  <div class="col-sm-7" style="margin-left: 45px;">',
-          "    <h4>Icestudio</h4>",
-          "    <p><i>Visual editor for open FPGA boards</i></p>",
-          "    <p>Version: " + $scope.version + "</p>",
-          "    <p>License: GPL-2.0</p>",
-          " </div>",
-          "</div>",
+          '    <h4>Icestudio</h4>',
+          '    <p><i>Visual editor for open FPGA boards</i></p>',
+          '    <p>Version: ' + $scope.version + '</p>',
+          '    <p>License: GPL-2.0</p>',
+          '  </div>',
+          '</div>',
           '<div class="row" style="margin-top:30px;">',
           '  <div class="col-sm-12">',
 
-          "    <p>Core Team:</p>",
+          '    <p>Core Team:</p>',
           '    <ul  class="credits-developers-list">',
 
-          "           <li><strong>Carlos Venegas Arrabé</strong>&nbsp;&nbsp;&nbsp;",
+          '           <li><strong>Carlos Venegas Arrabé</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
-          "</li>",
-          "           <li><strong>Juan González Gómez</strong>&nbsp;&nbsp;&nbsp;",
+          '</li>',
+          '           <li><strong>Juan González Gómez</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/Obijuan"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/Obijuan_cube"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
-          "</li>",
-          "</ul>",
-          "    <p>Highlighted contributors:</p>",
+          '</li>',
+          '</ul>',
+          '    <p>Highlighted contributors:</p>',
           '    <ul  class="credits-developers-list">',
 
-          "           <li><strong>Alex Gutierrez Tomas</strong>&nbsp;&nbsp;&nbsp;",
+          '           <li><strong>Alex Gutierrez Tomas</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/mslider"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/microslider"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
-          "</li>",
-          "           <li><strong>Joaquim</strong>&nbsp;&nbsp;&nbsp;",
+          '</li>',
+          '           <li><strong>Joaquim</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/jojo535275"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
-          "</li>",
-          "           <li><strong>Democrito</strong>&nbsp;&nbsp;&nbsp;",
+          '</li>',
+          '           <li><strong>Democrito</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/Democrito"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
-          "</li>",
+          '</li>',
           '<li><strong>Fernando Mosquera</strong>&nbsp;&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://github.com/benitoss"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
-          "</li>",
-          "</ul>",
-          "    <p>Thanks to <strong>Jesús Arroyo Torrens</strong>, ",
+          '</li>',
+          '</ul>',
+          '    <p>Thanks to <strong>Jesús Arroyo Torrens</strong>, ',
           '<a class="action-open-url-external-browser" href="https://github.com/Jesus89"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/JesusArroyo89"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
           'who started this project and was the main developer from 2016/Jan/28 to 2019/Oct',
-          "</p>",
+          '</p>',
           '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio#user-content-main-page">contributors</a></p>',
           '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="https://fpgawars.github.io">FPGAwars</a> 2016-2024</p>',
           '<img src="resources/images/fpgawars-logo.png">',
-          "  </div>",
-          "</div>",
+          '  </div>',
+          '</div>',
         ].join("\n");
         alertify.alert(content);
       };
@@ -1849,7 +1849,7 @@ angular
           }
         } else {
           if (searchName.length > 0) {
-            alertify.warning(gettextCatalog.getString('Wrong search name!'));
+            alertify.warning(gettextCatalog.getString('Invalid search name!'));
           }
         }
 
@@ -1945,7 +1945,7 @@ angular
           }
         } else {
           if (newName.length > 0) {
-            alertify.warning(gettextCatalog.getString('Wrong new name!'));
+            alertify.warning(gettextCatalog.getString('Invalid new name!'));
           }
         }
       }

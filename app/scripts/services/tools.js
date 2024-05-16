@@ -455,7 +455,7 @@ angular
       this.checkToolchain = checkToolchain;
 
       //----------------------------------------------------------------------------------
-      //-- Check if APIO is available. The apio version is read and stored in the
+      //-- Check if Apio is available. The Apio version is read and stored in the
       //-- toolchain.apio global object
       //-- It is also checked if the version is correct (with the version given in the  
       //-- package.json package)
@@ -710,7 +710,7 @@ angular
                   if (common.selectedBoard.name.startsWith("TinyFPGA-B")) {
                     // TinyFPGA bootloader notification
                     errorMessage +=
-                      "</br>(" +
+                      "<br>(" +
                       gettextCatalog.getString("Bootloader not active") +
                       ")";
                   }
@@ -773,14 +773,14 @@ angular
                       );
                     } else {
                       resultAlert = alertify.error(
-                        gettextCatalog.getString(stdout),
+                        stdout,
                         30
                       );
                     }
                     break;
                   default:
                     resultAlert = alertify.error(
-                      gettextCatalog.getString(stdout),
+                      stdout,
                       30
                     );
                 }
@@ -809,7 +809,7 @@ angular
                 stdout.indexOf("fatal error: duplicate pin constraints") !== -1
               ) {
                 resultAlert = alertify.error(
-                  gettextCatalog.getString("Duplicated FPGA I/O ports"),
+                  gettextCatalog.getString("Duplicate FPGA I/O ports"),
                   30
                 );
               } else {
@@ -1233,7 +1233,7 @@ angular
 
         alertify.confirm(
           gettextCatalog.getString(
-            "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection <br>" +
+            "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection.<br>" +
             "<p><b>NOTE:</b> You need to disconnect your VPN (if any) to allow the toolchain installation</p> " +
             "<p>Do you want to continue?</p>"
           ),
@@ -1241,7 +1241,7 @@ angular
             //-- Remove the toolchain for starting a fresh installation
             utils.removeToolchain();
 
-            //-- Install APIO STABLE version
+            //-- Install Apio STABLE version
             installOnlineToolchain(common.APIO_VERSION_STABLE);
           }
         );
@@ -1385,17 +1385,17 @@ angular
 
         //-- Progress bar
         const content = [
-          "<div>",
+          '<div>',
           '  <p id="progress-message">' +
-          gettextCatalog.getString("Installing " + utils.printApioVersion(version)) +
-          "</p>",
-          "  </br>",
+          gettextCatalog.getString("Installing") + ' ' + utils.printApioVersion(version) +
+          '  </p>',
+          '  <br>',
           '  <div class="progress">',
           '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-          '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-          "    </div>",
-          "  </div>",
-          "</div>"
+          '      aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+          '    </div>',
+          '  </div>',
+          '</div>'
         ].join("\n");
 
         toolchainAlert = alertify.alert(content, function () {
@@ -1578,7 +1578,7 @@ angular
           pkgName += ("@" + common.APIO_PKG_OSS_CAD_SUITE_VERSION);
         }
 
-        updateProgress("apio install " + pkgName, 60);
+        updateProgress(gettextCatalog.getString("Apio install") + " " + pkgName, 60);
         utils.apioInstall(pkgName, callback);
       }
 
@@ -1590,7 +1590,7 @@ angular
 
           iceConsole.log("**** STEP: APIO install drivers");
 
-          updateProgress("apio install drivers", 80);
+          updateProgress(gettextCatalog.getString("Apio install drivers"), 80);
           utils.apioInstall("drivers", callback);
         } else {
           callback();
@@ -1602,7 +1602,7 @@ angular
       //--
       function installationCompleted(callback) {
 
-        iceConsole.log("**** FINAL STEP: Checking the installed apio");
+        iceConsole.log("**** FINAL STEP: Checking the installed APIO");
 
         //------- Create the CACHE folders
         //------- They were removed before installing the toolchain
@@ -1966,7 +1966,11 @@ angular
                       gettextCatalog.getString(
                         "There is a new stable version available"
                       ) +
-                      '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
+                      '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">' +
+                      gettextCatalog.getString(
+                        "Click here to install it"
+                      ) +
+                      '</a></div></div>';
                   } else {
                     msg =
                       '<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
@@ -1974,7 +1978,11 @@ angular
                       gettextCatalog.getString(
                         "There is a new nightly version available"
                       ) +
-                      '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
+                      '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">' +
+                      gettextCatalog.getString(
+                        "Click here to install it"
+                      ) +
+                      '</a></div></div>';
                   }
                   alertify.notify(msg, "notify", 30);
                 }

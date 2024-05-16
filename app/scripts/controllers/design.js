@@ -47,9 +47,8 @@ angular
         var item;
         if (common.isEditingSubmodule) {
           alertify.warning(
-            gettextCatalog.getString(
-              'To navigate through design, you need to close "edit mode".'));
-
+            gettextCatalog.getString('To navigate through the design, you need to close \"edit mode\".')
+          );
         } else {
           if (!$scope.isNavigating) {
             $scope.isNavigating = true;

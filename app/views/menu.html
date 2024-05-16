@@ -410,7 +410,7 @@
                   <!-- Edit/Preferences/Logging file -->
                    <li>
                     <a href ng-click="setLoggingFile()">
-                       {{'Logging file' | translate }}</a>
+                       {{ 'Logging file' | translate }}</a>
                   </li>
                   
                 </ul>
@@ -661,7 +661,7 @@
                   <!-- Divisor line between sections of the menu -->
                   <li class="divider" ng-show="toolchain.apio"></li>
 
-                  <!-- Show the current apio version -->
+                  <!-- Show the current Apio version -->
                   <li class="disabled" ng-show="toolchain.apio">
                     <a href>{{ 'Apio ' + toolchain.apio }}</a>
                   </li>

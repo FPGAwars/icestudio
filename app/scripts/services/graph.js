@@ -295,7 +295,7 @@ angular.module('icestudio')
                             // Prevent to connect a pull-up if other blocks are connected
                             if ((cellViewT.model.get('pullup')) &&
                                 (cellViewS.model.id === link.get('source').id)) {
-                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>block already connected'));
+                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>Block already connected'));
                                 return false;
                             }
                             // Prevent to connect other blocks if a pull-up is connected
@@ -309,7 +309,7 @@ angular.module('icestudio')
                         if (cellViewT.model.get('pullup')) {
                             let ret = (cellViewS.model.get('blockType') === blocks.BASIC_INPUT);
                             if (!ret) {
-                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed'));
+                                warning(gettextCatalog.getString('Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed'));
                             }
                             return ret;
                         }
@@ -529,7 +529,7 @@ angular.module('icestudio')
                         else if (common.allDependencies[type]) {
                             if (typeof common.isEditingSubmodule !== 'undefined' &&
                                 common.isEditingSubmodule === true) {
-                                alertify.warning(gettextCatalog.getString('To enter "edit mode" in a deeper block, you need to finish first the current one by locking the padlock.'));
+                                alertify.warning(gettextCatalog.getString('To enter \"edit mode\" in a deeper block, you need to finish the current level by locking the padlock.'));
                                 return;
                             }
                             // Navigate inside generic blocks
