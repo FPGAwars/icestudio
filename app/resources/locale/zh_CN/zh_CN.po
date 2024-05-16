@@ -73,7 +73,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -424,8 +424,8 @@ msgstr "重复的 FPGA I/O 接口"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicate port name:"
-msgstr "输出标签"
+msgid "Duplicate port name: {{name}}"
+msgstr "输出标签: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -667,7 +667,7 @@ msgid "Input parameters"
 msgstr "输入参数"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -710,9 +710,8 @@ msgid "Installation completed"
 msgstr "安装成功"
 
 #: app/scripts/services/tools.js:1390
-#, fuzzy
-msgid "Installing"
-msgstr "安装"
+msgid "Installing {{version}}"
+msgstr ""
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -778,7 +777,7 @@ msgstr ""
 
 #: app/views/menu.html:328
 #, fuzzy
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -865,8 +864,8 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
-msgstr "名称"
+msgid "New Name:"
+msgstr "名称:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1104,7 +1103,7 @@ msgid "Synchronize remote files ..."
 msgstr "远程文件同步..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1276,7 +1275,7 @@ msgid "Upload done"
 msgstr "上传成功"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

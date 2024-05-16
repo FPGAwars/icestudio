@@ -986,7 +986,7 @@ angular.module('icestudio')
         constructor(name = '', virtual = false, clock = false, disabled = false, inoutValue = undefined) {
 
           //-- Create a blank BasicPortForm (calling the upper Class)
-          super(gettextCatalog.getString('Input port name:'),
+          super(gettextCatalog.getString('Input port name'),
             name,
             virtual,
             disabled);
@@ -1814,7 +1814,9 @@ angular.module('icestudio')
                 //-- Show an error and return
                 evt.cancel = true;
                 this.resultAlert = alertify.warning(
-                  gettextCatalog.getString('Duplicate port name:') + ' ' + portInfo.name
+                  gettextCatalog.getString('Duplicate port name: {{name}}', {
+                    name: portInfo.name,
+                  })
                 );
                 return;
               }

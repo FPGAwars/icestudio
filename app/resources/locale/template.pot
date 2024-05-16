@@ -66,7 +66,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -421,7 +421,7 @@ msgid "Duplicate FPGA I/O ports"
 msgstr ""
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
+msgid "Duplicate port name: {{name}}"
 msgstr ""
 
 #: app/views/languages.html:44
@@ -655,7 +655,7 @@ msgid "Input parameters"
 msgstr ""
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -687,7 +687,7 @@ msgid "Installation completed"
 msgstr ""
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
+msgid "Installing {{version}}"
 msgstr ""
 
 #: app/scripts/services/drivers.js:447
@@ -751,7 +751,7 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -837,7 +837,7 @@ msgid "New Color:"
 msgstr ""
 
 #: app/views/design.html:80
-msgid "New Name"
+msgid "New Name:"
 msgstr ""
 
 #: app/views/design.html:71
@@ -1083,7 +1083,7 @@ msgid "Synchronize remote files ..."
 msgstr ""
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1233,7 +1233,7 @@ msgid "Upload done"
 msgstr ""
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

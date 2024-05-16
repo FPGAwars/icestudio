@@ -82,7 +82,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -242,6 +242,7 @@ msgid "Clock not allowed for data buses"
 msgstr "データバスにクロックを使用不可"
 
 #: app/views/menu.html:278
+#, fuzzy
 msgid "Clone"
 msgstr "複製"
 
@@ -413,6 +414,7 @@ msgid "Drivers enabled"
 msgstr "ドライバが有効です"
 
 #: app/views/menu.html:287
+#, fuzzy
 msgid "Duplicate"
 msgstr "複製"
 
@@ -421,8 +423,9 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "FPGA の I/O ポートが重複しています"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
-msgstr "出力ラベル:"
+#, fuzzy
+msgid "Duplicate port name: {{name}}"
+msgstr "出力ラベル: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -651,7 +654,8 @@ msgid "Input parameters"
 msgstr "入力パラメタ"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+#, fuzzy
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -699,8 +703,9 @@ msgid "Installation completed"
 msgstr "インストールが完了しました"
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
-msgstr "インストール中"
+#, fuzzy
+msgid "Installing {{version}}"
+msgstr "インストール中 {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -765,7 +770,8 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+#, fuzzy
+msgid "Label finder"
 msgstr "ラベル検索"
 
 #: app/scripts/services/blockforms.js:1039
@@ -845,8 +851,9 @@ msgid "New Color:"
 msgstr "新しい色:"
 
 #: app/views/design.html:80
-msgid "New Name"
-msgstr "新しい名前"
+#, fuzzy
+msgid "New Name:"
+msgstr "新しい名前:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1076,7 +1083,8 @@ msgid "Synchronize remote files ..."
 msgstr "リモートのファイルを同期…"
 
 #: app/views/menu.html:477
-msgid "System Info"
+#, fuzzy
+msgid "System info"
 msgstr "システム情報"
 
 #: app/views/languages.html:62
@@ -1246,7 +1254,7 @@ msgid "Upload done"
 msgstr "アップロード完了"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

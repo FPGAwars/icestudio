@@ -76,7 +76,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -208,7 +208,7 @@ msgstr "중국"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "색깔을 선택하세요"
+msgstr "색깔을 선택하세요:"
 
 #: app/scripts/services/utils.js:1365
 msgid ""
@@ -427,8 +427,8 @@ msgstr "복사된 FPGA I/O 포트"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
-msgid "Duplicate port name:"
-msgstr "출력 라벨"
+msgid "Duplicate port name: {{name}}"
+msgstr "출력 라벨: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -671,7 +671,7 @@ msgid "Input parameters"
 msgstr "매개 변수 입력"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -718,9 +718,8 @@ msgid "Installation completed"
 msgstr "설치 완료"
 
 #: app/scripts/services/tools.js:1390
-#, fuzzy
-msgid "Installing"
-msgstr "설치"
+msgid "Installing {{version}}"
+msgstr ""
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -784,7 +783,7 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -871,8 +870,8 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
-msgstr "이름"
+msgid "New Name:"
+msgstr "이름:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1110,7 +1109,7 @@ msgid "Synchronize remote files ..."
 msgstr "원격 파일 동기화..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1285,7 +1284,7 @@ msgid "Upload done"
 msgstr "업로드 완료"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

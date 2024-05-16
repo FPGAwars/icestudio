@@ -460,7 +460,9 @@ angular.module('icestudio')
 
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.message(gettextCatalog.getString('Using external Apio:') + ' ' + candidateApio, 5);
+          alertify.message(gettextCatalog.getString('Using external Apio: {{name}}', {
+            name: candidateApio
+          }), 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);

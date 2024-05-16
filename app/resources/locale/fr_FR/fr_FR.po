@@ -84,7 +84,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -431,7 +431,7 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'entrée/sortie FPGA dupliqués"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
+msgid "Duplicate port name: {{name}}"
 msgstr ""
 
 #: app/views/languages.html:44
@@ -676,8 +676,8 @@ msgid "Input parameters"
 msgstr "Entrer les paramètres"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
-msgstr "Nom du port d'entrée :"
+msgid "Input port name"
+msgstr "Nom du port d'entrée"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -724,8 +724,9 @@ msgid "Installation completed"
 msgstr "Installation terminée"
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
-msgstr "Installation"
+#, fuzzy
+msgid "Installing {{version}}"
+msgstr "Installation de {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -792,8 +793,9 @@ msgid "Korean"
 msgstr "Coréen"
 
 #: app/views/menu.html:328
-msgid "Label Finder"
-msgstr "Chercher Label"
+#, fuzzy
+msgid "Label finder"
+msgstr "Chercher label"
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
@@ -873,12 +875,13 @@ msgid "New"
 msgstr "Nouveau"
 
 #: app/views/design.html:87
+#, fuzzy
 msgid "New Color:"
-msgstr "New Couleur:"
+msgstr "Nouveau Couleur :"
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
+msgid "New Name:"
 msgstr "Nouveau Nom :"
 
 #: app/views/design.html:71
@@ -1118,7 +1121,7 @@ msgid "Synchronize remote files ..."
 msgstr "Synchroniser les fichiers distants ..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr "Informations système"
 
 #: app/views/languages.html:62
@@ -1296,7 +1299,7 @@ msgid "Upload done"
 msgstr "Téléchargement terminé"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

@@ -73,7 +73,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -413,18 +413,16 @@ msgid "Drivers enabled"
 msgstr "Sürücüler aktif"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
-msgstr "Çıktı etiketi"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Çoğaltılmış FPGA I/O bağlantı noktalaı"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
-msgid "Duplicate port name:"
-msgstr "Çıktı etiketi"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -454,7 +452,7 @@ msgstr "Harici koleksiyonlar yolunu girin"
 #: app/scripts/services/forms.js:2381
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Garici koleksiyonlar yolunu girin"
+msgstr ""
 
 #: app/scripts/services/forms.js:2335
 #, fuzzy
@@ -464,12 +462,12 @@ msgstr "Enter the block's label"
 #: app/scripts/services/forms.js:2436
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Giriş bağlantı noktalarını girin"
+msgstr "Pip yolunu girin"
 
 #: app/scripts/services/forms.js:2428
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Garici koleksiyonlar yolunu girin"
+msgstr "Python yolunu girin"
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -670,7 +668,7 @@ msgid "Input parameters"
 msgstr "Parametreleri girin"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -717,9 +715,8 @@ msgid "Installation completed"
 msgstr "Kurulumu tamamlanmış"
 
 #: app/scripts/services/tools.js:1390
-#, fuzzy
-msgid "Installing"
-msgstr "Yükle"
+msgid "Installing {{version}}"
+msgstr ""
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -785,7 +782,8 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+#, fuzzy
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -872,7 +870,7 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
+msgid "New Name:"
 msgstr "Ad"
 
 #: app/views/design.html:71
@@ -1111,7 +1109,7 @@ msgid "Synchronize remote files ..."
 msgstr "Uzak dosyaları eşleştirin ..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1288,7 +1286,7 @@ msgid "Upload done"
 msgstr "Yükleme tamamlandı"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

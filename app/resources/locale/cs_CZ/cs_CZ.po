@@ -83,7 +83,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -422,8 +422,8 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Duplikované FPGA vstupně výstupní porty"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
-msgstr "Duplikovat popisek:"
+msgid "Duplicate port name: {{name}}"
+msgstr "Duplikovat popisek: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -653,8 +653,8 @@ msgstr "Vstupní parametry"
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name:"
-msgstr "Název vstupu:"
+msgid "Input port name"
+msgstr "Název vstupu"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -701,8 +701,9 @@ msgid "Installation completed"
 msgstr "Instalace dokončena"
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
-msgstr "Instaluji"
+#, fuzzy
+msgid "Installing {{version}}"
+msgstr "Instaluji {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -766,7 +767,7 @@ msgid "Korean"
 msgstr "Korejština"
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr "Hledat popisek"
 
 #: app/scripts/services/blockforms.js:1039
@@ -846,8 +847,9 @@ msgid "New Color:"
 msgstr "Nová barva:"
 
 #: app/views/design.html:80
-msgid "New Name"
-msgstr "Nové jméno"
+#, fuzzy
+msgid "New Name:"
+msgstr "Nové jméno:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1079,7 +1081,7 @@ msgid "Synchronize remote files ..."
 msgstr "Synchronizace vzdálených souborů..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr "Systémové informace"
 
 #: app/views/languages.html:62
@@ -1254,7 +1256,7 @@ msgid "Upload done"
 msgstr "Nahrávání hotovo"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

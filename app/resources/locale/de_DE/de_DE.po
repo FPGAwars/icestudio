@@ -73,7 +73,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -413,15 +413,15 @@ msgstr "Treiber aktiviert"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "Duplikat bei der Beschriftung:"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Doppelte FPGA I/O Schnittstellen"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
-msgstr "Duplikat bei der Beschriftung:"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -651,8 +651,9 @@ msgid "Input parameters"
 msgstr "Eingangs-Parameter"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
-msgstr "Port-Name eingeben:"
+#, fuzzy
+msgid "Input port name"
+msgstr "Eingangs Port-Name"
 
 #: app/scripts/services/forms.js:1615
 msgid "Input ports"
@@ -700,8 +701,9 @@ msgid "Installation completed"
 msgstr "Installation abgeschlossen"
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
-msgstr "Installation wird ausgeführt"
+#, fuzzy
+msgid "Installing {{version}}"
+msgstr "Installation wird ausgeführt {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -767,7 +769,8 @@ msgid "Korean"
 msgstr "Koreanisch"
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+#, fuzzy
+msgid "Label finder"
 msgstr "Suche Label"
 
 #: app/scripts/services/blockforms.js:1039
@@ -849,7 +852,7 @@ msgstr "Neue Farbe:"
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
+msgid "New Name:"
 msgstr "Neuer Name:"
 
 #: app/views/design.html:71
@@ -1086,7 +1089,7 @@ msgid "Synchronize remote files ..."
 msgstr "Synchronisiere Remote-Dateien..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr "Systeminformationen"
 
 #: app/views/languages.html:62
@@ -1269,7 +1272,7 @@ msgid "Upload done"
 msgstr "Übertragen abgeschlossen"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

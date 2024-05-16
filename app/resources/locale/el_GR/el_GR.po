@@ -73,7 +73,7 @@ msgid "Allow tri-state connections"
 msgstr ""
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1593
@@ -407,18 +407,16 @@ msgid "Drivers enabled"
 msgstr "Οι οδηγοί ενεργοποιήθηκαν"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
-msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
-msgid "Duplicate port name:"
-msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -659,7 +657,7 @@ msgid "Input parameters"
 msgstr "Εισαγάγετε τις παραμέτρους"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -707,8 +705,8 @@ msgstr "Η εγκατάσταση ολοκληρώθηκε"
 
 #: app/scripts/services/tools.js:1390
 #, fuzzy
-msgid "Installing"
-msgstr "Εγκατάσταση"
+msgid "Installing {{version}}"
+msgstr "Εγκατάσταση {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -773,7 +771,7 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -857,8 +855,8 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
-msgstr "Όνομα"
+msgid "New Name:"
+msgstr "Όνομα:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1090,7 +1088,7 @@ msgid "Synchronize remote files ..."
 msgstr "Συγχρονισμός απομακρυσμένων αρχείων ..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1262,7 +1260,7 @@ msgid "Upload done"
 msgstr "Η μεταφόρτωση ολοκληρωθηκε"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352

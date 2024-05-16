@@ -81,8 +81,8 @@ msgid "Allow tri-state connections"
 msgstr "Allow tri-state connections"
 
 #: app/scripts/services/tools.js:1581
-msgid "Apio install"
-msgstr "Apio install"
+msgid "Apio install {{name}}"
+msgstr "Apio install {{name}}"
 
 #: app/scripts/services/tools.js:1593
 msgid "Apio install drivers"
@@ -422,8 +422,8 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Duplicate FPGA I/O ports"
 
 #: app/scripts/services/forms.js:1817
-msgid "Duplicate port name:"
-msgstr "Duplicate port name:"
+msgid "Duplicate port name: {{name}}"
+msgstr "Duplicate port name: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -653,8 +653,8 @@ msgid "Input parameters"
 msgstr "Input parameters"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
-msgstr "Input port name:"
+msgid "Input port name"
+msgstr "Input port name"
 
 #: app/scripts/services/forms.js:1615
 msgid "Input ports"
@@ -699,8 +699,8 @@ msgid "Installation completed"
 msgstr "Installation completed"
 
 #: app/scripts/services/tools.js:1390
-msgid "Installing"
-msgstr "Installing"
+msgid "Installing {{version}}"
+msgstr "Installing {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -760,8 +760,8 @@ msgid "Korean"
 msgstr "Korean"
 
 #: app/views/menu.html:328
-msgid "Label Finder"
-msgstr "Label Finder"
+msgid "Label finder"
+msgstr "Label finder"
 
 #: app/scripts/services/blockforms.js:1039
 msgid "Label updated"
@@ -840,8 +840,8 @@ msgid "New Color:"
 msgstr "New Color:"
 
 #: app/views/design.html:80
-msgid "New Name"
-msgstr "New Name"
+msgid "New Name:"
+msgstr "New Name:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1070,8 +1070,8 @@ msgid "Synchronize remote files ..."
 msgstr "Synchronize remote files ..."
 
 #: app/views/menu.html:477
-msgid "System Info"
-msgstr "System Info"
+msgid "System info"
+msgstr "System info"
 
 #: app/views/languages.html:62
 msgid "Taiwanese"
@@ -1246,8 +1246,8 @@ msgid "Upload done"
 msgstr "Upload done"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
-msgstr "Using external Apio:"
+msgid "Using external Apio: {{name}}"
+msgstr "Using external Apio: {{name}}"
 
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
