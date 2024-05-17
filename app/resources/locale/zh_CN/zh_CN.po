@@ -436,7 +436,7 @@ msgstr "驱动开启"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "输出标签"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
@@ -445,7 +445,7 @@ msgstr "重复的 FPGA I/O 接口"
 #: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "输出标签: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -659,26 +659,27 @@ msgstr "输入"
 
 #: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
-msgstr "输入标签"
+msgstr ""
 
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "输入标签"
+msgstr ""
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "输入参数"
+msgstr ""
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "输入输入端口名称"
+msgstr ""
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -845,7 +846,7 @@ msgstr "内存"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "输入内存图块名称"
+msgstr ""
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -912,6 +913,7 @@ msgid "Output"
 msgstr "输出"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
 msgstr "输出标签"
 
@@ -923,12 +925,12 @@ msgstr "输出标签"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "输出标签"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "输出标签"
+msgstr ""
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"

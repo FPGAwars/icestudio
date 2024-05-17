@@ -477,7 +477,7 @@ msgstr "Immettere il percorso dei plugin esterni"
 #: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Inserire il nome dei blocchi di uscita"
+msgstr ""
 
 #: app/scripts/services/forms.js:2438
 #, fuzzy
@@ -664,21 +664,22 @@ msgstr "Etichetta di Input"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Etichetta di Input"
+msgstr "Etichette di Input"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Inserire i parametri"
+msgstr "Parametri di Input"
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port name"
-msgstr ""
+msgstr "Nome della porta di Input"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Inserire il nome delle porte di ingresso"
+msgstr "Porte di Input"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -848,7 +849,7 @@ msgstr "Memoria"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Inserire il nome dei blocchi di memoria"
+msgstr "Blocchi di memoria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -921,17 +922,17 @@ msgstr "Etichetta di Output"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Etichetta di Output"
+msgstr "Etichette di Output"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Etichetta di Output"
+msgstr "Nome della porta di Output"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Etichetta di Output"
+msgstr "Porte di Output"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -943,8 +944,9 @@ msgstr "Incolla"
 
 #: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
 #: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#, fuzzy
 msgid "Path {{path}} does not exist"
-msgstr "IL percorso {{path}}è inesistente"
+msgstr "Il percorso {{path}}è inesistente"
 
 #: app/scripts/services/utils.js:1179
 msgid "Please run: {{cmd}}"

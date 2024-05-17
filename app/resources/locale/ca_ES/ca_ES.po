@@ -671,7 +671,7 @@ msgstr "Etiquetes d'entrada"
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Introdueix els paràmetres"
+msgstr "Paràmetres d'entrada"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -795,7 +795,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Bloc actualitzat"
+msgstr "Etiqueta actualitzada"
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -849,7 +849,7 @@ msgstr "Memòria"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Introdueix els blocs de memòria"
+msgstr "Blocs de memòria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"

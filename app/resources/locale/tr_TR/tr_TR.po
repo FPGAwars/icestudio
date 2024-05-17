@@ -855,7 +855,7 @@ msgstr "Bellek"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Import block"
+msgstr ""
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -933,12 +933,12 @@ msgstr "Çıktı etiketi"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Çıktı etiketi"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Çıktı etiketi"
+msgstr ""
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1281,9 +1281,8 @@ msgid "Untitled"
 msgstr "İsimsiz"
 
 #: app/views/menu.html:639
-#, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Blok adını güncelle"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615

@@ -661,7 +661,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Voer de parameters in"
+msgstr "Invoerparameters"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -670,7 +670,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Voer de ingangspoorten in"
+msgstr "Ingangspoorten"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -784,7 +784,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Blok bijgewerkt"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -838,7 +838,7 @@ msgstr "Geheugen"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Voer de geheugenblokken in"
+msgstr "Geheugenblokken"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -909,16 +909,17 @@ msgstr ""
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Uitgang"
+msgstr ""
 
 #: app/scripts/services/forms.js:1135
+#, fuzzy
 msgid "Output port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Uitgang"
+msgstr "Uitgangspoorten"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"

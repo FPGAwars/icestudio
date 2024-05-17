@@ -444,9 +444,8 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "FPGA の I/O ポートが重複しています"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "出力ラベル: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -655,6 +654,7 @@ msgid "Input"
 msgstr "入力"
 
 #: app/views/design.html:291 app/views/menu.html:769
+#, fuzzy
 msgid "Input label"
 msgstr "入力ラベル"
 
@@ -906,6 +906,7 @@ msgid "Output"
 msgstr "出力"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
 msgstr "出力ラベル"
 

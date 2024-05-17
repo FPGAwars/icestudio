@@ -682,7 +682,7 @@ msgstr "Labels d'entrée"
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Entrer les paramètres"
+msgstr "Les paramètres d'entrée"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -865,7 +865,7 @@ msgstr "Mémoire"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Importer un bloc"
+msgstr "Blocs de mémoire"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"

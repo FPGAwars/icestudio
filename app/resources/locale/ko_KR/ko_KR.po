@@ -437,18 +437,18 @@ msgid "Drivers enabled"
 msgstr "드라이버 가능"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
-msgstr "출력 라벨"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
+#, fuzzy
 msgid "Duplicate FPGA I/O ports"
 msgstr "복사된 FPGA I/O 포트"
 
 #: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "출력 라벨: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -666,6 +666,7 @@ msgid "Input"
 msgstr "입력"
 
 #: app/views/design.html:291 app/views/menu.html:769
+#, fuzzy
 msgid "Input label"
 msgstr "입력 라벨"
 
@@ -855,7 +856,7 @@ msgstr "메모리"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "메모리 블록 입력"
+msgstr ""
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -922,6 +923,7 @@ msgid "Output"
 msgstr "출력"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
 msgstr "출력 라벨"
 
@@ -933,12 +935,12 @@ msgstr "출력 라벨"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "출력 라벨"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "출력 라벨"
+msgstr ""
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"

@@ -440,11 +440,11 @@ msgstr "Duplikovat"
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
-msgstr "Duplikované FPGA vstupně výstupní porty"
+msgstr "Duplikované FPGA vstupně/výstupní porty"
 
 #: app/scripts/services/forms.js:1817
 msgid "Duplicate port name: {{name}}"
-msgstr "Duplikovat popisek: {{name}}"
+msgstr "Duplikovat jméno portu: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"

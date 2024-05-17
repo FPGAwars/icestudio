@@ -672,7 +672,7 @@ msgstr "Метки ввода"
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Параметры"
+msgstr "Входные параметры"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -934,12 +934,12 @@ msgstr "Метка вывода"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Метка вывода"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Метка вывода"
+msgstr "Выходные порты"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1286,7 +1286,7 @@ msgstr "Безымянный"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Обновить имя блока (последняя стабильная версия)"
+msgstr "Обновить (последняя стабильная версия)"
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
