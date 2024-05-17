@@ -466,7 +466,7 @@ msgstr "Voer het pad naar de externe collectie in"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Voer het pad naar de externe collectie in"
+msgstr "Voer het pad naar de externe plugins in"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy

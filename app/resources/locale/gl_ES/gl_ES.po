@@ -466,7 +466,7 @@ msgstr "Introduza a ruta ás coleccións externas"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Introduza a ruta ás coleccións externas"
+msgstr "Introduza a ruta ás plugins externas"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -531,12 +531,12 @@ msgstr "Coleccións externas actualizadas"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Coleccións externas"
+msgstr "Plugins externas"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Colecións externas actualizadas"
+msgstr "Plugins externas actualizadas"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"

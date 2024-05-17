@@ -225,7 +225,7 @@ msgstr "中文(簡)"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "選擇顏色"
+msgstr "選擇顏色:"
 
 #: app/scripts/services/utils.js:1367
 msgid ""
