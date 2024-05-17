@@ -168,7 +168,7 @@ angular
                 } else {
 
                   alertify.error(
-                    gettextCatalog.getString("Bitstream not found: build your project first"),
+                    gettextCatalog.getString("Bitstream not found: Build your project first"),
                     30
                   );
                   utils.endBlockingTask();

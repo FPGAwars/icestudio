@@ -52,7 +52,7 @@ msgstr "Plaats een blok om te beginnen"
 msgid "Add as block"
 msgstr "Plaatsen als blok"
 
-#: app/scripts/services/forms.js:1911
+#: app/scripts/services/forms.js:1913
 msgid "Address format"
 msgstr "Adresformaat"
 
@@ -60,7 +60,7 @@ msgstr "Adresformaat"
 msgid "Advanced features"
 msgstr ""
 
-#: app/scripts/services/tools.js:1939
+#: app/scripts/services/tools.js:1941
 msgid "All collections removed"
 msgstr "Alle collecties zijn verwijderd"
 
@@ -72,12 +72,12 @@ msgstr "Alle opgeslagen collecties worden verwijderd. Doorgaan?"
 msgid "Allow tri-state connections"
 msgstr ""
 
-#: app/scripts/services/tools.js:1581
-msgid "Apio install {{name}}"
+#: app/scripts/services/tools.js:1595
+msgid "Apio install drivers"
 msgstr ""
 
-#: app/scripts/services/tools.js:1593
-msgid "Apio install drivers"
+#: app/scripts/services/tools.js:1581
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1508
@@ -85,7 +85,7 @@ msgstr ""
 msgid "At least Python 3.7 is required"
 msgstr "Python 3.7 is vereist"
 
-#: app/scripts/services/utils.js:671
+#: app/scripts/services/utils.js:673
 msgid "Author"
 msgstr "Auteur"
 
@@ -93,16 +93,20 @@ msgstr "Auteur"
 msgid "Basic"
 msgstr "Standaard"
 
+#: app/views/design.html:275
+msgid "Basic Toolbox"
+msgstr ""
+
 #: app/views/languages.html:86
 msgid "Basque"
 msgstr "Baskisch"
 
-#: app/scripts/services/forms.js:1897
+#: app/scripts/services/forms.js:1899
 msgid "Binary"
 msgstr "Binaire"
 
 #: app/scripts/services/tools.js:171
-msgid "Bitstream not found: build your project first"
+msgid "Bitstream not found: Build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1130
@@ -158,7 +162,7 @@ msgstr "Bord {{name}} geselecteerd"
 msgid "Bootloader not active"
 msgstr "Bootloader niet actief"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Maken"
@@ -168,12 +172,16 @@ msgid "Build done"
 msgstr "Maken voltooid"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
-#: app/scripts/services/utils.js:1382
+#: app/scripts/services/utils.js:1384
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: app/scripts/services/utils.js:1200
+#: app/scripts/services/utils.js:1202
 msgid "Cannot paste from a different project format ({{version}})"
+msgstr ""
+
+#: app/views/design.html:54
+msgid "Case sensitive"
 msgstr ""
 
 #: app/views/languages.html:92
@@ -185,7 +193,7 @@ msgstr "Catalaans"
 msgid "Change Color"
 msgstr ""
 
-#: app/scripts/services/utils.js:1367
+#: app/scripts/services/utils.js:1369
 msgid "Changed Preferences: Allow tri-state connections"
 msgstr ""
 
@@ -205,7 +213,7 @@ msgstr "Chinees"
 msgid "Choose a color:"
 msgstr ""
 
-#: app/scripts/services/utils.js:1365
+#: app/scripts/services/utils.js:1367
 msgid ""
 "Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
 "&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
@@ -216,13 +224,13 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Klik hier om <b>een nieuwe versie van Icestudio te downloaden</b>"
 
-#: app/scripts/services/tools.js:1650
+#: app/scripts/services/tools.js:1652
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Klik hier om <b>nieuwe drivers te installeren</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
-#: app/scripts/services/tools.js:1982 app/scripts/services/tools.js:546
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1972
+#: app/scripts/services/tools.js:1984 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "Klik hier om te installeren"
 
@@ -242,7 +250,7 @@ msgstr ""
 msgid "Close"
 msgstr "Sluiten"
 
-#: app/views/design.html:314 app/views/menu.html:791
+#: app/views/design.html:316 app/views/menu.html:791
 msgid "Code"
 msgstr "Code"
 
@@ -258,19 +266,19 @@ msgstr "Collectie-informatie"
 msgid "Collection {{collection}} info not defined"
 msgstr "Collectie {{collection}} informatie niet gedefinieerd"
 
-#: app/scripts/services/tools.js:1792
+#: app/scripts/services/tools.js:1794
 msgid "Collection {{name}} added"
 msgstr "Collectie {{name}} toegevoegd"
 
-#: app/scripts/services/tools.js:1779
+#: app/scripts/services/tools.js:1781
 msgid "Collection {{name}} not replaced"
 msgstr "Collectie {{name}} niet vervangen"
 
-#: app/scripts/services/tools.js:1930
+#: app/scripts/services/tools.js:1932
 msgid "Collection {{name}} removed"
 msgstr "Collectie {{name}} verwijderd"
 
-#: app/scripts/services/tools.js:1768
+#: app/scripts/services/tools.js:1770
 msgid "Collection {{name}} replaced"
 msgstr "Collectie {{name}} vervangen"
 
@@ -294,11 +302,11 @@ msgstr "Gemeenschapsforum"
 msgid "Configuration not completed"
 msgstr "Configuratie niet voltooid"
 
-#: app/views/design.html:304 app/views/menu.html:783
+#: app/views/design.html:306 app/views/menu.html:783
 msgid "Constant"
 msgstr "Constant"
 
-#: app/scripts/services/forms.js:2101
+#: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
 msgstr "Constant"
@@ -344,7 +352,7 @@ msgstr ""
 msgid "Datasheet"
 msgstr "Datasheet"
 
-#: app/scripts/services/forms.js:1901
+#: app/scripts/services/forms.js:1903
 msgid "Decimal"
 msgstr "Decimaal"
 
@@ -364,7 +372,7 @@ msgstr "Standaard"
 msgid "Delete"
 msgstr ""
 
-#: app/scripts/services/utils.js:670
+#: app/scripts/services/utils.js:672
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -380,7 +388,7 @@ msgstr "Programma sluiten?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Collectie {{name}} verwijderen?"
 
-#: app/scripts/services/tools.js:1761
+#: app/scripts/services/tools.js:1763
 msgid "Do you want to replace it?"
 msgstr "Vervangen?"
 
@@ -426,7 +434,7 @@ msgstr "Nederlands"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: app/scripts/services/tools.js:1740
+#: app/scripts/services/tools.js:1742
 msgid "Edit the collection name"
 msgstr "Bewerk de naam van de collectie"
 
@@ -438,27 +446,27 @@ msgstr "Activeren"
 msgid "English"
 msgstr "Engels"
 
-#: app/scripts/services/forms.js:2484
+#: app/scripts/services/forms.js:2486
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Voer het pad naar de externe collectie in"
 
-#: app/scripts/services/forms.js:2381
+#: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
 msgstr "Voer het pad naar de externe collectie in"
 
-#: app/scripts/services/forms.js:2335
+#: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
 msgstr ""
 
-#: app/scripts/services/forms.js:2436
+#: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
 msgstr ""
 
-#: app/scripts/services/forms.js:2428
+#: app/scripts/services/forms.js:2430
 #, fuzzy
 msgid "Enter the python path"
 msgstr ""
@@ -471,13 +479,17 @@ msgstr "Voer de externe hostnaam user@host in"
 msgid "Error installing driver:"
 msgstr ""
 
-#: app/scripts/services/utils.js:874
+#: app/scripts/services/utils.js:876
 msgid "Error: {{error}}"
 msgstr "Fout: {{error}}"
 
 #: app/scripts/services/tools.js:918
 msgid "Errors detected in the design"
 msgstr "Het ontwerp bevat fouten"
+
+#: app/views/design.html:57
+msgid "Exact match"
+msgstr ""
 
 #: app/views/menu.html:119
 msgid "Examples"
@@ -591,7 +603,7 @@ msgstr ""
 msgid "Help"
 msgstr "Help"
 
-#: app/scripts/services/forms.js:1905
+#: app/scripts/services/forms.js:1907
 msgid "Hexadecimal"
 msgstr "Hexadecimaal"
 
@@ -605,7 +617,7 @@ msgid ""
 "this board"
 msgstr ""
 
-#: app/scripts/services/utils.js:684
+#: app/scripts/services/utils.js:686
 msgid "Image"
 msgstr "Afbeelding"
 
@@ -632,15 +644,15 @@ msgstr ""
 msgid "Indian Red"
 msgstr ""
 
-#: app/views/design.html:319 app/views/menu.html:795
+#: app/views/design.html:321 app/views/menu.html:795
 msgid "Information"
 msgstr "Informatie"
 
-#: app/views/design.html:279 app/views/menu.html:760
+#: app/views/design.html:281 app/views/menu.html:760
 msgid "Input"
 msgstr "Ingang"
 
-#: app/views/design.html:289 app/views/menu.html:769
+#: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
 msgstr ""
 
@@ -697,7 +709,7 @@ msgstr ""
 "De toolchain wordt bijgewerkt. Hiervoor is een internetverbinding vereist. "
 "Doorgaan?"
 
-#: app/scripts/services/tools.js:1628
+#: app/scripts/services/tools.js:1630
 msgid "Installation completed"
 msgstr "Installatie voltooid"
 
@@ -726,7 +738,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "Ongeldige blokaansluiting:<br><i>pull up</i> is al aangesloten"
 
-#: app/scripts/services/tools.js:1805
+#: app/scripts/services/tools.js:1807
 msgid "Invalid collection {{name}}"
 msgstr "Ongeldige collectie {{name}}"
 
@@ -797,7 +809,7 @@ msgstr ""
 msgid "Load"
 msgstr "Laden"
 
-#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
+#: app/scripts/services/forms.js:1921 app/scripts/services/forms.js:2111
 msgid "Local parameter"
 msgstr "Lokale parameter"
 
@@ -814,7 +826,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:988
+#: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
 msgstr "Maximale busbreedte: 96 bits"
 
@@ -822,16 +834,16 @@ msgstr "Maximale busbreedte: 96 bits"
 msgid "Medium Violet Red"
 msgstr ""
 
-#: app/views/design.html:309 app/views/menu.html:787
+#: app/views/design.html:311 app/views/menu.html:787
 msgid "Memory"
 msgstr "Geheugen"
 
-#: app/scripts/services/forms.js:1886
+#: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Voer de geheugenblokken in"
 
-#: app/scripts/services/utils.js:668
+#: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Naam"
 
@@ -865,7 +877,7 @@ msgid "No collections stored"
 msgstr "Geen collecties"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
-#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "OK"
 
@@ -877,7 +889,7 @@ msgstr ""
 msgid "Open"
 msgstr "Openen"
 
-#: app/scripts/services/utils.js:725
+#: app/scripts/services/utils.js:727
 msgid "Open SVG"
 msgstr "Open SVG"
 
@@ -889,11 +901,11 @@ msgstr ""
 msgid "Original file {{file}} does not exist"
 msgstr "Originele bestand {{file}} bestaat niet"
 
-#: app/views/design.html:284 app/views/menu.html:764
+#: app/views/design.html:286 app/views/menu.html:764
 msgid "Output"
 msgstr "Uitgang"
 
-#: app/views/design.html:294 app/views/menu.html:773
+#: app/views/design.html:296 app/views/menu.html:773
 msgid "Output label"
 msgstr ""
 
@@ -911,7 +923,7 @@ msgstr ""
 msgid "Output ports"
 msgstr "Uitgang"
 
-#: app/views/design.html:299 app/views/menu.html:778
+#: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
 msgstr ""
 
@@ -924,7 +936,7 @@ msgstr "Plakken"
 msgid "Path {{path}} does not exist"
 msgstr "Pad {{file}} bestaat niet"
 
-#: app/scripts/services/utils.js:1177
+#: app/scripts/services/utils.js:1179
 msgid "Please run: {{cmd}}"
 msgstr "Voer uit: {{cmd}}"
 
@@ -1005,7 +1017,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:727
+#: app/scripts/services/utils.js:729
 msgid "Reset SVG"
 msgstr "Reset SVG"
 
@@ -1021,7 +1033,7 @@ msgstr ""
 msgid "Save"
 msgstr "Opslaan"
 
-#: app/scripts/services/utils.js:726
+#: app/scripts/services/utils.js:728
 msgid "Save SVG"
 msgstr "SVG opslaan"
 
@@ -1041,7 +1053,7 @@ msgstr "Selecteren"
 msgid "Select all"
 msgstr "Alles selecteren"
 
-#: app/scripts/services/forms.js:2290
+#: app/scripts/services/forms.js:2292
 msgid "Select your board"
 msgstr "Kies uw bord"
 
@@ -1104,7 +1116,7 @@ msgstr "Testbank"
 msgid "Thank you very much!"
 msgstr ""
 
-#: app/scripts/services/tools.js:1754
+#: app/scripts/services/tools.js:1756
 msgid "The collection {{name}} already exists."
 msgstr "Collectie {{name}} bestaat al."
 
@@ -1121,11 +1133,11 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "De toolchain wordt verwijderd. Doorgaan?"
 
-#: app/scripts/services/tools.js:1978
+#: app/scripts/services/tools.js:1980
 msgid "There is a new nightly version available"
 msgstr ""
 
-#: app/scripts/services/tools.js:1966
+#: app/scripts/services/tools.js:1968
 msgid "There is a new stable version available"
 msgstr ""
 
@@ -1147,7 +1159,7 @@ msgid ""
 "team from"
 msgstr ""
 
-#: app/scripts/services/utils.js:1375
+#: app/scripts/services/utils.js:1377
 msgid "This time"
 msgstr ""
 
@@ -1177,7 +1189,7 @@ msgstr "Gereedschappen"
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:1638
+#: app/scripts/services/tools.js:1640
 msgid "Toolchain installed"
 msgstr "Toolchain geïnstalleerd"
 
@@ -1198,7 +1210,7 @@ msgstr "Toolchain versie komt niet overeen"
 msgid "Tools"
 msgstr "Gereedschappen"
 
-#: app/scripts/services/utils.js:1350
+#: app/scripts/services/utils.js:1352
 msgid ""
 "Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
 "standard designs.<br /><br />You will be asked to update your Preferences "
@@ -1247,7 +1259,7 @@ msgstr "Naamloos"
 msgid "Update (Latest stable)"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Uploaden"
@@ -1264,11 +1276,11 @@ msgstr ""
 msgid "Verification done"
 msgstr "Verificatie voltooid"
 
-#: app/views/design.html:498 app/views/menu.html:599
+#: app/views/design.html:500 app/views/menu.html:599
 msgid "Verify"
 msgstr "Verifiëren"
 
-#: app/scripts/services/utils.js:669 app/views/menu.html:832
+#: app/scripts/services/utils.js:671 app/views/menu.html:832
 msgid "Version"
 msgstr "Versie"
 
@@ -1284,7 +1296,7 @@ msgstr "Bekijken"
 msgid "View license"
 msgstr "Bekijk licentie"
 
-#: app/scripts/services/utils.js:1371
+#: app/scripts/services/utils.js:1373
 msgid "Viewing tri-state"
 msgstr ""
 
@@ -1302,7 +1314,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Verkeerd blokformaat: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
+#: app/scripts/services/forms.js:1988 app/scripts/services/forms.js:2172
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Verkeerde bloknaam {{name}}"
@@ -1319,7 +1331,7 @@ msgstr "Verkeerde externe hostnaam {{name}}"
 msgid "Yellow"
 msgstr ""
 
-#: app/scripts/services/utils.js:1374
+#: app/scripts/services/utils.js:1376
 msgid "Yes"
 msgstr ""
 
@@ -1329,11 +1341,11 @@ msgid ""
 "\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/utils.js:1348
+#: app/scripts/services/utils.js:1350
 msgid "You are importing a block that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/services/utils.js:1347
+#: app/scripts/services/utils.js:1349
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
@@ -1373,7 +1385,7 @@ msgstr "Uw wijzigingen gaan verloren als u ze niet opslaat"
 msgid "back"
 msgstr "terug"
 
-#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1157
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1159
 msgid "{{app}} is required."
 msgstr "{{app}} is vereist."
 
