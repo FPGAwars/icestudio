@@ -1183,8 +1183,8 @@ msgid ""
 "To enter \"edit mode\" in a deeper block, you need to finish the current "
 "level by locking the padlock."
 msgstr ""
-"Daha derin bloğun \"düzenleme modu\" na girmek için, mevcut \"düzenleme modu"
-"\" nu bitirmeniz, bunu yapmak için tuş kilidini kilitlemeniz gerekir."
+"Daha derin bloğun \"düzenleme modu\" na girmek için, mevcut \"düzenleme "
+"modu\" nu bitirmeniz, bunu yapmak için tuş kilidini kilitlemeniz gerekir."
 
 #: app/scripts/controllers/design.js:50
 #, fuzzy
@@ -1360,8 +1360,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Bir alt modülü düzenliyorsunuz, eğer kaydederseniz, sadece alt modülü "
 "kaydedersiniz (bu durumda \"farklı kaydet\", \"dışa aktarma modülü\" gibi "

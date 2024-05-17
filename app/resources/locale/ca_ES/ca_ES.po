@@ -1346,8 +1346,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estàs editant un submòdul, si el deses, només es desarà el submòdul (en "
 "aquesta situació \"anomena i desa\" funciona com \"exporta mòdul\"), Vols "

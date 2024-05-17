@@ -1335,8 +1335,8 @@ msgstr "Si"
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estás editando un submódulo, aquí que guardarás solamente este submódulo "
 "(\"Guardar como\" funciona como \"Exportar módulo\"). ¿Quieres continuar?"

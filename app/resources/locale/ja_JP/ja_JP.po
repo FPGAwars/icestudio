@@ -1312,8 +1312,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "サブモジュールの編集中であるため、ここで保存するとサブモジュールだけが保存さ"
 "れます（「名前を付けて保存」は「モジュールのエクスポート」のように機能しま"

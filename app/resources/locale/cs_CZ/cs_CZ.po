@@ -1317,8 +1317,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Upravujete submodul, pokud bude ukládat, uložíte pouze submodul (v této "
 "situaci \"uložit jako\" funguje jako \"exportovat modul\"). Chcete "
