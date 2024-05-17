@@ -113,7 +113,6 @@ msgid "Basic"
 msgstr "Basic"
 
 #: app/views/design.html:275
-#, fuzzy
 msgid "Basic Toolbox"
 msgstr "Basic Toolbox"
 

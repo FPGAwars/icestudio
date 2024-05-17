@@ -176,12 +176,13 @@ msgstr "Bootloader no actiu"
 
 #: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
+#, fuzzy
 msgid "Build"
-msgstr "Sintetitza"
+msgstr "Síntetitza"
 
 #: app/scripts/controllers/menu.js:1375
 msgid "Build done"
-msgstr "Sintetitzat realitzat"
+msgstr "Síntesi realitzat"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
 #: app/scripts/services/utils.js:1384
@@ -1088,7 +1089,7 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:1374
 msgid "Start build"
-msgstr "Inicia sintetitzat"
+msgstr "Inicia síntesi"
 
 #: app/scripts/controllers/menu.js:1400
 msgid "Start upload"
