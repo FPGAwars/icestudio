@@ -168,7 +168,7 @@ angular
                 } else {
 
                   alertify.error(
-                    gettextCatalog.getString("Bitstream not found: build your project first"),
+                    gettextCatalog.getString("Bitstream not found: Build your project first"),
                     30
                   );
                   utils.endBlockingTask();
@@ -1387,7 +1387,7 @@ angular
         const content = [
           '<div>',
           '  <p id="progress-message">' +
-          gettextCatalog.getString("Installing") + ' ' + utils.printApioVersion(version) +
+          gettextCatalog.getString("Installing {{version}}", { version: utils.printApioVersion(version) }) +
           '  </p>',
           '  <br>',
           '  <div class="progress">',
@@ -1578,7 +1578,9 @@ angular
           pkgName += ("@" + common.APIO_PKG_OSS_CAD_SUITE_VERSION);
         }
 
-        updateProgress(gettextCatalog.getString("Apio install") + " " + pkgName, 60);
+        updateProgress(gettextCatalog.getString("Apio install {{name}}", {
+          name: pkgName
+        }), 60);
         utils.apioInstall(pkgName, callback);
       }
 

@@ -13,6 +13,18 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr ""
+
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
@@ -53,7 +65,7 @@ msgstr "Добавить блок в начало"
 msgid "Add as block"
 msgstr "Добавить как блок"
 
-#: app/scripts/services/forms.js:1911
+#: app/scripts/services/forms.js:1913
 msgid "Address format"
 msgstr "Формат адреса"
 
@@ -61,7 +73,7 @@ msgstr "Формат адреса"
 msgid "Advanced features"
 msgstr ""
 
-#: app/scripts/services/tools.js:1939
+#: app/scripts/services/tools.js:1941
 msgid "All collections removed"
 msgstr "Все коллекции удалены"
 
@@ -73,12 +85,12 @@ msgstr "Все сохраненные коллеции будут удалены
 msgid "Allow tri-state connections"
 msgstr ""
 
-#: app/scripts/services/tools.js:1581
-msgid "Apio install"
+#: app/scripts/services/tools.js:1595
+msgid "Apio install drivers"
 msgstr ""
 
-#: app/scripts/services/tools.js:1593
-msgid "Apio install drivers"
+#: app/scripts/services/tools.js:1581
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1508
@@ -86,7 +98,7 @@ msgstr ""
 msgid "At least Python 3.7 is required"
 msgstr "Необходим Python 3.7 или новее"
 
-#: app/scripts/services/utils.js:671
+#: app/scripts/services/utils.js:673
 msgid "Author"
 msgstr "Автор"
 
@@ -94,16 +106,20 @@ msgstr "Автор"
 msgid "Basic"
 msgstr "Базовый"
 
+#: app/views/design.html:275
+msgid "Basic Toolbox"
+msgstr ""
+
 #: app/views/languages.html:86
 msgid "Basque"
 msgstr "Баскский"
 
-#: app/scripts/services/forms.js:1897
+#: app/scripts/services/forms.js:1899
 msgid "Binary"
 msgstr "Бинарный"
 
 #: app/scripts/services/tools.js:171
-msgid "Bitstream not found: build your project first"
+msgid "Bitstream not found: Build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1130
@@ -159,7 +175,7 @@ msgstr "Выбрана плата {{name}}"
 msgid "Bootloader not active"
 msgstr "Загрузчик не активен"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Собрать"
@@ -169,12 +185,16 @@ msgid "Build done"
 msgstr "Сборка закончена"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
-#: app/scripts/services/utils.js:1382
+#: app/scripts/services/utils.js:1384
 msgid "Cancel"
 msgstr "Отменить"
 
-#: app/scripts/services/utils.js:1200
+#: app/scripts/services/utils.js:1202
 msgid "Cannot paste from a different project format ({{version}})"
+msgstr ""
+
+#: app/views/design.html:54
+msgid "Case sensitive"
 msgstr ""
 
 #: app/views/languages.html:92
@@ -187,7 +207,7 @@ msgstr "Каталонский"
 msgid "Change Color"
 msgstr "Выберите цвет"
 
-#: app/scripts/services/utils.js:1367
+#: app/scripts/services/utils.js:1369
 msgid "Changed Preferences: Allow tri-state connections"
 msgstr ""
 
@@ -208,7 +228,7 @@ msgstr "Китайский"
 msgid "Choose a color:"
 msgstr "Выберите цвет:"
 
-#: app/scripts/services/utils.js:1365
+#: app/scripts/services/utils.js:1367
 msgid ""
 "Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
 "&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
@@ -219,13 +239,13 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Нажмите здесь <b>для загрузки новой версии</b> Icestudio"
 
-#: app/scripts/services/tools.js:1650
+#: app/scripts/services/tools.js:1652
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Нажмите здесь <b>для установки драйверов</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
-#: app/scripts/services/tools.js:1982 app/scripts/services/tools.js:546
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1972
+#: app/scripts/services/tools.js:1984 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "Нажмите для установки"
 
@@ -245,7 +265,7 @@ msgstr "Клонировать"
 msgid "Close"
 msgstr "Закрыть"
 
-#: app/views/design.html:314 app/views/menu.html:791
+#: app/views/design.html:316 app/views/menu.html:791
 msgid "Code"
 msgstr "Код"
 
@@ -261,19 +281,19 @@ msgstr "Информация о коллекции"
 msgid "Collection {{collection}} info not defined"
 msgstr "Информация для {{collection}} не задана"
 
-#: app/scripts/services/tools.js:1792
+#: app/scripts/services/tools.js:1794
 msgid "Collection {{name}} added"
 msgstr "Коллекция {{name}} добавлена"
 
-#: app/scripts/services/tools.js:1779
+#: app/scripts/services/tools.js:1781
 msgid "Collection {{name}} not replaced"
 msgstr "Коллекция {{name}} не замещена"
 
-#: app/scripts/services/tools.js:1930
+#: app/scripts/services/tools.js:1932
 msgid "Collection {{name}} removed"
 msgstr "Коллекция {{name}} удалена"
 
-#: app/scripts/services/tools.js:1768
+#: app/scripts/services/tools.js:1770
 msgid "Collection {{name}} replaced"
 msgstr "Коллекция {{name}} замещена"
 
@@ -297,11 +317,11 @@ msgstr "Форум сообщества"
 msgid "Configuration not completed"
 msgstr "Конфигурация неполна"
 
-#: app/views/design.html:304 app/views/menu.html:783
+#: app/views/design.html:306 app/views/menu.html:783
 msgid "Constant"
 msgstr "Константа"
 
-#: app/scripts/services/forms.js:2101
+#: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
 msgstr "Константа"
@@ -349,7 +369,7 @@ msgstr "Тёмно-оранжевый"
 msgid "Datasheet"
 msgstr "Даташит"
 
-#: app/scripts/services/forms.js:1901
+#: app/scripts/services/forms.js:1903
 msgid "Decimal"
 msgstr "Десятичный"
 
@@ -371,7 +391,7 @@ msgstr "По умолчанию"
 msgid "Delete"
 msgstr ""
 
-#: app/scripts/services/utils.js:670
+#: app/scripts/services/utils.js:672
 msgid "Description"
 msgstr "Описание"
 
@@ -387,7 +407,7 @@ msgstr "Закрыть приложение ?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Удалить коллекцию {{name}} ?"
 
-#: app/scripts/services/tools.js:1761
+#: app/scripts/services/tools.js:1763
 msgid "Do you want to replace it?"
 msgstr "Заменить ?"
 
@@ -415,18 +435,16 @@ msgid "Drivers enabled"
 msgstr "Драйвера подключены"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
-msgstr "Метка вывода:"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Дублирование портов ввода/вывода платы"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
-msgid "Duplicate port name:"
-msgstr "Метка вывода:"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -436,7 +454,7 @@ msgstr "Немецкий"
 msgid "Edit"
 msgstr "Редактировать"
 
-#: app/scripts/services/tools.js:1740
+#: app/scripts/services/tools.js:1742
 msgid "Edit the collection name"
 msgstr "Редактировать имя коллекции"
 
@@ -448,30 +466,30 @@ msgstr "Включить"
 msgid "English"
 msgstr "English"
 
-#: app/scripts/services/forms.js:2484
+#: app/scripts/services/forms.js:2486
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Путь до сторонней коллекции"
 
-#: app/scripts/services/forms.js:2381
+#: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Путь до сторонней коллекции"
+msgstr ""
 
-#: app/scripts/services/forms.js:2335
+#: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
 msgstr "Выходные блоки"
 
-#: app/scripts/services/forms.js:2436
+#: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Входные порты"
+msgstr ""
 
-#: app/scripts/services/forms.js:2428
+#: app/scripts/services/forms.js:2430
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Путь до сторонней коллекции"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -481,13 +499,17 @@ msgstr "Удаленный хост в формате user@host"
 msgid "Error installing driver:"
 msgstr ""
 
-#: app/scripts/services/utils.js:874
+#: app/scripts/services/utils.js:876
 msgid "Error: {{error}}"
 msgstr "Ошибка: {{error}}"
 
 #: app/scripts/services/tools.js:918
 msgid "Errors detected in the design"
 msgstr "Найдены ошибки в схеме"
+
+#: app/views/design.html:57
+msgid "Exact match"
+msgstr ""
 
 #: app/views/menu.html:119
 msgid "Examples"
@@ -602,14 +624,13 @@ msgstr "Зелёно-жёлтый"
 msgid "Help"
 msgstr "Помощь"
 
-#: app/scripts/services/forms.js:1905
+#: app/scripts/services/forms.js:1907
 msgid "Hexadecimal"
 msgstr "Шестнадцатеричный"
 
 #: app/views/version.html:45
-#, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Inception"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -618,7 +639,7 @@ msgid ""
 "this board"
 msgstr "Могли остаться пустые пины, потому что на этой плате нет эквивалента"
 
-#: app/scripts/services/utils.js:684
+#: app/scripts/services/utils.js:686
 msgid "Image"
 msgstr "Изображение"
 
@@ -626,35 +647,20 @@ msgstr "Изображение"
 msgid "Image {{name}} saved"
 msgstr "Изображение {{name}} сохранено"
 
-#: app/scripts/services/forms.js:1645
-#, fuzzy
-msgid "InOut Left ports"
-msgstr "Входные порты"
-
-#: app/scripts/services/forms.js:1657
-#, fuzzy
-msgid "InOut Right ports"
-msgstr "Входные порты"
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-#, fuzzy
-msgid "InOut pin"
-msgstr "Входные порты"
-
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
 msgid "Indian Red"
 msgstr "Ярко-красный"
 
-#: app/views/design.html:319 app/views/menu.html:795
+#: app/views/design.html:321 app/views/menu.html:795
 msgid "Information"
 msgstr "Информация"
 
-#: app/views/design.html:279 app/views/menu.html:760
+#: app/views/design.html:281 app/views/menu.html:760
 msgid "Input"
 msgstr "Ввод"
 
-#: app/views/design.html:289 app/views/menu.html:769
+#: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
 msgstr "Метка ввода"
 
@@ -669,8 +675,8 @@ msgid "Input parameters"
 msgstr "Параметры"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
-msgstr "Введите имя порта:"
+msgid "Input port name"
+msgstr ""
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -694,7 +700,7 @@ msgid ""
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
 "Установите <b>стабильный набор инструментов</b>. Требуется подключение к "
-"сети <br><p><b>ВАЖНО:</b> Отключите VPN-сервис (если он активен), чтобы "
+"сети.<br><p><b>ВАЖНО:</b> Отключите VPN-сервис (если он активен), чтобы "
 "разрешить установку</p> <p>Продолжить ?</p>"
 
 #: app/scripts/services/tools.js:1260
@@ -715,14 +721,13 @@ msgstr ""
 "Набор инструментов будет обновлен. Для этой операции потребуется соединение "
 "с Интернетом. Продолжить ?"
 
-#: app/scripts/services/tools.js:1628
+#: app/scripts/services/tools.js:1630
 msgid "Installation completed"
 msgstr "Установка завершена"
 
 #: app/scripts/services/tools.js:1390
-#, fuzzy
-msgid "Installing"
-msgstr "Установка"
+msgid "Installing {{version}}"
+msgstr ""
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -746,7 +751,7 @@ msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr ""
 "Неверное соединение блока:<br><i>подтягивающее соединение</i> уже осущствлено"
 
-#: app/scripts/services/tools.js:1805
+#: app/scripts/services/tools.js:1807
 msgid "Invalid collection {{name}}"
 msgstr "Неправильная коллекция {{name}}"
 
@@ -782,20 +787,19 @@ msgstr "Итальянский"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr "Испанский"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr "Корейский"
 
 #: app/views/menu.html:328
-msgid "Label Finder"
-msgstr "Поиск блока"
+msgid "Label finder"
+msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
-#, fuzzy
 msgid "Label updated"
-msgstr "Блок обновлен"
+msgstr ""
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -819,14 +823,14 @@ msgstr "Светлая морская волна"
 msgid "Load"
 msgstr "Загрузить"
 
-#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
+#: app/scripts/services/forms.js:1921 app/scripts/services/forms.js:2111
 msgid "Local parameter"
 msgstr "Локальный параметр"
 
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Драйвера подключены"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -836,7 +840,7 @@ msgstr "Файл журнала"
 msgid "Logging file updated"
 msgstr "Файл журнала обновлен"
 
-#: app/scripts/services/utils.js:988
+#: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
 msgstr "Максимальный размер шины: 96 бит"
 
@@ -845,16 +849,16 @@ msgstr "Максимальный размер шины: 96 бит"
 msgid "Medium Violet Red"
 msgstr "Умеренный красно-фиолетовый"
 
-#: app/views/design.html:309 app/views/menu.html:787
+#: app/views/design.html:311 app/views/menu.html:787
 msgid "Memory"
 msgstr "Память"
 
-#: app/scripts/services/forms.js:1886
+#: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Блоки памяти"
 
-#: app/scripts/services/utils.js:668
+#: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Имя"
 
@@ -876,7 +880,7 @@ msgstr "Новый цвет:"
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
+msgid "New Name:"
 msgstr "Новое имя:"
 
 #: app/views/design.html:71
@@ -888,7 +892,7 @@ msgid "No collections stored"
 msgstr "Нет сохраненных коллекций"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
-#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "ОК"
 
@@ -901,7 +905,7 @@ msgstr "Тускло-коричневый"
 msgid "Open"
 msgstr "Открыть"
 
-#: app/scripts/services/utils.js:725
+#: app/scripts/services/utils.js:727
 msgid "Open SVG"
 msgstr "Открыть SVG"
 
@@ -914,11 +918,11 @@ msgstr "Оранжево-красный"
 msgid "Original file {{file}} does not exist"
 msgstr "Оригинальный файл {{file}} не существует"
 
-#: app/views/design.html:284 app/views/menu.html:764
+#: app/views/design.html:286 app/views/menu.html:764
 msgid "Output"
 msgstr "Вывод"
 
-#: app/views/design.html:294 app/views/menu.html:773
+#: app/views/design.html:296 app/views/menu.html:773
 msgid "Output label"
 msgstr "Метка вывода"
 
@@ -937,7 +941,7 @@ msgstr "Метка вывода"
 msgid "Output ports"
 msgstr "Метка вывода"
 
-#: app/views/design.html:299 app/views/menu.html:778
+#: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
 msgstr "Парные метки"
 
@@ -950,7 +954,7 @@ msgstr "Вставить"
 msgid "Path {{path}} does not exist"
 msgstr "Путь {{path}} не существует"
 
-#: app/scripts/services/utils.js:1177
+#: app/scripts/services/utils.js:1179
 msgid "Please run: {{cmd}}"
 msgstr "Выполните команду: {{cmd}}"
 
@@ -1031,7 +1035,7 @@ msgstr "Заменить ВСЕ"
 msgid "Replace One"
 msgstr "Заменить один"
 
-#: app/scripts/services/utils.js:727
+#: app/scripts/services/utils.js:729
 msgid "Reset SVG"
 msgstr "Убрать SVG"
 
@@ -1048,7 +1052,7 @@ msgstr "Русский"
 msgid "Save"
 msgstr "Сохранить"
 
-#: app/scripts/services/utils.js:726
+#: app/scripts/services/utils.js:728
 msgid "Save SVG"
 msgstr "Сохранить SVG"
 
@@ -1068,7 +1072,7 @@ msgstr "Выбрать"
 msgid "Select all"
 msgstr "Выбрать все"
 
-#: app/scripts/services/forms.js:2290
+#: app/scripts/services/forms.js:2292
 msgid "Select your board"
 msgstr "Выберите плату"
 
@@ -1116,7 +1120,7 @@ msgid "Synchronize remote files ..."
 msgstr "Синхронизация файлов..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr "Информация о системе"
 
 #: app/views/languages.html:62
@@ -1132,7 +1136,7 @@ msgstr "Тестбенч"
 msgid "Thank you very much!"
 msgstr "Большое спасибо!"
 
-#: app/scripts/services/tools.js:1754
+#: app/scripts/services/tools.js:1756
 msgid "The collection {{name}} already exists."
 msgstr "Коллекция {{name}} уже существует."
 
@@ -1149,11 +1153,11 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Набор инструментов будет удален. Продолжить ?"
 
-#: app/scripts/services/tools.js:1978
+#: app/scripts/services/tools.js:1980
 msgid "There is a new nightly version available"
 msgstr "Доступна для установки ночная сборка"
 
-#: app/scripts/services/tools.js:1966
+#: app/scripts/services/tools.js:1968
 msgid "There is a new stable version available"
 msgstr "Доступна для установки стабильная сборка"
 
@@ -1175,7 +1179,7 @@ msgid ""
 "team from"
 msgstr ""
 
-#: app/scripts/services/utils.js:1375
+#: app/scripts/services/utils.js:1377
 msgid "This time"
 msgstr ""
 
@@ -1214,7 +1218,7 @@ msgstr "Инструменты"
 msgid "Toolchain"
 msgstr "Набор инструментов"
 
-#: app/scripts/services/tools.js:1638
+#: app/scripts/services/tools.js:1640
 msgid "Toolchain installed"
 msgstr "Набор инструментов установлен"
 
@@ -1235,7 +1239,7 @@ msgstr "Версии инструментов не совпадают"
 msgid "Tools"
 msgstr "Инструменты"
 
-#: app/scripts/services/utils.js:1350
+#: app/scripts/services/utils.js:1352
 msgid ""
 "Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
 "standard designs.<br /><br />You will be asked to update your Preferences "
@@ -1284,7 +1288,7 @@ msgstr "Безымянный"
 msgid "Update (Latest stable)"
 msgstr "Обновить имя блока (последняя стабильная версия)"
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Загрузка"
@@ -1294,18 +1298,18 @@ msgid "Upload done"
 msgstr "Загрузка завершена"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Проверка завершена"
 
-#: app/views/design.html:498 app/views/menu.html:599
+#: app/views/design.html:500 app/views/menu.html:599
 msgid "Verify"
 msgstr "Проверка"
 
-#: app/scripts/services/utils.js:669 app/views/menu.html:832
+#: app/scripts/services/utils.js:671 app/views/menu.html:832
 msgid "Version"
 msgstr "Версия"
 
@@ -1321,7 +1325,7 @@ msgstr "Вид"
 msgid "View license"
 msgstr "Просмотр лицензии"
 
-#: app/scripts/services/utils.js:1371
+#: app/scripts/services/utils.js:1373
 msgid "Viewing tri-state"
 msgstr ""
 
@@ -1339,7 +1343,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Неправильный формат блока: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
+#: app/scripts/services/forms.js:1988 app/scripts/services/forms.js:2172
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "Неправильное имя блока  {{name}}"
@@ -1356,7 +1360,7 @@ msgstr "Неправильный удаленный хост {{name}}"
 msgid "Yellow"
 msgstr "Желтый"
 
-#: app/scripts/services/utils.js:1374
+#: app/scripts/services/utils.js:1376
 msgid "Yes"
 msgstr ""
 
@@ -1370,11 +1374,11 @@ msgstr ""
 "субмодуль (в таких случаях команда \"Сохранить как\" работает как \"Экспорт "
 "модуля\"). Вы хотите продолжить?"
 
-#: app/scripts/services/utils.js:1348
+#: app/scripts/services/utils.js:1350
 msgid "You are importing a block that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/services/utils.js:1347
+#: app/scripts/services/utils.js:1349
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
@@ -1422,7 +1426,7 @@ msgstr "Ваши изменения могут быть потеряны, есл
 msgid "back"
 msgstr "назад"
 
-#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1157
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1159
 msgid "{{app}} is required."
 msgstr "Требуется приложение {{app}}."
 

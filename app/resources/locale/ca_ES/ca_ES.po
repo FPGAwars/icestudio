@@ -12,6 +12,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr ""
+
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
@@ -52,7 +64,7 @@ msgstr "Afegeix un bloc per a iniciar"
 msgid "Add as block"
 msgstr "Afegeix com a bloc"
 
-#: app/scripts/services/forms.js:1911
+#: app/scripts/services/forms.js:1913
 msgid "Address format"
 msgstr "Format d'adreça"
 
@@ -60,7 +72,7 @@ msgstr "Format d'adreça"
 msgid "Advanced features"
 msgstr ""
 
-#: app/scripts/services/tools.js:1939
+#: app/scripts/services/tools.js:1941
 msgid "All collections removed"
 msgstr "Col·leccions eliminades"
 
@@ -72,20 +84,20 @@ msgstr "Totes les col·leccions emmagatzemades es perdran. Vols continuar?"
 msgid "Allow tri-state connections"
 msgstr ""
 
-#: app/scripts/services/tools.js:1581
-msgid "Apio install"
+#: app/scripts/services/tools.js:1595
+msgid "Apio install drivers"
 msgstr ""
 
-#: app/scripts/services/tools.js:1593
-msgid "Apio install drivers"
+#: app/scripts/services/tools.js:1581
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "És necessari Python 2.7"
+msgstr "És necessari Python 3.7"
 
-#: app/scripts/services/utils.js:671
+#: app/scripts/services/utils.js:673
 msgid "Author"
 msgstr "Autor"
 
@@ -93,16 +105,20 @@ msgstr "Autor"
 msgid "Basic"
 msgstr "Bàsic"
 
+#: app/views/design.html:275
+msgid "Basic Toolbox"
+msgstr ""
+
 #: app/views/languages.html:86
 msgid "Basque"
 msgstr "Basc"
 
-#: app/scripts/services/forms.js:1897
+#: app/scripts/services/forms.js:1899
 msgid "Binary"
 msgstr "Binari"
 
 #: app/scripts/services/tools.js:171
-msgid "Bitstream not found: build your project first"
+msgid "Bitstream not found: Build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1130
@@ -158,7 +174,7 @@ msgstr "Placa {{name}} seleccionada"
 msgid "Bootloader not active"
 msgstr "Bootloader no actiu"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Sintetitza"
@@ -168,12 +184,16 @@ msgid "Build done"
 msgstr "Sintetitzat realitzat"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
-#: app/scripts/services/utils.js:1382
+#: app/scripts/services/utils.js:1384
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: app/scripts/services/utils.js:1200
+#: app/scripts/services/utils.js:1202
 msgid "Cannot paste from a different project format ({{version}})"
+msgstr ""
+
+#: app/views/design.html:54
+msgid "Case sensitive"
 msgstr ""
 
 #: app/views/languages.html:92
@@ -186,7 +206,7 @@ msgstr "Català"
 msgid "Change Color"
 msgstr "Selecciona un color"
 
-#: app/scripts/services/utils.js:1367
+#: app/scripts/services/utils.js:1369
 msgid "Changed Preferences: Allow tri-state connections"
 msgstr ""
 
@@ -205,9 +225,9 @@ msgstr "Xinès"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Selecciona un color"
+msgstr "Selecciona un color:"
 
-#: app/scripts/services/utils.js:1365
+#: app/scripts/services/utils.js:1367
 msgid ""
 "Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
 "&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
@@ -218,13 +238,13 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Fes clic ací per a <b>descarregar una versió més nova</b> d'Icestudio"
 
-#: app/scripts/services/tools.js:1650
+#: app/scripts/services/tools.js:1652
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Fes clic aquí per <b>configurar els drivers</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
-#: app/scripts/services/tools.js:1982 app/scripts/services/tools.js:546
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1972
+#: app/scripts/services/tools.js:1984 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "Fes clic aquí per instal·lar-ho"
 
@@ -244,7 +264,7 @@ msgstr "Clona"
 msgid "Close"
 msgstr "Tanca"
 
-#: app/views/design.html:314 app/views/menu.html:791
+#: app/views/design.html:316 app/views/menu.html:791
 msgid "Code"
 msgstr "Codi"
 
@@ -260,19 +280,19 @@ msgstr "Informació de la col·lecció"
 msgid "Collection {{collection}} info not defined"
 msgstr "Informació de la col·lecció {{collection}} no definida"
 
-#: app/scripts/services/tools.js:1792
+#: app/scripts/services/tools.js:1794
 msgid "Collection {{name}} added"
 msgstr "Col·lecció {{name}} afegida"
 
-#: app/scripts/services/tools.js:1779
+#: app/scripts/services/tools.js:1781
 msgid "Collection {{name}} not replaced"
 msgstr "Col·lecció {{name}} no reemplaçada"
 
-#: app/scripts/services/tools.js:1930
+#: app/scripts/services/tools.js:1932
 msgid "Collection {{name}} removed"
 msgstr "Col·lecció {{name}} eliminada"
 
-#: app/scripts/services/tools.js:1768
+#: app/scripts/services/tools.js:1770
 msgid "Collection {{name}} replaced"
 msgstr "Col·lecció {{name}} reemplaçada"
 
@@ -296,14 +316,14 @@ msgstr "Fòrum de la comunitat"
 msgid "Configuration not completed"
 msgstr "Configuració no completada"
 
-#: app/views/design.html:304 app/views/menu.html:783
+#: app/views/design.html:306 app/views/menu.html:783
 msgid "Constant"
 msgstr "Constant"
 
-#: app/scripts/services/forms.js:2101
+#: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Constant"
+msgstr ""
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -346,7 +366,7 @@ msgstr ""
 msgid "Datasheet"
 msgstr "Datasheet"
 
-#: app/scripts/services/forms.js:1901
+#: app/scripts/services/forms.js:1903
 msgid "Decimal"
 msgstr "Decimal"
 
@@ -366,7 +386,7 @@ msgstr "Per defecte"
 msgid "Delete"
 msgstr ""
 
-#: app/scripts/services/utils.js:670
+#: app/scripts/services/utils.js:672
 msgid "Description"
 msgstr "Descripció"
 
@@ -382,7 +402,7 @@ msgstr "Vols tancar l'aplicació?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Vols eliminar la col·lecció {{name}}?"
 
-#: app/scripts/services/tools.js:1761
+#: app/scripts/services/tools.js:1763
 msgid "Do you want to replace it?"
 msgstr "Vols reemplaçar-la?"
 
@@ -412,16 +432,15 @@ msgstr "Drivers habilitats"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "Etiqueta d'eixida"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'E/S de la FPGA duplicats"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
-msgid "Duplicate port name:"
-msgstr "Etiqueta d'eixida"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -431,7 +450,7 @@ msgstr "Holandès"
 msgid "Edit"
 msgstr "Edita"
 
-#: app/scripts/services/tools.js:1740
+#: app/scripts/services/tools.js:1742
 msgid "Edit the collection name"
 msgstr "Edita el nom de la col·lecció"
 
@@ -443,30 +462,30 @@ msgstr "Habilita"
 msgid "English"
 msgstr "Anglés"
 
-#: app/scripts/services/forms.js:2484
+#: app/scripts/services/forms.js:2486
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Introdueix la ruta de les col·leccions externes"
 
-#: app/scripts/services/forms.js:2381
+#: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Introdueix la ruta de les col·leccions externes"
+msgstr "Introdueix la ruta de les plugins externes"
 
-#: app/scripts/services/forms.js:2335
+#: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Introdueix els blocs de sortida"
+msgstr ""
 
-#: app/scripts/services/forms.js:2436
+#: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Introdueix els ports d'entrada"
+msgstr ""
 
-#: app/scripts/services/forms.js:2428
+#: app/scripts/services/forms.js:2430
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Introdueix la ruta de les col·leccions externes"
+msgstr "Introdueix la ruta de python"
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -476,13 +495,17 @@ msgstr "Introdueix el nom del host remot usuari@host"
 msgid "Error installing driver:"
 msgstr ""
 
-#: app/scripts/services/utils.js:874
+#: app/scripts/services/utils.js:876
 msgid "Error: {{error}}"
 msgstr "Error: {{error}}"
 
 #: app/scripts/services/tools.js:918
 msgid "Errors detected in the design"
 msgstr "Errors detectats en el disseny"
+
+#: app/views/design.html:57
+msgid "Exact match"
+msgstr ""
 
 #: app/views/menu.html:119
 msgid "Examples"
@@ -511,12 +534,12 @@ msgstr "Col·leccions externes actualitzades"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Col·leccions externes"
+msgstr "Plugins externes"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Col·leccions externes actualitzades"
+msgstr "Plugins externes actualitzades"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -598,14 +621,13 @@ msgstr ""
 msgid "Help"
 msgstr "Ajuda"
 
-#: app/scripts/services/forms.js:1905
+#: app/scripts/services/forms.js:1907
 msgid "Hexadecimal"
 msgstr "Hexadecimal"
 
 #: app/views/version.html:45
-#, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudio Inception"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -616,7 +638,7 @@ msgstr ""
 "Si apareixen pins d'ENTRADA/SORTIDA en blanc, és perquè no hi ha equivalent "
 "en aquesta placa"
 
-#: app/scripts/services/utils.js:684
+#: app/scripts/services/utils.js:686
 msgid "Image"
 msgstr "Imatge"
 
@@ -624,34 +646,19 @@ msgstr "Imatge"
 msgid "Image {{name}} saved"
 msgstr "Imatge {{name}} desada"
 
-#: app/scripts/services/forms.js:1645
-#, fuzzy
-msgid "InOut Left ports"
-msgstr "Introdueix els ports d'entrada"
-
-#: app/scripts/services/forms.js:1657
-#, fuzzy
-msgid "InOut Right ports"
-msgstr "Introdueix els ports d'entrada"
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-#, fuzzy
-msgid "InOut pin"
-msgstr "Introdueix els ports d'entrada"
-
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
 msgstr ""
 
-#: app/views/design.html:319 app/views/menu.html:795
+#: app/views/design.html:321 app/views/menu.html:795
 msgid "Information"
 msgstr "Informació"
 
-#: app/views/design.html:279 app/views/menu.html:760
+#: app/views/design.html:281 app/views/menu.html:760
 msgid "Input"
 msgstr "Entrada"
 
-#: app/views/design.html:289 app/views/menu.html:769
+#: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
 msgstr "Etiqueta d'entrada"
 
@@ -666,7 +673,7 @@ msgid "Input parameters"
 msgstr "Introdueix els paràmetres"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -708,14 +715,14 @@ msgstr ""
 "La toolchain serà actualitzada. Aquesta operació requereix connexió a "
 "Internet. Vols continuar?"
 
-#: app/scripts/services/tools.js:1628
+#: app/scripts/services/tools.js:1630
 msgid "Installation completed"
 msgstr "Instal·lació completada"
 
 #: app/scripts/services/tools.js:1390
 #, fuzzy
-msgid "Installing"
-msgstr "Instal·la"
+msgid "Installing {{version}}"
+msgstr "Instal·lació de {{version}}"
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -724,13 +731,13 @@ msgstr "És necessari connexió a Internet"
 #: app/scripts/services/graph.js:298
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
-msgstr "Connexió de <i>Pull up</i> no vàlida: bloc ja connectat"
+msgstr "Connexió de <i>Pull up</i> no vàlida: Bloc ja connectat"
 
 #: app/scripts/services/graph.js:312
 #, fuzzy
 msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
 msgstr ""
-"Connexió <i>Pull up</i> no vàlida: <br>només blocs <i>Entrada</i> són "
+"Connexió <i>Pull up</i> no vàlida: <br>Només blocs <i>Entrada</i> són "
 "permitits"
 
 #: app/scripts/services/graph.js:304
@@ -738,7 +745,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "Connexió de blocs no vàlida:<br><i>Pull up</i> connectada"
 
-#: app/scripts/services/tools.js:1805
+#: app/scripts/services/tools.js:1807
 msgid "Invalid collection {{name}}"
 msgstr "Col·lecció {{name}} no vàlida"
 
@@ -773,16 +780,15 @@ msgid "Italian"
 msgstr "Italià"
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanese"
-msgstr "Espanyol"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -810,14 +816,14 @@ msgstr ""
 msgid "Load"
 msgstr "Carrega"
 
-#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
+#: app/scripts/services/forms.js:1921 app/scripts/services/forms.js:2111
 msgid "Local parameter"
 msgstr "Paràmetre local"
 
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Drivers habilitats"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -827,7 +833,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:988
+#: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
 msgstr "Mida màxima del bus: 96 bits"
 
@@ -835,16 +841,16 @@ msgstr "Mida màxima del bus: 96 bits"
 msgid "Medium Violet Red"
 msgstr ""
 
-#: app/views/design.html:309 app/views/menu.html:787
+#: app/views/design.html:311 app/views/menu.html:787
 msgid "Memory"
 msgstr "Memòria"
 
-#: app/scripts/services/forms.js:1886
+#: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Introdueix els blocs de memòria"
 
-#: app/scripts/services/utils.js:668
+#: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Nom"
 
@@ -866,8 +872,8 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
-msgstr "Nom"
+msgid "New Name:"
+msgstr "Nom:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -878,7 +884,7 @@ msgid "No collections stored"
 msgstr "Cap col·lecció emmagatzemada"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
-#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "D'acord"
 
@@ -890,7 +896,7 @@ msgstr ""
 msgid "Open"
 msgstr "Obre"
 
-#: app/scripts/services/utils.js:725
+#: app/scripts/services/utils.js:727
 msgid "Open SVG"
 msgstr "Obre SVG"
 
@@ -902,11 +908,11 @@ msgstr ""
 msgid "Original file {{file}} does not exist"
 msgstr "El fitxer original {{file}} no existeix"
 
-#: app/views/design.html:284 app/views/menu.html:764
+#: app/views/design.html:286 app/views/menu.html:764
 msgid "Output"
 msgstr "Eixida"
 
-#: app/views/design.html:294 app/views/menu.html:773
+#: app/views/design.html:296 app/views/menu.html:773
 msgid "Output label"
 msgstr "Etiqueta d'eixida"
 
@@ -925,7 +931,7 @@ msgstr "Etiqueta d'eixida"
 msgid "Output ports"
 msgstr "Etiqueta d'eixida"
 
-#: app/views/design.html:299 app/views/menu.html:778
+#: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
 msgstr ""
 
@@ -938,7 +944,7 @@ msgstr "Enganxa"
 msgid "Path {{path}} does not exist"
 msgstr "La ruta {{path}} no existeix"
 
-#: app/scripts/services/utils.js:1177
+#: app/scripts/services/utils.js:1179
 msgid "Please run: {{cmd}}"
 msgstr "Per favor executa: {{cmd}}"
 
@@ -1019,7 +1025,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:727
+#: app/scripts/services/utils.js:729
 msgid "Reset SVG"
 msgstr "Reseteja SVG"
 
@@ -1035,7 +1041,7 @@ msgstr "Rus"
 msgid "Save"
 msgstr "Desa"
 
-#: app/scripts/services/utils.js:726
+#: app/scripts/services/utils.js:728
 msgid "Save SVG"
 msgstr "Desa SVG"
 
@@ -1055,7 +1061,7 @@ msgstr "Selecciona"
 msgid "Select all"
 msgstr "Selecciona tot"
 
-#: app/scripts/services/forms.js:2290
+#: app/scripts/services/forms.js:2292
 msgid "Select your board"
 msgstr "Selecciona la teua placa"
 
@@ -1100,7 +1106,7 @@ msgid "Synchronize remote files ..."
 msgstr "Sincronitzant fitxers remots ..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1116,7 +1122,7 @@ msgstr "Testbench"
 msgid "Thank you very much!"
 msgstr ""
 
-#: app/scripts/services/tools.js:1754
+#: app/scripts/services/tools.js:1756
 msgid "The collection {{name}} already exists."
 msgstr "La col·leccio {{name}} ja existeix."
 
@@ -1133,11 +1139,11 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "La toolchain serà eliminada. Vols continuar?"
 
-#: app/scripts/services/tools.js:1978
+#: app/scripts/services/tools.js:1980
 msgid "There is a new nightly version available"
 msgstr "Hi ha una nova versió nightly disponible"
 
-#: app/scripts/services/tools.js:1966
+#: app/scripts/services/tools.js:1968
 msgid "There is a new stable version available"
 msgstr "Hi ha una nova versió estable disponible"
 
@@ -1159,7 +1165,7 @@ msgid ""
 "team from"
 msgstr ""
 
-#: app/scripts/services/utils.js:1375
+#: app/scripts/services/utils.js:1377
 msgid "This time"
 msgstr ""
 
@@ -1186,7 +1192,7 @@ msgid ""
 msgstr ""
 "Per desar el teu disseny cal bloquejar el cadenat i anar al disseny de "
 "nivell superior.<br/><br/>Si vols exportar aquest submòdul a un fitxer, "
-"executeu l'ordre «Anomena i desa» per fer-ho."
+"executeu l'ordre \"Anomena i desa\" per fer-ho."
 
 #: app/views/menu.html:338
 #, fuzzy
@@ -1197,7 +1203,7 @@ msgstr "Eines"
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:1638
+#: app/scripts/services/tools.js:1640
 msgid "Toolchain installed"
 msgstr "Toolchain instal·lada"
 
@@ -1218,7 +1224,7 @@ msgstr "La versió de la toolchain no coincideix"
 msgid "Tools"
 msgstr "Eines"
 
-#: app/scripts/services/utils.js:1350
+#: app/scripts/services/utils.js:1352
 msgid ""
 "Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
 "standard designs.<br /><br />You will be asked to update your Preferences "
@@ -1265,9 +1271,9 @@ msgstr "Sense títol"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Actualitza el nom del bloc"
+msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Carrega"
@@ -1277,18 +1283,18 @@ msgid "Upload done"
 msgstr "Càrrega realitzada"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Verificació realitzada"
 
-#: app/views/design.html:498 app/views/menu.html:599
+#: app/views/design.html:500 app/views/menu.html:599
 msgid "Verify"
 msgstr "Verifica"
 
-#: app/scripts/services/utils.js:669 app/views/menu.html:832
+#: app/scripts/services/utils.js:671 app/views/menu.html:832
 msgid "Version"
 msgstr "Versió"
 
@@ -1304,7 +1310,7 @@ msgstr "Visualitza"
 msgid "View license"
 msgstr "Visualitza llicència"
 
-#: app/scripts/services/utils.js:1371
+#: app/scripts/services/utils.js:1373
 msgid "Viewing tri-state"
 msgstr ""
 
@@ -1322,10 +1328,10 @@ msgid "Wrong block format: {{type}}"
 msgstr "Format de bloc incorrecte: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
+#: app/scripts/services/forms.js:1988 app/scripts/services/forms.js:2172
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
-msgstr "Nom de bloc incorrecte"
+msgstr "Nom de bloc incorrecte {{name}}"
 
 #: app/scripts/services/project.js:157
 msgid "Wrong project format: {{name}}"
@@ -1339,7 +1345,7 @@ msgstr "Nom del host remot incorrecte {{name}}"
 msgid "Yellow"
 msgstr ""
 
-#: app/scripts/services/utils.js:1374
+#: app/scripts/services/utils.js:1376
 msgid "Yes"
 msgstr ""
 
@@ -1353,15 +1359,16 @@ msgstr ""
 "aquesta situació \"anomena i desa\" funciona com \"exporta mòdul\"), Vols "
 "continuar?"
 
-#: app/scripts/services/utils.js:1348
+#: app/scripts/services/utils.js:1350
 msgid "You are importing a block that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/services/utils.js:1347
+#: app/scripts/services/utils.js:1349
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
+#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
@@ -1403,7 +1410,7 @@ msgstr "Els teus canvis es perdran si no els deses"
 msgid "back"
 msgstr "enrere"
 
-#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1157
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1159
 msgid "{{app}} is required."
 msgstr "És necessari {{app}}."
 

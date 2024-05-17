@@ -12,6 +12,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr ""
+
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
@@ -52,7 +64,7 @@ msgstr "Gehi ezazu bloke bat hasteko"
 msgid "Add as block"
 msgstr "Blokea sortu"
 
-#: app/scripts/services/forms.js:1911
+#: app/scripts/services/forms.js:1913
 msgid "Address format"
 msgstr "Helbidearen formatua"
 
@@ -60,7 +72,7 @@ msgstr "Helbidearen formatua"
 msgid "Advanced features"
 msgstr ""
 
-#: app/scripts/services/tools.js:1939
+#: app/scripts/services/tools.js:1941
 msgid "All collections removed"
 msgstr "Bildumak ezabatu dira"
 
@@ -72,20 +84,20 @@ msgstr "Gordetako bildumak galduko dira. Jarraitu nahi al duzu?"
 msgid "Allow tri-state connections"
 msgstr ""
 
-#: app/scripts/services/tools.js:1581
-msgid "Apio install"
+#: app/scripts/services/tools.js:1595
+msgid "Apio install drivers"
 msgstr ""
 
-#: app/scripts/services/tools.js:1593
-msgid "Apio install drivers"
+#: app/scripts/services/tools.js:1581
+msgid "Apio install {{name}}"
 msgstr ""
 
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 behar da"
+msgstr "Python 3.7 behar da"
 
-#: app/scripts/services/utils.js:671
+#: app/scripts/services/utils.js:673
 msgid "Author"
 msgstr "Egilea"
 
@@ -93,16 +105,20 @@ msgstr "Egilea"
 msgid "Basic"
 msgstr "Oinarrizkoa"
 
+#: app/views/design.html:275
+msgid "Basic Toolbox"
+msgstr ""
+
 #: app/views/languages.html:86
 msgid "Basque"
 msgstr "Euskara"
 
-#: app/scripts/services/forms.js:1897
+#: app/scripts/services/forms.js:1899
 msgid "Binary"
 msgstr "Bitarra"
 
 #: app/scripts/services/tools.js:171
-msgid "Bitstream not found: build your project first"
+msgid "Bitstream not found: Build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1130
@@ -112,7 +128,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1400
 #: app/scripts/services/blockforms.js:1568
 msgid "Block updated"
-msgstr "Etiketa freskatua dago"
+msgstr ""
 
 #: app/scripts/services/project.js:496
 msgid "Block {{name}} imported"
@@ -158,7 +174,7 @@ msgstr "{{name}} plaka hautatu duzu"
 msgid "Bootloader not active"
 msgstr "Bootloader ez aktiboa"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Sintetizatu"
@@ -168,14 +184,17 @@ msgid "Build done"
 msgstr "Sintetizatua egin da"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
-#: app/scripts/services/utils.js:1382
+#: app/scripts/services/utils.js:1384
 msgid "Cancel"
 msgstr "Utzi"
 
-#: app/scripts/services/utils.js:1200
-#, fuzzy
+#: app/scripts/services/utils.js:1202
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr "{{version}} formatua duen proiektua ez da onartzen"
+msgstr ""
+
+#: app/views/design.html:54
+msgid "Case sensitive"
+msgstr ""
 
 #: app/views/languages.html:92
 #, fuzzy
@@ -187,7 +206,7 @@ msgstr "Katalan"
 msgid "Change Color"
 msgstr "Kolorea hauta ezazu"
 
-#: app/scripts/services/utils.js:1367
+#: app/scripts/services/utils.js:1369
 msgid "Changed Preferences: Allow tri-state connections"
 msgstr ""
 
@@ -206,9 +225,9 @@ msgstr "Txinera"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Kolorea hauta ezazu"
+msgstr "Kolorea hauta ezazu:"
 
-#: app/scripts/services/utils.js:1365
+#: app/scripts/services/utils.js:1367
 msgid ""
 "Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
 "&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
@@ -220,13 +239,13 @@ msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 "Klik egizu hemen <b>Icestudio aplikazioaren bertsio berria</b> deskargatzeko"
 
-#: app/scripts/services/tools.js:1650
+#: app/scripts/services/tools.js:1652
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Klik egizu hemen <b>driverrak eguneratzeko</b>"
 
 #: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
-#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1970
-#: app/scripts/services/tools.js:1982 app/scripts/services/tools.js:546
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1972
+#: app/scripts/services/tools.js:1984 app/scripts/services/tools.js:546
 msgid "Click here to install it"
 msgstr "Instalatzeko hemen klik egin"
 
@@ -246,7 +265,7 @@ msgstr "Klonatu"
 msgid "Close"
 msgstr "Itxi"
 
-#: app/views/design.html:314 app/views/menu.html:791
+#: app/views/design.html:316 app/views/menu.html:791
 msgid "Code"
 msgstr "Kodea"
 
@@ -262,19 +281,19 @@ msgstr "Bildumaren informazioa"
 msgid "Collection {{collection}} info not defined"
 msgstr "{{collection}} bildumaren informazioa zehaztuta gabe dago"
 
-#: app/scripts/services/tools.js:1792
+#: app/scripts/services/tools.js:1794
 msgid "Collection {{name}} added"
 msgstr "{{name}} bilduma gehitu da"
 
-#: app/scripts/services/tools.js:1779
+#: app/scripts/services/tools.js:1781
 msgid "Collection {{name}} not replaced"
 msgstr "{{name}} bilduma ez da ordeztu"
 
-#: app/scripts/services/tools.js:1930
+#: app/scripts/services/tools.js:1932
 msgid "Collection {{name}} removed"
 msgstr "{{name}} bilduma ezabatu da"
 
-#: app/scripts/services/tools.js:1768
+#: app/scripts/services/tools.js:1770
 msgid "Collection {{name}} replaced"
 msgstr "{{name}} bilduma ordeztu da"
 
@@ -298,11 +317,11 @@ msgstr "Komunitatearen foroa"
 msgid "Configuration not completed"
 msgstr "Konfigurazioa ez da osatu"
 
-#: app/views/design.html:304 app/views/menu.html:783
+#: app/views/design.html:306 app/views/menu.html:783
 msgid "Constant"
 msgstr "Konstantea"
 
-#: app/scripts/services/forms.js:2101
+#: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
 msgstr "Konstantea"
@@ -350,7 +369,7 @@ msgstr "Laranja-iluna"
 msgid "Datasheet"
 msgstr "Datu-fitxa"
 
-#: app/scripts/services/forms.js:1901
+#: app/scripts/services/forms.js:1903
 msgid "Decimal"
 msgstr "Hamartarra"
 
@@ -372,7 +391,7 @@ msgstr "Lehenetsia"
 msgid "Delete"
 msgstr ""
 
-#: app/scripts/services/utils.js:670
+#: app/scripts/services/utils.js:672
 msgid "Description"
 msgstr "Azalpena"
 
@@ -388,7 +407,7 @@ msgstr "Aplikazioa itxi nahi al duzu?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
-#: app/scripts/services/tools.js:1761
+#: app/scripts/services/tools.js:1763
 msgid "Do you want to replace it?"
 msgstr "Ordeztu nahi al duzu?"
 
@@ -418,16 +437,15 @@ msgstr "Driverrak gaitu dira"
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "Irteera-etiketa"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "FPGAren E/S portuak bikoiztu dira"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
-msgid "Duplicate port name:"
-msgstr "Irteera-etiketa"
+msgid "Duplicate port name: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -437,7 +455,7 @@ msgstr "Holandako"
 msgid "Edit"
 msgstr "Aldatu"
 
-#: app/scripts/services/tools.js:1740
+#: app/scripts/services/tools.js:1742
 msgid "Edit the collection name"
 msgstr "Bildumaren izena aldatu"
 
@@ -449,30 +467,30 @@ msgstr "Onartu"
 msgid "English"
 msgstr "Ingelesa"
 
-#: app/scripts/services/forms.js:2484
+#: app/scripts/services/forms.js:2486
 #, fuzzy
 msgid "Enter the external collection path"
 msgstr "Kanpoko bildumen bidea sar ezazu"
 
-#: app/scripts/services/forms.js:2381
+#: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Kanpoko bildumen bidea sar ezazu"
+msgstr ""
 
-#: app/scripts/services/forms.js:2335
+#: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Irteera-blokeak sar itzazu"
+msgstr ""
 
-#: app/scripts/services/forms.js:2436
+#: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr ""
 
-#: app/scripts/services/forms.js:2428
+#: app/scripts/services/forms.js:2430
 #, fuzzy
 msgid "Enter the python path"
-msgstr "Kanpoko bildumen bidea sar ezazu"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:1012
 msgid "Enter the remote hostname user@host"
@@ -482,13 +500,17 @@ msgstr "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host"
 msgid "Error installing driver:"
 msgstr ""
 
-#: app/scripts/services/utils.js:874
+#: app/scripts/services/utils.js:876
 msgid "Error: {{error}}"
 msgstr "Errorea: {{error}}"
 
 #: app/scripts/services/tools.js:918
 msgid "Errors detected in the design"
 msgstr "Akatsak daude diseinuan"
+
+#: app/views/design.html:57
+msgid "Exact match"
+msgstr ""
 
 #: app/views/menu.html:119
 msgid "Examples"
@@ -517,12 +539,12 @@ msgstr "Kanpoko bildumak eguneratu dira"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Kanpoko bildumak"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Kanpoko bildumak eguneratu dira"
+msgstr ""
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -605,14 +627,13 @@ msgstr "Berde-horia"
 msgid "Help"
 msgstr "Laguntza"
 
-#: app/scripts/services/forms.js:1905
+#: app/scripts/services/forms.js:1907
 msgid "Hexadecimal"
 msgstr "Hamaseitarra"
 
 #: app/views/version.html:45
-#, fuzzy
 msgid "Icestudio is part of"
-msgstr "Icestudioren hastapenak"
+msgstr ""
 
 #: app/scripts/services/graph.js:1643
 #, fuzzy
@@ -621,7 +642,7 @@ msgid ""
 "this board"
 msgstr "SARRERA/IRTEERA pinak hutsik badaude, zure plakan baliokiderik ez da"
 
-#: app/scripts/services/utils.js:684
+#: app/scripts/services/utils.js:686
 msgid "Image"
 msgstr "Irudia"
 
@@ -629,35 +650,20 @@ msgstr "Irudia"
 msgid "Image {{name}} saved"
 msgstr "{{name}} izeneko irudia gorde da"
 
-#: app/scripts/services/forms.js:1645
-#, fuzzy
-msgid "InOut Left ports"
-msgstr "Sarrerako portuak sar itzazu"
-
-#: app/scripts/services/forms.js:1657
-#, fuzzy
-msgid "InOut Right ports"
-msgstr "Sarrerako portuak sar itzazu"
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-#, fuzzy
-msgid "InOut pin"
-msgstr "Sarrerako portuak sar itzazu"
-
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy
 msgid "Indian Red"
 msgstr "Gorri-indioa"
 
-#: app/views/design.html:319 app/views/menu.html:795
+#: app/views/design.html:321 app/views/menu.html:795
 msgid "Information"
 msgstr "Informazioa"
 
-#: app/views/design.html:279 app/views/menu.html:760
+#: app/views/design.html:281 app/views/menu.html:760
 msgid "Input"
 msgstr "Sarrera"
 
-#: app/views/design.html:289 app/views/menu.html:769
+#: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
 msgstr "Sarrera-etiketa"
 
@@ -672,7 +678,7 @@ msgid "Input parameters"
 msgstr "Parametroak sar itzazu"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name:"
+msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -714,14 +720,13 @@ msgstr ""
 "Toolchain-a eguneratuko da. Operazio horrek Interneteko sarbidea behar du. "
 "Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:1628
+#: app/scripts/services/tools.js:1630
 msgid "Installation completed"
 msgstr "Instalazioa amaitu da"
 
 #: app/scripts/services/tools.js:1390
-#, fuzzy
-msgid "Installing"
-msgstr "Instalatu"
+msgid "Installing {{version}}"
+msgstr ""
 
 #: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
 msgid "Internet connection required"
@@ -743,9 +748,9 @@ msgstr ""
 #, fuzzy
 msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr ""
-"Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
+"Bloke konexio baliogabeak:<br><i>Pull up</i>-a dagoeneko konektatua dago"
 
-#: app/scripts/services/tools.js:1805
+#: app/scripts/services/tools.js:1807
 msgid "Invalid collection {{name}}"
 msgstr "{{name}} bilduma baliogabea"
 
@@ -779,16 +784,15 @@ msgid "Italian"
 msgstr "Italiera"
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanese"
-msgstr "Gaztelera"
+msgstr ""
 
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
-msgid "Label Finder"
+msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
@@ -805,27 +809,24 @@ msgid "Light"
 msgstr ""
 
 #: app/scripts/services/forms.js:447 app/views/design.html:255
-#, fuzzy
 msgid "Light Gray"
-msgstr "\"\""
+msgstr ""
 
 #: app/scripts/services/forms.js:429 app/views/design.html:213
-#, fuzzy
 msgid "Light Sea Green"
-msgstr "\"\""
+msgstr ""
 
 #: app/scripts/services/project.js:102
 msgid "Load"
 msgstr "Kargatu"
 
-#: app/scripts/services/forms.js:1919 app/scripts/services/forms.js:2109
+#: app/scripts/services/forms.js:1921 app/scripts/services/forms.js:2111
 msgid "Local parameter"
 msgstr "Parametro lokala"
 
 #: app/views/menu.html:404
-#, fuzzy
 msgid "Logging enabled"
-msgstr "Driverrak gaitu dira"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -835,7 +836,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:988
+#: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
 msgstr "Busaren tamaina maximoa: 96 bit"
 
@@ -844,16 +845,16 @@ msgstr "Busaren tamaina maximoa: 96 bit"
 msgid "Medium Violet Red"
 msgstr "Bioleta"
 
-#: app/views/design.html:309 app/views/menu.html:787
+#: app/views/design.html:311 app/views/menu.html:787
 msgid "Memory"
 msgstr "Memoria"
 
-#: app/scripts/services/forms.js:1886
+#: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
 msgstr "Blokea inportatu"
 
-#: app/scripts/services/utils.js:668
+#: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Izena"
 
@@ -863,7 +864,7 @@ msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
-msgstr "\"\""
+msgstr ""
 
 #: app/views/menu.html:88
 msgid "New"
@@ -875,8 +876,8 @@ msgstr ""
 
 #: app/views/design.html:80
 #, fuzzy
-msgid "New Name"
-msgstr "Izena"
+msgid "New Name:"
+msgstr "Izena:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -887,7 +888,7 @@ msgid "No collections stored"
 msgstr "Ez dago gordeta bildumarik"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
-#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1381
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "Ados"
 
@@ -900,7 +901,7 @@ msgstr "Oliba-motela"
 msgid "Open"
 msgstr "Ireki"
 
-#: app/scripts/services/utils.js:725
+#: app/scripts/services/utils.js:727
 msgid "Open SVG"
 msgstr "SVGa ireki"
 
@@ -913,11 +914,11 @@ msgstr "Gorri-laranja"
 msgid "Original file {{file}} does not exist"
 msgstr "Jatorrizko {{file}} fitxategia ez dago"
 
-#: app/views/design.html:284 app/views/menu.html:764
+#: app/views/design.html:286 app/views/menu.html:764
 msgid "Output"
 msgstr "Irteera"
 
-#: app/views/design.html:294 app/views/menu.html:773
+#: app/views/design.html:296 app/views/menu.html:773
 msgid "Output label"
 msgstr "Irteera-etiketa"
 
@@ -929,14 +930,14 @@ msgstr "Irteera-etiketa"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Irteera-etiketa"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Irteera-etiketa"
+msgstr ""
 
-#: app/views/design.html:299 app/views/menu.html:778
+#: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
 msgstr ""
 
@@ -949,7 +950,7 @@ msgstr "Itsatsi"
 msgid "Path {{path}} does not exist"
 msgstr "Ez da {{path}} izeneko biderik"
 
-#: app/scripts/services/utils.js:1177
+#: app/scripts/services/utils.js:1179
 msgid "Please run: {{cmd}}"
 msgstr "Mesedez {{cmd}} exekutatu"
 
@@ -1029,7 +1030,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:727
+#: app/scripts/services/utils.js:729
 msgid "Reset SVG"
 msgstr "SVGa berrezarri"
 
@@ -1046,7 +1047,7 @@ msgstr "Errusiera"
 msgid "Save"
 msgstr "Gorde"
 
-#: app/scripts/services/utils.js:726
+#: app/scripts/services/utils.js:728
 msgid "Save SVG"
 msgstr "SVGa gorde"
 
@@ -1066,7 +1067,7 @@ msgstr "Hautatu"
 msgid "Select all"
 msgstr "Dena hautatu"
 
-#: app/scripts/services/forms.js:2290
+#: app/scripts/services/forms.js:2292
 msgid "Select your board"
 msgstr "Plaka hauta ezazu"
 
@@ -1114,7 +1115,7 @@ msgid "Synchronize remote files ..."
 msgstr "Urrutiko fitxategiak sinkronizatu..."
 
 #: app/views/menu.html:477
-msgid "System Info"
+msgid "System info"
 msgstr ""
 
 #: app/views/languages.html:62
@@ -1130,7 +1131,7 @@ msgstr "Testbench "
 msgid "Thank you very much!"
 msgstr ""
 
-#: app/scripts/services/tools.js:1754
+#: app/scripts/services/tools.js:1756
 msgid "The collection {{name}} already exists."
 msgstr "{{name}} bilduma badago"
 
@@ -1146,11 +1147,11 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:1978
+#: app/scripts/services/tools.js:1980
 msgid "There is a new nightly version available"
 msgstr "Nightly bertsio berria eskura duzu"
 
-#: app/scripts/services/tools.js:1966
+#: app/scripts/services/tools.js:1968
 msgid "There is a new stable version available"
 msgstr "Bertsio egonkor berria eskura duzu"
 
@@ -1159,7 +1160,7 @@ msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr ""
-"Inportazio operazioak proiektu-bidea behar du.  Uneko proiektua gorde ezazu. "
+"Inportazio operazioak proiektu-bidea behar du. Uneko proiektua gorde ezazu. "
 "Jarraitu nahi al duzu?"
 
 #: app/scripts/services/project.js:106
@@ -1172,7 +1173,7 @@ msgid ""
 "team from"
 msgstr ""
 
-#: app/scripts/services/utils.js:1375
+#: app/scripts/services/utils.js:1377
 msgid "This time"
 msgstr ""
 
@@ -1198,7 +1199,7 @@ msgid ""
 "submodule to a file, use the \"Save as\" command."
 msgstr ""
 "Diseinua gordetzeko kandadua blokea ezazu eta goi mailako diseinura joan. "
-"Azpimodulua diseinu batera esportatu nahi baduzu, \"Gorde honela..\" agindua "
+"Azpimodulua diseinu batera esportatu nahi baduzu, \"Gorde honela\" agindua "
 "exekuta ezazu."
 
 #: app/views/menu.html:338
@@ -1210,7 +1211,7 @@ msgstr "Tresnak"
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:1638
+#: app/scripts/services/tools.js:1640
 msgid "Toolchain installed"
 msgstr "Toolchain-a instalatu da"
 
@@ -1231,7 +1232,7 @@ msgstr "Toolchainaren bertsioa ez dator bat"
 msgid "Tools"
 msgstr "Tresnak"
 
-#: app/scripts/services/utils.js:1350
+#: app/scripts/services/utils.js:1352
 msgid ""
 "Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
 "standard designs.<br /><br />You will be asked to update your Preferences "
@@ -1278,9 +1279,9 @@ msgstr "Izenik gabe"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Blokearen izena egunera ezazu"
+msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Kargatu"
@@ -1290,18 +1291,18 @@ msgid "Upload done"
 msgstr "Karga egin da"
 
 #: app/scripts/services/utils.js:463
-msgid "Using external Apio:"
+msgid "Using external Apio: {{name}}"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1352
 msgid "Verification done"
 msgstr "Egiaztapena egin da"
 
-#: app/views/design.html:498 app/views/menu.html:599
+#: app/views/design.html:500 app/views/menu.html:599
 msgid "Verify"
 msgstr "Egiaztatu"
 
-#: app/scripts/services/utils.js:669 app/views/menu.html:832
+#: app/scripts/services/utils.js:671 app/views/menu.html:832
 msgid "Version"
 msgstr "Bertsioa"
 
@@ -1317,7 +1318,7 @@ msgstr "Ikusi"
 msgid "View license"
 msgstr "Lizentzia ikusi"
 
-#: app/scripts/services/utils.js:1371
+#: app/scripts/services/utils.js:1373
 msgid "Viewing tri-state"
 msgstr ""
 
@@ -1335,7 +1336,7 @@ msgid "Wrong block format: {{type}}"
 msgstr "Blokearen formatua okerra da: {{type}}"
 
 #: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
-#: app/scripts/services/forms.js:1986 app/scripts/services/forms.js:2170
+#: app/scripts/services/forms.js:1988 app/scripts/services/forms.js:2172
 #: app/scripts/services/forms.js:902
 msgid "Wrong block name {{name}}"
 msgstr "{{name}} blokearen izena okerra da"
@@ -1352,7 +1353,7 @@ msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 msgid "Yellow"
 msgstr "Horia"
 
-#: app/scripts/services/utils.js:1374
+#: app/scripts/services/utils.js:1376
 msgid "Yes"
 msgstr ""
 
@@ -1363,14 +1364,14 @@ msgid ""
 "as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Azpi modulua editatzen ari zara, gordetzen baduzu, azpimodulua gordeko duzu "
-"soilik (hala bada,  Gorde honela\" \"modulua esportatu\"ren antzera lan "
+"soilik (hala bada, \"Gorde honela\" \"modulua esportatu\"ren antzera lan "
 "egiten du). Jarraitu nahi duzu?"
 
-#: app/scripts/services/utils.js:1348
+#: app/scripts/services/utils.js:1350
 msgid "You are importing a block that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/services/utils.js:1347
+#: app/scripts/services/utils.js:1349
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
@@ -1416,7 +1417,7 @@ msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
 msgid "back"
 msgstr "atzera"
 
-#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1157
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1159
 msgid "{{app}} is required."
 msgstr "{{app}} behar da"
 
