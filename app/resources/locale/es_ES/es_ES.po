@@ -12,6 +12,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr "Puertos entrada/salida izquierdos"
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr "Puertos entrada/salida derechos"
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr "Puertos entrada/salida"
+
 #: app/views/design.html:18
 #, fuzzy
 msgid ""
@@ -635,18 +647,6 @@ msgstr "Imagen"
 #: app/scripts/controllers/menu.js:2164
 msgid "Image {{name}} saved"
 msgstr "Imagen {{name}} guardada"
-
-#: app/scripts/services/forms.js:1645
-msgid "InOut Left ports"
-msgstr "Puertos entrada/salida izquierdos"
-
-#: app/scripts/services/forms.js:1657
-msgid "InOut Right ports"
-msgstr "Puertos entrada/salida derechos"
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-msgid "InOut pin"
-msgstr "Puertos entrada/salida"
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"

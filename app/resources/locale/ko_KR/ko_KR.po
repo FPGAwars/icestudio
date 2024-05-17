@@ -15,6 +15,18 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: kr_ko.po\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr ""
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr ""
+
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
@@ -639,21 +651,6 @@ msgstr "사진"
 #: app/scripts/controllers/menu.js:2164
 msgid "Image {{name}} saved"
 msgstr "사진 {{name}}이 저장되었음"
-
-#: app/scripts/services/forms.js:1645
-#, fuzzy
-msgid "InOut Left ports"
-msgstr ""
-
-#: app/scripts/services/forms.js:1657
-#, fuzzy
-msgid "InOut Right ports"
-msgstr ""
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-#, fuzzy
-msgid "InOut pin"
-msgstr ""
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 #, fuzzy

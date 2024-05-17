@@ -1010,7 +1010,7 @@ angular.module('icestudio')
           //-- Field 3: Checkbox for configuring the pin as inout
           if (inoutValue !== undefined) {
             let field3 = new CheckboxField(
-              gettextCatalog.getString('InOut pin'),
+              gettextCatalog.getString('\"Inout\" pin'),
               inoutValue,  //-- Default value
               3            //-- Field id
             );
@@ -1145,7 +1145,7 @@ angular.module('icestudio')
           //-- Field 2: Checkbox for configuring the pin as inout
           if (inoutValue !== undefined) {
             let field2 = new CheckboxField(
-              gettextCatalog.getString('InOut pin'),
+              gettextCatalog.getString('\"Inout\" pin'),
               inoutValue,  //-- Default value
               2            //-- Field id
             );
@@ -1642,7 +1642,7 @@ angular.module('icestudio')
           //-- Field 3: InputOutput port names at the left
           if (portsInOutLeft !== undefined) {
             field3 = new TextField(
-              gettextCatalog.getString('InOut Left ports'), //-- Top message
+              gettextCatalog.getString('\"Inout\" Left ports'), //-- Top message
               portsInOutLeft,   //-- Default InputOutput port names at the left
               3                 //-- Field id
             );
@@ -1654,7 +1654,7 @@ angular.module('icestudio')
           //-- Field 4: InputOutput port names at the right
           if (portsInOutRight !== undefined) {
             field4 = new TextField(
-              gettextCatalog.getString('InOut Right ports'), //-- Top message
+              gettextCatalog.getString('\"Inout\" Right ports'), //-- Top message
               portsInOutRight,  //-- Default InputOutput port names at the right
               4                 //-- Field id
             );

@@ -12,6 +12,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr "\"Inout\" Left ports"
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr "\"Inout\" Right ports"
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr "\"Inout\" pin"
+
 #: app/views/design.html:18
 msgid ""
 "<b>Read only</b><br>\n"
@@ -628,18 +640,6 @@ msgstr "Image"
 #: app/scripts/controllers/menu.js:2164
 msgid "Image {{name}} saved"
 msgstr "Image {{name}} saved"
-
-#: app/scripts/services/forms.js:1645
-msgid "InOut Left ports"
-msgstr "InOut Left ports"
-
-#: app/scripts/services/forms.js:1657
-msgid "InOut Right ports"
-msgstr "InOut Right ports"
-
-#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
-msgid "InOut pin"
-msgstr "InOut pin"
 
 #: app/scripts/services/forms.js:387 app/views/design.html:108
 msgid "Indian Red"
