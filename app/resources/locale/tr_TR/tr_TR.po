@@ -203,7 +203,7 @@ msgstr "Katalanca"
 #: app/views/design.html:262
 #, fuzzy
 msgid "Change Color"
-msgstr "Bir renk seçin"
+msgstr ""
 
 #: app/scripts/services/utils.js:1369
 msgid "Changed Preferences: Allow tri-state connections"
@@ -477,7 +477,7 @@ msgstr ""
 #: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr "Enter the block's label"
+msgstr ""
 
 #: app/scripts/services/forms.js:2438
 #, fuzzy
@@ -536,12 +536,12 @@ msgstr "Harici koleksiyonu güncelle"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Harici koleksiyon"
+msgstr ""
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Harici koleksiyonu güncelle"
+msgstr ""
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -798,7 +798,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Blok güncellendi"
+msgstr "Etiket güncellendi"
 
 #: app/views/menu.html:359
 msgid "Language"

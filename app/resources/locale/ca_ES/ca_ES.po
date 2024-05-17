@@ -439,6 +439,7 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'E/S de la FPGA duplicats"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
 msgstr ""
 
@@ -665,7 +666,7 @@ msgstr "Etiqueta d'entrada"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Etiqueta d'entrada"
+msgstr "Etiquetes d'entrada"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
@@ -679,7 +680,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Introdueix els ports d'entrada"
+msgstr "Ports d'entrada"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -919,17 +920,17 @@ msgstr "Etiqueta d'eixida"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Etiqueta d'eixida"
+msgstr "Etiquetes d'eixida"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Etiqueta d'eixida"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Etiqueta d'eixida"
+msgstr "Ports de sortida"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"

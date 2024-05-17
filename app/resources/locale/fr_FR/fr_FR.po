@@ -334,7 +334,7 @@ msgstr "Constante"
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Constante"
+msgstr "Noms de constantes"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -677,7 +677,7 @@ msgstr "Label d'entrée"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Label d'entrée"
+msgstr "Labels d'entrée"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
@@ -939,7 +939,7 @@ msgstr "Label de sortie"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Label de sortie"
+msgstr "Labels de sortie"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
