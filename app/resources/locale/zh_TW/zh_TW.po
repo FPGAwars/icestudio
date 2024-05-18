@@ -225,7 +225,7 @@ msgstr "中文(簡)"
 #: app/scripts/services/forms.js:1245
 #, fuzzy
 msgid "Choose a color:"
-msgstr "選擇顏色"
+msgstr "選擇顏色:"
 
 #: app/scripts/services/utils.js:1367
 msgid ""
@@ -424,18 +424,20 @@ msgstr "驅動程式"
 
 #: app/scripts/services/drivers.js:252 app/scripts/services/drivers.js:307
 #: app/scripts/services/drivers.js:478
+#, fuzzy
 msgid "Drivers disabled"
 msgstr "停用驅動程式"
 
 #: app/scripts/services/drivers.js:230 app/scripts/services/drivers.js:287
 #: app/scripts/services/drivers.js:455
+#, fuzzy
 msgid "Drivers enabled"
 msgstr "啟用驅動程式"
 
 #: app/views/menu.html:287
 #, fuzzy
 msgid "Duplicate"
-msgstr "輸出標籤"
+msgstr ""
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
@@ -444,7 +446,7 @@ msgstr "重複的 FPGA I/O 接腳"
 #: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "輸出標籤: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -657,26 +659,27 @@ msgstr "輸入"
 
 #: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
-msgstr "輸入標籤"
+msgstr ""
 
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "輸入標籤"
+msgstr ""
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "輸入參數"
+msgstr ""
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "填寫輸入埠名稱"
+msgstr ""
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -841,7 +844,7 @@ msgstr "記憶體"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "輸入記憶體區塊"
+msgstr ""
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -908,6 +911,7 @@ msgid "Output"
 msgstr "輸出"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
 msgstr "輸出標籤"
 
@@ -919,12 +923,12 @@ msgstr "輸出標籤"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "輸出標籤"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "輸出標籤"
+msgstr ""
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1344,8 +1348,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "您正在編輯子模組，如果您儲存它，只有子模組會儲存，用「另存為」可以導出模組，"
 "請問還要繼續嗎？"

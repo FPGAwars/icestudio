@@ -470,7 +470,7 @@ msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής �
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής βιβλιοθήκης"
+msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής plugins"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -534,12 +534,12 @@ msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Εξωτερικές βιβλιοθήκες"
+msgstr "Εξωτερικές plugins"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
+msgstr "Οι εξωτερικές plugins ανανεώθηκαν"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -663,7 +663,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Εισαγάγετε τα blocks εισόδου"
+msgstr ""
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
@@ -791,7 +791,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Το block ενημερώθηκε"
+msgstr "Η ετικέτα ενημερώθηκε"
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -845,7 +845,7 @@ msgstr "Μνήμη"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Εισαγάγετε τα blocks μνήμης"
+msgstr "Blocks μνήμης"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -914,18 +914,16 @@ msgid "Output label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1396
-#, fuzzy
 msgid "Output labels"
-msgstr "Έξοδος"
+msgstr ""
 
 #: app/scripts/services/forms.js:1135
 msgid "Output port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
-#, fuzzy
 msgid "Output ports"
-msgstr "Έξοδος"
+msgstr ""
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1343,8 +1341,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 
 #: app/scripts/services/utils.js:1350

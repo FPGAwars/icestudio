@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #: app/scripts/services/forms.js:1645
@@ -672,7 +672,7 @@ msgstr "Метки ввода"
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Параметры"
+msgstr "Входные параметры"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -934,12 +934,12 @@ msgstr "Метка вывода"
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Метка вывода"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Метка вывода"
+msgstr "Выходные порты"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1286,7 +1286,7 @@ msgstr "Безымянный"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Обновить имя блока (последняя стабильная версия)"
+msgstr "Обновить (последняя стабильная версия)"
 
 #: app/scripts/controllers/menu.js:1390 app/views/design.html:516
 #: app/views/menu.html:615
@@ -1367,8 +1367,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Вы работаете с субмодулем. Если вы сохраните его, то будет сохранен только "
 "субмодуль (в таких случаях команда \"Сохранить как\" работает как \"Экспорт "

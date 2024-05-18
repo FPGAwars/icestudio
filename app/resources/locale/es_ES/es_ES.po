@@ -25,7 +25,6 @@ msgid "\"Inout\" pin"
 msgstr "Puertos entrada/salida"
 
 #: app/views/design.html:18
-#, fuzzy
 msgid ""
 "<b>Read only</b><br>\n"
 "            Unlock to edit the block!"
@@ -38,7 +37,6 @@ msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>Desconecta</b> y <b>reconecta</b> la placa"
 
 #: app/views/design.html:34
-#, fuzzy
 msgid ""
 "<b>WARNING!</b><br>\n"
 "        The changes made here will also be applied to all the\n"
@@ -421,7 +419,6 @@ msgid "Documentation"
 msgstr "Documentación"
 
 #: app/views/version.html:65
-#, fuzzy
 msgid "Don’t display"
 msgstr "No mostrar"
 
@@ -1349,8 +1346,8 @@ msgstr "Si"
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estás editando un submódulo, aquí que guardarás solamente este submódulo "
 "(\"Guardar como\" funciona como \"Exportar módulo\"). ¿Quieres continuar?"

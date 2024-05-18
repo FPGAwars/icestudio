@@ -118,6 +118,7 @@ msgid "Basic Toolbox"
 msgstr ""
 
 #: app/views/languages.html:86
+#, fuzzy
 msgid "Basque"
 msgstr ""
 
@@ -206,6 +207,7 @@ msgid "Case sensitive"
 msgstr ""
 
 #: app/views/languages.html:92
+#, fuzzy
 msgid "Catalonian"
 msgstr ""
 
@@ -226,6 +228,7 @@ msgid "Check Python..."
 msgstr "Python を確認中…"
 
 #: app/views/languages.html:68
+#, fuzzy
 msgid "Chinese"
 msgstr ""
 
@@ -446,9 +449,10 @@ msgstr "FPGA の I/O ポートが重複しています"
 #: app/scripts/services/forms.js:1817
 #, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "出力ラベル: {{name}}"
+msgstr ""
 
 #: app/views/languages.html:44
+#, fuzzy
 msgid "Dutch"
 msgstr ""
 
@@ -583,6 +587,7 @@ msgid "Find"
 msgstr "探す"
 
 #: app/views/menu.html:318
+#, fuzzy
 msgid "Fit content"
 msgstr ""
 
@@ -655,10 +660,12 @@ msgid "Input"
 msgstr "入力"
 
 #: app/views/design.html:291 app/views/menu.html:769
+#, fuzzy
 msgid "Input label"
 msgstr "入力ラベル"
 
 #: app/scripts/services/forms.js:1477
+#, fuzzy
 msgid "Input labels"
 msgstr "入力ラベル"
 
@@ -672,6 +679,7 @@ msgid "Input port name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
+#, fuzzy
 msgid "Input ports"
 msgstr "入力ポート"
 
@@ -771,14 +779,17 @@ msgid "Invalid search name!"
 msgstr "誤った検索名！"
 
 #: app/views/languages.html:32
+#, fuzzy
 msgid "Italian"
 msgstr ""
 
 #: app/views/languages.html:110
+#, fuzzy
 msgid "Japanese"
 msgstr ""
 
 #: app/views/languages.html:98
+#, fuzzy
 msgid "Korean"
 msgstr ""
 
@@ -792,6 +803,7 @@ msgid "Label updated"
 msgstr "ラベルが更新されました"
 
 #: app/views/menu.html:359
+#, fuzzy
 msgid "Language"
 msgstr ""
 
@@ -848,6 +860,7 @@ msgid "Name"
 msgstr "名前"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Name of the paired labels"
 msgstr ""
 
@@ -869,15 +882,18 @@ msgid "New Name:"
 msgstr "新しい名前:"
 
 #: app/views/design.html:71
+#, fuzzy
 msgid "Next"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1472
+#, fuzzy
 msgid "No collections stored"
 msgstr ""
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
+#, fuzzy
 msgid "OK"
 msgstr ""
 
@@ -906,10 +922,12 @@ msgid "Output"
 msgstr "出力"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
 msgstr "出力ラベル"
 
 #: app/scripts/services/forms.js:1396
+#, fuzzy
 msgid "Output labels"
 msgstr "出力ラベル"
 
@@ -922,6 +940,7 @@ msgid "Output ports"
 msgstr "出力ポート"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
 msgstr ""
 
@@ -943,6 +962,7 @@ msgid "Preferences"
 msgstr "環境設定"
 
 #: app/views/design.html:68
+#, fuzzy
 msgid "Prev."
 msgstr ""
 
@@ -1024,6 +1044,7 @@ msgid "Royal Blue"
 msgstr ""
 
 #: app/views/languages.html:74
+#, fuzzy
 msgid "Russian"
 msgstr ""
 
@@ -1068,6 +1089,7 @@ msgid "Source code"
 msgstr "ソースコード"
 
 #: app/views/languages.html:20
+#, fuzzy
 msgid "Spanish"
 msgstr ""
 
@@ -1101,10 +1123,12 @@ msgid "System info"
 msgstr "システム情報"
 
 #: app/views/languages.html:62
+#, fuzzy
 msgid "Taiwanese"
 msgstr ""
 
 #: app/views/menu.html:174
+#, fuzzy
 msgid "Testbench"
 msgstr ""
 
@@ -1226,6 +1250,7 @@ msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
 #: app/views/languages.html:104
+#, fuzzy
 msgid "Turkish"
 msgstr ""
 
@@ -1334,8 +1359,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "サブモジュールの編集中であるため、ここで保存するとサブモジュールだけが保存さ"
 "れます（「名前を付けて保存」は「モジュールのエクスポート」のように機能しま"
