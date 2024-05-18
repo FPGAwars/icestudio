@@ -1350,8 +1350,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "您正在编辑一个子模块。如果您保存，您将只会保存子模块 (在此情况下 \"另存为\" "
 "和 \"导出子模块\" 效果相同)，是否继续？"
