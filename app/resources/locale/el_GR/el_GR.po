@@ -868,13 +868,14 @@ msgid "New"
 msgstr "Δημιουργία"
 
 #: app/views/design.html:87
+#, fuzzy
 msgid "New Color:"
-msgstr ""
+msgstr "Νεο Χρώμα:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Ονομα:"
+msgstr "Νεο Ονομα:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -1172,8 +1173,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Αυτή τη φορά"
 
 #: app/scripts/services/graph.js:532
 msgid ""
@@ -1347,8 +1349,9 @@ msgid "Yellow"
 msgstr ""
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
