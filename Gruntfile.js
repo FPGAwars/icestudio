@@ -542,7 +542,7 @@ module.exports = function (grunt) {
   //--- If not, the default target is Linux64
 
   // Verifica el script npm que se está ejecutando
-  const npmLifecycleEvent = process.env.npm_lifecycle_event;
+  const npmLifecycleEvent = process.env.npmLifecycleEvent;
 
   let platform = grunt.option("platform") || false;
   let ocpu = grunt.option("cpu");
