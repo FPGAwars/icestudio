@@ -28,28 +28,22 @@ jobs:
           ref: develop 
       - name: Build OSX ARM64 packages
         run: |
-          mkdir dist
-          ls
+          npm run buildOSXARM64
+          ls dist/
+            
       # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
           echo "packageJson=${content}" >> $GITHUB_OUTPUT 
+      
       # Timestamp for the build
       - id: build_date
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
-      - name: Build OSX ARM64 packages
-        env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        run: |   
-          cd dist
-          wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg
-          wget https://drive16.magnitude.es/icestudio/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.zip
-          ls  
-
+      
+     
       - name: 'Upload DMG/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
