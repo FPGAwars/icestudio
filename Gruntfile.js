@@ -541,11 +541,14 @@ module.exports = function (grunt) {
   //--- Read if there is a platform argument set
   //--- If not, the default target is Linux64
 
+  // Verifica el script npm que se está ejecutando
+  const npmLifecycleEvent = process.env.npm_lifecycle_event;
+
   let platform = grunt.option("platform") || false;
   let ocpu = grunt.option("cpu");
   let cpu = (typeof ocpu !== 'undefined' && ocpu !== false && ocpu !== '') ? ocpu : process.arch;
   const cpuIsARM = (cpu === 'arm64');
-  console.log('CPU', cpu, 'TARGET', target);
+  console.log('CPU', cpu, 'NPM', npmLifecycleEvent);
   //-- Aditional options for the platforms
   let options = { scope: ["devDependencies"] };
 
