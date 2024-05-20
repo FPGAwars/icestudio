@@ -440,11 +440,12 @@ msgstr "Duplikovat"
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
-msgstr "Duplikované FPGA vstupně výstupní porty"
+msgstr "Duplikované FPGA vstupně/výstupní porty"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr "Duplikovat popisek: {{name}}"
+msgstr "Duplikovat jméno portu: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -1336,8 +1337,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Upravujete submodul, pokud bude ukládat, uložíte pouze submodul (v této "
 "situaci \"uložit jako\" funguje jako \"exportovat modul\"). Chcete "

@@ -334,7 +334,7 @@ msgstr "Constante"
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Constante"
+msgstr "Noms de constantes"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -677,12 +677,12 @@ msgstr "Label d'entrée"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Label d'entrée"
+msgstr "Labels d'entrée"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Entrer les paramètres"
+msgstr "Les paramètres d'entrée"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -865,7 +865,7 @@ msgstr "Mémoire"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Importer un bloc"
+msgstr "Blocs de mémoire"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -939,7 +939,7 @@ msgstr "Label de sortie"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Label de sortie"
+msgstr "Labels de sortie"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
@@ -1377,8 +1377,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Vous êtes en train d'éditer un sous-module, si vous le sauvegardez, vous "
 "sauvegardez uniquement le sous-module (dans ce cas, \"sauvegarder sous\" "

@@ -466,7 +466,7 @@ msgstr "Introduza a ruta ás coleccións externas"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Introduza a ruta ás coleccións externas"
+msgstr "Introduza a ruta ás plugins externas"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -531,12 +531,12 @@ msgstr "Coleccións externas actualizadas"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Coleccións externas"
+msgstr "Plugins externas"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Colecións externas actualizadas"
+msgstr "Plugins externas actualizadas"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -655,14 +655,13 @@ msgid "Input label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1477
-#, fuzzy
 msgid "Input labels"
-msgstr "Introduza os bloques de entrada"
+msgstr ""
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Introduza os parámetros"
+msgstr "Parámetros de entrada"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -671,7 +670,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Introduza os portos de entrada"
+msgstr "Portos de entrada"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -840,7 +839,7 @@ msgstr "Memoria"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Introduza os bloques de memoria"
+msgstr "Bloques de memoria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -909,9 +908,8 @@ msgid "Output label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1396
-#, fuzzy
 msgid "Output labels"
-msgstr "Saída"
+msgstr ""
 
 #: app/scripts/services/forms.js:1135
 msgid "Output port name"
@@ -920,7 +918,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Saída"
+msgstr "Portos de saída"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1333,8 +1331,8 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 
 #: app/scripts/services/utils.js:1350

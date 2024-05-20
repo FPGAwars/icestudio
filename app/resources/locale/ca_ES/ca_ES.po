@@ -176,12 +176,13 @@ msgstr "Bootloader no actiu"
 
 #: app/scripts/controllers/menu.js:1365 app/views/design.html:508
 #: app/views/menu.html:607
+#, fuzzy
 msgid "Build"
-msgstr "Sintetitza"
+msgstr "Síntetitza"
 
 #: app/scripts/controllers/menu.js:1375
 msgid "Build done"
-msgstr "Sintetitzat realitzat"
+msgstr "Síntesi realitzat"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
 #: app/scripts/services/utils.js:1384
@@ -439,6 +440,7 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'E/S de la FPGA duplicats"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
 msgstr ""
 
@@ -665,12 +667,12 @@ msgstr "Etiqueta d'entrada"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Etiqueta d'entrada"
+msgstr "Etiquetes d'entrada"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Introdueix els paràmetres"
+msgstr "Paràmetres d'entrada"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -679,7 +681,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Introdueix els ports d'entrada"
+msgstr "Ports d'entrada"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -794,7 +796,7 @@ msgstr ""
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr "Bloc actualitzat"
+msgstr "Etiqueta actualitzada"
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -848,7 +850,7 @@ msgstr "Memòria"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Introdueix els blocs de memòria"
+msgstr "Blocs de memòria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -919,17 +921,17 @@ msgstr "Etiqueta d'eixida"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Etiqueta d'eixida"
+msgstr "Etiquetes d'eixida"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port name"
-msgstr "Etiqueta d'eixida"
+msgstr ""
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Etiqueta d'eixida"
+msgstr "Ports de sortida"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1087,7 +1089,7 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:1374
 msgid "Start build"
-msgstr "Inicia sintetitzat"
+msgstr "Inicia síntesi"
 
 #: app/scripts/controllers/menu.js:1400
 msgid "Start upload"
@@ -1352,8 +1354,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estàs editant un submòdul, si el deses, només es desarà el submòdul (en "
 "aquesta situació \"anomena i desa\" funciona com \"exporta mòdul\"), Vols "

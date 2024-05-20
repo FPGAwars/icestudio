@@ -675,7 +675,7 @@ msgstr "Sarrera-etiketa"
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Parametroak sar itzazu"
+msgstr "Parametroak"
 
 #: app/scripts/services/forms.js:989
 msgid "Input port name"
@@ -684,7 +684,7 @@ msgstr ""
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Sarrerako portuak sar itzazu"
+msgstr "Sarrerako portuak"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -852,7 +852,7 @@ msgstr "Memoria"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory blocks"
-msgstr "Blokea inportatu"
+msgstr ""
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -1360,8 +1360,8 @@ msgstr ""
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save "
-"as\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Azpi modulua editatzen ari zara, gordetzen baduzu, azpimodulua gordeko duzu "
 "soilik (hala bada, \"Gorde honela\" \"modulua esportatu\"ren antzera lan "
