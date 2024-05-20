@@ -32,7 +32,10 @@ jobs:
       - name: Install pip distutils
         run:  pip install setuptools
       - name: Install npm dependencies
-        run:   npm install --legacy-peer-deps 
+        run: |
+          sed -i '' 's/darwinDependencies/dependencies/g' package.json
+          npm install --legacy-peer-deps 
+      
       #- name: Install dmg bundle creator
       #  run:  npm install grunt-appdmg --save-dev --legacy-peer-deps
       - name: Build OSX packages
