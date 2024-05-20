@@ -69,16 +69,18 @@ msgid "Address format"
 msgstr "Codifica dell'indirizzo"
 
 #: app/views/menu.html:385
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Funzionalità avanzate"
 
 #: app/scripts/services/tools.js:1941
 msgid "All collections removed"
 msgstr "Tutte le collezioni sono state rimosse"
 
 #: app/scripts/controllers/menu.js:1461
+#, fuzzy
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
+msgstr "Tutte le collezioni memorizzate seranno perse. Vuoi continuare?"
 
 #: app/views/advanced.html:25
 msgid "Allow tri-state connections"
@@ -95,7 +97,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "È richiesto almeno Python 3.5"
+msgstr "È richiesto almeno Python 3.7"
 
 #: app/scripts/services/utils.js:673
 msgid "Author"
@@ -324,7 +326,7 @@ msgstr "Costante"
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Costante"
+msgstr "Nomi delle costanti"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -434,16 +436,19 @@ msgid "Drivers enabled"
 msgstr "Drivers abilitati"
 
 #: app/views/menu.html:287
+#, fuzzy
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplica"
 
 #: app/scripts/services/tools.js:812
+#, fuzzy
 msgid "Duplicate FPGA I/O ports"
 msgstr "Porte I/O dell'FPGA duplicate"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr ""
+msgstr "Nome della porta duplicato: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -477,12 +482,12 @@ msgstr "Immettere il percorso dei plugin esterni"
 #: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr ""
+msgstr "Inserisci il nome del file di log"
 
 #: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
-msgstr ""
+msgstr "Inserisci il percorso pip"
 
 #: app/scripts/services/forms.js:2430
 #, fuzzy
@@ -530,8 +535,9 @@ msgid "External collections"
 msgstr "Collezioni esterne"
 
 #: app/scripts/controllers/menu.js:937
+#, fuzzy
 msgid "External collections updated"
-msgstr "Connessioni esterne aggiornate"
+msgstr "Collezioni esterne aggiornate"
 
 #: app/views/advanced.html:35
 msgid "External plugins"
@@ -687,8 +693,9 @@ msgid "Install (Stable)"
 msgstr "Installa"
 
 #: app/views/menu.html:656
+#, fuzzy
 msgid "Install Development version"
-msgstr ""
+msgstr "Installa la versione di sviluppo"
 
 #: app/scripts/services/tools.js:1235
 msgid ""
@@ -826,12 +833,14 @@ msgid "Logging enabled"
 msgstr ""
 
 #: app/views/menu.html:413
+#, fuzzy
 msgid "Logging file"
-msgstr ""
+msgstr "File di log"
 
 #: app/scripts/controllers/menu.js:751
+#, fuzzy
 msgid "Logging file updated"
-msgstr ""
+msgstr "File di log aggiornato"
 
 #: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
@@ -882,7 +891,7 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:1472
 msgid "No collections stored"
-msgstr "Nessuna connessione memorizzata"
+msgstr "Nessuna collezioni memorizzata"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
@@ -1175,8 +1184,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Questa volta"
 
 #: app/scripts/services/graph.js:532
 #, fuzzy
@@ -1358,8 +1368,9 @@ msgid "Yellow"
 msgstr "Giallo"
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Sì"
 
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
