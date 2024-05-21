@@ -685,11 +685,12 @@ msgstr "Θύρες εισόδου"
 #: app/views/menu.html:635
 #, fuzzy
 msgid "Install (Stable)"
-msgstr "Εγκατάσταση"
+msgstr "Εγκατάστησε"
 
 #: app/views/menu.html:656
+#, fuzzy
 msgid "Install Development version"
-msgstr ""
+msgstr "Εγκατάστησε έκδοση ανάπτυξης"
 
 #: app/scripts/services/tools.js:1235
 msgid ""
@@ -856,8 +857,9 @@ msgid "Name"
 msgstr "Ονομα"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Names of the paired labels"
-msgstr ""
+msgstr "Ονόματα των ζευγαρωμένων ετικετών"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -938,8 +940,9 @@ msgid "Output ports"
 msgstr "Θύρες εξόδου"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
-msgstr ""
+msgstr "Ζευγαρωμένες ετικέτες"
 
 #: app/views/menu.html:268
 msgid "Paste"
