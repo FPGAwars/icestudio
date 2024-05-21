@@ -651,12 +651,14 @@ msgid "Input"
 msgstr "Eingang"
 
 #: app/views/design.html:291 app/views/menu.html:769
+#, fuzzy
 msgid "Input label"
-msgstr "Eingangs-Beschriftung"
+msgstr "Eingangs-Label"
 
 #: app/scripts/services/forms.js:1477
+#, fuzzy
 msgid "Input labels"
-msgstr "Eingangs-Beschriftung"
+msgstr "Eingangs-Labels"
 
 #: app/scripts/services/forms.js:1629
 msgid "Input parameters"
@@ -664,8 +666,8 @@ msgstr "Eingangs-Parameter"
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name"
-msgstr "Eingangs Port-Name"
+msgid "Input port names"
+msgstr "Eingangs-Port-Namen"
 
 #: app/scripts/services/forms.js:1615
 msgid "Input ports"
@@ -839,16 +841,18 @@ msgid "Memory"
 msgstr "Speicher"
 
 #: app/scripts/services/forms.js:1888
-msgid "Memory blocks"
-msgstr "Speicher Blöcke"
+#, fuzzy
+msgid "Memory block names"
+msgstr "Namen von Speicherblöcken"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Name"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
-msgstr "Name der verknüpften Labels"
+#, fuzzy
+msgid "Names of the paired labels"
+msgstr "Namen der verknüpften Labels"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -907,22 +911,26 @@ msgid "Output"
 msgstr "Ausgang"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
-msgstr "Ausgangs-Beschriftung"
+msgstr "Ausgangs-Label"
 
 #: app/scripts/services/forms.js:1396
+#, fuzzy
 msgid "Output labels"
 msgstr "Ausgangs-Labels"
 
 #: app/scripts/services/forms.js:1135
-msgid "Output port name"
-msgstr "Ausgangs-Port Name"
+#, fuzzy
+msgid "Output port names"
+msgstr "Ausgangs-Port-Namen"
 
 #: app/scripts/services/forms.js:1622
 msgid "Output ports"
 msgstr "Ausgangs-Port"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
 msgstr "Verknüpfte Labels"
 

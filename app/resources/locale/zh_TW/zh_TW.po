@@ -673,7 +673,7 @@ msgstr ""
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -843,7 +843,7 @@ msgstr "記憶體"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
+msgid "Memory block names"
 msgstr ""
 
 #: app/scripts/services/utils.js:670
@@ -851,7 +851,8 @@ msgid "Name"
 msgstr "名稱"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+#, fuzzy
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -922,7 +923,7 @@ msgstr "輸出標籤"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
-msgid "Output port name"
+msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622

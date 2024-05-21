@@ -675,8 +675,9 @@ msgid "Input parameters"
 msgstr "Paràmetres d'entrada"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name"
-msgstr ""
+#, fuzzy
+msgid "Input port names"
+msgstr "Noms dels ports d'entrada"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -849,15 +850,15 @@ msgstr "Memòria"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
-msgstr "Blocs de memòria"
+msgid "Memory block names"
+msgstr "Noms de blocs de memòria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Nom"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -925,8 +926,8 @@ msgstr "Etiquetes d'eixida"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
-msgid "Output port name"
-msgstr ""
+msgid "Output port names"
+msgstr "Noms dels ports de sortida"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
