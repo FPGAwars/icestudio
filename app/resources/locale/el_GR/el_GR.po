@@ -327,7 +327,7 @@ msgstr "Σταθερά"
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Ονοματα σταθερών"
+msgstr "Ονόματα σταθερών"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -870,12 +870,12 @@ msgstr "Δημιουργία"
 #: app/views/design.html:87
 #, fuzzy
 msgid "New Color:"
-msgstr "Νεο Χρώμα:"
+msgstr "Νέο Χρώμα:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Νεο Ονομα:"
+msgstr "Νέο Ονομα:"
 
 #: app/views/design.html:71
 msgid "Next"
