@@ -466,7 +466,7 @@ msgstr "Voer het pad naar de externe collectie in"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Voer het pad naar de externe plugins in"
+msgstr "Voer het pad naar de externe plug-ins in"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -530,12 +530,12 @@ msgstr "Externe collecties bijgewerkt"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Externe collecties"
+msgstr "Externe plug-ins"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Externe collecties bijgewerkt"
+msgstr "Externe plug-ins bijgewerkt"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -664,7 +664,7 @@ msgid "Input parameters"
 msgstr "Invoerparameters"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -837,15 +837,15 @@ msgstr "Geheugen"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
-msgstr "Geheugenblokken"
+msgid "Memory block names"
+msgstr "Geheugenbloknamen"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Naam"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -913,7 +913,7 @@ msgstr ""
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
-msgid "Output port name"
+msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
@@ -977,7 +977,7 @@ msgstr "Afsluiten"
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 #, fuzzy
 msgid "Red"
-msgstr "Opnieuw"
+msgstr "Rood"
 
 #: app/views/menu.html:238
 msgid "Redo"

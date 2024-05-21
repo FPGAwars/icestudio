@@ -664,7 +664,7 @@ msgid "Input parameters"
 msgstr "Parámetros de entrada"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -838,15 +838,15 @@ msgstr "Memoria"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
-msgstr "Bloques de memoria"
+msgid "Memory block names"
+msgstr "Nomes dos bloques de memoria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Nome"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -912,7 +912,7 @@ msgid "Output labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:1135
-msgid "Output port name"
+msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
@@ -976,7 +976,7 @@ msgstr "Saír"
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 #, fuzzy
 msgid "Red"
-msgstr "Refacer"
+msgstr ""
 
 #: app/views/menu.html:238
 msgid "Redo"

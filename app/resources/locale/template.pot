@@ -667,7 +667,7 @@ msgid "Input parameters"
 msgstr ""
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -824,7 +824,7 @@ msgid "Memory"
 msgstr ""
 
 #: app/scripts/services/forms.js:1888
-msgid "Memory blocks"
+msgid "Memory block names"
 msgstr ""
 
 #: app/scripts/services/utils.js:670
@@ -832,7 +832,7 @@ msgid "Name"
 msgstr ""
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444
@@ -904,7 +904,7 @@ msgid "Output labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:1135
-msgid "Output port name"
+msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
