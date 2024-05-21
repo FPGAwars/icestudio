@@ -986,7 +986,7 @@ angular.module('icestudio')
         constructor(name = '', virtual = false, clock = false, disabled = false, inoutValue = undefined) {
 
           //-- Create a blank BasicPortForm (calling the upper Class)
-          super(gettextCatalog.getString('Input port name'),
+          super(gettextCatalog.getString('Input port names'),
             name,
             virtual,
             disabled);
@@ -1132,7 +1132,7 @@ angular.module('icestudio')
         constructor(name = '', virtual = false, disabled = false, inoutValue = undefined) {
 
           //-- Create a blank BasicPortForm (calling the upper Class)
-          super(gettextCatalog.getString('Output port name'),
+          super(gettextCatalog.getString('Output port names'),
             name,
             virtual,
             disabled);
@@ -1536,7 +1536,7 @@ angular.module('icestudio')
 
           //-- Create a blank BasicLabelForm (calling the upper Class)
           super(
-            gettextCatalog.getString('Name of the paired labels'),
+            gettextCatalog.getString('Names of the paired labels'),
             name,
             color
           );
@@ -1885,7 +1885,7 @@ angular.module('icestudio')
 
           //-- Field 0: Memory block names
           let field0 = new TextField(
-            gettextCatalog.getString('Memory blocks'), //-- Top message
+            gettextCatalog.getString('Memory block names'), //-- Top message
             names,   //-- Default names
             0        //-- Field id
           );
