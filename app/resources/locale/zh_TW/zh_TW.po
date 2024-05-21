@@ -95,7 +95,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "至少需要 Python3.5版"
+msgstr "至少需要 Python3.7版"
 
 #: app/scripts/services/utils.js:673
 msgid "Author"

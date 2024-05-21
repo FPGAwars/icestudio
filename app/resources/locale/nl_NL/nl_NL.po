@@ -466,7 +466,7 @@ msgstr "Voer het pad naar de externe collectie in"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Voer het pad naar de externe plugins in"
+msgstr "Voer het pad naar de externe plug-ins in"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -530,12 +530,12 @@ msgstr "Externe collecties bijgewerkt"
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr "Externe collecties"
+msgstr "Externe plug-ins"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr "Externe collecties bijgewerkt"
+msgstr "Externe plug-ins bijgewerkt"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
@@ -977,7 +977,7 @@ msgstr "Afsluiten"
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 #, fuzzy
 msgid "Red"
-msgstr "Opnieuw"
+msgstr "Rood"
 
 #: app/views/menu.html:238
 msgid "Redo"

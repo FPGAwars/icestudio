@@ -990,7 +990,7 @@ msgstr "Tanca"
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 #, fuzzy
 msgid "Red"
-msgstr "Refés"
+msgstr ""
 
 #: app/views/menu.html:238
 msgid "Redo"
