@@ -55,18 +55,23 @@ jobs:
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
  
-      - name: Sign binary
+      - name: Sign DMG
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: lando/code-sign-action@v2
-        with:
-          file: dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg
-          certificate-data: ${{ secrets.APPLE_CERT_DATA }}
-          certificate-password: ${{ secrets.APPLE_CERT_PASSWORD }}
-          apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
-     
-     
+          MACOS_CERTIFICATE: ${{ secrets.APPLE_CERT_DATA }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.APPLE_CERT_PASSWORD }}
+          MACOS_APPLE_UID: ${{ secrets.APPLE_TEAM_ID }}
+          MACOS_KEYCHAIN_PASS: ${{ secrets.LOCAL_KEYCHAIN_PASS }}
+        run: |
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p $MACOS_KEYCHAIN_PASS build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $MACOS_KEYCHAIN_PASS build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PASS build.keychain
+          codesign --force --deep --sign ${MACOS_APPLE_UID} dist/icestudio-${ICESTUDIO_VERSION}${TIMESTAMP}-osxarm64.dmg -v
+
       - name: 'Upload DMG/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
