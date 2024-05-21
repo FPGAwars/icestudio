@@ -865,8 +865,9 @@ msgid "Name"
 msgstr "Nome"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Names of the paired labels"
-msgstr ""
+msgstr "Nomi delle etichette accoppiate"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -945,8 +946,9 @@ msgid "Output ports"
 msgstr "Porte di Output"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
-msgstr ""
+msgstr "Etichette accoppiate"
 
 #: app/views/menu.html:268
 msgid "Paste"
