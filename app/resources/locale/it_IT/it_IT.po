@@ -77,8 +77,9 @@ msgid "All collections removed"
 msgstr "Tutte le collezioni sono state rimosse"
 
 #: app/scripts/controllers/menu.js:1461
+#, fuzzy
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
+msgstr "Tutte le collezioni memorizzate saranno perse. Vuoi continuare?"
 
 #: app/views/advanced.html:25
 msgid "Allow tri-state connections"
@@ -95,7 +96,7 @@ msgstr ""
 #: app/scripts/services/tools.js:1508
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "È richiesto almeno Python 3.5"
+msgstr "È richiesto almeno Python 3.7"
 
 #: app/scripts/services/utils.js:673
 msgid "Author"
@@ -530,8 +531,9 @@ msgid "External collections"
 msgstr "Collezioni esterne"
 
 #: app/scripts/controllers/menu.js:937
+#, fuzzy
 msgid "External collections updated"
-msgstr "Connessioni esterne aggiornate"
+msgstr "Collezioni esterne aggiornate"
 
 #: app/views/advanced.html:35
 msgid "External plugins"
@@ -673,8 +675,8 @@ msgstr "Parametri di Input"
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name"
-msgstr "Nome della porta di Input"
+msgid "Input port names"
+msgstr "Nomi delle porte di Input"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -848,15 +850,15 @@ msgstr "Memoria"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
-msgstr "Blocchi di memoria"
+msgid "Memory block names"
+msgstr "Nomi dei blocchi di memoria"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Nome"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -881,8 +883,9 @@ msgid "Next"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:1472
+#, fuzzy
 msgid "No collections stored"
-msgstr "Nessuna connessione memorizzata"
+msgstr "Nessuna collezioni memorizzata"
 
 #: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
@@ -926,8 +929,8 @@ msgstr "Etichette di Output"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
-msgid "Output port name"
-msgstr "Nome della porta di Output"
+msgid "Output port names"
+msgstr "Nomi delle porte di Output"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
