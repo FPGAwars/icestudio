@@ -667,8 +667,8 @@ msgstr "Vstupní parametry"
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name"
-msgstr "Název vstupu"
+msgid "Input port names"
+msgstr "Názvy vstupních portů"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
@@ -837,15 +837,16 @@ msgid "Memory"
 msgstr "Paměť"
 
 #: app/scripts/services/forms.js:1888
-msgid "Memory blocks"
-msgstr "Paměťové bloky"
+#, fuzzy
+msgid "Memory block names"
+msgstr "Názvy bloků paměti"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
 msgstr "Jméno"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr "Názvy párovaných popisků"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -912,8 +913,8 @@ msgstr "Popisky výstupů"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
-msgid "Output port name"
-msgstr "Název výstupu"
+msgid "Output port names"
+msgstr "Názvy výstupních portů"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy

@@ -675,7 +675,7 @@ msgstr "入力パラメタ"
 
 #: app/scripts/services/forms.js:989
 #, fuzzy
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -852,7 +852,8 @@ msgid "Memory"
 msgstr "メモリ"
 
 #: app/scripts/services/forms.js:1888
-msgid "Memory blocks"
+#, fuzzy
+msgid "Memory block names"
 msgstr "メモリブロック"
 
 #: app/scripts/services/utils.js:670
@@ -861,7 +862,7 @@ msgstr "名前"
 
 #: app/scripts/services/forms.js:1539
 #, fuzzy
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -932,7 +933,8 @@ msgid "Output labels"
 msgstr "出力ラベル"
 
 #: app/scripts/services/forms.js:1135
-msgid "Output port name"
+#, fuzzy
+msgid "Output port names"
 msgstr "出力ポート名"
 
 #: app/scripts/services/forms.js:1622

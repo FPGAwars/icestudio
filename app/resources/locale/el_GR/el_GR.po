@@ -671,7 +671,7 @@ msgid "Input parameters"
 msgstr "Εισαγάγετε τις παραμέτρους"
 
 #: app/scripts/services/forms.js:989
-msgid "Input port name"
+msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
@@ -844,7 +844,7 @@ msgstr "Μνήμη"
 
 #: app/scripts/services/forms.js:1888
 #, fuzzy
-msgid "Memory blocks"
+msgid "Memory block names"
 msgstr "Blocks μνήμης"
 
 #: app/scripts/services/utils.js:670
@@ -852,7 +852,7 @@ msgid "Name"
 msgstr "Όνομα"
 
 #: app/scripts/services/forms.js:1539
-msgid "Name of the paired labels"
+msgid "Names of the paired labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
@@ -914,14 +914,16 @@ msgid "Output label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1396
+#, fuzzy
 msgid "Output labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:1135
-msgid "Output port name"
+msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
+#, fuzzy
 msgid "Output ports"
 msgstr ""
 
@@ -982,7 +984,7 @@ msgstr "Έξοδος"
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 #, fuzzy
 msgid "Red"
-msgstr "Επανάληψη"
+msgstr ""
 
 #: app/views/menu.html:238
 msgid "Redo"
