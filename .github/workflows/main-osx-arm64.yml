@@ -42,7 +42,7 @@ jobs:
 
           npm run buildOSXARM64
           ls dist/
-            
+
       # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
@@ -54,7 +54,15 @@ jobs:
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "buildJson=${content}" >> $GITHUB_OUTPUT
-      
+ 
+      - name: Sign binary
+        uses: lando/code-sign-action@v2
+        with:
+          file: dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg
+          certificate-data: ${{ secrets.APPLE_CERT_DATA }}
+          certificate-password: ${{ secrets.APPLE_CERT_PASSWORD }}
+          apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
+     
      
       - name: 'Upload DMG/OSX64'
         env:
