@@ -38,8 +38,20 @@ jobs:
           npm install --legacy-peer-deps
       
       - name: Build OSX ARM64 packages
+        env:
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
+          MACOS_CERTIFICATE: ${{ secrets.APPLE_CERT_DATA }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.APPLE_CERT_PASSWORD }}
+          CODESIGN_ID: ${{ secrets.APPLE_TEAM_ID }}
+          MACOS_KEYCHAIN_PASS: ${{ secrets.LOCAL_KEYCHAIN_PASS }}
         run: |
-
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p $MACOS_KEYCHAIN_PASS build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $MACOS_KEYCHAIN_PASS build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PASS build.keychain
           npm run buildOSXARM64
           ls dist/
 
