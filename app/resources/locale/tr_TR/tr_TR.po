@@ -13,22 +13,28 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: app/scripts/services/forms.js:1645
+#, fuzzy
 msgid "\"Inout\" Left ports"
-msgstr ""
+msgstr "Sol \"Giriş/Çıkış\" bağlantı noktaları"
 
 #: app/scripts/services/forms.js:1657
+#, fuzzy
 msgid "\"Inout\" Right ports"
-msgstr ""
+msgstr "Sağ \"Giriş/Çıkış\" bağlantı noktaları"
 
 #: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+#, fuzzy
 msgid "\"Inout\" pin"
-msgstr ""
+msgstr "\"Giriş/Çıkış\" pin"
 
 #: app/views/design.html:18
+#, fuzzy
 msgid ""
 "<b>Read only</b><br>\n"
 "            Unlock to edit the block!"
 msgstr ""
+"<b>Salt okunur</b><br>\n"
+"Bloğu düzenlemek için kilidi açın!"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:633
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -49,8 +55,9 @@ msgid "About Icestudio"
 msgstr "Icestudio Hakkında"
 
 #: app/views/version.html:33
+#, fuzzy
 msgid "Acknowledgment"
-msgstr ""
+msgstr "Bildirim"
 
 #: app/views/menu.html:708
 msgid "Add"
@@ -69,8 +76,9 @@ msgid "Address format"
 msgstr "Adres biçimi"
 
 #: app/views/menu.html:385
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Gelişmiş özellikler"
 
 #: app/scripts/services/tools.js:1941
 msgid "All collections removed"
@@ -81,8 +89,9 @@ msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Saklanan tüm koleksiyonlar kaybolacaktır. Devam etmek istiyor musunuz?"
 
 #: app/views/advanced.html:25
+#, fuzzy
 msgid "Allow tri-state connections"
-msgstr ""
+msgstr "Üç durumlu bağlantılara izin verilir"
 
 #: app/scripts/services/tools.js:1595
 msgid "Apio install drivers"
@@ -105,8 +114,9 @@ msgid "Basic"
 msgstr "Temel"
 
 #: app/views/design.html:275
+#, fuzzy
 msgid "Basic Toolbox"
-msgstr ""
+msgstr "Temel Araç kutusu"
 
 #: app/views/languages.html:86
 msgid "Basque"
@@ -142,16 +152,19 @@ msgid "Board"
 msgstr "Pano"
 
 #: app/views/advanced.html:15 app/views/menu.html:458
+#, fuzzy
 msgid "Board rules"
-msgstr "Pano ölçüm aleti"
+msgstr "Pano kuralları"
 
 #: app/scripts/controllers/menu.js:1025
+#, fuzzy
 msgid "Board rules disabled"
-msgstr "Pano ölçüm kuralları devre dışı"
+msgstr "Pano kuralları devre dışı"
 
 #: app/scripts/controllers/menu.js:1023
+#, fuzzy
 msgid "Board rules enabled"
-msgstr "Pano ölçüm kuralları aktif"
+msgstr "Pano kuralları aktif"
 
 #: app/scripts/services/tools.js:766
 msgid "Board {{name}} disconnected"
@@ -167,7 +180,7 @@ msgstr "Pano {{name}} bağlı değil"
 
 #: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
 msgid "Board {{name}} selected"
-msgstr "Pano {{name}} seç"
+msgstr "Pano {{name}} seçildi"
 
 #: app/scripts/services/tools.js:714 app/scripts/services/tools.js:744
 msgid "Bootloader not active"
@@ -179,8 +192,9 @@ msgid "Build"
 msgstr "Yapı"
 
 #: app/scripts/controllers/menu.js:1375
+#, fuzzy
 msgid "Build done"
-msgstr "Yapı tamam"
+msgstr "Yapı tamamlandı"
 
 #: app/scripts/app.js:58 app/scripts/services/project.js:161
 #: app/scripts/services/utils.js:1384
@@ -188,34 +202,37 @@ msgid "Cancel"
 msgstr "İptal"
 
 #: app/scripts/services/utils.js:1202
+#, fuzzy
 msgid "Cannot paste from a different project format ({{version}})"
-msgstr ""
+msgstr "Farklı bir proje biçiminden ({{version}}) yapıştırılamıyor"
 
 #: app/views/design.html:54
+#, fuzzy
 msgid "Case sensitive"
-msgstr ""
+msgstr "Büyük/küçük harfe duyarlı"
 
 #: app/views/languages.html:92
-#, fuzzy
 msgid "Catalonian"
 msgstr "Katalanca"
 
 #: app/views/design.html:262
 #, fuzzy
 msgid "Change Color"
-msgstr ""
+msgstr "Rengi Değiştir"
 
 #: app/scripts/services/utils.js:1369
+#, fuzzy
 msgid "Changed Preferences: Allow tri-state connections"
-msgstr ""
+msgstr "Tercihleri değiştirdi: Üç durumlu bağlantılara izin verilir"
 
 #: app/scripts/services/tools.js:1463
 msgid "Check Internet connection..."
 msgstr "İnternet bağlantısını kontrol edin..."
 
 #: app/scripts/services/tools.js:1497
+#, fuzzy
 msgid "Check Python..."
-msgstr "Python'u Kontrol Et..."
+msgstr "Python'u kontrol edin..."
 
 #: app/views/languages.html:68
 msgid "Chinese"
@@ -304,8 +321,9 @@ msgid "Collections"
 msgstr "Koleksiyonlar"
 
 #: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#, fuzzy
 msgid "Command output"
-msgstr "Komut çıkışı"
+msgstr "Komut çıktışı"
 
 #: app/views/menu.html:864
 msgid "Community forum"
@@ -316,13 +334,14 @@ msgid "Configuration not completed"
 msgstr "Yapılandırma tamamlanmadı"
 
 #: app/views/design.html:306 app/views/menu.html:783
+#, fuzzy
 msgid "Constant"
-msgstr "Sürekli"
+msgstr "Sabit"
 
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Sürekli"
+msgstr "Sabit adları"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -351,7 +370,7 @@ msgstr "Çekce"
 #: app/views/uithemes.html:16
 #, fuzzy
 msgid "Dark (default)"
-msgstr "Varsayılan"
+msgstr "Karanlık (varsayılan)"
 
 #: app/scripts/services/forms.js:423 app/views/design.html:199
 #, fuzzy
@@ -386,8 +405,9 @@ msgid "Default"
 msgstr "Varsayılan"
 
 #: app/views/menu.html:296
+#, fuzzy
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: app/scripts/services/utils.js:672
 msgid "Description"
@@ -433,16 +453,18 @@ msgid "Drivers enabled"
 msgstr "Sürücüler aktif"
 
 #: app/views/menu.html:287
+#, fuzzy
 msgid "Duplicate"
-msgstr ""
+msgstr "Çoğalt"
 
 #: app/scripts/services/tools.js:812
 msgid "Duplicate FPGA I/O ports"
 msgstr "Çoğaltılmış FPGA I/O bağlantı noktalaı"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr ""
+msgstr "Çoğaltılmış bağlantı noktası adı: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -457,8 +479,9 @@ msgid "Edit the collection name"
 msgstr "Koleksiyon adını düzenle"
 
 #: app/views/menu.html:681
+#, fuzzy
 msgid "Enable"
-msgstr "Aktif"
+msgstr "Etkinleştir"
 
 #: app/views/languages.html:14
 msgid "English"
@@ -472,7 +495,7 @@ msgstr "Harici koleksiyonlar yolunu girin"
 #: app/scripts/services/forms.js:2383
 #, fuzzy
 msgid "Enter the external plugins path"
-msgstr ""
+msgstr "Harici eklentileri yolunu girin"
 
 #: app/scripts/services/forms.js:2337
 #, fuzzy
@@ -490,12 +513,14 @@ msgid "Enter the python path"
 msgstr "Python yolunu girin"
 
 #: app/scripts/controllers/menu.js:1012
+#, fuzzy
 msgid "Enter the remote hostname user@host"
-msgstr "Uzaktan ev ana bilgisayar adını girin @anabilgisayar"
+msgstr "Uzak ana bilgisayar adını (user@host) girin"
 
 #: app/scripts/services/drivers.js:469
+#, fuzzy
 msgid "Error installing driver:"
-msgstr ""
+msgstr "Sürücü yüklenirken hata oluştu"
 
 #: app/scripts/services/utils.js:876
 msgid "Error: {{error}}"
@@ -506,8 +531,9 @@ msgid "Errors detected in the design"
 msgstr "Tasarımda tespit edilen hatalar"
 
 #: app/views/design.html:57
+#, fuzzy
 msgid "Exact match"
-msgstr ""
+msgstr "Tam eşleşme"
 
 #: app/views/menu.html:119
 msgid "Examples"
@@ -526,42 +552,47 @@ msgid "Export submodule"
 msgstr "İhraç alt modül"
 
 #: app/views/menu.html:398
+#, fuzzy
 msgid "External collections"
-msgstr "Harici koleksiyon"
+msgstr "Harici koleksiyonlar"
 
 #: app/scripts/controllers/menu.js:937
+#, fuzzy
 msgid "External collections updated"
-msgstr "Harici koleksiyonu güncelle"
+msgstr "Harici koleksiyonları güncellendi"
 
 #: app/views/advanced.html:35
 #, fuzzy
 msgid "External plugins"
-msgstr ""
+msgstr "Harici eklentiler"
 
 #: app/scripts/controllers/menu.js:809
 #, fuzzy
 msgid "External plugins updated"
-msgstr ""
+msgstr "Harici eklentileri güncellendi"
 
 #: app/scripts/services/tools.js:805
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O bağlantı noktaları tanımlanmadı"
 
 #: app/scripts/services/forms.js:844
+#, fuzzy
 msgid "FPGA pin"
-msgstr "FPGA raptiye"
+msgstr "FPGA pin"
 
 #: app/views/menu.html:486
 msgid "FPGA resources"
 msgstr "FPGA kaynaklar"
 
 #: app/views/version.html:47
+#, fuzzy
 msgid "FPGAwars community"
-msgstr ""
+msgstr "FPGAwars topluluk"
 
 #: app/views/version.html:39
+#, fuzzy
 msgid "FPGAwars community."
-msgstr ""
+msgstr "FPGAwars topluluk."
 
 #: app/views/menu.html:76
 msgid "File"
@@ -586,8 +617,9 @@ msgid "Find"
 msgstr ""
 
 #: app/views/menu.html:318
+#, fuzzy
 msgid "Fit content"
-msgstr "Uygun içerik"
+msgstr "İçeriği uygunlaştır"
 
 #: app/views/languages.html:26
 msgid "French"
@@ -637,7 +669,7 @@ msgid ""
 "If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
 "this board"
 msgstr ""
-"Boş GİRİŞ/ÇIKIŞ raptiyeleriniz varsa, bunun nedeni bu kartta eşdeğer "
+"Boş GİRİŞ/ÇIKIŞ pinleriniz varsa, bunun nedeni bu kartta eşdeğer pin "
 "olmamasıdır"
 
 #: app/scripts/services/utils.js:686
@@ -668,21 +700,22 @@ msgstr "Giriş etiketi"
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr "Giriş etiketi"
+msgstr "Giriş etiketleri"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Parametreleri girin"
+msgstr "Giriş parametreleri"
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port names"
-msgstr ""
+msgstr "Giriş bağlantı noktası adleri"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Giriş bağlantı noktalarını girin"
+msgstr "Giriş bağlantı noktalar"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -690,8 +723,9 @@ msgid "Install (Stable)"
 msgstr "Yükle"
 
 #: app/views/menu.html:656
+#, fuzzy
 msgid "Install Development version"
-msgstr ""
+msgstr "Geliştirme sürümünü yükle"
 
 #: app/scripts/services/tools.js:1235
 msgid ""
@@ -706,8 +740,6 @@ msgid ""
 "Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
 msgstr ""
-"Araç zinciri güncellenecektir. Bu işlem İnternet bağlantısı gerektirir. "
-"Devam etmek istiyor musunuz?"
 
 #: app/scripts/services/tools.js:1282
 #, fuzzy
@@ -720,7 +752,7 @@ msgstr ""
 
 #: app/scripts/services/tools.js:1630
 msgid "Installation completed"
-msgstr "Kurulumu tamamlanmış"
+msgstr "Kurulumu tamamlandı"
 
 #: app/scripts/services/tools.js:1390
 #, fuzzy
@@ -754,12 +786,14 @@ msgstr "Geçersiz koleksiyon {{name}}"
 
 #: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
 #: app/scripts/services/graph.js:276
+#, fuzzy
 msgid "Invalid connection"
-msgstr "Geçersiz koleksiyon"
+msgstr "Geçersiz bağlantı"
 
 #: app/scripts/services/graph.js:332
+#, fuzzy
 msgid "Invalid connection: {{a}} → {{b}}"
-msgstr "Geçersiz koleksiyon: {{a}} → {{b}}"
+msgstr "Geçersiz bağlantı: {{a}} → {{b}}"
 
 #: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
@@ -784,16 +818,17 @@ msgstr "İtalyanca"
 #: app/views/languages.html:110
 #, fuzzy
 msgid "Japanese"
-msgstr ""
+msgstr "Japonca"
 
 #: app/views/languages.html:98
+#, fuzzy
 msgid "Korean"
-msgstr ""
+msgstr "Korece"
 
 #: app/views/menu.html:328
 #, fuzzy
 msgid "Label finder"
-msgstr ""
+msgstr "Etiket bulucu"
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
@@ -829,7 +864,7 @@ msgstr "Yerel parametre"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr "Sürücüler aktif"
+msgstr ""
 
 #: app/views/menu.html:413
 msgid "Logging file"
@@ -846,7 +881,7 @@ msgstr "Azami veri yolu boyutu: 96 bit"
 #: app/scripts/services/forms.js:396 app/views/design.html:129
 #, fuzzy
 msgid "Medium Violet Red"
-msgstr "OrtaMorAl"
+msgstr "Orta Menekşe Kırmızı"
 
 #: app/views/design.html:311 app/views/menu.html:787
 msgid "Memory"
@@ -855,7 +890,7 @@ msgstr "Bellek"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory block names"
-msgstr ""
+msgstr "Bellek bloğu adları"
 
 #: app/scripts/services/utils.js:670
 msgid "Name"
@@ -874,13 +909,14 @@ msgid "New"
 msgstr "Yeni"
 
 #: app/views/design.html:87
+#, fuzzy
 msgid "New Color:"
-msgstr ""
+msgstr "Yeni Renk:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Ad"
+msgstr "Yeni Ad:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -928,17 +964,17 @@ msgstr "Çıktı etiketi"
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr "Çıktı etiketi"
+msgstr "Çıktı etiketleri"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port names"
-msgstr ""
+msgstr "Çıkış bağlantı noktası adleri"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr ""
+msgstr "Çıkış bağlantı noktaları"
 
 #: app/views/design.html:301 app/views/menu.html:778
 msgid "Paired labels"
@@ -1098,7 +1134,7 @@ msgstr "BaharYeşili"
 
 #: app/scripts/controllers/menu.js:1374
 msgid "Start build"
-msgstr "Oluşturmaya başla"
+msgstr "Yapıya başla"
 
 #: app/scripts/controllers/menu.js:1400
 msgid "Start upload"
@@ -1178,8 +1214,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Bu sefer"
 
 #: app/scripts/services/graph.js:532
 #, fuzzy
@@ -1209,28 +1246,33 @@ msgstr ""
 #: app/views/menu.html:338
 #, fuzzy
 msgid "Toolbox"
-msgstr "Araçlar"
+msgstr "Araç kutusu"
 
 #: app/views/menu.html:627
+#, fuzzy
 msgid "Toolchain"
-msgstr "Uyumluuygulama"
+msgstr "Araç zinciri"
 
 #: app/scripts/services/tools.js:1640
+#, fuzzy
 msgid "Toolchain installed"
-msgstr "Uyumluuygulama yüklü"
+msgstr "Araç zinciri yüklü"
 
 #: app/scripts/services/drivers.js:625 app/scripts/services/drivers.js:644
 #: app/scripts/services/tools.js:312 app/scripts/services/tools.js:489
+#, fuzzy
 msgid "Toolchain not installed"
-msgstr "Uyumluuygulama yüklü değil"
+msgstr "Araç zinciri yüklü değil"
 
 #: app/scripts/services/tools.js:1318
+#, fuzzy
 msgid "Toolchain removed"
-msgstr "Uyumluuygulamayı kaldır"
+msgstr "Araç zinciri kaldırıldı"
 
 #: app/scripts/services/tools.js:530
+#, fuzzy
 msgid "Toolchain version does not match"
-msgstr "Uyumluuygulama sürümü eşleşmiyor"
+msgstr "Araç zinciri sürümü eşleşmiyor"
 
 #: app/views/menu.html:592
 msgid "Tools"
@@ -1357,8 +1399,9 @@ msgid "Yellow"
 msgstr "Sarı"
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
@@ -1379,6 +1422,7 @@ msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
 #: app/scripts/controllers/menu.js:396
+#, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
