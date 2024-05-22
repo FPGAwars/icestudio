@@ -69,8 +69,9 @@ msgid "Address format"
 msgstr "Codifica dell'indirizzo"
 
 #: app/views/menu.html:385
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Funzionalità avanzate"
 
 #: app/scripts/services/tools.js:1941
 msgid "All collections removed"
@@ -325,7 +326,7 @@ msgstr "Costante"
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Costante"
+msgstr "Nomi delle costanti"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -435,16 +436,19 @@ msgid "Drivers enabled"
 msgstr "Drivers abilitati"
 
 #: app/views/menu.html:287
+#, fuzzy
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplica"
 
 #: app/scripts/services/tools.js:812
+#, fuzzy
 msgid "Duplicate FPGA I/O ports"
 msgstr "Porte I/O dell'FPGA duplicate"
 
 #: app/scripts/services/forms.js:1817
+#, fuzzy
 msgid "Duplicate port name: {{name}}"
-msgstr ""
+msgstr "Nome della porta duplicato: {{name}}"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -478,12 +482,12 @@ msgstr "Immettere il percorso dei plugin esterni"
 #: app/scripts/services/forms.js:2337
 #, fuzzy
 msgid "Enter the log filename"
-msgstr ""
+msgstr "Inserisci il nome del file di log"
 
 #: app/scripts/services/forms.js:2438
 #, fuzzy
 msgid "Enter the pip path"
-msgstr ""
+msgstr "Inserisci il percorso pip"
 
 #: app/scripts/services/forms.js:2430
 #, fuzzy
@@ -689,8 +693,9 @@ msgid "Install (Stable)"
 msgstr "Installa"
 
 #: app/views/menu.html:656
+#, fuzzy
 msgid "Install Development version"
-msgstr ""
+msgstr "Installa la versione di sviluppo"
 
 #: app/scripts/services/tools.js:1235
 msgid ""
@@ -828,12 +833,14 @@ msgid "Logging enabled"
 msgstr ""
 
 #: app/views/menu.html:413
+#, fuzzy
 msgid "Logging file"
-msgstr ""
+msgstr "File di log"
 
 #: app/scripts/controllers/menu.js:751
+#, fuzzy
 msgid "Logging file updated"
-msgstr ""
+msgstr "File di log aggiornato"
 
 #: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
@@ -858,8 +865,9 @@ msgid "Name"
 msgstr "Nome"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Names of the paired labels"
-msgstr ""
+msgstr "Nomi delle etichette accoppiate"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -938,8 +946,9 @@ msgid "Output ports"
 msgstr "Porte di Output"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
-msgstr ""
+msgstr "Etichette accoppiate"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -1178,8 +1187,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Questa volta"
 
 #: app/scripts/services/graph.js:532
 #, fuzzy
@@ -1361,8 +1371,9 @@ msgid "Yellow"
 msgstr "Giallo"
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Sì"
 
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
