@@ -81,13 +81,3 @@ jobs:
           name: "osxarm64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.dmg"
           if-no-files-found: error
-          
-      - name: 'Upload ZIP/OSX64'
-        env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: actions/upload-artifact@v3
-        with:
-          name: "osxarm64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osxarm64.zip"
-          if-no-files-found: error
