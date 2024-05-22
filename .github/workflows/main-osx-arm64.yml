@@ -39,8 +39,6 @@ jobs:
       
       - name: Build OSX ARM64 packages
         env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
           MACOS_CERTIFICATE: ${{ secrets.APPLE_CERT_DATA }}
           MACOS_CERTIFICATE_PWD: ${{ secrets.APPLE_CERT_PASSWORD }}
           CODESIGN_ID: ${{ secrets.APPLE_TEAM_ID }}
