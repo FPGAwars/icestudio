@@ -69,8 +69,9 @@ msgid "Address format"
 msgstr "Adresformaat"
 
 #: app/views/menu.html:385
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Geavanceerde functies"
 
 #: app/scripts/services/tools.js:1941
 msgid "All collections removed"
@@ -315,13 +316,14 @@ msgid "Configuration not completed"
 msgstr "Configuratie niet voltooid"
 
 #: app/views/design.html:306 app/views/menu.html:783
+#, fuzzy
 msgid "Constant"
-msgstr "Constant"
+msgstr "Constante"
 
 #: app/scripts/services/forms.js:2103
 #, fuzzy
 msgid "Constant names"
-msgstr "Constant"
+msgstr "Namen van constantes"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -646,17 +648,19 @@ msgid "Information"
 msgstr "Informatie"
 
 #: app/views/design.html:281 app/views/menu.html:760
+#, fuzzy
 msgid "Input"
-msgstr "Ingang"
+msgstr "Invoer"
 
 #: app/views/design.html:291 app/views/menu.html:769
+#, fuzzy
 msgid "Input label"
-msgstr ""
+msgstr "Invoeretiket"
 
 #: app/scripts/services/forms.js:1477
 #, fuzzy
 msgid "Input labels"
-msgstr ""
+msgstr "Invoeretiketten"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
@@ -664,13 +668,14 @@ msgid "Input parameters"
 msgstr "Invoerparameters"
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port names"
-msgstr ""
+msgstr "Namen van de invoerpoorten"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Ingangspoorten"
+msgstr "Invoerpoorten"
 
 #: app/views/menu.html:635
 #, fuzzy
@@ -778,13 +783,14 @@ msgid "Korean"
 msgstr ""
 
 #: app/views/menu.html:328
+#, fuzzy
 msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
 #, fuzzy
 msgid "Label updated"
-msgstr ""
+msgstr "Etiket bijgewerkt"
 
 #: app/views/menu.html:359
 msgid "Language"
@@ -813,15 +819,17 @@ msgstr "Lokale parameter"
 #: app/views/menu.html:404
 #, fuzzy
 msgid "Logging enabled"
-msgstr ""
+msgstr "Logging geactiveerd"
 
 #: app/views/menu.html:413
+#, fuzzy
 msgid "Logging file"
-msgstr ""
+msgstr "Logging-bestand"
 
 #: app/scripts/controllers/menu.js:751
+#, fuzzy
 msgid "Logging file updated"
-msgstr ""
+msgstr "Logging-bestand bijgewerkt"
 
 #: app/scripts/services/utils.js:990
 msgid "Maximum bus size: 96 bits"
@@ -845,8 +853,9 @@ msgid "Name"
 msgstr "Naam"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Names of the paired labels"
-msgstr ""
+msgstr "Namen van de gekoppelde etiketten"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -857,13 +866,14 @@ msgid "New"
 msgstr "Nieuw"
 
 #: app/views/design.html:87
+#, fuzzy
 msgid "New Color:"
-msgstr ""
+msgstr "Nieuwe Kleur:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Naam:"
+msgstr "Nieuwe Naam:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -899,31 +909,34 @@ msgid "Original file {{file}} does not exist"
 msgstr "Originele bestand {{file}} bestaat niet"
 
 #: app/views/design.html:286 app/views/menu.html:764
+#, fuzzy
 msgid "Output"
-msgstr "Uitgang"
+msgstr "Uitvoer"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
-msgstr ""
+msgstr "Uitvoeretiket"
 
 #: app/scripts/services/forms.js:1396
 #, fuzzy
 msgid "Output labels"
-msgstr ""
+msgstr "Uitvoeretiketten"
 
 #: app/scripts/services/forms.js:1135
 #, fuzzy
 msgid "Output port names"
-msgstr ""
+msgstr "Namen van de uitvoerpoorten"
 
 #: app/scripts/services/forms.js:1622
 #, fuzzy
 msgid "Output ports"
-msgstr "Uitgangspoorten"
+msgstr "Uitvoerpoorten"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
-msgstr ""
+msgstr "Gekoppelde etiketten"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -963,12 +976,14 @@ msgid "Project {{name}} saved"
 msgstr "Project {{name}} opgeslagen"
 
 #: app/views/advanced.html:41
+#, fuzzy
 msgid "Python environment"
-msgstr ""
+msgstr "Python-omgeving"
 
 #: app/scripts/controllers/menu.js:873
+#, fuzzy
 msgid "Python environment updated"
-msgstr ""
+msgstr "Python-omgeving bijgewerkt"
 
 #: app/views/menu.html:202
 msgid "Quit"
@@ -1158,8 +1173,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Deze keer"
 
 #: app/scripts/services/graph.js:532
 msgid ""
@@ -1330,8 +1346,9 @@ msgid "Yellow"
 msgstr ""
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: app/scripts/controllers/menu.js:409
 msgid ""
