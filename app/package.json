@@ -42,7 +42,7 @@
     "external": "",
     "branch": ""
   },
-  "collection": "0.3.3",
+  "collection": "0.4.0",
   "engines": {},
   "node": ">= 21.1.0",
   "dependencies": {
