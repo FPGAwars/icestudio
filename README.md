@@ -29,7 +29,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 * **Step 1**: Draw your circuit
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.6.0-default-.gif)
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.12.0-default-.gif)
 
 
 * **Step 2**: Upload it to your favorite OpenSource FPGA board 
@@ -160,8 +160,8 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.11-blue.svg
-[version-image-wip]: https://img.shields.io/badge/version-v0.11.3w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.12-blue.svg
+[version-image-wip]: https://img.shields.io/badge/version-v0.12.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
