@@ -66,7 +66,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ([SPI Display Notes](https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.7:-Display-SPI-de-4-d%C3%ADgitos-de-7-segmentos)) (In spanish)
 
-![](https://raw.githubusercontent.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/master/wiki/CT7-display-7seg-spi/controller-13.png)
+![](https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-03-1-spi-display-7seg.png)
 
 ## RISC-V CPU
 
