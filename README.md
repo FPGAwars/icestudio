@@ -35,7 +35,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 * **Step 2**: Upload it to your favorite OpenSource FPGA board 
 
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/upload-two-leds-0.6.0-default-.gif)
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/upload-two-leds-0.12.0-default-.gif)
 
 * **Step 3**: Done! 😀️
 
@@ -177,4 +177,4 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 [build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
 
-[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml
+[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx-arm64.yml
