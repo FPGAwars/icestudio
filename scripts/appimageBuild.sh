@@ -10,7 +10,7 @@ DISTDIR=dist
 LINUXAPP=${DISTDIR}/icestudio/linux64
 APPIMAGE_SKEL=icestudio.AppDir
 APPIMAGE_SKEL_DIR=res/AppImage/${APPIMAGE_SKEL}
-BUILDDIR=${DISTDIR}/icestudio.AppDir
+BUILDDIR="${DISTDIR}/icestudio.AppDir"
 APPIMAGETOOL=appimagetool-x86_64.AppImage
 APPIMAGE_O=Icestudio-x86_64.AppImage
 APPIMAGE=icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage
@@ -33,13 +33,13 @@ if [ -d $LINUXAPP ]; then
 				ls ${LINUXAPP}
 	
 				echo "!-----------"
-				ls -l  ${BUILDDIR}
+				ls -ld  ${BUILDDIR}
 	
 				echo "!-----------"
-				ls -l  "${BUILDDIR}/usr/bin"
+				ls -l d "${BUILDDIR}/usr/bin"
 
-				cp -R ${LINUXAPP}/* "${BUILDDIR}/usr/bin"
-				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' ${BUILDDIR}/Icestudio.desktop
+				cp -R "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin
+				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' "${BUILDDIR}"/Icestudio.desktop
 				cd $DISTDIR
 		
 				echo "${BLUE}Downloading appimage tool${NC}"
