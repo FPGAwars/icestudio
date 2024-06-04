@@ -13,7 +13,7 @@ APPIMAGE_SKEL_DIR="res/AppImage/${APPIMAGE_SKEL}"
 BUILDDIR="${DISTDIR}/icestudio.AppDir"
 APPIMAGETOOL="appimagetool-x86_64.AppImage"
 APPIMAGE_O="Icestudio-x86_64.AppImage"
-APPIMAGE="icestudio-${ICESTUDIO_BUILD_ID}.AppImage"
+APPIMAGE="icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage"
 
 if [ -n "${BUILDDIR}" ]; then
 	echo "${BLUE}Clean previous build ${NC}"
