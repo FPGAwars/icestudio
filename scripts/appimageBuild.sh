@@ -6,18 +6,19 @@ BLUE="\033[1;34m"
 RED="\033[1;31m"
 GREEN="\033[1;32m"
 
-DISTDIR=dist
-LINUXAPP=${DISTDIR}/icestudio/linux64
-APPIMAGE_SKEL=icestudio.AppDir
-APPIMAGE_SKEL_DIR=res/AppImage/${APPIMAGE_SKEL}
+DISTDIR="dist"
+LINUXAPP="${DISTDIR}/icestudio/linux64"
+APPIMAGE_SKEL="icestudio.AppDir"
+APPIMAGE_SKEL_DIR="res/AppImage/${APPIMAGE_SKEL}"
 BUILDDIR="${DISTDIR}/icestudio.AppDir"
-APPIMAGETOOL=appimagetool-x86_64.AppImage
-APPIMAGE_O=Icestudio-x86_64.AppImage
-APPIMAGE=icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage
+APPIMAGETOOL="appimagetool-x86_64.AppImage"
+APPIMAGE_O="Icestudio-x86_64.AppImage"
+APPIMAGE="icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage"
 
 if [ -n "${BUILDDIR}" ]; then
 	echo "${BLUE}Clean previous build ${NC}"
 	rm -rf ${BUILDDIR}
+	sync
 fi
 
 
@@ -25,7 +26,8 @@ if [ -d $LINUXAPP ]; then
 	if [ -d $APPIMAGE_SKEL_DIR ]; then
 		if [ -n "${ICESTUDIO_BUILD_ID}" ]; then
 			echo "${BLUE}Populating appimage skeleton${NC}"
-			cp -R ${APPIMAGE_SKEL_DIR} ${DISTDIR}
+			cp -r ${APPIMAGE_SKEL_DIR} ${DISTDIR}
+			sync
 			echo "!-----------"
 			ls
 			echo "!-----------"
@@ -36,10 +38,12 @@ if [ -d $LINUXAPP ]; then
 				ls -ld  ${BUILDDIR}
 	
 				echo "!-----------"
-				ls -l d "${BUILDDIR}/usr/bin"
+				ls -ld "${BUILDDIR}/usr/bin"
 
-				cp -R "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin
+				cp -r "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin
+				sync
 				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' "${BUILDDIR}"/Icestudio.desktop
+				sync
 				cd $DISTDIR
 		
 				echo "${BLUE}Downloading appimage tool${NC}"
