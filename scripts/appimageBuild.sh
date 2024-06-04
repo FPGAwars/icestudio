@@ -36,9 +36,9 @@ if [ -d $LINUXAPP ]; then
 				ls -l  ${BUILDDIR}
 	
 				echo "!-----------"
-				ls -l  ${BUILDDIR}/usr/bin
+				ls -l  "${BUILDDIR}/usr/bin"
 
-				cp -R ${LINUXAPP}/* ${BUILDDIR}/usr/bin
+				cp -R ${LINUXAPP}/* "${BUILDDIR}/usr/bin"
 				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' ${BUILDDIR}/Icestudio.desktop
 				cd $DISTDIR
 		
