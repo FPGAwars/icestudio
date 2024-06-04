@@ -39,6 +39,7 @@ jobs:
       
       - name: Build Linux
         run: |
+          apt install -y libfuse2
           export DISPLAY=:0.0 
           npm run buildLinux64
           
