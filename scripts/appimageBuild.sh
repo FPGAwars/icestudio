@@ -40,7 +40,10 @@ if [ -d $LINUXAPP ]; then
 				echo "!-----------"
 				ls -ld "${BUILDDIR}/usr/bin"
 
-				cp -r "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin
+				rsync -avH "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin/
+				pwd
+				echo "?-------------"
+				ls
 				sync
 				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' "${BUILDDIR}"/Icestudio.desktop
 				sync
