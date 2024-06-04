@@ -102,7 +102,7 @@ jobs:
       #-- Build for linux
       - name: Build Linux
         run: |
-          apt install -y libfuse2
+          sudo apt install -y libfuse2
           export DISPLAY=:0.0 
           npm run buildLinux64
           echo "====> DEBUG: Contents of the dist folder..."
@@ -207,7 +207,7 @@ jobs:
 
       - name: Build ARM
         run: |
-          apt install -y libfuse2
+          sudo apt install -y libfuse2
           export DISPLAY=:0.0 
           npm run buildAarch64
           echo "====> DEBUG: Contents of the dist folder..."
