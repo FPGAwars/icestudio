@@ -6,14 +6,14 @@ BLUE="\033[1;34m"
 RED="\033[1;31m"
 GREEN="\033[1;32m"
 
-DISTDIR="dist"
-LINUXAPP="${DISTDIR}/icestudio/linux64"
-APPIMAGE_SKEL="icestudio.AppDir"
-APPIMAGE_SKEL_DIR="res/AppImage/${APPIMAGE_SKEL}"
-BUILDDIR="${DISTDIR}/icestudio.AppDir"
-APPIMAGETOOL="appimagetool-x86_64.AppImage"
-APPIMAGE_O="Icestudio-x86_64.AppImage"
-APPIMAGE="icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage"
+DISTDIR=dist
+LINUXAPP=${DISTDIR}/icestudio/linux64
+APPIMAGE_SKEL=icestudio.AppDir
+APPIMAGE_SKEL_DIR=res/AppImage/${APPIMAGE_SKEL}
+BUILDDIR=${DISTDIR}/icestudio.AppDir
+APPIMAGETOOL=appimagetool-x86_64.AppImage
+APPIMAGE_O=Icestudio-x86_64.AppImage
+APPIMAGE=icestudio-${ICESTUDIO_BUILD_ID}-linux64.AppImage
 
 if [ -n "${BUILDDIR}" ]; then
 	echo "${BLUE}Clean previous build ${NC}"
@@ -30,6 +30,7 @@ if [ -d $LINUXAPP ]; then
 			echo "!-----------"
 			cp -R ${APPIMAGE_SKEL_DIR} ${DISTDIR}
 			if [ -n "${BUILDDIR}" ]; then
+				ls ${LINUXAPP}
 				cp -R ${LINUXAPP}/* ${BUILDDIR}/usr/bin
 				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' ${BUILDDIR}/Icestudio.desktop
 				cd $DISTDIR
