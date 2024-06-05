@@ -65,7 +65,8 @@ jobs:
           TIMESTAMP: "${{steps.build_date.outputs.icestudio_timestamp}}"
         uses: 'actions/upload-artifact@v3'
         with:
-          name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          #   name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
           if-no-files-found: error
           
