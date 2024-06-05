@@ -26,27 +26,11 @@ if [ -d $LINUXAPP ]; then
 	if [ -d $APPIMAGE_SKEL_DIR ]; then
 		if [ -n "${ICESTUDIO_BUILD_ID}" ]; then
 			echo "${BLUE}Populating appimage skeleton${NC}"
-			cp -r ${APPIMAGE_SKEL_DIR} ${DISTDIR}
-			sync
-			echo "!-----------"
-			ls
-			echo "!-----------"
+			rsync -aH ${APPIMAGE_SKEL_DIR} ${DISTDIR}
 			if [ -n "${BUILDDIR}" ]; then
-				ls ${LINUXAPP}
-	
-				echo "!-----------"
-				ls -ld  ${BUILDDIR}
-	
-				echo "!-----------"
-				ls -ld "${BUILDDIR}/usr/bin"
 
-				rsync -avH "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin/
-				pwd
-				echo "?-------------"
-				ls
-				sync
+				rsync -aH  "${LINUXAPP}"/* "${BUILDDIR}"/usr/bin/
 				perl -pi -e  's/\{\{icestudioBuildId\}\}/$ENV{"ICESTUDIO_BUILD_ID"}/g' "${BUILDDIR}"/Icestudio.desktop
-				sync
 				cd $DISTDIR
 		
 				echo "${BLUE}Downloading appimage tool${NC}"
