@@ -46,10 +46,7 @@
     "grunt-zip": "^0.18.2",
     "json5": "^2.2.3",
     "npm-platform-dependencies": "0.1.0",
-    //-- For stable version
-    //"nw": "0.83.0",
-    //-- For development version
-    "nw": "0.83.0-sdk",
+    "nw": "0.83.0",
     "nw-builder": "^4.5.4"
   }
   
