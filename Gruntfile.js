@@ -428,17 +428,13 @@ module.exports = function (grunt) {
   //----------------------------------------------------------------------
   //-- APPIMAGE TASK: Build the appimage Linux executable. Constants
   //----------------------------------------------------------------------
-  //-- Path to the Linux icon files
-  const LINUX_ICONS = "docs/resources/icons";
 
-  //-- Linux Executable filename
-  const LINUX_EXEC_FILE = pkg.name;
-
+ 
   //-- Linux final APPIMAGE_FILENAME
   const LINUX_APPIMAGE_FILE = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 +
     ".AppImage";
-
-  //----------------------------------------------------------------------
+  
+	//----------------------------------------------------------------------
   //-- APPDMG TASK: Build the dmg MAC executable. Constants
   //----------------------------------------------------------------------
 
@@ -452,12 +448,6 @@ module.exports = function (grunt) {
   //-- MAC final DMG image
   let MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + ".dmg";
 
-
-  //-- MAC executable filename (inside the DMG image folder)
-  //  const MAC_ARM_EXEC_FILE = DIST_ICESTUDIO_OSXARM64 + "/icestudio.app";
-
-  //-- MAC final DMG image
-  //  const MAC_ARM_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSXARM64 + ".dmg";
 
 
   //----------------------------------------------------------------------
@@ -494,7 +484,7 @@ module.exports = function (grunt) {
     //-- TARGET_LINUX64
     "linux64": [
       "compress:linux64",  //-- Create the Icestudio .zip package
-      "appimage:linux64",  //-- Create the Icestudio appimage package
+      "shell:appImageLinux64",  //-- Create the Icestudio appimage package
     ],
 
     //-- TARGET_WIN64
@@ -667,7 +657,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-json-minify');
   grunt.loadNpmTasks('grunt-nw-builder');
   grunt.loadNpmTasks('grunt-contrib-compress');
-  grunt.loadNpmTasks('grunt-appimage');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-zip');
 
@@ -916,6 +905,17 @@ module.exports = function (grunt) {
         ].join(' && ')
 
       },
+
+
+    //-- TASK: APPIMAGE
+    //-- ONLY LINUX: generate AppImage package
+    appImageLinux64: {
+	 command: [
+          `sync`,
+	  `ICESTUDIO_BUILD_ID=${pkg.version} scripts/appimageBuild.sh`
+          ].join(' && ')
+
+    },
 
     },
 
@@ -1210,41 +1210,7 @@ module.exports = function (grunt) {
 
     },
 
-    //-- TASK: APPIMAGE
-    //-- ONLY LINUX: generate AppImage package
-    //-- More information: https://www.npmjs.com/package/grunt-appimage
-    appimage: {
-      linux64: {
-
-        //-- Information to be included in the appimage
-        options: {
-          name: "Icestudio",
-
-          //-- Executable file
-          exec: LINUX_EXEC_FILE,
-          arch: "64bit",
-          icons: LINUX_ICONS,
-          comment: "Visual editor for open FPGA boards",
-
-          //-- Final APPIMAGE filename
-          archive: LINUX_APPIMAGE_FILE,
-        },
-
-        //-- Files to include in the appimage
-        files: [
-          {
-            expand: true,
-
-            //-- Working directory
-            cwd: DIST_ICESTUDIO_LINUX64,
-
-            //-- Include all the files and folder from the
-            //-- working directory
-            src: ALL,
-          },
-        ],
-      },
-    },
+  
 
 
     //-- TASK: APPDMG
@@ -1293,47 +1259,7 @@ module.exports = function (grunt) {
         dest: MAC_DMG_IMAGE
       },
     },
-    /*  //-- TASK: APPDMGARM64
-      //-- ONLY MAC: generate a DMG package
-      //-- More information: https://www.npmjs.com/package/grunt-appdmg
-      appdmgarm64: {
-  
-        //-- Information to be included in the DMG image
-        options: {
-          basepath: ".",
-          title: "Icestudio Installer",
-          icon: MAC_ICON,
-          background: MAC_DMG_BACKGROUND_IMAGE,
-          window: {
-            size: {
-              width: 512,
-              height: 385,
-            },
-          },
-          contents: [
-            {
-              x: 345,
-              y: 250,
-              type: "link",
-              path: "/Applications",
-            },
-            {
-              x: 170,
-              y: 250,
-  
-              //-- Executable file
-              type: "file",
-              path: MAC_ARM_EXEC_FILE,
-            },
-          ],
-        },
-  
-        //-- Final DMG image
-        target: {
-          dest: MAC_ARM_DMG_IMAGE
-        },
-      },
-  */
+
     //-- TASK: WATCH
     //-- Watch files for changes and run tasks based on the changed files
     //-- More info: https://www.npmjs.com/package/grunt-contrib-watch

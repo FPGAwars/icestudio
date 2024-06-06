@@ -55,7 +55,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.1.0'
+          node-version: '21.1.0'
 
       - name: Install npm dependencies
         run: |  
@@ -102,6 +102,7 @@ jobs:
       #-- Build for linux
       - name: Build Linux
         run: |
+          sudo apt install -y libfuse2
           export DISPLAY=:0.0 
           npm run buildLinux64
           echo "====> DEBUG: Contents of the dist folder..."
@@ -206,6 +207,7 @@ jobs:
 
       - name: Build ARM
         run: |
+          sudo apt install -y libfuse2
           export DISPLAY=:0.0 
           npm run buildAarch64
           echo "====> DEBUG: Contents of the dist folder..."

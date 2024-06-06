@@ -31,7 +31,6 @@
   "devDependencies": {
     "grunt": "^1.4.1",
     "grunt-angular-gettext": "^2.5.3",
-    "grunt-appimage": "^0.6.0",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-compress": "^2.0.0",

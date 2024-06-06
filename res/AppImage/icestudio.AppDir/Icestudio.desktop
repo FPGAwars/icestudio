@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Icestudio
+Comment=Visual editor for open FPGA boards
+Exec=/usr/bin/icestudio
+Icon=icestudio
+Terminal=false
+Type=Application
+X-AppImage-BuildId={{icestudioBuildId}}
+Categories=Development
+
+

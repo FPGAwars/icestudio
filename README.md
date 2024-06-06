@@ -29,13 +29,13 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 * **Step 1**: Draw your circuit
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.6.0-default-.gif)
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.12.0-default-.gif)
 
 
 * **Step 2**: Upload it to your favorite OpenSource FPGA board 
 
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/upload-two-leds-0.6.0-default-.gif)
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/upload-two-leds-0.12.0-default-.gif)
 
 * **Step 3**: Done! 😀️
 
@@ -66,7 +66,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ([SPI Display Notes](https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.7:-Display-SPI-de-4-d%C3%ADgitos-de-7-segmentos)) (In spanish)
 
-![](https://raw.githubusercontent.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/master/wiki/CT7-display-7seg-spi/controller-13.png)
+![](https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-03-1-spi-display-7seg.png)
 
 ## RISC-V CPU
 
@@ -160,8 +160,8 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.11-blue.svg
-[version-image-wip]: https://img.shields.io/badge/version-v0.11.3w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.12-blue.svg
+[version-image-wip]: https://img.shields.io/badge/version-v0.12.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
@@ -175,6 +175,6 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 [build-win-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-windows.yml
 
-[build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
+[build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx-arm64.yml/badge.svg
 
-[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml
+[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx-arm64.yml
