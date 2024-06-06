@@ -112,7 +112,10 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 **Contribute!**
 
+If you need to add packages to package.json main npm file, update it in package.json5 (comments supported), changes in package.json will be overwritted.
+
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
+
 
 *Developer note*: 
   * use `npm run preptext` before doing translation editing: this extracts the labels from the codebase to update template file `template.pot`; it also runs `scripts/update_translations.sh`, to update the existing `*.po` language files so they are synched to the template
