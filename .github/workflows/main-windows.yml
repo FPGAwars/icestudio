@@ -33,7 +33,6 @@ jobs:
       
       - name: Install npm dependencies
         run: |
-          npm install json5 -g
           npm install --legacy-peer-deps 
       
       # It is necesarry to install wine for building the package for

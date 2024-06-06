@@ -36,7 +36,6 @@ jobs:
       
       - name: Install npm dependencies
         run: |
-          npm install json5 -g
           npm install --legacy-peer-deps 
       
       - name: Build Linux

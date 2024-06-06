@@ -34,9 +34,7 @@ jobs:
       
       - name: Install npm dependencies
         run:   |
-          sed -i '' 's/darwinDependencies/dependencies/g' package.json5
-          npm install json5 -g
-          npm install appdmg -g
+          sed -i '' 's/darwinDependencies/dependencies/g' package.json
           npm install --legacy-peer-deps
           
       - name: Build OSX ARM64 packages
