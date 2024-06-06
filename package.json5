@@ -48,15 +48,11 @@
     "npm-platform-dependencies": "0.1.0",
     "nw": "0.83.0",
     "nw-builder": "^4.5.4"
-  }
+  },
   
-  //-- Uncomment for OSX or install by hand
-  //"darwinDependencies": {
-  //  "fs-xattr": "^0.4.0",
-  //  "grunt-appdmg": "github:agoodney/grunt-appdmg"
-  //},
-  //"dependencies": {
-  //  "fs-xattr": "^0.4.0",
-  //  "grunt-appdmg": "github:agoodney/grunt-appdmg"
-  //}
+  //-- It's parsed as "dependencies" block for OSX
+  "darwinDependencies": {
+    "fs-xattr": "^0.4.0",
+    "grunt-appdmg": "github:agoodney/grunt-appdmg"
+  }
 }
