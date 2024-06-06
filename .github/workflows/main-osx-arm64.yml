@@ -36,7 +36,7 @@ jobs:
         run:   |
           sed -i '' 's/darwinDependencies/dependencies/g' package.json
           npm install --legacy-peer-deps
-          
+      
       - name: Build OSX ARM64 packages
         env:
           MACOS_CERTIFICATE: ${{ secrets.APPLE_CERT_DATA }}

@@ -223,7 +223,6 @@ angular
         let hasNewVersion =
           lastversionReview === false || lastversionReview < _package.version;
 
-        console.log('VERSION CHECK', lastversionReview, _package.version);
         //-- Display the version notes, if the option is enabled or
         //-- if this is a newer version
         if (versionW === "yes" || hasNewVersion) {

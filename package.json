@@ -43,13 +43,15 @@
     "grunt-shell": "^3.0.1",
     "grunt-wget": "^0.1.3",
     "grunt-zip": "^0.18.2",
-    "json5": "^2.2.3",
     "npm-platform-dependencies": "0.1.0",
     "nw": "0.83.0",
     "nw-builder": "^4.5.4"
   },
-  
   "darwinDependencies": {
+    "fs-xattr": "^0.4.0",
+    "grunt-appdmg": "github:agoodney/grunt-appdmg"
+  },
+  "dependencies": {
     "fs-xattr": "^0.4.0",
     "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
