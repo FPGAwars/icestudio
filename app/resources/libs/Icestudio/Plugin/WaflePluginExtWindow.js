@@ -38,6 +38,7 @@ class WaflePluginExtWindow extends WaflePlugin {
 
                     ];
                     this.window.pluginID = _this.id();
+                    console.log('Loading NEW WINDOW PLUGIN', this.window.pluginID);
                     let js = [];
                     for (let i = 0; i < JSfileNames.length; i++) {
                         js[i] = document.createElement('script');

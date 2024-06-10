@@ -225,6 +225,7 @@ angular
 
         //-- Display the version notes, if the option is enabled or
         //-- if this is a newer version
+
         if (versionW === "yes" || hasNewVersion) {
           $scope.openVersionInfoWindow();
         }
@@ -271,6 +272,7 @@ angular
           ":checked"
         );
 
+        console.log('VERSION WIN', nodisplay);
         //-- Write the option to the profile file (so that it is remembered
         //--  after icestudio is closed)
         let option = (nodisplay) ? "no" : "yes";

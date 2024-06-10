@@ -251,7 +251,7 @@ var serialManager = function () {
         console.log('ÁREA DE TRABAJO ' + workingPath);
         let OS = require('os').platform();
         let slashOS = (OS === 'win32') ? '\\' : '/';
-        let captureFile = workingPath + slashOS + 'icerok.raw';
+        let captureFile = workingPath + slashOS + 'icerok16bit.raw';
         let captureFile8 = workingPath + slashOS + 'icerok8bit.raw';
 
         captureFileFD = nodeFs.openSync(captureFile, 'w+');
@@ -281,16 +281,20 @@ var serialManager = function () {
 
         let wu16 = 0;
         let stack = [];
+        let stack8 = [];
         for (let i = 0; i < dumpdata.length; i += 2) {
             if ((i + 1) <= (dumpdata.length - 1)) {
                 wu16 = ((dumpdata[i] << 8) | dumpdata[i + 1]) << 4;
                 stack.push(wu16);
+                stack8.push(dumpdata[i + 1]);
+                stack8.push(dumpdata[i]);
                 //console.log(wu16, dumpdata[i], dumpdata[i + 1], dumpdata[i + 1] << 8);
             }
         }
         let dumpdata16 = new Uint16Array(stack);
+        let dumpdata8 = new Uint8Array(stack8);
         nodeFs.write(captureFileFD, dumpdata16, 0, dumpdata16.length, null, function (err) { });
-        nodeFs.write(captureFileFD8, dumpdata, 0, dumpdata.length, null, function (err) { });
+        nodeFs.write(captureFileFD8, dumpdata8, 0, dumpdata8.length, null, function (err) { });
 
 
         console.log('TOTAL', total);
