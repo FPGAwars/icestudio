@@ -117,6 +117,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 |Version | Contributors |
 |--------|--------------|
+| 0.11   | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [mgesteiro](https://github.com/mgesteiro), [Laulin](https://github.com/laulin), [aqumu](https://github.com/aqumu), [Doom4535](https://github.com/Doom4535), [jrwagz](https://github.com/jrwagz), [Saij](https://github.com/Saij), [RBEGamer](https://github.com/RBEGamer), [Fernando Mosquera](https://github.com/benitoss), [ain101](https://github.com/ain101)           |
 | 0.10   | [kanade-k-1228](https://github.com/kanade-k-1228), [vr2045](https://github.com/vr2045), [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan)   |
 | 0.9-1  | [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.9    | [Carlos Venegas Arrabé](https://github.com/cavearr), [mslider](https://github.com/mSlider), [Joaquim (jojo535275)](https://github.com/jojo535275),[Fernando Mosquera](https://github.com/benitoss), [TheSnowfield](https://github.com/TheSnowfield), [Juan González (Obijuan)](https://github.com/Obijuan)  |
