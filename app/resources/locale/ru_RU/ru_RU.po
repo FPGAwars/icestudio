@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #: app/scripts/services/forms.js:1645
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Add"
 msgstr "Добавить"
 
-#: app/scripts/controllers/menu.js:1421
+#: app/scripts/controllers/menu.js:1423
 msgid "Add a block to start"
 msgstr "Добавить блок в начало"
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "Все коллекции удалены"
 
-#: app/scripts/controllers/menu.js:1461
+#: app/scripts/controllers/menu.js:1463
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Все сохраненные коллеции будут удалены. Продолжить ?"
 
@@ -147,11 +147,11 @@ msgstr "Плата"
 msgid "Board rules"
 msgstr "Правила платы"
 
-#: app/scripts/controllers/menu.js:1025
+#: app/scripts/controllers/menu.js:1027
 msgid "Board rules disabled"
 msgstr "Правила платы отключены"
 
-#: app/scripts/controllers/menu.js:1023
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules enabled"
 msgstr "Правила платы включены"
 
@@ -167,7 +167,7 @@ msgstr "Плата {{name}} недоступна"
 msgid "Board {{name}} not connected"
 msgstr "Board {{name}} не подключена"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
 msgid "Board {{name}} selected"
 msgstr "Выбрана плата {{name}}"
 
@@ -175,12 +175,12 @@ msgstr "Выбрана плата {{name}}"
 msgid "Bootloader not active"
 msgstr "Загрузчик не активен"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Собрать"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1377
 msgid "Build done"
 msgstr "Сборка закончена"
 
@@ -249,7 +249,7 @@ msgstr "Нажмите здесь <b>для установки драйверо�
 msgid "Click here to install it"
 msgstr "Нажмите для установки"
 
-#: app/scripts/controllers/menu.js:965
+#: app/scripts/controllers/menu.js:967
 msgid "Click here to view"
 msgstr "Нажмите для просмотра"
 
@@ -261,7 +261,7 @@ msgstr "Сигнал тактирования не разрешен для ши�
 msgid "Clone"
 msgstr "Клонировать"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:76
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
 msgid "Close"
 msgstr "Закрыть"
 
@@ -277,7 +277,7 @@ msgstr "Коллекция"
 msgid "Collection info"
 msgstr "Информация о коллекции"
 
-#: app/scripts/controllers/menu.js:1252
+#: app/scripts/controllers/menu.js:1254
 msgid "Collection {{collection}} info not defined"
 msgstr "Информация для {{collection}} не задана"
 
@@ -297,7 +297,7 @@ msgstr "Коллекция {{name}} удалена"
 msgid "Collection {{name}} replaced"
 msgstr "Коллекция {{name}} замещена"
 
-#: app/scripts/controllers/menu.js:1298
+#: app/scripts/controllers/menu.js:1300
 msgid "Collection {{name}} selected"
 msgstr "Коллекция {{name}} выбрана"
 
@@ -305,7 +305,7 @@ msgstr "Коллекция {{name}} выбрана"
 msgid "Collections"
 msgstr "Коллекции"
 
-#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
 msgid "Command output"
 msgstr "Вывод команды"
 
@@ -399,11 +399,11 @@ msgstr "Описание"
 msgid "Disable"
 msgstr "Отключить"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:587
 msgid "Do you want to close the application?"
 msgstr "Закрыть приложение ?"
 
-#: app/scripts/controllers/menu.js:1444
+#: app/scripts/controllers/menu.js:1446
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Удалить коллекцию {{name}} ?"
 
@@ -472,7 +472,6 @@ msgid "Enter the external collection path"
 msgstr "Путь до сторонней коллекции"
 
 #: app/scripts/services/forms.js:2383
-#, fuzzy
 msgid "Enter the external plugins path"
 msgstr ""
 
@@ -482,16 +481,14 @@ msgid "Enter the log filename"
 msgstr "Выходные блоки"
 
 #: app/scripts/services/forms.js:2438
-#, fuzzy
 msgid "Enter the pip path"
 msgstr ""
 
 #: app/scripts/services/forms.js:2430
-#, fuzzy
 msgid "Enter the python path"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1012
+#: app/scripts/controllers/menu.js:1014
 msgid "Enter the remote hostname user@host"
 msgstr "Удаленный хост в формате user@host"
 
@@ -523,7 +520,7 @@ msgstr "Выполняется удаленно {{label}} ..."
 msgid "Export"
 msgstr "Экспорт"
 
-#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
 msgid "Export submodule"
 msgstr "Экспорт субмодуля"
 
@@ -531,7 +528,7 @@ msgstr "Экспорт субмодуля"
 msgid "External collections"
 msgstr "Сторонняя коллекция"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:939
 msgid "External collections updated"
 msgstr "Сторонние коллекции обновлены"
 
@@ -540,7 +537,7 @@ msgstr "Сторонние коллекции обновлены"
 msgid "External plugins"
 msgstr "Сторонняя коллекция"
 
-#: app/scripts/controllers/menu.js:809
+#: app/scripts/controllers/menu.js:811
 #, fuzzy
 msgid "External plugins updated"
 msgstr "Сторонние коллекции обновлены"
@@ -643,7 +640,7 @@ msgstr "Могли остаться пустые пины, потому что �
 msgid "Image"
 msgstr "Изображение"
 
-#: app/scripts/controllers/menu.js:2164
+#: app/scripts/controllers/menu.js:2166
 msgid "Image {{name}} saved"
 msgstr "Изображение {{name}} сохранено"
 
@@ -768,7 +765,7 @@ msgstr "Неверное соединение: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Неправильные множественные соединения"
 
-#: app/scripts/controllers/menu.js:1948
+#: app/scripts/controllers/menu.js:1950
 msgid "Invalid new name!"
 msgstr ""
 
@@ -776,7 +773,7 @@ msgstr ""
 msgid "Invalid project format"
 msgstr "Неправильный формат проекта"
 
-#: app/scripts/controllers/menu.js:1852
+#: app/scripts/controllers/menu.js:1854
 msgid "Invalid search name!"
 msgstr ""
 
@@ -785,7 +782,6 @@ msgid "Italian"
 msgstr "Итальянский"
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanese"
 msgstr ""
 
@@ -828,7 +824,6 @@ msgid "Local parameter"
 msgstr "Локальный параметр"
 
 #: app/views/menu.html:404
-#, fuzzy
 msgid "Logging enabled"
 msgstr ""
 
@@ -836,7 +831,7 @@ msgstr ""
 msgid "Logging file"
 msgstr "Файл журнала"
 
-#: app/scripts/controllers/menu.js:751
+#: app/scripts/controllers/menu.js:753
 msgid "Logging file updated"
 msgstr "Файл журнала обновлен"
 
@@ -888,11 +883,11 @@ msgstr "Новое имя:"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1472
+#: app/scripts/controllers/menu.js:1474
 msgid "No collections stored"
 msgstr "Нет сохраненных коллекций"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "ОК"
@@ -933,7 +928,6 @@ msgid "Output labels"
 msgstr "Метка вывода"
 
 #: app/scripts/services/forms.js:1135
-#, fuzzy
 msgid "Output port names"
 msgstr ""
 
@@ -950,8 +944,8 @@ msgstr "Парные метки"
 msgid "Paste"
 msgstr "Вставить"
 
-#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
-#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
 msgid "Path {{path}} does not exist"
 msgstr "Путь {{path}} не существует"
 
@@ -971,7 +965,7 @@ msgstr ""
 msgid "Project information"
 msgstr "Информация о проекте"
 
-#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
 msgid "Project information updated"
 msgstr "Информация о проекте обновлена"
 
@@ -987,7 +981,7 @@ msgstr "Проект {{name}} сохранен"
 msgid "Python environment"
 msgstr "Среда Python"
 
-#: app/scripts/controllers/menu.js:873
+#: app/scripts/controllers/menu.js:875
 #, fuzzy
 msgid "Python environment updated"
 msgstr "Среда Python обновлена"
@@ -1061,7 +1055,7 @@ msgstr "Сохранить SVG"
 msgid "Save as"
 msgstr "Сохранить как"
 
-#: app/scripts/controllers/menu.js:348
+#: app/scripts/controllers/menu.js:350
 msgid "Save submodule"
 msgstr "Сохранить субмодуль"
 
@@ -1099,15 +1093,15 @@ msgstr "Испанский"
 msgid "Spring Green"
 msgstr "Весенний зелёный"
 
-#: app/scripts/controllers/menu.js:1374
+#: app/scripts/controllers/menu.js:1376
 msgid "Start build"
 msgstr "Запуск сборки"
 
-#: app/scripts/controllers/menu.js:1400
+#: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
 msgstr "Запуск загрузки в плату"
 
-#: app/scripts/controllers/menu.js:1351
+#: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
 msgstr "Запуск проверки"
 
@@ -1141,7 +1135,7 @@ msgstr "Большое спасибо!"
 msgid "The collection {{name}} already exists."
 msgstr "Коллекция {{name}} уже существует."
 
-#: app/scripts/controllers/menu.js:1323
+#: app/scripts/controllers/menu.js:1325
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
@@ -1199,7 +1193,7 @@ msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr ""
 "Для перемещения по схеме, вы должны сперва закрыть \"режим редактирования\"."
 
-#: app/scripts/controllers/menu.js:349
+#: app/scripts/controllers/menu.js:351
 #, fuzzy
 msgid ""
 "To save your design you need to lock the padlock and               go to the "
@@ -1248,11 +1242,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1036
+#: app/scripts/controllers/menu.js:1038
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1033
+#: app/scripts/controllers/menu.js:1035
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1289,12 +1283,12 @@ msgstr "Безымянный"
 msgid "Update (Latest stable)"
 msgstr "Обновить (последняя стабильная версия)"
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Загрузка"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1403
 msgid "Upload done"
 msgstr "Загрузка завершена"
 
@@ -1302,7 +1296,7 @@ msgstr "Загрузка завершена"
 msgid "Using external Apio: {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1354
 msgid "Verification done"
 msgstr "Проверка завершена"
 
@@ -1365,11 +1359,11 @@ msgstr "Желтый"
 msgid "Yes"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:411
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Вы работаете с субмодулем. Если вы сохраните его, то будет сохранен только "
 "субмодуль (в таких случаях команда \"Сохранить как\" работает как \"Экспорт "
@@ -1383,7 +1377,7 @@ msgstr ""
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:396
+#: app/scripts/controllers/menu.js:398
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
@@ -1397,7 +1391,7 @@ msgstr ""
 "Вы можете загрузить проект \"как есть\" или сконвертировать для платы "
 "{{name}}"
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1368
 #, fuzzy
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
@@ -1406,7 +1400,7 @@ msgstr ""
 "Сборка возможна на верхнем уровне. В субмодулях доступна только "
 "<strong>Проверка</strong>"
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1393
 #, fuzzy
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
@@ -1419,7 +1413,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr "Вы можете прочитать примечания к выпуску"
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:591
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Ваши изменения могут быть потеряны, если вы их не сохраните"
 
@@ -1431,18 +1425,18 @@ msgstr "назад"
 msgid "{{app}} is required."
 msgstr "Требуется приложение {{app}}."
 
-#: app/scripts/controllers/menu.js:1138
+#: app/scripts/controllers/menu.js:1140
 msgid "{{board}} datasheet not defined"
 msgstr "Даташит для {{board}} не определен"
 
-#: app/scripts/controllers/menu.js:1124
+#: app/scripts/controllers/menu.js:1126
 msgid "{{board}} pinout not defined"
 msgstr "Разводка платы {{board}} не определена"
 
-#: app/scripts/controllers/menu.js:1164
+#: app/scripts/controllers/menu.js:1166
 msgid "{{board}} rules not defined"
 msgstr "Правила для платы {{board}} не определены"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
 msgid "{{name}} exported"
 msgstr "{{name}} экспортирован(о)"

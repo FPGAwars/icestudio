@@ -66,7 +66,7 @@ msgstr "Poděkování"
 msgid "Add"
 msgstr "Přidat"
 
-#: app/scripts/controllers/menu.js:1421
+#: app/scripts/controllers/menu.js:1423
 msgid "Add a block to start"
 msgstr "Přidat blok na začátek"
 
@@ -86,7 +86,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "Všechny kolekce odstraněny"
 
-#: app/scripts/controllers/menu.js:1461
+#: app/scripts/controllers/menu.js:1463
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Všechny uložené kolekce budou zahozeny. Přejete si pokračovat?"
 
@@ -156,11 +156,11 @@ msgstr "Deska"
 msgid "Board rules"
 msgstr "Pravidla desky"
 
-#: app/scripts/controllers/menu.js:1025
+#: app/scripts/controllers/menu.js:1027
 msgid "Board rules disabled"
 msgstr "Pravidla desky zakázána"
 
-#: app/scripts/controllers/menu.js:1023
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules enabled"
 msgstr "Pravidla desky povolena"
 
@@ -176,7 +176,7 @@ msgstr "Deska {{name}} není dostupná"
 msgid "Board {{name}} not connected"
 msgstr "Deska {{name}} není připojena"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
 msgid "Board {{name}} selected"
 msgstr "Deska {{name}} vybrána"
 
@@ -184,12 +184,12 @@ msgstr "Deska {{name}} vybrána"
 msgid "Bootloader not active"
 msgstr "Zavaděč není aktivní"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Sestavení"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1377
 msgid "Build done"
 msgstr "Sestavení hotovo"
 
@@ -255,7 +255,7 @@ msgstr "Klikněte zde <b>pro instalování ovladačů</b>"
 msgid "Click here to install it"
 msgstr "Pro instalaci klikněte zde"
 
-#: app/scripts/controllers/menu.js:965
+#: app/scripts/controllers/menu.js:967
 msgid "Click here to view"
 msgstr "Pro zobrazení klikněte zde"
 
@@ -267,7 +267,7 @@ msgstr "Hodiny nejsou povoleny pro datové sběrnice"
 msgid "Clone"
 msgstr "Klonovat"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:76
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
 msgid "Close"
 msgstr "Zavřít"
 
@@ -283,7 +283,7 @@ msgstr "Kolekce"
 msgid "Collection info"
 msgstr "Informace o kolekci"
 
-#: app/scripts/controllers/menu.js:1252
+#: app/scripts/controllers/menu.js:1254
 msgid "Collection {{collection}} info not defined"
 msgstr "Informace o kolekci {{collection}} nejsou definovány"
 
@@ -303,7 +303,7 @@ msgstr "Kolekce {{name}} odstraněna"
 msgid "Collection {{name}} replaced"
 msgstr "Kolekce {{name}} nahrazena"
 
-#: app/scripts/controllers/menu.js:1298
+#: app/scripts/controllers/menu.js:1300
 msgid "Collection {{name}} selected"
 msgstr "Kolekce {{name}} vybrána"
 
@@ -311,7 +311,7 @@ msgstr "Kolekce {{name}} vybrána"
 msgid "Collections"
 msgstr "Kolekce"
 
-#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
 msgid "Command output"
 msgstr "Výstup"
 
@@ -399,11 +399,11 @@ msgstr "Popis"
 msgid "Disable"
 msgstr "Zakázat"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:587
 msgid "Do you want to close the application?"
 msgstr "Chcete zavřít aplikaci?"
 
-#: app/scripts/controllers/menu.js:1444
+#: app/scripts/controllers/menu.js:1446
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Chcete odstranit kolekci {{name}}?"
 
@@ -487,7 +487,7 @@ msgstr "Zadejte cestu k programu pip"
 msgid "Enter the python path"
 msgstr "Zadejte cestu k pythonu"
 
-#: app/scripts/controllers/menu.js:1012
+#: app/scripts/controllers/menu.js:1014
 msgid "Enter the remote hostname user@host"
 msgstr "Zadejte vzdáleného hostitele uživatel@hostitel"
 
@@ -519,7 +519,7 @@ msgstr "Spouštění vzdáleně {{label}} ..."
 msgid "Export"
 msgstr "Exportovat"
 
-#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
 msgid "Export submodule"
 msgstr "Exportovat submodul"
 
@@ -527,7 +527,7 @@ msgstr "Exportovat submodul"
 msgid "External collections"
 msgstr "Externí kolekce"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:939
 msgid "External collections updated"
 msgstr "Externí kolekce aktualizována"
 
@@ -535,7 +535,7 @@ msgstr "Externí kolekce aktualizována"
 msgid "External plugins"
 msgstr "Externí zásuvné moduly"
 
-#: app/scripts/controllers/menu.js:809
+#: app/scripts/controllers/menu.js:811
 msgid "External plugins updated"
 msgstr "Externí zásuvné moduly aktualizovány"
 
@@ -637,7 +637,7 @@ msgstr ""
 msgid "Image"
 msgstr "Obraz"
 
-#: app/scripts/controllers/menu.js:2164
+#: app/scripts/controllers/menu.js:2166
 msgid "Image {{name}} saved"
 msgstr "Obraz {{name}} uložen"
 
@@ -756,7 +756,7 @@ msgstr "Neplatné spojení: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Neplatné vícenásobná vstupní připojení"
 
-#: app/scripts/controllers/menu.js:1948
+#: app/scripts/controllers/menu.js:1950
 msgid "Invalid new name!"
 msgstr ""
 
@@ -764,7 +764,7 @@ msgstr ""
 msgid "Invalid project format"
 msgstr "Neplatný formát projektu"
 
-#: app/scripts/controllers/menu.js:1852
+#: app/scripts/controllers/menu.js:1854
 msgid "Invalid search name!"
 msgstr ""
 
@@ -820,7 +820,7 @@ msgstr "Protokolování povoleno"
 msgid "Logging file"
 msgstr "Soubor protokolu"
 
-#: app/scripts/controllers/menu.js:751
+#: app/scripts/controllers/menu.js:753
 msgid "Logging file updated"
 msgstr "Soubor protokolu aktualizován"
 
@@ -870,11 +870,11 @@ msgstr "Nové jméno:"
 msgid "Next"
 msgstr "Další"
 
-#: app/scripts/controllers/menu.js:1472
+#: app/scripts/controllers/menu.js:1474
 msgid "No collections stored"
 msgstr "Žádné kolekce neuloženy"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "Budiž"
@@ -929,8 +929,8 @@ msgstr "Párované popisky"
 msgid "Paste"
 msgstr "Vložit"
 
-#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
-#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
 msgid "Path {{path}} does not exist"
 msgstr "Cesta {{path}} neexistuje"
 
@@ -950,7 +950,7 @@ msgstr "Před."
 msgid "Project information"
 msgstr "Informace o projektu"
 
-#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
 msgid "Project information updated"
 msgstr "Informace o projektu aktualizovány"
 
@@ -966,7 +966,7 @@ msgstr "Projekt {{name}} uložen"
 msgid "Python environment"
 msgstr "Prostředí Pythonu"
 
-#: app/scripts/controllers/menu.js:873
+#: app/scripts/controllers/menu.js:875
 #, fuzzy
 msgid "Python environment updated"
 msgstr "Prostředí Pythonu aktualizováno"
@@ -1039,7 +1039,7 @@ msgstr "Uložit SVG"
 msgid "Save as"
 msgstr "Uložit jako"
 
-#: app/scripts/controllers/menu.js:348
+#: app/scripts/controllers/menu.js:350
 msgid "Save submodule"
 msgstr "Uložit submodul"
 
@@ -1075,15 +1075,15 @@ msgstr "Španělština"
 msgid "Spring Green"
 msgstr "Jarní zelená"
 
-#: app/scripts/controllers/menu.js:1374
+#: app/scripts/controllers/menu.js:1376
 msgid "Start build"
 msgstr "Začínám překlad"
 
-#: app/scripts/controllers/menu.js:1400
+#: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
 msgstr "Začínám nahrávat"
 
-#: app/scripts/controllers/menu.js:1351
+#: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
 msgstr "Začínám kontrolovat"
 
@@ -1115,7 +1115,7 @@ msgstr "Děkuji mnohokrát!"
 msgid "The collection {{name}} already exists."
 msgstr "Kolekce {{name}} již existuje."
 
-#: app/scripts/controllers/menu.js:1323
+#: app/scripts/controllers/menu.js:1325
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "the {{name}} board?"
@@ -1174,7 +1174,7 @@ msgstr ""
 msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr "Pro procházení návrhu musíte uzavřít režim úprav."
 
-#: app/scripts/controllers/menu.js:349
+#: app/scripts/controllers/menu.js:351
 msgid ""
 "To save your design you need to lock the padlock and               go to the "
 "top-level design.<br/><br/>If you want to export               this "
@@ -1221,11 +1221,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1036
+#: app/scripts/controllers/menu.js:1038
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1033
+#: app/scripts/controllers/menu.js:1035
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1261,12 +1261,12 @@ msgstr "Nepojmenovaný"
 msgid "Update (Latest stable)"
 msgstr "Aktualizovat (Poslední stabilní)"
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Nahrát"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1403
 msgid "Upload done"
 msgstr "Nahrávání hotovo"
 
@@ -1274,7 +1274,7 @@ msgstr "Nahrávání hotovo"
 msgid "Using external Apio: {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1354
 msgid "Verification done"
 msgstr "Kontrola hotová"
 
@@ -1336,10 +1336,10 @@ msgstr "Žlutá"
 msgid "Yes"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:411
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Upravujete submodul, pokud bude ukládat, uložíte pouze submodul (v této "
 "situaci \"uložit jako\" funguje jako \"exportovat modul\"). Chcete "
@@ -1353,7 +1353,7 @@ msgstr ""
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:396
+#: app/scripts/controllers/menu.js:398
 #, fuzzy
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
@@ -1368,7 +1368,7 @@ msgstr ""
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "Můžete nahrát tak jak je, nebo převést pro desku {{name}}."
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1368
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
@@ -1376,7 +1376,7 @@ msgstr ""
 "Sestavovat můžete pouze na nejvyšší úrovni návrhu. Uvnitř submodulů můžete "
 "pouze <strong>Verifikovat</strong>"
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1393
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
@@ -1388,7 +1388,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr "Poznámky k vydání můžete přečíst na"
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:591
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Vaše změny budou ztraceny pokud je neuložíte"
 
@@ -1400,18 +1400,18 @@ msgstr "zpět"
 msgid "{{app}} is required."
 msgstr "{{app}} je vyžadováno."
 
-#: app/scripts/controllers/menu.js:1138
+#: app/scripts/controllers/menu.js:1140
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} katalogový list není definován"
 
-#: app/scripts/controllers/menu.js:1124
+#: app/scripts/controllers/menu.js:1126
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} vývody nejsou definované"
 
-#: app/scripts/controllers/menu.js:1164
+#: app/scripts/controllers/menu.js:1166
 msgid "{{board}} rules not defined"
 msgstr "{{board}} pravidla nejsou definována"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
 msgid "{{name}} exported"
 msgstr "{{name}} exportováno"

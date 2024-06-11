@@ -56,7 +56,7 @@ msgstr ""
 msgid "Add"
 msgstr "Afegeix"
 
-#: app/scripts/controllers/menu.js:1421
+#: app/scripts/controllers/menu.js:1423
 msgid "Add a block to start"
 msgstr "Afegeix un bloc per a iniciar"
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "Col·leccions eliminades"
 
-#: app/scripts/controllers/menu.js:1461
+#: app/scripts/controllers/menu.js:1463
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Totes les col·leccions emmagatzemades es perdran. Vols continuar?"
 
@@ -146,11 +146,11 @@ msgstr "Placa"
 msgid "Board rules"
 msgstr "Regles de la placa"
 
-#: app/scripts/controllers/menu.js:1025
+#: app/scripts/controllers/menu.js:1027
 msgid "Board rules disabled"
 msgstr "Regles de la placa inhabilitades"
 
-#: app/scripts/controllers/menu.js:1023
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules enabled"
 msgstr "Regles de la placa habilitades"
 
@@ -166,7 +166,7 @@ msgstr "Placa {{name}} no disponible"
 msgid "Board {{name}} not connected"
 msgstr "Placa {{name}} no connectada"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
 msgid "Board {{name}} selected"
 msgstr "Placa {{name}} seleccionada"
 
@@ -174,13 +174,13 @@ msgstr "Placa {{name}} seleccionada"
 msgid "Bootloader not active"
 msgstr "Bootloader no actiu"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
 #, fuzzy
 msgid "Build"
 msgstr "Síntetitza"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1377
 msgid "Build done"
 msgstr "Síntesi realitzat"
 
@@ -249,7 +249,7 @@ msgstr "Fes clic aquí per <b>configurar els drivers</b>"
 msgid "Click here to install it"
 msgstr "Fes clic aquí per instal·lar-ho"
 
-#: app/scripts/controllers/menu.js:965
+#: app/scripts/controllers/menu.js:967
 msgid "Click here to view"
 msgstr "Fes clic aquí per veure"
 
@@ -261,7 +261,7 @@ msgstr "Rellotge no permès per a busos de dades"
 msgid "Clone"
 msgstr "Clona"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:76
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
 msgid "Close"
 msgstr "Tanca"
 
@@ -277,7 +277,7 @@ msgstr "Col·lecció"
 msgid "Collection info"
 msgstr "Informació de la col·lecció"
 
-#: app/scripts/controllers/menu.js:1252
+#: app/scripts/controllers/menu.js:1254
 msgid "Collection {{collection}} info not defined"
 msgstr "Informació de la col·lecció {{collection}} no definida"
 
@@ -297,7 +297,7 @@ msgstr "Col·lecció {{name}} eliminada"
 msgid "Collection {{name}} replaced"
 msgstr "Col·lecció {{name}} reemplaçada"
 
-#: app/scripts/controllers/menu.js:1298
+#: app/scripts/controllers/menu.js:1300
 msgid "Collection {{name}} selected"
 msgstr "Col·lecció {{name}} seleccionada"
 
@@ -305,7 +305,7 @@ msgstr "Col·lecció {{name}} seleccionada"
 msgid "Collections"
 msgstr "Col·leccions"
 
-#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
 msgid "Command output"
 msgstr "Sortida d'ordres"
 
@@ -322,7 +322,6 @@ msgid "Constant"
 msgstr "Constant"
 
 #: app/scripts/services/forms.js:2103
-#, fuzzy
 msgid "Constant names"
 msgstr ""
 
@@ -395,11 +394,11 @@ msgstr "Descripció"
 msgid "Disable"
 msgstr "Inhabilita"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:587
 msgid "Do you want to close the application?"
 msgstr "Vols tancar l'aplicació?"
 
-#: app/scripts/controllers/menu.js:1444
+#: app/scripts/controllers/menu.js:1446
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Vols eliminar la col·lecció {{name}}?"
 
@@ -431,7 +430,6 @@ msgid "Drivers enabled"
 msgstr "Drivers habilitats"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
 msgstr ""
 
@@ -440,7 +438,6 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "Ports d'E/S de la FPGA duplicats"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
 msgid "Duplicate port name: {{name}}"
 msgstr ""
 
@@ -475,12 +472,10 @@ msgid "Enter the external plugins path"
 msgstr "Introdueix la ruta de les plugins externes"
 
 #: app/scripts/services/forms.js:2337
-#, fuzzy
 msgid "Enter the log filename"
 msgstr ""
 
 #: app/scripts/services/forms.js:2438
-#, fuzzy
 msgid "Enter the pip path"
 msgstr ""
 
@@ -489,7 +484,7 @@ msgstr ""
 msgid "Enter the python path"
 msgstr "Introdueix la ruta de python"
 
-#: app/scripts/controllers/menu.js:1012
+#: app/scripts/controllers/menu.js:1014
 msgid "Enter the remote hostname user@host"
 msgstr "Introdueix el nom del host remot usuari@host"
 
@@ -521,7 +516,7 @@ msgstr "Executa {{label}} remot..."
 msgid "Export"
 msgstr "Exporta"
 
-#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
 msgid "Export submodule"
 msgstr "Exporta submòdul"
 
@@ -529,7 +524,7 @@ msgstr "Exporta submòdul"
 msgid "External collections"
 msgstr "Col·leccions externes"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:939
 msgid "External collections updated"
 msgstr "Col·leccions externes actualitzades"
 
@@ -538,7 +533,7 @@ msgstr "Col·leccions externes actualitzades"
 msgid "External plugins"
 msgstr "Plugins externes"
 
-#: app/scripts/controllers/menu.js:809
+#: app/scripts/controllers/menu.js:811
 #, fuzzy
 msgid "External plugins updated"
 msgstr "Plugins externes actualitzades"
@@ -644,7 +639,7 @@ msgstr ""
 msgid "Image"
 msgstr "Imatge"
 
-#: app/scripts/controllers/menu.js:2164
+#: app/scripts/controllers/menu.js:2166
 msgid "Image {{name}} saved"
 msgstr "Imatge {{name}} desada"
 
@@ -765,7 +760,7 @@ msgstr "Connexió no vàlida: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Connexions d'entrada múltiple no vàlides"
 
-#: app/scripts/controllers/menu.js:1948
+#: app/scripts/controllers/menu.js:1950
 #, fuzzy
 msgid "Invalid new name!"
 msgstr "Nom del port incorrecte"
@@ -774,7 +769,7 @@ msgstr "Nom del port incorrecte"
 msgid "Invalid project format"
 msgstr "Format de projecte no vàlid"
 
-#: app/scripts/controllers/menu.js:1852
+#: app/scripts/controllers/menu.js:1854
 msgid "Invalid search name!"
 msgstr ""
 
@@ -824,7 +819,6 @@ msgid "Local parameter"
 msgstr "Paràmetre local"
 
 #: app/views/menu.html:404
-#, fuzzy
 msgid "Logging enabled"
 msgstr ""
 
@@ -832,7 +826,7 @@ msgstr ""
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:751
+#: app/scripts/controllers/menu.js:753
 msgid "Logging file updated"
 msgstr ""
 
@@ -882,11 +876,11 @@ msgstr "Nom:"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1472
+#: app/scripts/controllers/menu.js:1474
 msgid "No collections stored"
 msgstr "Cap col·lecció emmagatzemada"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "D'acord"
@@ -942,8 +936,8 @@ msgstr ""
 msgid "Paste"
 msgstr "Enganxa"
 
-#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
-#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
 msgid "Path {{path}} does not exist"
 msgstr "La ruta {{path}} no existeix"
 
@@ -963,7 +957,7 @@ msgstr ""
 msgid "Project information"
 msgstr "Informació del projecte"
 
-#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
 msgid "Project information updated"
 msgstr "Informació del projecte actualitzada"
 
@@ -979,7 +973,7 @@ msgstr "Projecte {{name}} desat"
 msgid "Python environment"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:873
+#: app/scripts/controllers/menu.js:875
 msgid "Python environment updated"
 msgstr ""
 
@@ -988,7 +982,6 @@ msgid "Quit"
 msgstr "Tanca"
 
 #: app/scripts/services/forms.js:390 app/views/design.html:115
-#, fuzzy
 msgid "Red"
 msgstr ""
 
@@ -1052,7 +1045,7 @@ msgstr "Desa SVG"
 msgid "Save as"
 msgstr "Anomena i desa"
 
-#: app/scripts/controllers/menu.js:348
+#: app/scripts/controllers/menu.js:350
 msgid "Save submodule"
 msgstr "Desa submòdul"
 
@@ -1088,15 +1081,15 @@ msgstr "Espanyol"
 msgid "Spring Green"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1374
+#: app/scripts/controllers/menu.js:1376
 msgid "Start build"
 msgstr "Inicia síntesi"
 
-#: app/scripts/controllers/menu.js:1400
+#: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
 msgstr "Inicia càrrega"
 
-#: app/scripts/controllers/menu.js:1351
+#: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
 msgstr "Inicia verificació"
 
@@ -1129,7 +1122,7 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr "La col·leccio {{name}} ja existeix."
 
-#: app/scripts/controllers/menu.js:1323
+#: app/scripts/controllers/menu.js:1325
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
@@ -1186,7 +1179,7 @@ msgstr ""
 msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr "Per navegar pel disseny, cal tancar el \"mode d'edició\"."
 
-#: app/scripts/controllers/menu.js:349
+#: app/scripts/controllers/menu.js:351
 #, fuzzy
 msgid ""
 "To save your design you need to lock the padlock and               go to the "
@@ -1235,11 +1228,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1036
+#: app/scripts/controllers/menu.js:1038
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1033
+#: app/scripts/controllers/menu.js:1035
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1272,16 +1265,15 @@ msgid "Untitled"
 msgstr "Sense títol"
 
 #: app/views/menu.html:639
-#, fuzzy
 msgid "Update (Latest stable)"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Carrega"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1403
 msgid "Upload done"
 msgstr "Càrrega realitzada"
 
@@ -1289,7 +1281,7 @@ msgstr "Càrrega realitzada"
 msgid "Using external Apio: {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1354
 msgid "Verification done"
 msgstr "Verificació realitzada"
 
@@ -1352,11 +1344,11 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:411
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Estàs editant un submòdul, si el deses, només es desarà el submòdul (en "
 "aquesta situació \"anomena i desa\" funciona com \"exporta mòdul\"), Vols "
@@ -1370,8 +1362,7 @@ msgstr ""
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:396
-#, fuzzy
+#: app/scripts/controllers/menu.js:398
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
@@ -1383,7 +1374,7 @@ msgstr ""
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "Pots carregar-ho com està o convertir-ho per a la placa {{name}}."
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1368
 #, fuzzy
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
@@ -1392,7 +1383,7 @@ msgstr ""
 "Només pots construir en el disseny de nivell superior. Dins dels submòduls "
 "només pots <strong>Verificar</strong>"
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1393
 #, fuzzy
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
@@ -1405,7 +1396,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:591
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Els teus canvis es perdran si no els deses"
 
@@ -1417,18 +1408,18 @@ msgstr "enrere"
 msgid "{{app}} is required."
 msgstr "És necessari {{app}}."
 
-#: app/scripts/controllers/menu.js:1138
+#: app/scripts/controllers/menu.js:1140
 msgid "{{board}} datasheet not defined"
 msgstr "Full de dades de {{board}} no definit"
 
-#: app/scripts/controllers/menu.js:1124
+#: app/scripts/controllers/menu.js:1126
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} pinout no definit"
 
-#: app/scripts/controllers/menu.js:1164
+#: app/scripts/controllers/menu.js:1166
 msgid "{{board}} rules not defined"
 msgstr "Regles de {{board}} no definides"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
 msgid "{{name}} exported"
 msgstr "{{name}} exportat"

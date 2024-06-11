@@ -56,7 +56,7 @@ msgstr "致謝"
 msgid "Add"
 msgstr "新增"
 
-#: app/scripts/controllers/menu.js:1421
+#: app/scripts/controllers/menu.js:1423
 msgid "Add a block to start"
 msgstr "新增區塊並開始"
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "已刪除全部選集"
 
-#: app/scripts/controllers/menu.js:1461
+#: app/scripts/controllers/menu.js:1463
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "儲存的選集會全部消失，是否要繼續?"
 
@@ -146,11 +146,11 @@ msgstr "開發板"
 msgid "Board rules"
 msgstr "開發板規則"
 
-#: app/scripts/controllers/menu.js:1025
+#: app/scripts/controllers/menu.js:1027
 msgid "Board rules disabled"
 msgstr "開發板規則停用"
 
-#: app/scripts/controllers/menu.js:1023
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules enabled"
 msgstr "開發板規則啟用"
 
@@ -166,7 +166,7 @@ msgstr "開發板 {{name}}無法使用"
 msgid "Board {{name}} not connected"
 msgstr "開發板 {{name}} 未連線"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
 msgid "Board {{name}} selected"
 msgstr "開發板{{name}} 已選中"
 
@@ -174,12 +174,12 @@ msgstr "開發板{{name}} 已選中"
 msgid "Bootloader not active"
 msgstr "Bootloader 未啟動"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "建構"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1377
 msgid "Build done"
 msgstr "建構完成"
 
@@ -248,7 +248,7 @@ msgstr "點按這裡 <b>安裝驅動程式</b>"
 msgid "Click here to install it"
 msgstr "點按這裡安裝"
 
-#: app/scripts/controllers/menu.js:965
+#: app/scripts/controllers/menu.js:967
 msgid "Click here to view"
 msgstr "點按這裡瀏覽"
 
@@ -260,7 +260,7 @@ msgstr "時脈不合於資料匯流排線"
 msgid "Clone"
 msgstr "Clone"
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:76
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
 msgid "Close"
 msgstr "關閉"
 
@@ -276,7 +276,7 @@ msgstr "選集"
 msgid "Collection info"
 msgstr "選集資訊"
 
-#: app/scripts/controllers/menu.js:1252
+#: app/scripts/controllers/menu.js:1254
 msgid "Collection {{collection}} info not defined"
 msgstr "選集 {{collection}} 資訊未定義"
 
@@ -296,7 +296,7 @@ msgstr "已移除 {{name}} 選集"
 msgid "Collection {{name}} replaced"
 msgstr "已替換 {{name}} 選集"
 
-#: app/scripts/controllers/menu.js:1298
+#: app/scripts/controllers/menu.js:1300
 msgid "Collection {{name}} selected"
 msgstr "選中 {{name}} 選集"
 
@@ -304,7 +304,7 @@ msgstr "選中 {{name}} 選集"
 msgid "Collections"
 msgstr "範例選集組"
 
-#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
 msgid "Command output"
 msgstr "查看執行結果"
 
@@ -397,11 +397,11 @@ msgstr "說明"
 msgid "Disable"
 msgstr "取消"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:587
 msgid "Do you want to close the application?"
 msgstr "您是否關閉應用程式?"
 
-#: app/scripts/controllers/menu.js:1444
+#: app/scripts/controllers/menu.js:1446
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是是否要移除這 {{name}} 選集?"
 
@@ -435,7 +435,6 @@ msgid "Drivers enabled"
 msgstr "啟用驅動程式"
 
 #: app/views/menu.html:287
-#, fuzzy
 msgid "Duplicate"
 msgstr ""
 
@@ -444,7 +443,6 @@ msgid "Duplicate FPGA I/O ports"
 msgstr "重複的 FPGA I/O 接腳"
 
 #: app/scripts/services/forms.js:1817
-#, fuzzy
 msgid "Duplicate port name: {{name}}"
 msgstr ""
 
@@ -490,7 +488,7 @@ msgstr ""
 msgid "Enter the python path"
 msgstr "輸入 python 版本 > 3.8 的路徑"
 
-#: app/scripts/controllers/menu.js:1012
+#: app/scripts/controllers/menu.js:1014
 msgid "Enter the remote hostname user@host"
 msgstr "輸入遠端主機 用戶名@主機名"
 
@@ -522,7 +520,7 @@ msgstr "遠端執行 {{label}} ..."
 msgid "Export"
 msgstr "導出"
 
-#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
 msgid "Export submodule"
 msgstr "輸出子模組"
 
@@ -530,7 +528,7 @@ msgstr "輸出子模組"
 msgid "External collections"
 msgstr "外部選集"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:939
 msgid "External collections updated"
 msgstr "外部選集已更新"
 
@@ -538,7 +536,7 @@ msgstr "外部選集已更新"
 msgid "External plugins"
 msgstr "外部外掛"
 
-#: app/scripts/controllers/menu.js:809
+#: app/scripts/controllers/menu.js:811
 msgid "External plugins updated"
 msgstr "外部外掛已更新"
 
@@ -640,7 +638,7 @@ msgstr "若您看到空的輸入輸出接腳，這是因為這塊開發板上沒
 msgid "Image"
 msgstr "圖像"
 
-#: app/scripts/controllers/menu.js:2164
+#: app/scripts/controllers/menu.js:2166
 msgid "Image {{name}} saved"
 msgstr "圖像 {{name}} 已儲存"
 
@@ -662,22 +660,18 @@ msgid "Input label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1477
-#, fuzzy
 msgid "Input labels"
 msgstr ""
 
 #: app/scripts/services/forms.js:1629
-#, fuzzy
 msgid "Input parameters"
 msgstr ""
 
 #: app/scripts/services/forms.js:989
-#, fuzzy
 msgid "Input port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1615
-#, fuzzy
 msgid "Input ports"
 msgstr ""
 
@@ -755,7 +749,7 @@ msgstr "無效的連接: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "無效的多輸入連接"
 
-#: app/scripts/controllers/menu.js:1948
+#: app/scripts/controllers/menu.js:1950
 msgid "Invalid new name!"
 msgstr ""
 
@@ -763,7 +757,7 @@ msgstr ""
 msgid "Invalid project format"
 msgstr "無效的專案格式"
 
-#: app/scripts/controllers/menu.js:1852
+#: app/scripts/controllers/menu.js:1854
 msgid "Invalid search name!"
 msgstr ""
 
@@ -772,7 +766,6 @@ msgid "Italian"
 msgstr "Italian"
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanese"
 msgstr ""
 
@@ -781,12 +774,10 @@ msgid "Korean"
 msgstr "Korean"
 
 #: app/views/menu.html:328
-#, fuzzy
 msgid "Label finder"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1039
-#, fuzzy
 msgid "Label updated"
 msgstr ""
 
@@ -824,7 +815,7 @@ msgstr ""
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:751
+#: app/scripts/controllers/menu.js:753
 msgid "Logging file updated"
 msgstr ""
 
@@ -842,7 +833,6 @@ msgid "Memory"
 msgstr "記憶體"
 
 #: app/scripts/services/forms.js:1888
-#, fuzzy
 msgid "Memory block names"
 msgstr ""
 
@@ -851,7 +841,6 @@ msgid "Name"
 msgstr "名稱"
 
 #: app/scripts/services/forms.js:1539
-#, fuzzy
 msgid "Names of the paired labels"
 msgstr ""
 
@@ -876,11 +865,11 @@ msgstr "名稱:"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1472
+#: app/scripts/controllers/menu.js:1474
 msgid "No collections stored"
 msgstr "沒有儲存的選集"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "確定"
@@ -922,12 +911,10 @@ msgid "Output labels"
 msgstr "輸出標籤"
 
 #: app/scripts/services/forms.js:1135
-#, fuzzy
 msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
-#, fuzzy
 msgid "Output ports"
 msgstr ""
 
@@ -939,8 +926,8 @@ msgstr ""
 msgid "Paste"
 msgstr "貼上"
 
-#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
-#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
 msgid "Path {{path}} does not exist"
 msgstr "路徑 {{path}} 不存在"
 
@@ -960,7 +947,7 @@ msgstr ""
 msgid "Project information"
 msgstr "專案資訊"
 
-#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
 msgid "Project information updated"
 msgstr "專案資訊已更新"
 
@@ -976,7 +963,7 @@ msgstr "專案 {{name}} 已儲存"
 msgid "Python environment"
 msgstr "Python 環境"
 
-#: app/scripts/controllers/menu.js:873
+#: app/scripts/controllers/menu.js:875
 #, fuzzy
 msgid "Python environment updated"
 msgstr "Python 環境已更新"
@@ -1050,7 +1037,7 @@ msgstr "儲存SVG"
 msgid "Save as"
 msgstr "另存為"
 
-#: app/scripts/controllers/menu.js:348
+#: app/scripts/controllers/menu.js:350
 msgid "Save submodule"
 msgstr "儲存子模組"
 
@@ -1088,15 +1075,15 @@ msgstr "Spanish"
 msgid "Spring Green"
 msgstr "春天綠色"
 
-#: app/scripts/controllers/menu.js:1374
+#: app/scripts/controllers/menu.js:1376
 msgid "Start build"
 msgstr "開始編譯"
 
-#: app/scripts/controllers/menu.js:1400
+#: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
 msgstr "開始上傳"
 
-#: app/scripts/controllers/menu.js:1351
+#: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
 msgstr "開始驗證"
 
@@ -1131,7 +1118,7 @@ msgstr ". 非常感謝"
 msgid "The collection {{name}} already exists."
 msgstr "選集 {{name}} 已存在."
 
-#: app/scripts/controllers/menu.js:1323
+#: app/scripts/controllers/menu.js:1325
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
@@ -1182,7 +1169,7 @@ msgstr "要進入深層區塊的編輯模式，您必須先結束現在的編輯
 msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr "要在設計中遊走瀏覽，您需要先關閉編輯模式。"
 
-#: app/scripts/controllers/menu.js:349
+#: app/scripts/controllers/menu.js:351
 #, fuzzy
 msgid ""
 "To save your design you need to lock the padlock and               go to the "
@@ -1230,11 +1217,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1036
+#: app/scripts/controllers/menu.js:1038
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1033
+#: app/scripts/controllers/menu.js:1035
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1270,12 +1257,12 @@ msgstr "未命名"
 msgid "Update (Latest stable)"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "上傳"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1403
 msgid "Upload done"
 msgstr "上傳完成"
 
@@ -1283,7 +1270,7 @@ msgstr "上傳完成"
 msgid "Using external Apio: {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1354
 msgid "Verification done"
 msgstr "驗證完成"
 
@@ -1346,11 +1333,11 @@ msgstr "黃色"
 msgid "Yes"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:411
 #, fuzzy
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "您正在編輯子模組，如果您儲存它，只有子模組會儲存，用「另存為」可以導出模組，"
 "請問還要繼續嗎？"
@@ -1363,7 +1350,7 @@ msgstr ""
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:396
+#: app/scripts/controllers/menu.js:398
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
@@ -1375,14 +1362,14 @@ msgstr ""
 msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "您可以載入原始專案，或轉換成適合開發板 {{name}} ."
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1368
 #, fuzzy
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr "您可以只建構最上層的設計，子模組內只要 <strong>驗證。</strong>"
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1393
 #, fuzzy
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
@@ -1393,7 +1380,7 @@ msgstr "您可以只建構最上層的設計，子模組內只要 <strong>驗證
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:591
 msgid "Your changes will be lost if you don’t save them"
 msgstr "如果不儲存，更改內容將消失"
 
@@ -1405,18 +1392,18 @@ msgstr "後退"
 msgid "{{app}} is required."
 msgstr "需要{{app}}"
 
-#: app/scripts/controllers/menu.js:1138
+#: app/scripts/controllers/menu.js:1140
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} 數據表未定義"
 
-#: app/scripts/controllers/menu.js:1124
+#: app/scripts/controllers/menu.js:1126
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} 接腳未定義"
 
-#: app/scripts/controllers/menu.js:1164
+#: app/scripts/controllers/menu.js:1166
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 規則未定義"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
 msgid "{{name}} exported"
 msgstr "{{name}} 已導出"

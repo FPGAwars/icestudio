@@ -88,6 +88,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 
 ### Languages
+
 <!-- START Language table -->
 |  Language  | Translated strings |
 |:----------:|:------------------:|
@@ -110,22 +111,14 @@ Icestudio is a design tool focused on new comers to the FPGA world
 | Galician (gl_ES) | ![Progress](http://progress-bar.dev/57) |
 
 
-**Contribute!**
-
-Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
-
-*Developer note*: 
-  * use `npm run preptext` before doing translation editing: this extracts the labels from the codebase to update template file `template.pot`; it also runs `scripts/update_translations.sh`, to update the existing `*.po` language files so they are synched to the template
-  * use `npm run compiletext` to regenerate the `*.json` language files (these are what the IDE really needs) to test them
-
-*Developer note*:
-  * for Windows, use `npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"` or equivalent so the `postinstall` script can run during npm install
-  * for Windows, if commands `msgmerge`, `msgfmt` are not found while executing `update_translations.sh`, then they weren't installed with MSYS2/Git Bash; a Windows binary installer for `GNU gettext utils` will take care of this: https://mlocati.github.io/articles/gettext-iconv-windows.html; download the "static" flavor for 64bit Windows; include it in PATH (done in an install step)
+**Contribute!**. Any contribution is very welcome!. Please, follow the instructions on [Translating Icestudio](https://github.com/FPGAwars/icestudio/wiki/Translating-Icestudio)  
 
 ## Contributors
 
 |Version | Contributors |
 |--------|--------------|
+| 0.12   | [Carlos Venegas Arrabé](https://github.com/cavearr), [TimRudy](https://github.com/TimRudy), [Joaquim (jojo535275)](https://github.com/jojo535275), [kanade-k-1228](https://github.com/kanade-k-1228), [will-hut](https://github.com/will-hut), [pcotret](https://github.com/pcotret), [Juan González (Obijuan)](https://github.com/Obijuan)       |
+| 0.11   | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [mgesteiro](https://github.com/mgesteiro), [Laulin](https://github.com/laulin), [aqumu](https://github.com/aqumu), [Doom4535](https://github.com/Doom4535), [jrwagz](https://github.com/jrwagz), [Saij](https://github.com/Saij), [RBEGamer](https://github.com/RBEGamer), [Fernando Mosquera](https://github.com/benitoss), [ain101](https://github.com/ain101), [Juan González (Obijuan)](https://github.com/Obijuan)           |
 | 0.10   | [kanade-k-1228](https://github.com/kanade-k-1228), [vr2045](https://github.com/vr2045), [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan)   |
 | 0.9-1  | [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.9    | [Carlos Venegas Arrabé](https://github.com/cavearr), [mslider](https://github.com/mSlider), [Joaquim (jojo535275)](https://github.com/jojo535275),[Fernando Mosquera](https://github.com/benitoss), [TheSnowfield](https://github.com/TheSnowfield), [Juan González (Obijuan)](https://github.com/Obijuan)  |

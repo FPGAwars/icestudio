@@ -56,7 +56,7 @@ msgstr ""
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: app/scripts/controllers/menu.js:1421
+#: app/scripts/controllers/menu.js:1423
 msgid "Add a block to start"
 msgstr "Προσθέστε ένα block στην αρχή"
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "All collections removed"
 msgstr "Όλες οι συλλογές διαγράφηκαν"
 
-#: app/scripts/controllers/menu.js:1461
+#: app/scripts/controllers/menu.js:1463
 #, fuzzy
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Όλες οι αποθηκευμένες συλλογές θα διαγραφούν. θέλετε να συνεχίσετε?"
@@ -148,11 +148,11 @@ msgstr "Πλακέτα"
 msgid "Board rules"
 msgstr "Κανόνες πλακέτας"
 
-#: app/scripts/controllers/menu.js:1025
+#: app/scripts/controllers/menu.js:1027
 msgid "Board rules disabled"
 msgstr "Οι κανόνες της πλακέτας απενεργοποιήθηκαν"
 
-#: app/scripts/controllers/menu.js:1023
+#: app/scripts/controllers/menu.js:1025
 msgid "Board rules enabled"
 msgstr "Οι κανόνες της πλακέτας ενεργοποιήθηκαν"
 
@@ -168,7 +168,7 @@ msgstr "Η πλακέτα {{name}} δεν είναι διαθέσιμη"
 msgid "Board {{name}} not connected"
 msgstr "Η πλακέτα {{name}} δεν είναι συνδεδεμένη"
 
-#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1343
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
 msgid "Board {{name}} selected"
 msgstr "Η πλακέτα {{name}} επιλέχθηκε"
 
@@ -176,12 +176,12 @@ msgstr "Η πλακέτα {{name}} επιλέχθηκε"
 msgid "Bootloader not active"
 msgstr "Ο Bootloader δεν είναι ενεργός"
 
-#: app/scripts/controllers/menu.js:1365 app/views/design.html:508
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Χτίσιμο"
 
-#: app/scripts/controllers/menu.js:1375
+#: app/scripts/controllers/menu.js:1377
 msgid "Build done"
 msgstr "Το χτίσιμο ολοκληρώθηκε"
 
@@ -250,7 +250,7 @@ msgstr "Πατήστε εδώ <b>για να εγκαταστήσετε τους
 msgid "Click here to install it"
 msgstr "Πατήστε εδώ για να το εγκαταστήσετε"
 
-#: app/scripts/controllers/menu.js:965
+#: app/scripts/controllers/menu.js:967
 msgid "Click here to view"
 msgstr "Πατήστε εδώ για εμφάνιση"
 
@@ -262,7 +262,7 @@ msgstr "Το ρολόι δεν επιτρέπετε για διαύλους δε
 msgid "Clone"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:580 app/views/version.html:76
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -278,7 +278,7 @@ msgstr "Βιβλιοθήκη"
 msgid "Collection info"
 msgstr "Λεπτομέρειες βιβλιοθήκης"
 
-#: app/scripts/controllers/menu.js:1252
+#: app/scripts/controllers/menu.js:1254
 msgid "Collection {{collection}} info not defined"
 msgstr "Δεν υπάρχουν πληροφορίες για την βιβλιοθήκη {{collection}}"
 
@@ -298,7 +298,7 @@ msgstr "Η βιβλιοθήκη {{name}} αφαιρέθηκε"
 msgid "Collection {{name}} replaced"
 msgstr "Η βιβλιοθήκη {{name}} αντικαταστάθηκε"
 
-#: app/scripts/controllers/menu.js:1298
+#: app/scripts/controllers/menu.js:1300
 msgid "Collection {{name}} selected"
 msgstr "Η βιβλιοθήκη {{name}} επιλέχθηκε"
 
@@ -306,7 +306,7 @@ msgstr "Η βιβλιοθήκη {{name}} επιλέχθηκε"
 msgid "Collections"
 msgstr "Βιβλιοθήκες"
 
-#: app/scripts/controllers/menu.js:1268 app/views/menu.html:471
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
 msgid "Command output"
 msgstr "Τερματικό εξόδου εντολών"
 
@@ -323,7 +323,6 @@ msgid "Constant"
 msgstr "Σταθερά"
 
 #: app/scripts/services/forms.js:2103
-#, fuzzy
 msgid "Constant names"
 msgstr ""
 
@@ -396,11 +395,11 @@ msgstr "Περιγραφή"
 msgid "Disable"
 msgstr "Απενεργοποίηση"
 
-#: app/scripts/controllers/menu.js:585
+#: app/scripts/controllers/menu.js:587
 msgid "Do you want to close the application?"
 msgstr "Θέλετε να κλείσετε την εφαρμογή?"
 
-#: app/scripts/controllers/menu.js:1444
+#: app/scripts/controllers/menu.js:1446
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Θέλετε να διαγράψετε τη βιβλιοθήκη {{name}}?"
 
@@ -473,21 +472,18 @@ msgid "Enter the external plugins path"
 msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής plugins"
 
 #: app/scripts/services/forms.js:2337
-#, fuzzy
 msgid "Enter the log filename"
 msgstr ""
 
 #: app/scripts/services/forms.js:2438
-#, fuzzy
 msgid "Enter the pip path"
 msgstr ""
 
 #: app/scripts/services/forms.js:2430
-#, fuzzy
 msgid "Enter the python path"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1012
+#: app/scripts/controllers/menu.js:1014
 msgid "Enter the remote hostname user@host"
 msgstr "Εισαγάγετε το όνομα του απομακρυσμένου υπολογιστή/συσκευής (user@host)"
 
@@ -519,7 +515,7 @@ msgstr "Εκτέλεση απομακρυσμένου {{label}} ..."
 msgid "Export"
 msgstr "Εξαγωγή"
 
-#: app/scripts/controllers/menu.js:395 app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
 msgid "Export submodule"
 msgstr ""
 
@@ -527,7 +523,7 @@ msgstr ""
 msgid "External collections"
 msgstr "Εξωτερικές βιβλιοθήκες"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:939
 msgid "External collections updated"
 msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
 
@@ -536,7 +532,7 @@ msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
 msgid "External plugins"
 msgstr "Εξωτερικές plugins"
 
-#: app/scripts/controllers/menu.js:809
+#: app/scripts/controllers/menu.js:811
 #, fuzzy
 msgid "External plugins updated"
 msgstr "Οι εξωτερικές plugins ανανεώθηκαν"
@@ -639,7 +635,7 @@ msgstr ""
 msgid "Image"
 msgstr "Εικόνα"
 
-#: app/scripts/controllers/menu.js:2164
+#: app/scripts/controllers/menu.js:2166
 msgid "Image {{name}} saved"
 msgstr "H eικόνα {{name}} αποθηκεύτηκε"
 
@@ -656,12 +652,10 @@ msgid "Input"
 msgstr "Είσοδος"
 
 #: app/views/design.html:291 app/views/menu.html:769
-#, fuzzy
 msgid "Input label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1477
-#, fuzzy
 msgid "Input labels"
 msgstr ""
 
@@ -759,7 +753,7 @@ msgstr "Μη έγκυρη σύνδεση: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Πολλαπλές μη έγκυρες συνδέσεις"
 
-#: app/scripts/controllers/menu.js:1948
+#: app/scripts/controllers/menu.js:1950
 msgid "Invalid new name!"
 msgstr ""
 
@@ -767,7 +761,7 @@ msgstr ""
 msgid "Invalid project format"
 msgstr "Μη έγκυρη μορφοποίηση έργου"
 
-#: app/scripts/controllers/menu.js:1852
+#: app/scripts/controllers/menu.js:1854
 msgid "Invalid search name!"
 msgstr ""
 
@@ -776,7 +770,6 @@ msgid "Italian"
 msgstr ""
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanese"
 msgstr ""
 
@@ -818,7 +811,6 @@ msgid "Local parameter"
 msgstr "Τοπική παράμετρος"
 
 #: app/views/menu.html:404
-#, fuzzy
 msgid "Logging enabled"
 msgstr ""
 
@@ -826,7 +818,7 @@ msgstr ""
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:751
+#: app/scripts/controllers/menu.js:753
 msgid "Logging file updated"
 msgstr ""
 
@@ -876,11 +868,11 @@ msgstr "Όνομα:"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1472
+#: app/scripts/controllers/menu.js:1474
 msgid "No collections stored"
 msgstr "Δεν έχουν αποθηκευτεί βιβλιοθήκες"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
 #: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
 msgid "OK"
 msgstr "ΟΚ"
@@ -914,7 +906,6 @@ msgid "Output label"
 msgstr ""
 
 #: app/scripts/services/forms.js:1396
-#, fuzzy
 msgid "Output labels"
 msgstr ""
 
@@ -923,7 +914,6 @@ msgid "Output port names"
 msgstr ""
 
 #: app/scripts/services/forms.js:1622
-#, fuzzy
 msgid "Output ports"
 msgstr ""
 
@@ -935,8 +925,8 @@ msgstr ""
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: app/scripts/controllers/menu.js:760 app/scripts/controllers/menu.js:817
-#: app/scripts/controllers/menu.js:881 app/scripts/controllers/menu.js:945
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
 msgid "Path {{path}} does not exist"
 msgstr "Η διαδρομή {{path}} δεν υπάρχει"
 
@@ -956,7 +946,7 @@ msgstr ""
 msgid "Project information"
 msgstr "Πληροφορίες έργου"
 
-#: app/scripts/controllers/menu.js:963 app/scripts/controllers/menu.js:989
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
 msgid "Project information updated"
 msgstr "Οι πληροφορίες του έργου ανανεωθήκαν"
 
@@ -972,7 +962,7 @@ msgstr "Το έργο {{name}} αποθηκεύτηκε"
 msgid "Python environment"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:873
+#: app/scripts/controllers/menu.js:875
 msgid "Python environment updated"
 msgstr ""
 
@@ -982,7 +972,6 @@ msgid "Quit"
 msgstr "Έξοδος"
 
 #: app/scripts/services/forms.js:390 app/views/design.html:115
-#, fuzzy
 msgid "Red"
 msgstr ""
 
@@ -1046,7 +1035,7 @@ msgstr "Αποθήκευση SVG"
 msgid "Save as"
 msgstr "Αποθήκευση ως"
 
-#: app/scripts/controllers/menu.js:348
+#: app/scripts/controllers/menu.js:350
 msgid "Save submodule"
 msgstr ""
 
@@ -1082,15 +1071,15 @@ msgstr "Ισπανικά"
 msgid "Spring Green"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1374
+#: app/scripts/controllers/menu.js:1376
 msgid "Start build"
 msgstr "Έναρξη χτισίματος"
 
-#: app/scripts/controllers/menu.js:1400
+#: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
 msgstr "Έναρξη μεταφόρτωσης"
 
-#: app/scripts/controllers/menu.js:1351
+#: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
 msgstr "Έναρξη επαλήθευσης"
 
@@ -1123,7 +1112,7 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr "Η βιβλιοθήκη {{name}} υπάρχει ήδη."
 
-#: app/scripts/controllers/menu.js:1323
+#: app/scripts/controllers/menu.js:1325
 #, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
@@ -1178,7 +1167,7 @@ msgstr ""
 msgid "To navigate through the design, you need to close \"edit mode\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:349
+#: app/scripts/controllers/menu.js:351
 msgid ""
 "To save your design you need to lock the padlock and               go to the "
 "top-level design.<br/><br/>If you want to export               this "
@@ -1223,11 +1212,11 @@ msgid ""
 "<br /><br />Continue?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1036
+#: app/scripts/controllers/menu.js:1038
 msgid "Tri-state connections (inout ports) disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1033
+#: app/scripts/controllers/menu.js:1035
 msgid "Tri-state connections (inout ports) enabled"
 msgstr ""
 
@@ -1261,16 +1250,15 @@ msgid "Untitled"
 msgstr "Άτιτλο"
 
 #: app/views/menu.html:639
-#, fuzzy
 msgid "Update (Latest stable)"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1390 app/views/design.html:516
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Μεταφόρτωση"
 
-#: app/scripts/controllers/menu.js:1401
+#: app/scripts/controllers/menu.js:1403
 msgid "Upload done"
 msgstr "Η μεταφόρτωση ολοκληρωθηκε"
 
@@ -1278,7 +1266,7 @@ msgstr "Η μεταφόρτωση ολοκληρωθηκε"
 msgid "Using external Apio: {{name}}"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1352
+#: app/scripts/controllers/menu.js:1354
 msgid "Verification done"
 msgstr "Η επαλήθευση ολοκληρωθηκε"
 
@@ -1341,10 +1329,10 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:411
 msgid ""
-"You are editing a submodule, so you will save just this submodule (\"Save as"
-"\" works like \"Export                 module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 
 #: app/scripts/services/utils.js:1350
@@ -1355,7 +1343,7 @@ msgstr ""
 msgid "You are loading a design that uses \"tri-state\"."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:396
+#: app/scripts/controllers/menu.js:398
 msgid ""
 "You are navigating into the design: If you want to save the entire design, "
 "you need to go back                      to the top-level. If you want to "
@@ -1369,13 +1357,13 @@ msgstr ""
 "Μπορείτε να το φορτώσετε όπως είναι ή να το μετατρέψετε για την πλακέτα "
 "{{name}}"
 
-#: app/scripts/controllers/menu.js:1366
+#: app/scripts/controllers/menu.js:1368
 msgid ""
 "You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1391
+#: app/scripts/controllers/menu.js:1393
 msgid ""
 "You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
@@ -1385,7 +1373,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:591
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Οι αλλαγές σας θα χαθούν αν δεν τις αποθηκεύσετε"
 
@@ -1397,18 +1385,18 @@ msgstr "επιστροφή"
 msgid "{{app}} is required."
 msgstr "{{app}} είναι απαρέτητ."
 
-#: app/scripts/controllers/menu.js:1138
+#: app/scripts/controllers/menu.js:1140
 msgid "{{board}} datasheet not defined"
 msgstr "το δελτίο δεδομένων για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
-#: app/scripts/controllers/menu.js:1124
+#: app/scripts/controllers/menu.js:1126
 msgid "{{board}} pinout not defined"
 msgstr "το pinout για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
-#: app/scripts/controllers/menu.js:1164
+#: app/scripts/controllers/menu.js:1166
 msgid "{{board}} rules not defined"
 msgstr "οι κανόνες για την πλακέτα {{board}} δεν έχουν δηλωθεί"
 
-#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
 msgid "{{name}} exported"
 msgstr "Το {{name}} εξήχθη"
