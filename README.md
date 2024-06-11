@@ -112,16 +112,6 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 **Contribute!**
 
-Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
-
-*Developer note*: 
-  * use `npm run preptext` before doing translation editing: this extracts the labels from the codebase to update template file `template.pot`; it also runs `scripts/update_translations.sh`, to update the existing `*.po` language files so they are synched to the template
-  * use `npm run compiletext` to regenerate the `*.json` language files (these are what the IDE really needs) to test them
-
-*Developer note*:
-  * for Windows, use `npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"` or equivalent so the `postinstall` script can run during npm install
-  * for Windows, if commands `msgmerge`, `msgfmt` are not found while executing `update_translations.sh`, then they weren't installed with MSYS2/Git Bash; a Windows binary installer for `GNU gettext utils` will take care of this: https://mlocati.github.io/articles/gettext-iconv-windows.html; download the "static" flavor for 64bit Windows; include it in PATH (done in an install step)
-
 ## Contributors
 
 |Version | Contributors |
