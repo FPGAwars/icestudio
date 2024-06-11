@@ -227,6 +227,7 @@ angular
         //-- if this is a newer version
 
         if (versionW === "yes" || hasNewVersion) {
+
           $scope.openVersionInfoWindow();
         }
       }, 500);
@@ -246,6 +247,7 @@ angular
 
         //-- Get the state of the version notes: to be displayed or not
         let versionW = $scope.profile.get("displayVersionInfoWindow");
+
 
         //-- Get the state for the "don't display" checkbox
         let noShowVersion = (versionW === "no");
@@ -272,7 +274,6 @@ angular
           ":checked"
         );
 
-        console.log('VERSION WIN', nodisplay);
         //-- Write the option to the profile file (so that it is remembered
         //--  after icestudio is closed)
         let option = (nodisplay) ? "no" : "yes";
