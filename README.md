@@ -88,6 +88,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 
 ### Languages
+
 <!-- START Language table -->
 |  Language  | Translated strings |
 |:----------:|:------------------:|
@@ -110,7 +111,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 | Galician (gl_ES) | ![Progress](http://progress-bar.dev/57) |
 
 
-**Contribute!**
+**Contribute!**. Any contribution is very welcome!. Please, follow the instruccion on [Translating Icestudio](https://github.com/FPGAwars/icestudio/wiki/Translating-Icestudio)  
 
 ## Contributors
 
