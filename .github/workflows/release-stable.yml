@@ -151,12 +151,6 @@ jobs:
           sed -i '' 's/darwinDependencies/dependencies/g' package.json
           npm install --legacy-peer-deps 
 
-      # -- TODO REMOVE IT
-      - name: Build OSX packages
-        run:  | 
-          npm run buildOSX
-          ls dist/
-
       - name: Build OSX ARM64 packages
         env:
           MACOS_CERTIFICATE: ${{ secrets.APPLE_CERT_DATA }}
@@ -193,17 +187,15 @@ jobs:
       - name: 'Upload DMG/OSX64'
         uses: softprops/action-gh-release@v1
         env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          # VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
           prerelease: false
           tag_name: v${{ env.VERSION }}
           files: |
-            dist/icestudio-${{env.VERSION}}-osx64.dmg
-            dist/icestudio-${{env.VERSION}}-osx64.zip
-            dist/icestudio-${env.VERSION}-osxarm64.dmg
-          if-no-files-found: error
+            dist/icestudio-${{env.VERSION}}-osxarm64.dmg
 
   # Build for ARM 64
   build-arm:
