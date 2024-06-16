@@ -1,6 +1,7 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+
 		//-- Execute Icestudio!
 		{
 			"label": "Run Icestudio",
@@ -13,10 +14,21 @@
 
 		//-- Build Icestudio for Linux!
 		{
-			"label": "BuildLinux64",
+			"label": "Build Linux64",
 			"detail": "npm buildLinux64",
 			"type": "npm",
 			"script": "buildLinux64",
+			"group": "build",
+			"problemMatcher": [],
+			
+		},
+
+		//-- Build Icestudio for Windows!
+		{
+			"label": "Build Windows",
+			"detail": "npm buildWindows",
+			"type": "npm",
+			"script": "buildWindows",
 			"group": "build",
 			"problemMatcher": [],
 			
