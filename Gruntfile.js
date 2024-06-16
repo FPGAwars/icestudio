@@ -733,7 +733,7 @@ module.exports = function (grunt) {
 
       //-- Remove the default collection (which is installed when 
       //-- npm install is executed initially
-      collection: [DEFAULT_COLLECTION_FOLDER],
+      collection: [DEFAULT_COLLECTION_FOLDER, CACHE_DEFAULT_COLLECTION_FILE],
     },
 
     //-- Get the English texts from the .js and .html files
