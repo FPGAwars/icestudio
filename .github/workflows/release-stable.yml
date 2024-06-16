@@ -28,7 +28,7 @@ jobs:
 
       # Checkout the master repo branch
       - name: Checkout!
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
 
@@ -53,7 +53,7 @@ jobs:
 
       # Install Node
       - name: Setup Nodejs version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '21.1.0'
 
@@ -85,7 +85,7 @@ jobs:
       #-- Create the Release (draft) and Upload Window binaries
       - name: Create the Stable Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,7 +112,7 @@ jobs:
       # -- Upload the Linux binaries to the release
       # ---------------------------------------
       - name: Upload Linux64 binaries
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -137,12 +137,12 @@ jobs:
     steps:
      
       - name: Checkout the master repo branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
       
       - name: Setup Nodejs version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '21.1.0'
 
@@ -191,7 +191,7 @@ jobs:
       # -- Upload Mac binaries to the release
       # ---------------------------------------
       - name: 'Upload DMG/OSX64'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           # VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           VERSION: "${{steps.icestudio_version_json.outputs.icestudio_version}}"
@@ -217,7 +217,7 @@ jobs:
     steps:
     
       # Checkout the develop branch
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: master
       
@@ -226,7 +226,7 @@ jobs:
         run:  ./scripts/preInstallArm64.sh
 
       - name: Setup Nodejs version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '19.3.0'
       
@@ -263,7 +263,7 @@ jobs:
       # -- Upload ARM binaries to the release
       # ---------------------------------------
       - name: 'Upload ZIP/Aarch64'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
