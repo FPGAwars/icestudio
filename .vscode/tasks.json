@@ -32,6 +32,17 @@
 			"group": "build",
 			"problemMatcher": [],
 			
+		}, 
+
+		//-- Build Icestudio for Linux ARM 64
+		{
+			"label": "Build Linux ARM 64",
+			"detail": "npm buildAarch64",
+			"type": "npm",
+			"script": "buildAarch64",
+			"group": "build",
+			"problemMatcher": [],
+			
 		},
 
 		{
