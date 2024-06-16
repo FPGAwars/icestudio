@@ -171,7 +171,13 @@ jobs:
       - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
-          echo "packageJson=${content}" >> $GITHUB_OUTPUT 
+          echo "packageJson=${content}" >> $GITHUB_OUTPUT
+
+      # Read the icestudio version from package.json (version property)
+      - id: icestudio_version_json
+        run: |
+          version=$(jq -r '.version' package.json)
+          echo "icestudio_version=${version}" >> $GITHUB_OUTPUT
 
       - name: Sign DMG
         env:
@@ -188,7 +194,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         env:
           # VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          VERSION: "${{steps.icestudio_json.outputs.icestudio_version}}"
+          VERSION: "${{steps.icestudio_version_json.outputs.icestudio_version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
