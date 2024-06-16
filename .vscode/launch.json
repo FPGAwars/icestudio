@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            //-- Start icestudio (npm start)
+            //-- Place a breakpoint in the Gruntfile
+            //-- Debug it!
+            "name": "Debug grunt",
+            "request": "launch",
+            "type": "node",
+
+            //-- Execute: npm run start
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "start"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            
+        },
+    ]
+}
