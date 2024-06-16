@@ -275,8 +275,8 @@ module.exports = function (grunt) {
     DEFAULT_COLLECTION_ZIP_FILE;
 
   //-- DEBUG!!
-  console.log(`DEFAULT_COLLECTION_ZIP_FILE: ${DEFAULT_COLLECTION_ZIP_FILE}`)
-  console.log(`DEFAULT_COLLECTION_URL_FILE: ${DEFAULT_COLLECTION_URL_FILE}`)
+  console.log(`DEFAULT_COLLECTION_ZIP_FILE: ${DEFAULT_COLLECTION_ZIP_FILE}`);
+  console.log(`DEFAULT_COLLECTION_URL_FILE: ${DEFAULT_COLLECTION_URL_FILE}`);
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 

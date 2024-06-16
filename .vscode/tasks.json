@@ -1,18 +1,33 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+		//-- Execute Icestudio!
 		{
+			"label": "Run Icestudio",
+			"detail": "npm start",
 			"type": "npm",
 			"script": "start",
 			"problemMatcher": [],
-			"label": "npm: start",
-			"detail": "grunt serve"
+			
 		},
+
+		//-- Build Icestudio for Linux!
+		{
+			"label": "BuildLinux64",
+			"detail": "npm buildLinux64",
+			"type": "npm",
+			"script": "buildLinux64",
+			"group": "build",
+			"problemMatcher": [],
+			
+		},
+
 		{
 			"type": "grunt",
 			"task": "getcollection",
 			"problemMatcher": [],
 			"label": "grunt: getcollection"
-		}
+		},
+		
 	]
 }
