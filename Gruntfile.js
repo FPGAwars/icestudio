@@ -274,6 +274,10 @@ module.exports = function (grunt) {
     "https://github.com/FPGAwars/collection-default/archive/" +
     DEFAULT_COLLECTION_ZIP_FILE;
 
+  //-- DEBUG!!
+  console.log(`DEFAULT_COLLECTION_ZIP_FILE: ${DEFAULT_COLLECTION_ZIP_FILE}`)
+  console.log(`DEFAULT_COLLECTION_URL_FILE: ${DEFAULT_COLLECTION_URL_FILE}`)
+
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
   //-------------------------------------------------------------------------
