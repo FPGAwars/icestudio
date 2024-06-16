@@ -17,7 +17,6 @@ cache
 docs/_build
 node_modules
 bower_components
-.vscode
 .idea
 app/resources/collection
 app/resources/locale/**/*.json
