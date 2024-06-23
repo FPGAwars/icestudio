@@ -1,0 +1,12 @@
+{"label":"RPGA Feather",
+ "device":"U4K",
+ "datasheet":"https://github.com/Oak-Development-Technologies/RPGA%20Feather/",
+ "interface":"MCU",
+ "FPGAResources": {
+    "ffs":3520,
+    "luts":3520,
+    "pios":12,
+    "plbs":440,
+    "brams":20
+    }
+}
