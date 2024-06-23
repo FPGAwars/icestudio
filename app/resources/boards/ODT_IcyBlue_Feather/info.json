@@ -1,3 +1,13 @@
-{"label":"icyBlue","datasheet":"https://github.com/Oak-Development-Technologies/IcyBlue/blob/main/Documentation/IcyBlue%20Feather%20V2%20Datasheet%20rev1a.docx",
- "interface":"FTDI","FPGAResources": {"ffs":3520,"luts":3520,
- "pios":27,"plbs":440,"brams":20}}
+{"label":"icyBlue",
+ "device":"U4K",
+ "datasheet":"https://github.com/Oak-Development-Technologies/IcyBlue/blob/main/Documentation/IcyBlue%20Feather%20V2%20Datasheet%20rev1a.docx",
+ "interface":"FTDI",
+ "FPGAResources": 
+ {
+    "ffs":3520,
+    "luts":3520,
+    "pios":27,
+    "plbs":440,
+    "brams":20
+    }
+}
