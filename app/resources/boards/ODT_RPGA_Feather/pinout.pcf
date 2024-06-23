@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------------
+ #- RPGA Feather constraint file (.pcf)
+ #- By Seth Kerr
+ #- June - 2024
+ #- GPL license
+ # -----------------------------------------------------------------------------
+
+ # ------------ RGB LED Driver -------------------------------------------------
+ set_io --warn-no-port LED_B 39  # output
+ set_io --warn-no-port LED_G 40  # output
+ set_io --warn-no-port LED_R 41  # output
+
+ set_io RGB[2] 41
+ set_io RGB[1] 40
+ set_io RGB[0] 39
+
+ # ------------ SPI Flash ------------------------------------------------------
+ set_io --warn-no-port F_SCK 15
+ set_io --warn-no-port F_SSB 16
+ set_io --warn-no-port F_IO0 14
+ set_io --warn-no-port F_IO1 17
+
+ # ------------ GPIO -----------------------------------------------------------
+ set_io --warn-no-port clk 2
+ set_io --warn-no-port pico16 2
+ set_io --warn-no-port pico17 3
+ set_io --warn-no-port pico18 4
+ set_io --warn-no-port pico19 6
+
+ set_io --warn-no-port pico20 48
+ set_io --warn-no-port pico6 47
+ set_io --warn-no-port pico11 46
+ set_io --warn-no-port pico10 45
+
+ set_io edge[1] 13
+ set_io edge[0] 20

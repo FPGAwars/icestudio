@@ -1,0 +1,17 @@
+[{"type": "inout", "name": "pico16", "value": "2"},
+ {"type": "inout", "name": "pico17", "value": "3"},
+ {"type": "inout", "name": "pico19", "value": "6"},
+ {"type": "inout", "name": "pico20", "value": "48"}
+ {"type": "inout", "name": "pico6", "value": "47"}, 
+ {"type": "inout", "name": "pico11", "value": "46"}, 
+ {"type": "inout", "name": "pico10", "value": "45"},  
+ {"type": "inout", "name": "pico18", "value": "4"}, 
+ {"type": "output", "name": "LED_R", "value": "41"}, 
+ {"type": "output", "name": "LED_G", "value": "40"}, 
+ {"type": "output", "name": "LED_B", "value": "39"}, 
+ {"type": "inout", "name": "F_SSB", "value": "16"}, 
+ {"type": "inout", "name": "F_SCK", "value": "15"}, 
+ {"type": "inout", "name": "F_IO1", "value": "17"}, 
+ {"type": "inout", "name": "F_IO0", "value": "14"},
+ {"type": "inout", "name": "edge[0]", "value": "20"},
+ {"type": "inout", "name": "edge[1]", "value": "13"}]

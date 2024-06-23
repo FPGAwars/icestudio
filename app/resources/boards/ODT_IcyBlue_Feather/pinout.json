@@ -28,4 +28,4 @@
  {"type": "inout", "name": "F_SCK", "value": "15"}, 
  {"type": "inout", "name": "F_IO1", "value": "17"}, 
  {"type": "inout", "name": "F_IO0", "value": "14"}, 
- {"type": "inout", "name": "P48", "value": "P48"}]
+ {"type": "inout", "name": "P48", "value": "48"}]
