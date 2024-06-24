@@ -1,7 +1,7 @@
 [{"type": "inout", "name": "pico16", "value": "2"},
  {"type": "inout", "name": "pico17", "value": "3"},
  {"type": "inout", "name": "pico19", "value": "6"},
- {"type": "inout", "name": "pico20", "value": "48"}
+ {"type": "inout", "name": "pico20", "value": "48"},
  {"type": "inout", "name": "pico6", "value": "47"}, 
  {"type": "inout", "name": "pico11", "value": "46"}, 
  {"type": "inout", "name": "pico10", "value": "45"},  
