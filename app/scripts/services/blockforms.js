@@ -131,7 +131,6 @@ angular.module('icestudio')
             if (allowInoutPorts) {
               inoutDefault = '';
             }
-
             form = new forms.FormBasicCode('', '', '', inoutDefault, inoutDefault);
             newBasicCode(form, callback);
             break;
@@ -611,7 +610,6 @@ angular.module('icestudio')
           rightPorts: rightPorts,
           choices: common.pinoutInputHTML
         });
-        console.log("DEBUG! ETIQUETA SALIDA CREADA!!!");
         return cell;
       }
 
@@ -1416,8 +1414,11 @@ angular.module('icestudio')
         // Compatibility between tri-state/non-tri-state project formats
         if (typeof block.data.ports.inoutLeft === 'undefined') {
           block.data.ports.inoutLeft = [];
+        }
+        if (typeof block.data.ports.inoutRight === 'undefined') {
           block.data.ports.inoutRight = [];
         }
+
 
         //-- Get the input port names as a string
         if (block.data.ports.in) {
