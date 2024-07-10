@@ -7,7 +7,6 @@
 //--     Developing pretty browser dialogs and notifications
 //---------------------------------------------------------------------------
 "use strict";
-var checkPRECOMMIT;
 
 //-- Disable the jshint Warning: "xxxx defined but never used"
 /*jshint unused:false*/
