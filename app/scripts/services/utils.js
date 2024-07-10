@@ -59,39 +59,24 @@ angular.module('icestudio')
           possibleExecutables.push('py.exe -3');
           possibleExecutables.push('python.exe');
 
-          possibleExecutables.push('C:\\Python315\\python.exe');
-          possibleExecutables.push('C:\\Python314\\python.exe');
-          possibleExecutables.push('C:\\Python313\\python.exe');
-          possibleExecutables.push('C:\\Python312\\python.exe');
-          possibleExecutables.push('C:\\Python311\\python.exe');
-          possibleExecutables.push('C:\\Python39\\python.exe');
-          possibleExecutables.push('C:\\Python38\\python.exe');
-          possibleExecutables.push('C:\\Python37\\python.exe');
         } //-- Python executables in Linux/Mac
         else {
-          let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
-          paths.forEach((base) => {
-
-            for (let i = 16; i >= 7; i--) {
-              possibleExecutables.push(`${base}python3.${i}`);
-            }
-            possibleExecutables.push(`${base}python3`);
-            possibleExecutables.push(`${base}python`);
-          });
-          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
-          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
-
-
+          possibleExecutables.push('python3');
+          possibleExecutables.push('python');
         }
 
-        console.log('Possible Python', possibleExecutables);
         //-- Move through all the possible executables
         //-- checking if they are executable
         for (let executable of possibleExecutables) {
-
+          iceConsole.log("Trying executable: " + executable);
           if (isPython3(executable)) {
             _pythonExecutableCached = executable;
-            console.log("Executable: " + executable);
+            const pythonExecutablePath = getExecutablePath(executable);
+            if (pythonExecutablePath) {
+              iceConsole.log(`Using Python 3 executable: ${pythonExecutablePath}`);
+            } else {
+              iceConsole.log(`Using Python 3 executable: ${executable}`);
+            }
             break;
           }
         }
@@ -124,6 +109,27 @@ angular.module('icestudio')
         console.error(e);
       }
       return false;
+    }
+
+    //---------------------------------------------------------
+    //-- Get the path of an executable using the `which` utility
+    //--
+    //-- INPUTS:
+    //--   -executable: string for an executable
+    //-- OUTPUTS:
+    //--   string: the path to the executable
+    //--   null: `which` is unavailable or execution error
+    function getExecutablePath(executable) {
+      const command = `which ${executable}`;
+      try {
+        const result = nodeChildProcess.execSync(command);
+        if (result !== false && result !== null) {
+          return result.toString();
+        }
+      } catch (e) {
+          console.error(e);
+      }
+      return null;
     }
 
 
