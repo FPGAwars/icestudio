@@ -24,8 +24,6 @@ jobs:
     
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with:
-          ref: develop 
       
       - name: Setup Nodejs version
         uses: actions/setup-node@v3

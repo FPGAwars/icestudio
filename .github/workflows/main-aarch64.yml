@@ -23,8 +23,6 @@ jobs:
      
       # Checkout the develop branch
       - uses: actions/checkout@v3
-        with:
-          ref: develop
     
       - name: Setup por arm64
         run:  ./scripts/preInstallArm64.sh
