@@ -726,7 +726,12 @@ module.exports = function (grunt) {
     //-- https://github.com/gruntjs/grunt-contrib-clean
     clean: {
       //-- Remove temporary folder
-      tmp: [".tmp", DIST_TMP],
+      tmp: {
+        src: [".tmp", DIST_TMP],
+        options: {
+          'no-write': grunt.option('dont-clean-tmp')
+        }
+      },
 
       //-- Remove folder with generated executable packages
       dist: [DIST],
