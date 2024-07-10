@@ -693,9 +693,10 @@ module.exports = function (grunt) {
   //-- This task is called in the npm postinstallation
   //-- (after npm install is executed)
   grunt.registerTask("getcollection", [
-    "clean:collection",  //-- Remove previous collection downloaded
+    "clean:collection",  //-- Remove previously installed collection
     "wget:collection",   //-- Download the collection
-    "unzip"              //-- Unzip the collection (install it)
+    "unzip",             //-- Unzip the collection (install it)
+    "clean:collectionFile" //-- Remove cached collection file
   ]);
 
   //-- grunt server
@@ -733,7 +734,11 @@ module.exports = function (grunt) {
 
       //-- Remove the default collection (which is installed when 
       //-- npm install is executed initially
-      collection: [DEFAULT_COLLECTION_FOLDER, CACHE_DEFAULT_COLLECTION_FILE],
+      collection: [DEFAULT_COLLECTION_FOLDER],
+
+      //-- Remove the downloaded collection file
+      //-- that is fetched with wget:collection
+      collectionFile: [CACHE_DEFAULT_COLLECTION_FILE],
     },
 
     //-- Get the English texts from the .js and .html files
