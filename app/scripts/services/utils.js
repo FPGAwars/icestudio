@@ -19,6 +19,7 @@ angular.module('icestudio')
     nodeLangInfo,
     SVGO,
     fastCopy,
+    shelljs,
     sparkMD5) {
 
     let _pythonExecutableCached = null;
@@ -112,24 +113,17 @@ angular.module('icestudio')
     }
 
     //---------------------------------------------------------
-    //-- Get the path of an executable using the `which` utility
+    //-- Get the path of an executable using the `which` shelljs module
     //--
     //-- INPUTS:
     //--   -executable: string for an executable
     //-- OUTPUTS:
     //--   string: the path to the executable
-    //--   null: `which` is unavailable or execution error
+    //--   null: executable not found
     function getExecutablePath(executable) {
-      const command = `which ${executable}`;
-      try {
-        const result = nodeChildProcess.execSync(command);
-        if (result !== false && result !== null) {
-          return result.toString();
-        }
-      } catch (e) {
-          console.error(e);
-      }
-      return null;
+      // split executable at first space to account for e.g. `python.exe -3`
+      executable = executable.split(" ")[0]
+      return shelljs.which(executable)
     }
 
 
