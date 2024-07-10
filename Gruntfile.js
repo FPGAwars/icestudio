@@ -693,9 +693,9 @@ module.exports = function (grunt) {
   //-- This task is called in the npm postinstallation
   //-- (after npm install is executed)
   grunt.registerTask("getcollection", [
-    "clean:collection",  //-- Remove previous collection downloaded
     "wget:collection",   //-- Download the collection
-    "unzip"              //-- Unzip the collection (install it)
+    "unzip",             //-- Unzip the collection (install it)
+    "clean:collection"   //-- Remove previously downloaded collection
   ]);
 
   //-- grunt server
