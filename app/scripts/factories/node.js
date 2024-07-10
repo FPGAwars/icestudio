@@ -77,6 +77,9 @@ angular.module('icestudio')
   .factory('nodeDebounce', function() {
     return require('lodash.debounce');
   })
+  .factory('shelljs', function() {
+    return require('shelljs');
+  })
   .factory('SVGO', function() {
     var config = {
       full: true,
