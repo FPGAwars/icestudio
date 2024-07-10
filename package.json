@@ -26,7 +26,7 @@
     "jshint": "grunt jshint",
     "clean": "grunt clean",
     "getcollection": "grunt getcollection",
-    "postinstall": "scripts/postInstall.sh && grunt getcollection && npmpd && cd app && npm install"
+    "postinstall": "sh scripts/postInstall.sh && grunt getcollection && npmpd && cd app && npm install"
   },
   "devDependencies": {
     "grunt": "^1.4.1",
