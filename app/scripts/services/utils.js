@@ -122,8 +122,8 @@ angular.module('icestudio')
     //--   null: executable not found
     function getExecutablePath(executable) {
       // split executable at first space to account for e.g. `python.exe -3`
-      executable = executable.split(" ")[0]
-      return shelljs.which(executable)
+      executable = executable.split(" ")[0];
+      return shelljs.which(executable);
     }
 
 
