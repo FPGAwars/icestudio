@@ -525,7 +525,11 @@ module.exports = function (grunt) {
       "copy:aarch64",      //-- Copy the Linux build dir to ARM build dir
       "shell:mergeAarch64",
       "compress:Aarch64"
-    ]
+    ],
+
+    //-- NO TARGET
+    //-- Use this to skip running platform-specific tasks
+    "none": []
   };
 
   //---------------------------------------------------------------
