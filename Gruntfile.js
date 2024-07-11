@@ -474,7 +474,10 @@ module.exports = function (grunt) {
     "nggettext_compile",  //-- Extract English texts to the template file
     "copy:dist",    //-- Copy the files to be included in the build package
     "json-minify",  //-- Minify JSON files
-    "nwjs",         //-- Build the executable package
+
+    //-- Build the executable package with nwjs by default, and skip this task
+    //-- when the flag --dont-build-nwjs is passed
+    ... grunt.option('dont-build-nwjs') ? [] : ["nwjs"],
 
     //-- The clean:tmp task is also a common task, but it is
     //-- executed after the specific platform task
