@@ -1,0 +1,1391 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: app/scripts/services/forms.js:1645
+msgid "\"Inout\" Left ports"
+msgstr "\"Inout\" Left ports"
+
+#: app/scripts/services/forms.js:1657
+msgid "\"Inout\" Right ports"
+msgstr "\"Inout\" Right ports"
+
+#: app/scripts/services/forms.js:1013 app/scripts/services/forms.js:1148
+msgid "\"Inout\" pin"
+msgstr "\"Inout\" pin"
+
+#: app/views/design.html:18
+msgid ""
+"<b>Read only</b><br>\n"
+"            Unlock to edit the block!"
+msgstr ""
+"<b>Тільки для читання</b><br>\n"
+"            Розблокуйте для редагування блоку!"
+
+#: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:633
+msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+msgstr "<b>Відключіть</b> і <b>підключіть</b> плату знову"
+
+#: app/views/design.html:34
+msgid ""
+"<b>WARNING!</b><br>\n"
+"        The changes made here will also be applied to all the\n"
+"        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
+"        you DO NOT want them to propagate, create a cloned block instead\n"
+"        using<br>\n"
+"        <b>Edit → Clone</b>."
+msgstr ""
+"<b>УВАГА!</b><br>\n"
+"        Зміни, зроблені тут, будуть також застосовані до всіх\n"
+"        блоків [<b>{{ information.name }}</b>] у поточному дизайні. Якщо\n"
+"        ви НЕ бажаєте, щоб вони розповсюджувалися, створіть клонований блок,\n"
+"        використовуючи<br>\n"
+"        <b>Редагування → Клонувати</b>."
+
+#: app/views/menu.html:873
+msgid "About Icestudio"
+msgstr "Про Icestudio"
+
+#: app/views/version.html:33
+msgid "Acknowledgment"
+msgstr "Подяка"
+
+#: app/views/menu.html:708
+msgid "Add"
+msgstr "Додати"
+
+#: app/scripts/controllers/menu.js:1423
+msgid "Add a block to start"
+msgstr "Додайте блок для початку"
+
+#: app/views/menu.html:131
+msgid "Add as block"
+msgstr "Додати як блок"
+
+#: app/scripts/services/forms.js:1913
+msgid "Address format"
+msgstr "Формат адреси"
+
+#: app/views/menu.html:385
+msgid "Advanced features"
+msgstr "Розширені функції"
+
+#: app/scripts/services/tools.js:1941
+msgid "All collections removed"
+msgstr "Всі колекції видалено"
+
+#: app/scripts/controllers/menu.js:1463
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "Усі збережені колекції буде втрачено. Ви хочете продовжити?"
+
+#: app/views/advanced.html:25
+msgid "Allow tri-state connections"
+msgstr "Дозволити тристабільні з'єднання"
+
+#: app/scripts/services/tools.js:1595
+msgid "Apio install drivers"
+msgstr "Встановити драйвери Apio"
+
+#: app/scripts/services/tools.js:1581
+msgid "Apio install {{name}}"
+msgstr "Встановити {{name}} за допомогою Apio"
+
+#: app/scripts/services/tools.js:1508
+msgid "At least Python 3.7 is required"
+msgstr "Потрібен Python версії не нижче 3.7"
+
+#: app/scripts/services/utils.js:673
+msgid "Author"
+msgstr "Автор"
+
+#: app/views/menu.html:753
+msgid "Basic"
+msgstr "Основний"
+
+#: app/views/design.html:275
+msgid "Basic Toolbox"
+msgstr "Основний інструментарій"
+
+#: app/views/languages.html:86
+msgid "Basque"
+msgstr "Баскська"
+
+#: app/scripts/services/forms.js:1899
+msgid "Binary"
+msgstr "Двійковий"
+
+#: app/scripts/services/tools.js:171
+msgid "Bitstream not found: Build your project first"
+msgstr "Бітстрім не знайдено: спершу побудуйте свій проект"
+
+#: app/scripts/services/blockforms.js:1130
+#: app/scripts/services/blockforms.js:1254
+#: app/scripts/services/blockforms.js:1297
+#: app/scripts/services/blockforms.js:1347
+#: app/scripts/services/blockforms.js:1400
+#: app/scripts/services/blockforms.js:1568
+msgid "Block updated"
+msgstr "Блок оновлено"
+
+#: app/scripts/services/project.js:496
+msgid "Block {{name}} imported"
+msgstr "Блок {{name}} імпортовано"
+
+#: app/views/menu.html:110
+msgid "Blocks"
+msgstr "Блоки"
+
+#: app/views/menu.html:508
+msgid "Board"
+msgstr "Плата"
+
+#: app/views/advanced.html:15 app/views/menu.html:458
+msgid "Board rules"
+msgstr "Правила плати"
+
+#: app/scripts/controllers/menu.js:1027
+msgid "Board rules disabled"
+msgstr "Правила плати вимкнені"
+
+#: app/scripts/controllers/menu.js:1025
+msgid "Board rules enabled"
+msgstr "Правила плати ввімкнені"
+
+#: app/scripts/services/tools.js:766
+msgid "Board {{name}} disconnected"
+msgstr "Плата {{name}} відключена"
+
+#: app/scripts/services/tools.js:725 app/scripts/services/tools.js:751
+msgid "Board {{name}} not available"
+msgstr "Плата {{name}} недоступна"
+
+#: app/scripts/services/tools.js:703
+msgid "Board {{name}} not connected"
+msgstr "Плата {{name}} не підключена"
+
+#: app/scripts/app.js:190 app/scripts/controllers/menu.js:1345
+msgid "Board {{name}} selected"
+msgstr "Вибрана плата {{name}}"
+
+#: app/scripts/services/tools.js:714 app/scripts/services/tools.js:744
+msgid "Bootloader not active"
+msgstr "Завантажувач не активний"
+
+#: app/scripts/controllers/menu.js:1367 app/views/design.html:508
+#: app/views/menu.html:607
+msgid "Build"
+msgstr "Збірка"
+
+#: app/scripts/controllers/menu.js:1377
+msgid "Build done"
+msgstr "Збірка завершена"
+
+#: app/scripts/app.js:58 app/scripts/services/project.js:161
+#: app/scripts/services/utils.js:1384
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: app/scripts/services/utils.js:1202
+msgid "Cannot paste from a different project format ({{version}})"
+msgstr "Не можна вставити з іншого формату проекту ({{version}})"
+
+#: app/views/design.html:54
+msgid "Case sensitive"
+msgstr "З урахуванням регістру"
+
+#: app/views/languages.html:92
+msgid "Catalonian"
+msgstr "Каталонська"
+
+#: app/views/design.html:262
+msgid "Change Color"
+msgstr "Змінити колір"
+
+#: app/scripts/services/utils.js:1369
+msgid "Changed Preferences: Allow tri-state connections"
+msgstr "Змінені налаштування: Дозволити тристабільні з'єднання"
+
+#: app/scripts/services/tools.js:1463
+msgid "Check Internet connection..."
+msgstr "Перевірте підключення до Інтернету..."
+
+#: app/scripts/services/tools.js:1497
+msgid "Check Python..."
+msgstr "Перевірте Python..."
+
+#: app/views/languages.html:68
+msgid "Chinese"
+msgstr "Китайська"
+
+#: app/scripts/services/forms.js:1245
+msgid "Choose a color:"
+msgstr "Виберіть колір:"
+
+#: app/scripts/services/utils.js:1367
+msgid ""
+"Click \"Yes\" to allow tri-state and update Preferences:<br />&nbsp;&nbsp;"
+"&nbsp;<b>Advanced features → Allow tri-state connections</b><br /><br /"
+">Click \"This time\" to view tri-state for this design only."
+msgstr ""
+"Натисніть \"Так\", щоб дозволити тристабільні з'єднання та оновити налаштування:<br />&nbsp;&nbsp;"
+"&nbsp;<b>Розширені функції → Дозволити тристабільні з'єднання</b><br /><br /"
+">Натисніть \"Цього разу\", щоб переглянути тристабільні з'єднання лише для цього дизайну."
+
+#: app/scripts/services/project.js:185
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "Натисніть тут, щоб <b>завантажити новішу версію</b> Icestudio"
+
+#: app/scripts/services/tools.js:1652
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "Натисніть тут, щоб <b>налаштувати драйвери</b>"
+
+#: app/scripts/services/drivers.js:440 app/scripts/services/drivers.js:625
+#: app/scripts/services/drivers.js:644 app/scripts/services/tools.js:1972
+#: app/scripts/services/tools.js:1984 app/scripts/services/tools.js:546
+msgid "Click here to install it"
+msgstr "Натисніть тут, щоб встановити"
+
+#: app/scripts/controllers/menu.js:967
+msgid "Click here to view"
+msgstr "Натисніть тут, щоб переглянути"
+
+#: app/scripts/services/forms.js:1062
+msgid "Clock not allowed for data buses"
+msgstr "Годинник не дозволений для шин даних"
+
+#: app/views/menu.html:278
+msgid "Clone"
+msgstr "Клонувати"
+
+#: app/scripts/controllers/menu.js:582 app/views/version.html:76
+msgid "Close"
+msgstr "Закрити"
+
+#: app/views/design.html:316 app/views/menu.html:791
+msgid "Code"
+msgstr "Код"
+
+#: app/views/menu.html:541
+msgid "Collection"
+msgstr "Колекція"
+
+#: app/views/menu.html:465
+msgid "Collection info"
+msgstr "Інформація про колекцію"
+
+#: app/scripts/controllers/menu.js:1254
+msgid "Collection {{collection}} info not defined"
+msgstr "Інформацію про колекцію {{collection}} не визначено"
+
+#: app/scripts/services/tools.js:1794
+msgid "Collection {{name}} added"
+msgstr "Колекцію {{name}} додано"
+
+#: app/scripts/services/tools.js:1781
+msgid "Collection {{name}} not replaced"
+msgstr "Колекцію {{name}} не замінено"
+
+#: app/scripts/services/tools.js:1932
+msgid "Collection {{name}} removed"
+msgstr "Колекцію {{name}} видалено"
+
+#: app/scripts/services/tools.js:1770
+msgid "Collection {{name}} replaced"
+msgstr "Колекцію {{name}} замінено"
+
+#: app/scripts/controllers/menu.js:1300
+msgid "Collection {{name}} selected"
+msgstr "Колекцію {{name}} вибрано"
+
+#: app/views/menu.html:700
+msgid "Collections"
+msgstr "Колекції"
+
+#: app/scripts/controllers/menu.js:1270 app/views/menu.html:471
+msgid "Command output"
+msgstr "Вивід команди"
+
+#: app/views/menu.html:864
+msgid "Community forum"
+msgstr "Форум спільноти"
+
+#: app/scripts/services/tools.js:794
+msgid "Configuration not completed"
+msgstr "Конфігурацію не завершено"
+
+#: app/views/design.html:306 app/views/menu.html:783
+msgid "Constant"
+msgstr "Константа"
+
+#: app/scripts/services/forms.js:2103
+msgid "Constant names"
+msgstr "Назви констант"
+
+#: app/scripts/services/project.js:103
+msgid "Convert"
+msgstr "Конвертувати"
+
+#: app/views/menu.html:259
+msgid "Copy"
+msgstr "Копіювати"
+
+#: app/scripts/services/forms.js:399 app/views/design.html:136
+msgid "Coral"
+msgstr "Кораловий"
+
+#: app/scripts/services/tools.js:1527
+msgid "Create virtualenv..."
+msgstr "Створити virtualenv..."
+
+#: app/views/menu.html:250
+msgid "Cut"
+msgstr "Вирізати"
+
+#: app/views/languages.html:50
+msgid "Czech"
+msgstr "Чеська"
+
+#: app/views/uithemes.html:16
+msgid "Dark (default)"
+msgstr "Темний (за замовчуванням)"
+
+#: app/scripts/services/forms.js:423 app/views/design.html:199
+msgid "Dark Green"
+msgstr "Темно-зелений"
+
+#: app/scripts/services/forms.js:405 app/views/design.html:150
+msgid "Dark Orange"
+msgstr "Темно-оранжевий"
+
+#: app/views/menu.html:452
+msgid "Datasheet"
+msgstr "Технічна документація"
+
+#: app/scripts/services/forms.js:1903
+msgid "Decimal"
+msgstr "Десятковий"
+
+#: app/scripts/services/forms.js:393 app/views/design.html:122
+msgid "Deep Pink"
+msgstr "Насичено-рожевий"
+
+#: app/scripts/services/forms.js:438 app/views/design.html:234
+msgid "Deep Sky Blue"
+msgstr "Насичено-блакитний"
+
+#: app/views/menu.html:550
+msgid "Default"
+msgstr "За замовчуванням"
+
+#: app/views/menu.html:296
+msgid "Delete"
+msgstr "Видалити"
+
+#: app/scripts/services/utils.js:672
+msgid "Description"
+msgstr "Опис"
+
+#: app/views/menu.html:688
+msgid "Disable"
+msgstr "Вимкнути"
+
+#: app/scripts/controllers/menu.js:587
+msgid "Do you want to close the application?"
+msgstr "Ви хочете закрити програму?"
+
+#: app/scripts/controllers/menu.js:1446
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "Ви хочете видалити колекцію {{name}}?"
+
+#: app/scripts/services/tools.js:1763
+msgid "Do you want to replace it?"
+msgstr "Ви хочете замінити її?"
+
+#: app/views/menu.html:845
+msgid "Documentation"
+msgstr "Документація"
+
+#: app/views/version.html:65
+msgid "Don’t display"
+msgstr "Не відображати"
+
+#: app/views/menu.html:675
+msgid "Drivers"
+msgstr "Драйвери"
+
+#: app/scripts/services/drivers.js:252 app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:478
+msgid "Drivers disabled"
+msgstr "Драйвери вимкнено"
+
+#: app/scripts/services/drivers.js:230 app/scripts/services/drivers.js:287
+#: app/scripts/services/drivers.js:455
+msgid "Drivers enabled"
+msgstr "Драйвери увімкнено"
+
+#: app/views/menu.html:287
+msgid "Duplicate"
+msgstr "Дублювати"
+
+#: app/scripts/services/tools.js:812
+msgid "Duplicate FPGA I/O ports"
+msgstr "Дублювання портів введення/виведення FPGA"
+
+#: app/scripts/services/forms.js:1817
+msgid "Duplicate port name: {{name}}"
+msgstr "Повторювана назва порту: {{name}}"
+
+#: app/views/languages.html:44
+msgid "Dutch"
+msgstr "Голландська"
+
+#: app/views/menu.html:219
+msgid "Edit"
+msgstr "Редагувати"
+
+#: app/scripts/services/tools.js:1742
+msgid "Edit the collection name"
+msgstr "Редагувати назву колекції"
+
+#: app/views/menu.html:681
+msgid "Enable"
+msgstr "Увімкнути"
+
+#: app/views/languages.html:14
+msgid "English"
+msgstr "Англійська"
+
+#: app/scripts/services/forms.js:2486
+msgid "Enter the external collection path"
+msgstr "Введіть шлях до зовнішньої колекції"
+
+#: app/scripts/services/forms.js:2383
+msgid "Enter the external plugins path"
+msgstr "Введіть шлях до зовнішніх плагінів"
+
+#: app/scripts/services/forms.js:2337
+msgid "Enter the log filename"
+msgstr "Введіть ім'я файлу журналу"
+
+#: app/scripts/services/forms.js:2438
+msgid "Enter the pip path"
+msgstr "Введіть шлях до pip"
+
+#: app/scripts/services/forms.js:2430
+msgid "Enter the python path"
+msgstr "Введіть шлях до python"
+
+#: app/scripts/controllers/menu.js:1014
+msgid "Enter the remote hostname user@host"
+msgstr "Введіть віддалене ім'я хоста user@host"
+
+#: app/scripts/services/drivers.js:469
+msgid "Error installing driver:"
+msgstr "Помилка встановлення драйвера:"
+
+#: app/scripts/services/utils.js:876
+msgid "Error: {{error}}"
+msgstr "Помилка: {{error}}"
+
+#: app/scripts/services/tools.js:918
+msgid "Errors detected in the design"
+msgstr "Виявлено помилки в проєкті"
+
+#: app/views/design.html:57
+msgid "Exact match"
+msgstr "Точний збіг"
+
+#: app/views/menu.html:119
+msgid "Examples"
+msgstr "Приклади"
+
+#: app/scripts/services/tools.js:584
+msgid "Execute remote {{label}} ..."
+msgstr "Виконати віддалено {{label}} ..."
+
+#: app/views/menu.html:163
+msgid "Export"
+msgstr "Експорт"
+
+#: app/scripts/controllers/menu.js:397 app/scripts/controllers/menu.js:410
+msgid "Export submodule"
+msgstr "Експорт підмодуля"
+
+#: app/views/menu.html:398
+msgid "External collections"
+msgstr "Зовнішні колекції"
+
+#: app/scripts/controllers/menu.js:939
+msgid "External collections updated"
+msgstr "Зовнішні колекції оновлено"
+
+#: app/views/advanced.html:35
+msgid "External plugins"
+msgstr "Зовнішні плагіни"
+
+#: app/scripts/controllers/menu.js:811
+msgid "External plugins updated"
+msgstr "Зовнішні плагіни оновлено"
+
+#: app/scripts/services/tools.js:805
+msgid "FPGA I/O ports not defined"
+msgstr "Порти введення/виведення FPGA не визначені"
+
+#: app/scripts/services/forms.js:844
+msgid "FPGA pin"
+msgstr "Пін FPGA"
+
+#: app/views/menu.html:486
+msgid "FPGA resources"
+msgstr "Ресурси FPGA"
+
+#: app/views/version.html:47
+msgid "FPGAwars community"
+msgstr "Спільнота FPGAwars"
+
+#: app/views/version.html:39
+msgid "FPGAwars community."
+msgstr "Спільнота FPGAwars."
+
+#: app/views/menu.html:76
+msgid "File"
+msgstr "Файл"
+
+#: app/scripts/services/project.js:511
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr ""
+"Файл {{file}} вже існує в шляху проєкту. Ви хочете замінити його?"
+
+#: app/scripts/services/tools.js:445
+msgid "File {{file}} does not exist"
+msgstr "Файл {{file}} не існує"
+
+#: app/scripts/services/project.js:544
+msgid "File {{file}} imported"
+msgstr "Файл {{file}} імпортовано"
+
+#: app/views/design.html:65
+msgid "Find"
+msgstr "Знайти"
+
+#: app/views/menu.html:318
+msgid "Fit content"
+msgstr "Підігнати вміст"
+
+#: app/views/languages.html:26
+msgid "French"
+msgstr "Французька"
+
+#: app/scripts/services/forms.js:384 app/views/design.html:171
+#: app/views/design.html:97
+msgid "Fuchsia"
+msgstr "Фуксія"
+
+#: app/views/languages.html:80
+msgid "Galician"
+msgstr "Галісійська"
+
+#: app/views/languages.html:38
+msgid "German"
+msgstr "Німецька"
+
+#: app/scripts/services/forms.js:408 app/views/design.html:157
+msgid "Gold"
+msgstr "Золотий"
+
+#: app/views/languages.html:56
+msgid "Greek"
+msgstr "Грецька"
+
+#: app/scripts/services/forms.js:417 app/views/design.html:185
+msgid "Green Yellow"
+msgstr "Зелено-жовтий"
+
+#: app/views/menu.html:809
+msgid "Help"
+msgstr "Допомога"
+
+#: app/scripts/services/forms.js:1907
+msgid "Hexadecimal"
+msgstr "Шістнадцятковий"
+
+#: app/views/version.html:45
+msgid "Icestudio is part of"
+msgstr "Icestudio є частиною"
+
+#: app/scripts/services/graph.js:1643
+msgid ""
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
+msgstr ""
+"Якщо ви бачите порожні контакти IN/OUT, це тому що відповідних контактів не існує на цій платі"
+
+#: app/scripts/services/utils.js:686
+msgid "Image"
+msgstr "Зображення"
+
+#: app/scripts/controllers/menu.js:2166
+msgid "Image {{name}} saved"
+msgstr "Зображення {{name}} збережено"
+
+#: app/scripts/services/forms.js:387 app/views/design.html:108
+msgid "Indian Red"
+msgstr "Індійський червоний"
+
+#: app/views/design.html:321 app/views/menu.html:795
+msgid "Information"
+msgstr "Інформація"
+
+#: app/views/design.html:281 app/views/menu.html:760
+msgid "Input"
+msgstr "Вхід"
+
+#: app/views/design.html:291 app/views/menu.html:769
+msgid "Input label"
+msgstr "Мітка входу"
+
+#: app/scripts/services/forms.js:1477
+msgid "Input labels"
+msgstr "Мітки входів"
+
+#: app/scripts/services/forms.js:1629
+msgid "Input parameters"
+msgstr "Вхідні параметри"
+
+#: app/scripts/services/forms.js:989
+msgid "Input port names"
+msgstr "Назви вхідних портів"
+
+#: app/scripts/services/forms.js:1615
+msgid "Input ports"
+msgstr "Вхідні порти"
+
+#: app/views/menu.html:635
+msgid "Install (Stable)"
+msgstr "Встановити (стабільну версію)"
+
+#: app/views/menu.html:656
+msgid "Install Development version"
+msgstr "Встановити версію для розробників"
+
+#: app/scripts/services/tools.js:1235
+msgid ""
+"Install the <b>STABLE Toolchain</b>. This operation requires Internet "
+"connection.<br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
+"allow the toolchain installation</p> <p>Do you want to continue?</p>"
+msgstr ""
+"Встановіть <b>СТАБІЛЬНИЙ інструментарій</b>. Ця операція вимагає підключення до Інтернету.<br><p><b>ПРИМІТКА:</b> Вам потрібно відключити VPN (якщо є) для дозволу установки інструментарію</p> <p>Ви хочете продовжити?</p>"
+
+#: app/scripts/services/tools.js:1260
+msgid ""
+"Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"Встановіть інструментарій ДЛЯ РОЗРОБНИКІВ. Він буде завантажений. Ця операція вимагає підключення до Інтернету. Ви хочете продовжити?"
+
+#: app/scripts/services/tools.js:1282
+msgid ""
+"Install the LATEST STABLE toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"Встановіть ОСТАННІЙ СТАБІЛЬНИЙ інструментарій. Він буде завантажений. Ця операція вимагає підключення до Інтернету. Ви хочете продовжити?"
+
+#: app/scripts/services/tools.js:1630
+msgid "Installation completed"
+msgstr "Установку завершено"
+
+#: app/scripts/services/tools.js:1390
+msgid "Installing {{version}}"
+msgstr "Встановлення {{version}}"
+
+#: app/scripts/services/drivers.js:447 app/scripts/services/tools.js:1481
+msgid "Internet connection required"
+msgstr "Потрібне підключення до Інтернету"
+
+#: app/scripts/services/graph.js:298
+msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
+msgstr "Неправильне підключення <i>Pull-up</i>:<br>Блок вже підключений"
+
+#: app/scripts/services/graph.js:312
+msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
+msgstr "Неправильне підключення <i>Pull-up</i>:<br>Дозволені лише блоки <i>Input</i>"
+
+#: app/scripts/services/graph.js:304
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
+msgstr "Неправильне підключення блоку:<br><i>Pull-up</i> вже підключений"
+
+#: app/scripts/services/tools.js:1807
+msgid "Invalid collection {{name}}"
+msgstr "Неправильна колекція {{name}}"
+
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
+msgid "Invalid connection"
+msgstr "Неправильне підключення"
+
+#: app/scripts/services/graph.js:332
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Неправильне підключення: {{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:292
+msgid "Invalid multiple input connections"
+msgstr "Неправильне підключення декількох входів"
+
+#: app/scripts/controllers/menu.js:1950
+msgid "Invalid new name!"
+msgstr "Неправильне нове ім'я!"
+
+#: app/scripts/services/project.js:502 app/scripts/services/project.js:80
+msgid "Invalid project format"
+msgstr "Неправильний формат проекту"
+
+#: app/scripts/controllers/menu.js:1854
+msgid "Invalid search name!"
+msgstr "Неправильне ім'я для пошуку!"
+
+#: app/views/languages.html:32
+msgid "Italian"
+msgstr "Італійська"
+
+#: app/views/languages.html:110
+msgid "Japanese"
+msgstr "Японська"
+
+#: app/views/languages.html:98
+msgid "Korean"
+msgstr "Корейська"
+
+#: app/views/menu.html:328
+msgid "Label finder"
+msgstr "Пошук міток"
+
+#: app/scripts/services/blockforms.js:1039
+msgid "Label updated"
+msgstr "Мітку оновлено"
+
+#: app/views/menu.html:359
+msgid "Language"
+msgstr "Мова"
+
+#: app/views/uithemes.html:26
+msgid "Light"
+msgstr "Світла"
+
+#: app/scripts/services/forms.js:447 app/views/design.html:255
+msgid "Light Gray"
+msgstr "Світло-сірий"
+
+#: app/scripts/services/forms.js:429 app/views/design.html:213
+msgid "Light Sea Green"
+msgstr "Світло-морський зелений"
+
+#: app/scripts/services/project.js:102
+msgid "Load"
+msgstr "Завантажити"
+
+#: app/scripts/services/forms.js:1921 app/scripts/services/forms.js:2111
+msgid "Local parameter"
+msgstr "Локальний параметр"
+
+#: app/views/menu.html:404
+msgid "Logging enabled"
+msgstr "Журналювання увімкнено"
+
+#: app/views/menu.html:413
+msgid "Logging file"
+msgstr "Файл журналювання"
+
+#: app/scripts/controllers/menu.js:753
+msgid "Logging file updated"
+msgstr "Файл журналювання оновлено"
+
+#: app/scripts/services/utils.js:990
+msgid "Maximum bus size: 96 bits"
+msgstr "Максимальний розмір шини: 96 біт"
+
+#: app/scripts/services/forms.js:396 app/views/design.html:129
+msgid "Medium Violet Red"
+msgstr "Середній фіолетово-червоний"
+
+#: app/views/design.html:311 app/views/menu.html:787
+msgid "Memory"
+msgstr "Пам'ять"
+
+#: app/scripts/services/forms.js:1888
+msgid "Memory block names"
+msgstr "Назви блоків пам'яті"
+
+#: app/scripts/services/utils.js:670
+msgid "Name"
+msgstr "Ім'я"
+
+#: app/scripts/services/forms.js:1539
+msgid "Names of the paired labels"
+msgstr "Назви парних міток"
+
+#: app/scripts/services/forms.js:444 app/views/design.html:248
+msgid "Navy"
+msgstr "Темно-синій"
+
+#: app/views/menu.html:88
+msgid "New"
+msgstr "Новий"
+
+#: app/views/design.html:87
+msgid "New Color:"
+msgstr "Новий колір:"
+
+#: app/views/design.html:80
+msgid "New Name:"
+msgstr "Нове ім'я:"
+
+#: app/views/design.html:71
+msgid "Next"
+msgstr "Далі"
+
+#: app/scripts/controllers/menu.js:1474
+msgid "No collections stored"
+msgstr "Колекції не збережені"
+
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:602
+#: app/scripts/services/project.js:160 app/scripts/services/utils.js:1383
+msgid "OK"
+msgstr "ОК"
+
+#: app/scripts/services/forms.js:426 app/views/design.html:206
+msgid "Olive Drab"
+msgstr "Оливковий зелений"
+
+#: app/views/menu.html:100
+msgid "Open"
+msgstr "Відкрити"
+
+#: app/scripts/services/utils.js:727
+msgid "Open SVG"
+msgstr "Відкрити SVG"
+
+#: app/scripts/services/forms.js:402 app/views/design.html:143
+msgid "Orange Red"
+msgstr "Помаранчево-червоний"
+
+#: app/scripts/services/project.js:547
+msgid "Original file {{file}} does not exist"
+msgstr "Оригінальний файл {{file}} не існує"
+
+#: app/views/design.html:286 app/views/menu.html:764
+msgid "Output"
+msgstr "Вихід"
+
+#: app/views/design.html:296 app/views/menu.html:773
+msgid "Output label"
+msgstr "Вихідна мітка"
+
+#: app/scripts/services/forms.js:1396
+msgid "Output labels"
+msgstr "Вихідні мітки"
+
+#: app/scripts/services/forms.js:1135
+msgid "Output port names"
+msgstr "Назви вихідних портів"
+
+#: app/scripts/services/forms.js:1622
+msgid "Output ports"
+msgstr "Вихідні порти"
+
+#: app/views/design.html:301 app/views/menu.html:778
+msgid "Paired labels"
+msgstr "Парні мітки"
+
+#: app/views/menu.html:268
+msgid "Paste"
+msgstr "Вставити"
+
+#: app/scripts/controllers/menu.js:762 app/scripts/controllers/menu.js:819
+#: app/scripts/controllers/menu.js:883 app/scripts/controllers/menu.js:947
+msgid "Path {{path}} does not exist"
+msgstr "Шлях {{path}} не існує"
+
+#: app/scripts/services/utils.js:1179
+msgid "Please run: {{cmd}}"
+msgstr "Будь ласка, виконайте: {{cmd}}"
+
+#: app/views/menu.html:352
+msgid "Preferences"
+msgstr "Налаштування"
+
+#: app/views/design.html:68
+msgid "Prev."
+msgstr "Назад"
+
+#: app/views/menu.html:422
+msgid "Project information"
+msgstr "Інформація про проект"
+
+#: app/scripts/controllers/menu.js:965 app/scripts/controllers/menu.js:991
+msgid "Project information updated"
+msgstr "Інформацію про проект оновлено"
+
+#: app/scripts/services/project.js:145
+msgid "Project {{name}} loaded"
+msgstr "Проект {{name}} завантажено"
+
+#: app/scripts/services/project.js:420
+msgid "Project {{name}} saved"
+msgstr "Проект {{name}} збережено"
+
+#: app/views/advanced.html:41
+msgid "Python environment"
+msgstr "Середовище Python"
+
+#: app/scripts/controllers/menu.js:875
+msgid "Python environment updated"
+msgstr "Середовище Python оновлено"
+
+#: app/views/menu.html:202
+msgid "Quit"
+msgstr "Вийти"
+
+#: app/scripts/services/forms.js:390 app/views/design.html:115
+msgid "Red"
+msgstr "Червоний"
+
+#: app/views/menu.html:238
+msgid "Redo"
+msgstr "Повторити"
+
+#: app/views/version.html:29
+msgid "Release History WIKI"
+msgstr "Історія випусків WIKI"
+
+#: app/views/menu.html:715
+msgid "Reload"
+msgstr "Перезавантажити"
+
+#: app/scripts/services/tools.js:987
+msgid "Remote host {{name}} not connected"
+msgstr "Віддалений хост {{name}} не підключено"
+
+#: app/views/advanced.html:47
+msgid "Remote hostname"
+msgstr "Віддалене ім'я хоста"
+
+#: app/views/menu.html:647 app/views/menu.html:722
+msgid "Remove"
+msgstr "Видалити"
+
+#: app/views/menu.html:738
+msgid "Remove all"
+msgstr "Видалити все"
+
+#: app/views/design.html:265
+msgid "Replace All"
+msgstr "Замінити все"
+
+#: app/views/design.html:84
+msgid "Replace One"
+msgstr "Замінити одне"
+
+#: app/scripts/services/utils.js:729
+msgid "Reset SVG"
+msgstr "Скинути SVG"
+
+#: app/scripts/services/forms.js:441 app/views/design.html:241
+msgid "Royal Blue"
+msgstr "Королівський синій"
+
+#: app/views/languages.html:74
+msgid "Russian"
+msgstr "Російська"
+
+#: app/views/menu.html:141
+msgid "Save"
+msgstr "Зберегти"
+
+#: app/scripts/services/utils.js:728
+msgid "Save SVG"
+msgstr "Зберегти SVG"
+
+#: app/views/menu.html:151
+msgid "Save as"
+msgstr "Зберегти як"
+
+#: app/scripts/controllers/menu.js:350
+msgid "Save submodule"
+msgstr "Зберегти субмодуль"
+
+#: app/views/menu.html:502
+msgid "Select"
+msgstr "Вибрати"
+
+#: app/views/menu.html:305
+msgid "Select all"
+msgstr "Вибрати все"
+
+#: app/scripts/services/forms.js:2292
+msgid "Select your board"
+msgstr "Виберіть вашу плату"
+
+#: app/scripts/services/forms.js:1002
+msgid "Show clock"
+msgstr "Показати годинник"
+
+#: app/scripts/services/forms.js:414 app/views/design.html:178
+msgid "Slate Blue"
+msgstr "Сланцево-синій"
+
+#: app/views/menu.html:853
+msgid "Source code"
+msgstr "Вихідний код"
+
+#: app/views/languages.html:20
+msgid "Spanish"
+msgstr "Іспанська"
+
+#: app/scripts/services/forms.js:420 app/views/design.html:192
+msgid "Spring Green"
+msgstr "Яскраво-зелений"
+
+#: app/scripts/controllers/menu.js:1376
+msgid "Start build"
+msgstr "Розпочати збірку"
+
+#: app/scripts/controllers/menu.js:1402
+msgid "Start upload"
+msgstr "Розпочати завантаження"
+
+#: app/scripts/controllers/menu.js:1353
+msgid "Start verification"
+msgstr "Розпочати перевірку"
+
+#: app/scripts/services/forms.js:435 app/views/design.html:227
+msgid "Steel Blue"
+msgstr "Сталевий синій"
+
+#: app/scripts/services/tools.js:561
+msgid "Synchronize remote files ..."
+msgstr "Синхронізувати віддалені файли ..."
+
+#: app/views/menu.html:477
+msgid "System info"
+msgstr "Системна інформація"
+
+#: app/views/languages.html:62
+msgid "Taiwanese"
+msgstr "Тайванська"
+
+#: app/views/menu.html:174
+msgid "Testbench"
+msgstr "Тестовий стенд"
+
+#: app/views/version.html:41
+msgid "Thank you very much!"
+msgstr "Дуже дякуємо!"
+
+#: app/scripts/services/tools.js:1756
+msgid "The collection {{name}} already exists."
+msgstr "Колекція {{name}} вже існує."
+
+#: app/scripts/controllers/menu.js:1325
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"the {{name}} board?"
+msgstr ""
+"Поточну конфігурацію FPGA I/O буде втрачено. Хочете змінити на плату {{name}}?"
+
+#: app/scripts/services/tools.js:1300
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "Інструмент розробки буде видалено. Хочете продовжити?"
+
+#: app/scripts/services/tools.js:1980
+msgid "There is a new nightly version available"
+msgstr "Доступна нова нічна версія"
+
+#: app/scripts/services/tools.js:1968
+msgid "There is a new stable version available"
+msgstr "Доступна нова стабільна версія"
+
+#: app/scripts/services/project.js:478
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"Ця операція імпорту вимагає шляху до проекту. Необхідно зберегти поточний проект. Хочете продовжити?"
+
+#: app/scripts/services/project.js:106
+msgid "This project is designed for the {{name}} board."
+msgstr "Цей проект призначений для плати {{name}}."
+
+#: app/views/version.html:36
+msgid ""
+"This release has been possible thanks to the great work done by an emerging "
+"team from"
+msgstr ""
+"Цей випуск став можливим завдяки чудовій роботі команди, що виникає з"
+
+#: app/scripts/services/utils.js:1377
+msgid "This time"
+msgstr "Цього разу"
+
+#: app/scripts/services/graph.js:532
+msgid ""
+"To enter \"edit mode\" in a deeper block, you need to finish the current "
+"level by locking the padlock."
+msgstr ""
+"Щоб увійти в \"режим редагування\" у глибшому блоці, потрібно завершити поточний рівень, заблокувавши замок."
+
+#: app/scripts/controllers/design.js:50
+msgid "To navigate through the design, you need to close \"edit mode\"."
+msgstr "Щоб навігувати через дизайн, потрібно закрити \"режим редагування\"."
+
+#: app/scripts/controllers/menu.js:351
+msgid ""
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
+msgstr ""
+"Щоб зберегти свій дизайн, потрібно заблокувати замок і перейти до "
+"дизайну найвищого рівня.<br/><br/>Якщо ви хочете експортувати цей "
+"субмодуль у файл, використовуйте команду \"Зберегти як\"."
+
+#: app/views/menu.html:338
+msgid "Toolbox"
+msgstr "Набір інструментів"
+
+#: app/views/menu.html:627
+msgid "Toolchain"
+msgstr "Інструменти розробки"
+
+#: app/scripts/services/tools.js:1640
+msgid "Toolchain installed"
+msgstr "Інструменти розробки встановлено"
+
+#: app/scripts/services/drivers.js:625 app/scripts/services/drivers.js:644
+#: app/scripts/services/tools.js:312 app/scripts/services/tools.js:489
+msgid "Toolchain not installed"
+msgstr "Інструменти розробки не встановлено"
+
+#: app/scripts/services/tools.js:1318
+msgid "Toolchain removed"
+msgstr "Інструменти розробки видалено"
+
+#: app/scripts/services/tools.js:530
+msgid "Toolchain version does not match"
+msgstr "Версія інструменту розробки не збігається"
+
+#: app/views/menu.html:592
+msgid "Tools"
+msgstr "Інструменти"
+
+#: app/scripts/services/utils.js:1352
+msgid ""
+"Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
+"standard designs.<br /><br />You will be asked to update your Preferences "
+"(Advanced user setting) or you can just open this design on a preview basis."
+"<br /><br />Continue?"
+msgstr ""
+"Тристабільні (також відомі як high-Z, двонаправлені або вхід-вихідні) порти не рекомендовані в "
+"стандартних дизайнах.<br /><br />Вас попросять оновити налаштування "
+"(Налаштування для досвідчених користувачів) або ви можете просто відкрити цей дизайн для попереднього перегляду."
+"<br /><br />Продовжити?"
+
+#: app/scripts/controllers/menu.js:1038
+msgid "Tri-state connections (inout ports) disabled"
+msgstr "Тристабільні з'єднання (вхід-вихідні порти) відключені"
+
+#: app/scripts/controllers/menu.js:1035
+msgid "Tri-state connections (inout ports) enabled"
+msgstr "Тристабільні з'єднання (вхід-вихідні порти) увімкнені"
+
+#: app/views/languages.html:104
+msgid "Turkish"
+msgstr "Турецька"
+
+#: app/scripts/services/forms.js:432 app/views/design.html:220
+msgid "Turquoise"
+msgstr "Бірюзовий"
+
+#: app/views/menu.html:372
+msgid "UI theme"
+msgstr "Тема інтерфейсу"
+
+#: app/views/menu.html:228
+msgid "Undo"
+msgstr "Скасувати"
+
+#: app/scripts/services/tools.js:733
+msgid "Unknown board"
+msgstr "Невідома плата"
+
+#: app/scripts/services/project.js:184
+msgid "Unsupported project format {{version}}"
+msgstr "Непідтримуваний формат проекту {{version}}"
+
+#: app/scripts/app.js:215
+msgid "Untitled"
+msgstr "Без назви"
+
+#: app/views/menu.html:639
+msgid "Update (Latest stable)"
+msgstr "Оновлення (остання стабільна версія)"
+
+#: app/scripts/controllers/menu.js:1392 app/views/design.html:516
+#: app/views/menu.html:615
+msgid "Upload"
+msgstr "Завантажити"
+
+#: app/scripts/controllers/menu.js:1403
+msgid "Upload done"
+msgstr "Завантаження завершено"
+
+#: app/scripts/services/utils.js:463
+msgid "Using external Apio: {{name}}"
+msgstr "Використання зовнішнього Apio: {{name}}"
+
+#: app/scripts/controllers/menu.js:1354
+msgid "Verification done"
+msgstr "Перевірка завершена"
+
+#: app/views/design.html:500 app/views/menu.html:599
+msgid "Verify"
+msgstr "Перевірити"
+
+#: app/scripts/services/utils.js:671 app/views/menu.html:832
+msgid "Version"
+msgstr "Версія"
+
+#: app/views/menu.html:826
+msgid "Version notes"
+msgstr "Примітки до версії"
+
+#: app/views/menu.html:434
+msgid "View"
+msgstr "Перегляд"
+
+#: app/views/menu.html:819
+msgid "View license"
+msgstr "Переглянути ліцензію"
+
+#: app/scripts/services/utils.js:1373
+msgid "Viewing tri-state"
+msgstr "Перегляд тристабільного стану"
+
+#: app/scripts/services/tools.js:924
+msgid "Warnings detected in the design"
+msgstr "Попередження виявлені в дизайні"
+
+#: app/views/version.html:21
+msgid "Welcome to Icestudio!"
+msgstr "Ласкаво просимо до Icestudio!"
+
+#: app/scripts/services/blockforms.js:535
+msgid "Wrong block format: {{type}}"
+msgstr "Неправильний формат блоку: {{type}}"
+
+#: app/scripts/services/forms.js:1304 app/scripts/services/forms.js:1706
+#: app/scripts/services/forms.js:1988 app/scripts/services/forms.js:2172
+#: app/scripts/services/forms.js:902
+msgid "Wrong block name {{name}}"
+msgstr "Неправильна назва блоку: {{name}}"
+
+#: app/scripts/services/project.js:157
+msgid "Wrong project format: {{name}}"
+msgstr "Неправильний формат проекту: {{name}}"
+
+#: app/scripts/services/tools.js:980
+msgid "Wrong remote hostname {{name}}"
+msgstr "Неправильне віддалене ім'я хоста: {{name}}"
+
+#: app/scripts/services/forms.js:411 app/views/design.html:164
+msgid "Yellow"
+msgstr "Жовтий"
+
+#: app/scripts/services/utils.js:1376
+msgid "Yes"
+msgstr "Так"
+
+#: app/scripts/controllers/menu.js:411
+msgid ""
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
+msgstr ""
+"Ви редагуєте субмодуль, тому збережете лише цей субмодуль (\"Зберегти як\" працює як \"Експортувати                 модуль\"). Хочете продовжити?"
+
+#: app/scripts/services/utils.js:1350
+msgid "You are importing a block that uses \"tri-state\"."
+msgstr "Ви імпортуєте блок, який використовує \"тристабільний стан\"."
+
+#: app/scripts/services/utils.js:1349
+msgid "You are loading a design that uses \"tri-state\"."
+msgstr "Ви завантажуєте дизайн, який використовує \"тристабільний стан\"."
+
+#: app/scripts/controllers/menu.js:398
+msgid ""
+"You are navigating into the design: If you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\"."
+msgstr ""
+"Ви навігуєте по дизайну: якщо хочете зберегти весь дизайн, потрібно повернутися                      до верхнього рівня. Якщо хочете "
+"експортувати цей модуль як новий файл, розблокуйте модуль і використовуйте \"Зберегти як\"."
+
+#: app/scripts/services/project.js:107
+msgid "You can load it as it is or convert it to use the {{name}} board."
+msgstr "Ви можете завантажити його як є або конвертувати для використання з платою {{name}}."
+
+#: app/scripts/controllers/menu.js:1368
+msgid ""
+"You can only build at the top-level design. Inside submodules, you can "
+"<strong>Verify</strong>"
+msgstr ""
+"Ви можете збирати тільки на верхньому рівні дизайну. Усередині субмодулів, ви можете "
+"<strong>Перевірити</strong>"
+
+#: app/scripts/controllers/menu.js:1393
+msgid ""
+"You can only upload at the top-level design. Inside submodules, you can "
+"<strong>Verify</strong>"
+msgstr ""
+"Ви можете завантажувати тільки на верхньому рівні дизайну. Усередині субмодулів, ви можете "
+"<strong>Перевірити</strong>"
+
+#: app/views/version.html:23
+msgid "You can read the release notes on the"
+msgstr "Ви можете прочитати примітки до версії на"
+
+#: app/scripts/controllers/menu.js:591
+msgid "Your changes will be lost if you don’t save them"
+msgstr "Ваші зміни будуть втрачені, якщо ви їх не збережете"
+
+#: app/views/design.html:25
+msgid "back"
+msgstr "назад"
+
+#: app/scripts/services/drivers.js:439 app/scripts/services/utils.js:1159
+msgid "{{app}} is required."
+msgstr "{{app}} необхідний."
+
+#: app/scripts/controllers/menu.js:1140
+msgid "{{board}} datasheet not defined"
+msgstr "{{board}} технічний опис не визначено"
+
+#: app/scripts/controllers/menu.js:1126
+msgid "{{board}} pinout not defined"
+msgstr "{{board}} розташування контактів не визначено"
+
+#: app/scripts/controllers/menu.js:1166
+msgid "{{board}} rules not defined"
+msgstr "{{board}} правила не визначено"
+
+#: app/scripts/controllers/menu.js:500 app/scripts/controllers/menu.js:533
+msgid "{{name}} exported"
+msgstr "{{name}} експортовано"
