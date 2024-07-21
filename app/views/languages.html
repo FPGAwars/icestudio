@@ -106,6 +106,12 @@
   </a>
 </li>
 <li>
+  <a href ng-click="selectLanguage('uk_UA')">
+    {{ 'Ukrainian' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'uk_UA'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
   <a href ng-click="selectLanguage('ja_JP')">
     {{ 'Japanese' | translate }}&ensp;
     <span ng-show="profile.data.language == 'ja_JP'" class="glyphicon glyphicon-ok-circle"></span>
