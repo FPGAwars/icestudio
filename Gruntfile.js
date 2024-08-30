@@ -82,7 +82,6 @@ os.tmpDir = os.tmpdir;
 
 //-- This is for debugging...
 console.log("Executing Gruntfile.js...");
-
 //---------------------------------------------------------------------------
 //-- Wrapper function. This function is called when the 'grunt' command is
 //-- executed. Grunt exposes all of its methods and properties on the 
