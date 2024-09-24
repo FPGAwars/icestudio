@@ -1,0 +1,15 @@
+{
+  "label": "Cynthion-r1.4",
+  "SysClkMhz": 60,
+  "datasheet": "https://cynthion.readthedocs.io",
+  "interface": "MCU",
+  "arch" : "ecp5",
+  "toolchain": "apio",
+  "FPGAResources": {
+    "ffs": 12064,
+    "luts": 12064,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}
