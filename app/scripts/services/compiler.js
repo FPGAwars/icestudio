@@ -956,9 +956,7 @@ angular.module('icestudio')
 
               //-- Get the pullmode property of the physical pin (its id is pin.value)
               let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
-              pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
-
-              if (pullmode === 'UP' || pullmode === 'DOWN') {
+              if (pullmode === 'UP' || pullmode === 'DOWN'  || pullmode === 'NONE') {
                 code += 'PULLMODE=' + pullmode;
               }
               code += ' ;\n\n';
@@ -978,9 +976,7 @@ angular.module('icestudio')
 
             //-- Get the pullmode property of the physical pin (its id is pin.value)
             let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
-            pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
-
-            if (pullmode === 'UP' || pullmode === 'DOWN') {
+            if (pullmode === 'UP' || pullmode === 'DOWN' || pullmode === 'NONE') {
               code += 'PULLMODE=' + pullmode;
             }
             code += ' ;\n\n';
