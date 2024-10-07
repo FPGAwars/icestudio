@@ -69,18 +69,19 @@ msgid "Address format"
 msgstr "Μορφοποίηση Διεύθυνσης"
 
 #: app/views/menu.html:385
+#, fuzzy
 msgid "Advanced features"
-msgstr ""
+msgstr "Προηγμένες λειτουργίες"
 
 #: app/scripts/services/tools.js:1941
 #, fuzzy
 msgid "All collections removed"
-msgstr "Όλες οι συλλογές διαγράφηκαν"
+msgstr "Ολες οι συλλογές διαγράφηκαν"
 
 #: app/scripts/controllers/menu.js:1463
 #, fuzzy
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr "Όλες οι αποθηκευμένες συλλογές θα διαγραφούν. θέλετε να συνεχίσετε?"
+msgstr "Ολες οι αποθηκευμένες συλλογές θα διαγραφούν. Θέλετε να συνεχίσετε?"
 
 #: app/views/advanced.html:25
 msgid "Allow tri-state connections"
@@ -178,8 +179,9 @@ msgstr "Ο Bootloader δεν είναι ενεργός"
 
 #: app/scripts/controllers/menu.js:1367 app/views/design.html:508
 #: app/views/menu.html:607
+#, fuzzy
 msgid "Build"
-msgstr "Χτίσιμο"
+msgstr "Χτίσε"
 
 #: app/scripts/controllers/menu.js:1377
 msgid "Build done"
@@ -214,12 +216,12 @@ msgstr ""
 #: app/scripts/services/tools.js:1463
 #, fuzzy
 msgid "Check Internet connection..."
-msgstr "Έλεγχος συνδεσιμότητας..."
+msgstr "Eλεγχος συνδεσιμότητας..."
 
 #: app/scripts/services/tools.js:1497
 #, fuzzy
 msgid "Check Python..."
-msgstr "Έλεγχος Python..."
+msgstr "Eλεγχος Python..."
 
 #: app/views/languages.html:68
 msgid "Chinese"
@@ -324,7 +326,7 @@ msgstr "Σταθερά"
 
 #: app/scripts/services/forms.js:2103
 msgid "Constant names"
-msgstr ""
+msgstr "Ονόματα σταθερών"
 
 #: app/scripts/services/project.js:103
 msgid "Convert"
@@ -565,7 +567,7 @@ msgstr "Αρχείο"
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
-"Το αρχείο {{file}} υπάρχει ήδη στην διαδρομή του έργου. θέλετε να το "
+"Το αρχείο {{file}} υπάρχει ήδη στην διαδρομή του έργου. Θέλετε να το "
 "αντικαταστήσετε?"
 
 #: app/scripts/services/tools.js:445
@@ -653,34 +655,36 @@ msgstr "Είσοδος"
 
 #: app/views/design.html:291 app/views/menu.html:769
 msgid "Input label"
-msgstr ""
+msgstr "Ετικέτα εισόδου"
 
 #: app/scripts/services/forms.js:1477
 msgid "Input labels"
-msgstr ""
+msgstr "Ετικέτες εισόδου"
 
 #: app/scripts/services/forms.js:1629
 #, fuzzy
 msgid "Input parameters"
-msgstr "Εισαγάγετε τις παραμέτρους"
+msgstr "Παράμετροι εισόδου"
 
 #: app/scripts/services/forms.js:989
+#, fuzzy
 msgid "Input port names"
-msgstr ""
+msgstr "Ονόματα θύρας εισόδου"
 
 #: app/scripts/services/forms.js:1615
 #, fuzzy
 msgid "Input ports"
-msgstr "Εισαγάγετε τις θύρες εισόδου"
+msgstr "Θύρες εισόδου"
 
 #: app/views/menu.html:635
 #, fuzzy
 msgid "Install (Stable)"
-msgstr "Εγκατάσταση"
+msgstr "Εγκατάστησε"
 
 #: app/views/menu.html:656
+#, fuzzy
 msgid "Install Development version"
-msgstr ""
+msgstr "Εγκατάστησε έκδοση ανάπτυξης"
 
 #: app/scripts/services/tools.js:1235
 msgid ""
@@ -837,15 +841,17 @@ msgstr "Μνήμη"
 #: app/scripts/services/forms.js:1888
 #, fuzzy
 msgid "Memory block names"
-msgstr "Blocks μνήμης"
+msgstr "Ονόματα block μνήμης"
 
 #: app/scripts/services/utils.js:670
+#, fuzzy
 msgid "Name"
-msgstr "Όνομα"
+msgstr "Ονομα"
 
 #: app/scripts/services/forms.js:1539
+#, fuzzy
 msgid "Names of the paired labels"
-msgstr ""
+msgstr "Ονόματα των ζευγαρωμένων ετικετών"
 
 #: app/scripts/services/forms.js:444 app/views/design.html:248
 msgid "Navy"
@@ -856,13 +862,14 @@ msgid "New"
 msgstr "Δημιουργία"
 
 #: app/views/design.html:87
+#, fuzzy
 msgid "New Color:"
-msgstr ""
+msgstr "Νέο Χρώμα:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Όνομα:"
+msgstr "Νέο Ονομα:"
 
 #: app/views/design.html:71
 msgid "Next"
@@ -882,12 +889,14 @@ msgid "Olive Drab"
 msgstr ""
 
 #: app/views/menu.html:100
+#, fuzzy
 msgid "Open"
-msgstr "Άνοιγμα"
+msgstr "Ανοιγμα"
 
 #: app/scripts/services/utils.js:727
+#, fuzzy
 msgid "Open SVG"
-msgstr "Άνοιγμα SVG"
+msgstr "Ανοιγμα SVG"
 
 #: app/scripts/services/forms.js:402 app/views/design.html:143
 msgid "Orange Red"
@@ -898,28 +907,32 @@ msgid "Original file {{file}} does not exist"
 msgstr "Το αρχικό αρχείο {{file}} δεν υπάρχει"
 
 #: app/views/design.html:286 app/views/menu.html:764
+#, fuzzy
 msgid "Output"
-msgstr "Έξοδος"
+msgstr "Εξοδος"
 
 #: app/views/design.html:296 app/views/menu.html:773
+#, fuzzy
 msgid "Output label"
-msgstr ""
+msgstr "Ετικέτα εξόδου"
 
 #: app/scripts/services/forms.js:1396
 msgid "Output labels"
-msgstr ""
+msgstr "Ετικέτες εξόδου"
 
 #: app/scripts/services/forms.js:1135
+#, fuzzy
 msgid "Output port names"
-msgstr ""
+msgstr "Ονόματα θύρας εξόδου"
 
 #: app/scripts/services/forms.js:1622
 msgid "Output ports"
-msgstr ""
+msgstr "Θύρες εξόδου"
 
 #: app/views/design.html:301 app/views/menu.html:778
+#, fuzzy
 msgid "Paired labels"
-msgstr ""
+msgstr "Ζευγαρωμένες ετικέτες"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -969,7 +982,7 @@ msgstr ""
 #: app/views/menu.html:202
 #, fuzzy
 msgid "Quit"
-msgstr "Έξοδος"
+msgstr "Εξοδος"
 
 #: app/scripts/services/forms.js:390 app/views/design.html:115
 msgid "Red"
@@ -1073,15 +1086,15 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:1376
 msgid "Start build"
-msgstr "Έναρξη χτισίματος"
+msgstr "Eναρξη χτισίματος"
 
 #: app/scripts/controllers/menu.js:1402
 msgid "Start upload"
-msgstr "Έναρξη μεταφόρτωσης"
+msgstr "Eναρξη μεταφόρτωσης"
 
 #: app/scripts/controllers/menu.js:1353
 msgid "Start verification"
-msgstr "Έναρξη επαλήθευσης"
+msgstr "Eναρξη επαλήθευσης"
 
 #: app/scripts/services/forms.js:435 app/views/design.html:227
 msgid "Steel Blue"
@@ -1154,8 +1167,9 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/utils.js:1377
+#, fuzzy
 msgid "This time"
-msgstr ""
+msgstr "Αυτή τη φορά"
 
 #: app/scripts/services/graph.js:532
 msgid ""
@@ -1237,8 +1251,9 @@ msgid "Undo"
 msgstr "Αναίρεση"
 
 #: app/scripts/services/tools.js:733
+#, fuzzy
 msgid "Unknown board"
-msgstr "Άγνωστη πλακέτα"
+msgstr "Αγνωστη πλακέτα"
 
 #: app/scripts/services/project.js:184
 #, fuzzy
@@ -1246,8 +1261,9 @@ msgid "Unsupported project format {{version}}"
 msgstr "Μη υποστηριζόμενη μορφοποίηση έργου {{version}}"
 
 #: app/scripts/app.js:215
+#, fuzzy
 msgid "Untitled"
-msgstr "Άτιτλο"
+msgstr "Ατιτλος"
 
 #: app/views/menu.html:639
 msgid "Update (Latest stable)"
@@ -1276,7 +1292,7 @@ msgstr "Επαλήθευση"
 
 #: app/scripts/services/utils.js:671 app/views/menu.html:832
 msgid "Version"
-msgstr "Έκδοση"
+msgstr "Eκδοση"
 
 #: app/views/menu.html:826
 msgid "Version notes"
@@ -1326,8 +1342,9 @@ msgid "Yellow"
 msgstr ""
 
 #: app/scripts/services/utils.js:1376
+#, fuzzy
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: app/scripts/controllers/menu.js:411
 msgid ""
