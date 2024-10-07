@@ -1,0 +1,438 @@
+BLOCK ASYNCPATHS;
+BLOCK RESETPATHS;
+## Cynthion r1.4
+# More information:
+# https://github.com/greatscottgadgets/cynthion/blob/main/cynthion/python/src/gateware/platform/cynthion_r1_4.py
+
+## Primary, discrete 60MHz oscillator. "TODO" sheet
+LOCATE    COMP "clk_60MHz" SITE "A8";
+IOBUF     PORT "clk_60MHz" IO_TYPE=LVCMOS33;
+FREQUENCY PORT "clk_60MHz" 60000000.0 HZ;
+
+## QSPI/SPI FLASH chip. "TODO" sheet
+# Note: SCK is on pin 9; but doesn't have a traditional I/O buffer.
+# Instead, we'll need to drive a clock into a USRMCLK instance.  See
+# interfaces/flash.py for more information.
+LOCATE COMP "spi_flash__cs"  SITE "N8";
+LOCATE COMP "spi_flash__sdi" SITE "T8";
+LOCATE COMP "spi_flash__sdo" SITE "T7";
+IOBUF  PORT "spi_flash__cs"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "spi_flash__sdi" IO_TYPE=LVCMOS33;
+IOBUF  PORT "spi_flash__sdo" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "qspi_flash__cs"    SITE "N8";
+LOCATE COMP "qspi_flash__dq[0]" SITE "T8";
+LOCATE COMP "qspi_flash__dq[1]" SITE "T7";
+LOCATE COMP "qspi_flash__dq[2]" SITE "M7";
+LOCATE COMP "qspi_flash__dq[3]" SITE "N7";
+IOBUF  PORT "qspi_flash__cs"    IO_TYPE=LVCMOS33;
+IOBUF  PORT "qspi_flash__dq[0]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "qspi_flash__dq[1]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "qspi_flash__dq[2]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "qspi_flash__dq[3]" IO_TYPE=LVCMOS33;
+
+## UART "TODO" sheet
+# Note: UART pins R14 and T14 are connected to JTAG pins R11 (TDI)
+# and T11 (TMS) respectively, so the microcontroller can use either
+# function but not both simultaneously.
+LOCATE COMP "uart__rx" SITE "R14";
+LOCATE COMP "uart__tx" SITE "T14";
+IOBUF  PORT "uart__rx" IO_TYPE=LVCMOS33;
+IOBUF  PORT "uart__tx" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+## INT pin. "TODO" sheet
+# interrupt output to send signal to microcontroller
+# interrupt output to send a signal to the debug microcontroller
+LOCATE COMP "int" SITE "T6";
+IOBUF  PORT "int" IO_TYPE=LVCMOS33;
+
+## USER button. "TODO" sheet
+LOCATE COMP "button_user" SITE "M14";
+IOBUF  PORT "button_user" PULLMODE=NONE IO_TYPE=LVCMOS33;
+
+## SELF_PROGRAM "TODO" sheet
+# output signal connected to PROGRAMN to trigger FPGA reconfiguration
+LOCATE COMP "self_program" SITE "T13";
+IOBUF  PORT "self_program" IO_TYPE=LVCMOS33;
+
+## FPGA LEDs "TODO" sheet
+LOCATE COMP "led_0" SITE "E13";
+LOCATE COMP "led_1" SITE "C13";
+LOCATE COMP "led_2" SITE "B14";
+LOCATE COMP "led_3" SITE "A15";
+LOCATE COMP "led_4" SITE "D12";
+LOCATE COMP "led_5" SITE "C11";
+IOBUF  PORT "led_0" IO_TYPE=LVCMOS33;
+IOBUF  PORT "led_1" IO_TYPE=LVCMOS33;
+IOBUF  PORT "led_2" IO_TYPE=LVCMOS33;
+IOBUF  PORT "led_3" IO_TYPE=LVCMOS33;
+IOBUF  PORT "led_4" IO_TYPE=LVCMOS33;
+IOBUF  PORT "led_5" IO_TYPE=LVCMOS33;
+
+# TARGET USB PHY "TODO" sheet
+LOCATE COMP "target_phy__clk" SITE "T4";
+LOCATE COMP "target_phy__data[0]" SITE "R2";
+LOCATE COMP "target_phy__data[1]" SITE "R1";
+LOCATE COMP "target_phy__data[2]" SITE "P2";
+LOCATE COMP "target_phy__data[3]" SITE "P1";
+LOCATE COMP "target_phy__data[4]" SITE "N3";
+LOCATE COMP "target_phy__data[5]" SITE "N1";
+LOCATE COMP "target_phy__data[6]" SITE "M2";
+LOCATE COMP "target_phy__data[7]" SITE "M1";
+LOCATE COMP "target_phy__dir" SITE "R3";
+LOCATE COMP "target_phy__nxt" SITE "T2";
+LOCATE COMP "target_phy__rst" SITE "R4";
+LOCATE COMP "target_phy__stp" SITE "T3";
+IOBUF  PORT "target_phy__clk" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[0]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[1]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[2]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[3]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[4]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[5]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[6]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__data[7]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__dir" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__nxt" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__rst" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "target_phy__stp" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+
+# CONTROL USB PHY "TODO" sheet
+LOCATE COMP "control_phy__clk" SITE "L14";
+LOCATE COMP "control_phy__data[0]" SITE "N16";
+LOCATE COMP "control_phy__data[1]" SITE "N14";
+LOCATE COMP "control_phy__data[2]" SITE "P16";
+LOCATE COMP "control_phy__data[3]" SITE "P15";
+LOCATE COMP "control_phy__data[4]" SITE "R16";
+LOCATE COMP "control_phy__data[5]" SITE "R15";
+LOCATE COMP "control_phy__data[6]" SITE "T15";
+LOCATE COMP "control_phy__data[7]" SITE "P14";
+LOCATE COMP "control_phy__dir" SITE "M16";
+LOCATE COMP "control_phy__nxt" SITE "M15";
+LOCATE COMP "control_phy__rst" SITE "L16";
+LOCATE COMP "control_phy__stp" SITE "L15";
+IOBUF  PORT "control_phy__clk" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[0]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[1]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[2]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[3]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[4]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[5]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[6]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__data[7]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__dir" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__nxt" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__rst" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "control_phy__stp" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+
+# AUX USB PHY "TODO" sheet
+LOCATE COMP "aux_phy__clk" SITE "D16";
+LOCATE COMP "aux_phy__data[0" SITE "F16";
+LOCATE COMP "aux_phy__data[1]" SITE "G15";
+LOCATE COMP "aux_phy__data[2]" SITE "G16";
+LOCATE COMP "aux_phy__data[3]" SITE "H15";
+LOCATE COMP "aux_phy__data[4]" SITE "J15";
+LOCATE COMP "aux_phy__data[5]" SITE "J16";
+LOCATE COMP "aux_phy__data[6]" SITE "K15";
+LOCATE COMP "aux_phy__data[7]" SITE "K16";
+LOCATE COMP "aux_phy__dir" SITE "E16";
+LOCATE COMP "aux_phy__nxt" SITE "F15";
+LOCATE COMP "aux_phy__rst" SITE "J13";
+LOCATE COMP "aux_phy__stp" SITE "E15";
+IOBUF  PORT "aux_phy__clk" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[0]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[1]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[2]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[3]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[4]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[5]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[6]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__data[7]" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__dir" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__nxt" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__rst" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+IOBUF  PORT "aux_phy__stp" IO_TYPE=LVCMOS33 SLEWRATE=FAST;
+
+## Direct connection to TARGET USB D+/D- "TODO" sheet
+LOCATE COMP "target_usb_diff__p"  SITE "N4";
+LOCATE COMP "target_usb_diff__m"  SITE "P3";
+LOCATE COMP "target_usb_dp"       SITE "N4";
+LOCATE COMP "target_usb_dm"       SITE "P3";
+IOBUF  PORT "target_usb_diff__p"  IO_TYPE=LVDS PULLMODE=NONE;
+IOBUF  PORT "target_usb_diff__m"  IO_TYPE=LVDS PULLMODE=NONE;
+IOBUF  PORT "target_usb_dp"       IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "target_usb_dm"       IO_TYPE=LVCMOS33 PULLMODE=NONE;
+
+## TARGET USB Type-C controller "TODO" sheet
+LOCATE COMP "target_type_c__scl"   SITE "A4";
+LOCATE COMP "target_type_c__sda"   SITE "C4";
+LOCATE COMP "target_type_c__int"   SITE "A3";
+LOCATE COMP "target_type_c__fault" SITE "D4";
+LOCATE COMP "target_type_c__sbu1"  SITE "A2";
+LOCATE COMP "target_type_c__sbu2"  SITE "E4";
+IOBUF  PORT "target_type_c__scl"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "target_type_c__sda"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "target_type_c__int"   IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF  PORT "target_type_c__fault" IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF  PORT "target_type_c__sbu1"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "target_type_c__sbu2"  IO_TYPE=LVCMOS33;
+
+## AUX USB Type-C controller "TODO" sheet
+LOCATE COMP "aux_type_c__scl"   SITE "H12";
+LOCATE COMP "aux_type_c__sda"   SITE "G14";
+LOCATE COMP "aux_type_c__int"   SITE "H14";
+LOCATE COMP "aux_type_c__fault" SITE "J14";
+LOCATE COMP "aux_type_c__sbu1"  SITE "H13";
+LOCATE COMP "aux_type_c__sbu2"  SITE "K14";
+IOBUF  PORT "aux_type_c__scl"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "aux_type_c__sda"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "aux_type_c__int"   IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF  PORT "aux_type_c__fault" IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF  PORT "aux_type_c__sbu1"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "aux_type_c__sbu2"  IO_TYPE=LVCMOS33;
+
+## power input shutoff
+LOCATE COMP "control_vbus_in_en" SITE "K13";
+LOCATE COMP "aux_vbus_in_en" SITE "L13";
+IOBUF  PORT "control_vbus_in_en" IO_TYPE=LVCMOS33;
+IOBUF  PORT "aux_vbus_in_en" IO_TYPE=LVCMOS33;
+
+## VBUS passthrough
+LOCATE COMP "target_c_vbus_en" SITE "K5";
+LOCATE COMP "control_vbus_en" SITE "L1";
+LOCATE COMP "aux_vbus_en" SITE "L2";
+LOCATE COMP "target_a_discharge" SITE "K4";
+IOBUF  PORT "target_c_vbus_en" IO_TYPE=LVCMOS33;
+IOBUF  PORT "control_vbus_en" IO_TYPE=LVCMOS33;
+IOBUF  PORT "aux_vbus_en" IO_TYPE=LVCMOS33;
+IOBUF  PORT "target_a_discharge" IO_TYPE=LVCMOS33;
+
+## voltage and current monitor
+LOCATE COMP "power_monitor__scl"   SITE "D7";
+LOCATE COMP "power_monitor__sda"   SITE "C7";
+LOCATE COMP "power_monitor__pwrdn" SITE "D5";
+LOCATE COMP "power_monitor__slow"  SITE "C6";
+LOCATE COMP "power_monitor__gpio"  SITE "D6";
+IOBUF  PORT "power_monitor__scl"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "power_monitor__sda"   IO_TYPE=LVCMOS33 PULLMODE=NONE;
+IOBUF  PORT "power_monitor__pwrdn" IO_TYPE=LVCMOS33;
+IOBUF  PORT "power_monitor__slow"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "power_monitor__gpio"  IO_TYPE=LVCMOS33;
+
+# HyperRAM "TODO" sheet
+LOCATE COMP "ram__clk__p" SITE "C3";
+LOCATE COMP "ram__clk__m" SITE "D3";
+LOCATE COMP "ram__cs"     SITE "B2";
+LOCATE COMP "ram__dq[0]"  SITE "F2";
+LOCATE COMP "ram__dq[1]"  SITE "B1";
+LOCATE COMP "ram__dq[2]"  SITE "C2";
+LOCATE COMP "ram__dq[3]"  SITE "E1";
+LOCATE COMP "ram__dq[4]"  SITE "E3";
+LOCATE COMP "ram__dq[5]"  SITE "E2";
+LOCATE COMP "ram__dq[6]"  SITE "F3";
+LOCATE COMP "ram__dq[7]"  SITE "G4";
+LOCATE COMP "ram__reset"  SITE "C1";
+LOCATE COMP "ram__rwds"   SITE "D1";
+IOBUF  PORT "ram__clk__p" IO_TYPE=LVCMOS33D SLEWRATE=FAST;
+IOBUF  PORT "ram__clk__m" IO_TYPE=LVCMOS33D SLEWRATE=FAST;
+IOBUF  PORT "ram__cs"     IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[0]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[1]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[2]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[3]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[4]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[5]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[6]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__dq[7]"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__reset"  IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+IOBUF  PORT "ram__rwds"   IO_TYPE=LVCMOS33  SLEWRATE=FAST;
+
+## USER I/O connections. "TODO" sheet
+LOCATE COMP "user_pmod_a[0]" SITE "C9";
+LOCATE COMP "user_pmod_a[1]" SITE "B9";
+LOCATE COMP "user_pmod_a[2]" SITE "D11";
+LOCATE COMP "user_pmod_a[3]" SITE "C12";
+LOCATE COMP "user_pmod_a[4]" SITE "C8";
+LOCATE COMP "user_pmod_a[5]" SITE "D8";
+LOCATE COMP "user_pmod_a[6]" SITE "D9";
+LOCATE COMP "user_pmod_a[7]" SITE "C10";
+IOBUF  PORT "user_pmod_a[0]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[1]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[2]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[3]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[4]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[5]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[6]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_a[7]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "user_pmod_b[0]" SITE "B4";
+LOCATE COMP "user_pmod_b[1]" SITE "B5";
+LOCATE COMP "user_pmod_b[2]" SITE "B6";
+LOCATE COMP "user_pmod_b[3]" SITE "B7";
+LOCATE COMP "user_pmod_b[4]" SITE "C5";
+LOCATE COMP "user_pmod_b[5]" SITE "A5";
+LOCATE COMP "user_pmod_b[6]" SITE "A6";
+LOCATE COMP "user_pmod_b[7]" SITE "A7";
+IOBUF  PORT "user_pmod_b[0]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[1]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[2]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[3]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[4]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[5]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[6]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "user_pmod_b[7]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "mezzzanine[0]"  SITE "B8";
+LOCATE COMP "mezzzanine[1]"  SITE "A9";
+LOCATE COMP "mezzzanine[2]"  SITE "B10";
+LOCATE COMP "mezzzanine[3]"  SITE "A10";
+LOCATE COMP "mezzzanine[4]"  SITE "B11";
+LOCATE COMP "mezzzanine[5]"  SITE "D14";
+LOCATE COMP "mezzzanine[6]"  SITE "C14";
+LOCATE COMP "mezzzanine[7]"  SITE "F14";
+LOCATE COMP "mezzzanine[8]"  SITE "E14";
+LOCATE COMP "mezzzanine[9]"  SITE "G13";
+LOCATE COMP "mezzzanine[10]" SITE "G12";
+LOCATE COMP "mezzzanine[11]" SITE "C16";
+LOCATE COMP "mezzzanine[12]" SITE "C15";
+LOCATE COMP "mezzzanine[13]" SITE "B16";
+LOCATE COMP "mezzzanine[14]" SITE "B15";
+LOCATE COMP "mezzzanine[15]" SITE "A14";
+LOCATE COMP "mezzzanine[16]" SITE "B13";
+LOCATE COMP "mezzzanine[17]" SITE "A13";
+LOCATE COMP "mezzzanine[18]" SITE "D13";
+LOCATE COMP "mezzzanine[19]" SITE "A12";
+LOCATE COMP "mezzzanine[20]" SITE "B12";
+LOCATE COMP "mezzzanine[21]" SITE "A11";
+IOBUF  PORT "mezzzanine[0]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[1]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[2]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[3]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[4]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[5]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[6]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[7]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[8]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[9]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[10]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[11]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[12]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[13]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[14]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[15]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[16]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[17]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[18]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[19]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[20]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "mezzzanine[21]" IO_TYPE=LVCMOS33;
+
+
+## Pseudo-supply pins
+#
+# These I/O pins are connected to VCCIO or GND and are intended to be
+# driven as outputs in order to source or sink additional supply
+# current.
+LOCATE COMP "pseudo_vccio[0]"  SITE "E6";
+LOCATE COMP "pseudo_vccio[1]"  SITE "E7";
+LOCATE COMP "pseudo_vccio[2]"  SITE "D10";
+LOCATE COMP "pseudo_vccio[3]"  SITE "E10";
+LOCATE COMP "pseudo_vccio[4]"  SITE "E11";
+LOCATE COMP "pseudo_vccio[5]"  SITE "F12";
+LOCATE COMP "pseudo_vccio[6]"  SITE "J12";
+LOCATE COMP "pseudo_vccio[7]"  SITE "K12";
+LOCATE COMP "pseudo_vccio[8]"  SITE "L12";
+LOCATE COMP "pseudo_vccio[9]"  SITE "N13";
+LOCATE COMP "pseudo_vccio[10]" SITE "P13";
+LOCATE COMP "pseudo_vccio[11]" SITE "M11";
+LOCATE COMP "pseudo_vccio[12]" SITE "P11";
+LOCATE COMP "pseudo_vccio[13]" SITE "P12";
+LOCATE COMP "pseudo_vccio[14]" SITE "L4";
+LOCATE COMP "pseudo_vccio[15]" SITE "M4";
+LOCATE COMP "pseudo_vccio[16]" SITE "R5";
+LOCATE COMP "pseudo_vccio[17]" SITE "M5";
+LOCATE COMP "pseudo_vccio[18]" SITE "N5";
+LOCATE COMP "pseudo_vccio[19]" SITE "P4";
+LOCATE COMP "pseudo_vccio[20]" SITE "M6";
+LOCATE COMP "pseudo_vccio[21]" SITE "F5";
+LOCATE COMP "pseudo_vccio[22]" SITE "G5";
+LOCATE COMP "pseudo_vccio[23]" SITE "H5";
+LOCATE COMP "pseudo_vccio[24]" SITE "H4";
+LOCATE COMP "pseudo_vccio[25]" SITE "J4";
+LOCATE COMP "pseudo_vccio[26]" SITE "J5";
+LOCATE COMP "pseudo_vccio[27]" SITE "J3";
+LOCATE COMP "pseudo_vccio[28]" SITE "J1";
+LOCATE COMP "pseudo_vccio[29]" SITE "J2";
+LOCATE COMP "pseudo_vccio[30]" SITE "R6";
+IOBUF  PORT "pseudo_vccio[0]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[1]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[2]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[3]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[4]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[5]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[6]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[7]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[8]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[9]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[10]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[11]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[12]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[13]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[14]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[15]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[16]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[17]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[18]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[19]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[20]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[21]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[22]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[23]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[24]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[25]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[26]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[27]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[28]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[29]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_vccio[30]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "pseudo_gnd[0]"  SITE "E5";
+LOCATE COMP "pseudo_gnd[1]"  SITE "E8";
+LOCATE COMP "pseudo_gnd[2]"  SITE "E9";
+LOCATE COMP "pseudo_gnd[3]"  SITE "E12";
+LOCATE COMP "pseudo_gnd[4]"  SITE "F13";
+LOCATE COMP "pseudo_gnd[5]"  SITE "M13";
+LOCATE COMP "pseudo_gnd[6]"  SITE "M12";
+LOCATE COMP "pseudo_gnd[7]"  SITE "N12";
+LOCATE COMP "pseudo_gnd[8]"  SITE "N11";
+LOCATE COMP "pseudo_gnd[9]"  SITE "L5";
+LOCATE COMP "pseudo_gnd[10]" SITE "L3";
+LOCATE COMP "pseudo_gnd[11]" SITE "M3";
+LOCATE COMP "pseudo_gnd[12]" SITE "N6";
+LOCATE COMP "pseudo_gnd[13]" SITE "P5";
+LOCATE COMP "pseudo_gnd[14]" SITE "P6";
+LOCATE COMP "pseudo_gnd[15]" SITE "F4";
+LOCATE COMP "pseudo_gnd[16]" SITE "G2";
+LOCATE COMP "pseudo_gnd[17]" SITE "G3";
+LOCATE COMP "pseudo_gnd[18]" SITE "H3";
+LOCATE COMP "pseudo_gnd[19]" SITE "H2";
+IOBUF  PORT "pseudo_gnd[0]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[1]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[2]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[3]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[4]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[5]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[6]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[7]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[8]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[9]"  IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[10]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[11]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[12]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[13]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[14]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[15]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[16]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[17]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[18]" IO_TYPE=LVCMOS33;
+IOBUF  PORT "pseudo_gnd[19]" IO_TYPE=LVCMOS33;
