@@ -565,47 +565,34 @@ angular.module('icestudio')
         }
       });
     };
-/*
-    this.saveFile = function (filepath, data) {
-      return new Promise(function (resolve, reject) {
-        var content = data;
-        if (typeof data !== 'string') {
-          content = JSON.stringify(data, null, 2);
-        }
-        nodeFs.writeFile(filepath, content,
-          function (err) {
-            if (err) {
-              reject(err.toString());
-            } else {
-              resolve();
-            }
-          });
-      });
-    };
-    */
 
-      this.saveFile = function (filepath, data) {
+      this.saveFile = async function (filepath, data) {
   return new Promise(async function (resolve, reject) {
     try {
-      // Intenta adquirir el lock en el archivo
-      const release = await fsLock.lock(filepath, { retries: 10 });  // Espera hasta 10 reintentos antes de fallar
+      // Verify if file exists
+        if (!fs.existsSync(filepath)) {
+            // If not exists we need to create empty file to block it until write it
+            fs.writeFileSync(filepath, '');
+      }
+
+      // Try to get the file ownership
+      const release = await fsLock.lock(filepath, { retries: 10 }); // Retry 10 times if is locked
+
       var content = data;
       if (typeof data !== 'string') {
         content = JSON.stringify(data, null, 2);
       }
 
-      // Escribe el archivo mientras mantienes el lock
-      nodeFs.writeFile(filepath, content, async function (err) {
+      fs.writeFile(filepath, content, async function (err) {
         if (err) {
-          // Libera el lock en caso de error
-          await release();
+          await release();  
           reject(err.toString());
         } else {
-          // Libera el lock después de escribir exitosamente
-          await release();
+          await release();  
           resolve();
         }
       });
+
     } catch (error) {
       reject('Error while locking the file: ' + error.toString());
     }
