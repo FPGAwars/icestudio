@@ -86,7 +86,8 @@
     "sudo-prompt": "~8.2.0",
     "svg-pan-zoom": "~3.4.1",
     "svgo": "~0.7.2",
-    "tmp": "0.0.33"
+    "tmp": "0.0.33",
+    "proper-lockfile": "^4.1.2"
   },
   "readme": "../README.md",
   "keywords": [
