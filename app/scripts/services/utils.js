@@ -20,7 +20,8 @@ angular.module('icestudio')
     SVGO,
     fastCopy,
     shelljs,
-    sparkMD5) {
+    sparkMD5,
+    fsLock) {
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
@@ -564,7 +565,7 @@ angular.module('icestudio')
         }
       });
     };
-
+/*
     this.saveFile = function (filepath, data) {
       return new Promise(function (resolve, reject) {
         var content = data;
@@ -581,6 +582,35 @@ angular.module('icestudio')
           });
       });
     };
+    */
+
+      this.saveFile = function (filepath, data) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      // Intenta adquirir el lock en el archivo
+      const release = await fsLock.lock(filepath, { retries: 10 });  // Espera hasta 10 reintentos antes de fallar
+      var content = data;
+      if (typeof data !== 'string') {
+        content = JSON.stringify(data, null, 2);
+      }
+
+      // Escribe el archivo mientras mantienes el lock
+      nodeFs.writeFile(filepath, content, async function (err) {
+        if (err) {
+          // Libera el lock en caso de error
+          await release();
+          reject(err.toString());
+        } else {
+          // Libera el lock después de escribir exitosamente
+          await release();
+          resolve();
+        }
+      });
+    } catch (error) {
+      reject('Error while locking the file: ' + error.toString());
+    }
+  });
+};
 
     function isJSON(content) {
       try {

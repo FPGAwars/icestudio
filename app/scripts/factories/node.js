@@ -11,7 +11,10 @@ angular.module('icestudio')
   .factory('sparkMD5', function() {
     return require('spark-md5');
   })
- 
+   .factory('fsLock',function(){
+       return require ('proper-lockfile');
+   })
+  
   .factory('nodeFs', function() {
     return require('fs');
   })
