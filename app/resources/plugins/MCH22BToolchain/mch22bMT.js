@@ -45,8 +45,9 @@ function upload(data) {
     }
   }
 
-  nodeChildProcess.exec(
-    command,
+  nodeChildProcess.execFile(
+    python,
+    [uploader, bitstream],
     {
       maxBuffer: 5000 * 1024,
     },
