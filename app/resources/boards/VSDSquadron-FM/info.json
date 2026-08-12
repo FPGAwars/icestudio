@@ -1,0 +1,13 @@
+{
+  "label": "VSDSquadron-FM",
+  "SysClkMhz": 12,
+  "datasheet": "https://www.vlsisystemdesign.com/wp-content/uploads/2025/01/datasheet.pdf",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 4960,
+    "luts": 5280,
+    "pios": 32,
+    "plbs": 660,
+    "brams": 30
+  }
+}
