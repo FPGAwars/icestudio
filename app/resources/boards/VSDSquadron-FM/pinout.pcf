@@ -1,44 +1,54 @@
-[
-  {"name": "CLK",  "value": "35", "type": "input"},
+# ---------------------------------------
+# VSDSquadron-FM constraint file (.pcf)
+# By VSD (vlsisystemdesign.com)
+# FPGA: Lattice ICE40UP5K-SG48ITR
+# Package: SG48
+# GPL license
+# ---------------------------------------
 
-  {"name": "LED_R", "value": "39", "type": "output"},
-  {"name": "LED_G", "value": "40", "type": "output"},
-  {"name": "LED_B", "value": "41", "type": "output"},
+# ------------ System Clock (12 MHz via internal oscillator / GBIN) ------
+set_io --warn-no-port CLK 35 # input  IOT 46b G0
 
-  {"name": "GPIO_0", "value": "46", "type": "inout"},
-  {"name": "GPIO_1", "value": "47", "type": "inout"},
-  {"name": "GPIO_2", "value": "48", "type": "inout"},
-  {"name": "GPIO_3", "value": "45", "type": "inout"},
-  {"name": "GPIO_4", "value": "44", "type": "inout"},
-  {"name": "GPIO_5", "value": "2",  "type": "inout"},
-  {"name": "GPIO_6", "value": "4",  "type": "inout"},
-  {"name": "GPIO_7", "value": "3",  "type": "inout"},
-  {"name": "GPIO_8", "value": "6",  "type": "inout"},
-  {"name": "GPIO_9", "value": "9",  "type": "inout"},
-  {"name": "GPIO_10", "value": "10", "type": "inout"},
-  {"name": "GPIO_11", "value": "11", "type": "inout"},
-  {"name": "GPIO_12", "value": "12", "type": "inout"},
-  {"name": "GPIO_13", "value": "21", "type": "inout"},
-  {"name": "GPIO_14", "value": "13", "type": "inout"},
-  {"name": "GPIO_15", "value": "20", "type": "inout"},
-  {"name": "GPIO_16", "value": "19", "type": "inout"},
-  {"name": "GPIO_17", "value": "18", "type": "inout"},
-  {"name": "GPIO_18", "value": "25", "type": "inout"},
-  {"name": "GPIO_19", "value": "23", "type": "inout"},
-  {"name": "GPIO_20", "value": "27", "type": "inout"},
-  {"name": "GPIO_21", "value": "26", "type": "inout"},
-  {"name": "GPIO_22", "value": "28", "type": "inout"},
-  {"name": "GPIO_23", "value": "31", "type": "inout"},
-  {"name": "GPIO_24", "value": "32", "type": "inout"},
-  {"name": "GPIO_25", "value": "34", "type": "inout"},
-  {"name": "GPIO_26", "value": "37", "type": "inout"},
-  {"name": "GPIO_27", "value": "36", "type": "inout"},
-  {"name": "GPIO_28", "value": "43", "type": "inout"},
-  {"name": "GPIO_29", "value": "38", "type": "inout"},
-  {"name": "GPIO_30", "value": "42", "type": "inout"},
+# ------------ RGB LED (onboard) -----------------------------------------
+set_io --warn-no-port LED_R 39 # output  RGB0
+set_io --warn-no-port LED_G 40 # output  RGB1
+set_io --warn-no-port LED_B 41 # output  RGB2
 
-  {"name": "SPI_SO",  "value": "14", "type": "output"},
-  {"name": "SPI_SI",  "value": "17", "type": "input"},
-  {"name": "SPI_SCK", "value": "15", "type": "output"},
-  {"name": "SPI_SS",  "value": "16", "type": "output"}
-]
+# ------------ General Purpose I/O (Bank 0, 1, 2) ------------------------
+set_io --warn-no-port GPIO_0  46  # IOB 0a
+set_io --warn-no-port GPIO_1  47  # IOB 2a
+set_io --warn-no-port GPIO_2  48  # IOB 4a
+set_io --warn-no-port GPIO_3  45  # IOB 5b
+set_io --warn-no-port GPIO_4  44  # IOB 3b G6
+set_io --warn-no-port GPIO_5   2  # IOB 6a
+set_io --warn-no-port GPIO_6   4  # IOB 8a
+set_io --warn-no-port GPIO_7   3  # IOB 9b
+set_io --warn-no-port GPIO_8   6  # IOB 13b
+set_io --warn-no-port GPIO_9   9  # IOB 16a
+set_io --warn-no-port GPIO_10 10  # IOB 18a
+set_io --warn-no-port GPIO_11 11  # IOB 20a
+set_io --warn-no-port GPIO_12 12  # IOB 22a
+set_io --warn-no-port GPIO_13 21  # IOB 23b
+set_io --warn-no-port GPIO_14 13  # IOB 24a
+set_io --warn-no-port GPIO_15 20  # IOB 25b G3
+set_io --warn-no-port GPIO_16 19  # IOB 29b
+set_io --warn-no-port GPIO_17 18  # IOB 31b
+set_io --warn-no-port GPIO_18 25  # IOT 36b
+set_io --warn-no-port GPIO_19 23  # IOT 37a
+set_io --warn-no-port GPIO_20 27  # IOT 38b
+set_io --warn-no-port GPIO_21 26  # IOT 39a
+set_io --warn-no-port GPIO_22 28  # IOT 41a
+set_io --warn-no-port GPIO_23 31  # IOT 42b
+set_io --warn-no-port GPIO_24 32  # IOT 43a
+set_io --warn-no-port GPIO_25 34  # IOT 44b
+set_io --warn-no-port GPIO_26 37  # IOT 45a G1
+set_io --warn-no-port GPIO_27 36  # IOT 48b
+set_io --warn-no-port GPIO_28 43  # IOT 49a
+set_io --warn-no-port GPIO_29 38  # IOT 50b
+set_io --warn-no-port GPIO_30 42  # IOT 51a
+
+# ------------ SPI Flash (4MB, config/data) ------------------------------
+set_io --warn-no-port SPI_SO  14  # IOB 32a
+set_io --warn-no-port SPI_SI  17  # IOB 33b
+set_io --warn-no-port SPI_SCK 15  # IOB 34a
+set_io --warn-no-port SPI_SS  16  # IOB 35b
