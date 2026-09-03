@@ -1,0 +1,42 @@
+[
+  {
+    "name": "CLK",
+    "value": "L14",
+    "type": "input"
+  },
+  {
+    "name": "LED_0_R",
+    "value": "C17",
+    "type": "output"
+  },
+  {
+    "name": "LED_0_G",
+    "value": "B16",
+    "type": "output"
+  },
+  {
+    "name": "LED_0_B",
+    "value": "B17",
+    "type": "output"
+  },
+  {
+    "name": "LED_1",
+    "value": "A17",
+    "type": "output"
+  },
+  {
+    "name": "LED_2",
+    "value": "C16",
+    "type": "output"
+  },
+  {
+    "name": "BTN_0",
+    "value": "A18",
+    "type": "input"
+  },
+  {
+    "name": "BTN_1",
+    "value": "B18",
+    "type": "input"
+  }
+]

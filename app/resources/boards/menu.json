@@ -134,7 +134,8 @@
   {
     "type": "XILINX",
     "boards": [
-      "basys3"
+      "basys3",
+      "cmod-a7-35t"
     ]
   }
 ]
