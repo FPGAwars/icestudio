@@ -1,0 +1,9 @@
+{
+  "input": [
+    {
+      "port": "clk",
+      "pin": "F14"
+    }
+  ],
+  "output": []
+}

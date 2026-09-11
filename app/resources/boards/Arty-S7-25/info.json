@@ -1,0 +1,20 @@
+{
+  "label": "Arty S7-25",
+  "mode": "apio",
+  "SysClkMhz": 12,
+  "arch": "xc7",
+  "fpga": "xc7s25csga324-1",
+  "interface": "FTDI",
+  "datasheet": "https://digilent.com/reference/programmable-logic/arty-s7/reference-manual",
+  "group": "XILINX",
+  "apio": {
+    "board": "arty-s7-25"
+  },
+  "FPGAResources": {
+    "ffs": 9999,
+    "luts": 9999,
+    "pios": 99,
+    "plbs": 99,
+    "brams": 99
+  }
+}

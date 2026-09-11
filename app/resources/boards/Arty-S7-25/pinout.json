@@ -1,0 +1,67 @@
+[
+  {
+    "name": "CLK",
+    "value": "F14",
+    "type": "input"
+  },
+  {
+    "name": "LED0",
+    "value": "E18",
+    "type": "output"
+  },
+  {
+    "name": "LED1",
+    "value": "F13",
+    "type": "output"
+  },
+  {
+    "name": "LED2",
+    "value": "E13",
+    "type": "output"
+  },
+  {
+    "name": "LED3",
+    "value": "H15",
+    "type": "output"
+  },
+  {
+    "name": "BTN0",
+    "value": "G15",
+    "type": "input"
+  },
+  {
+    "name": "BTN1",
+    "value": "K16",
+    "type": "input"
+  },
+  {
+    "name": "BTN2",
+    "value": "J16",
+    "type": "input"
+  },
+  {
+    "name": "BTN3",
+    "value": "H13",
+    "type": "input"
+  },
+  {
+    "name": "SW0",
+    "value": "H14",
+    "type": "input"
+  },
+  {
+    "name": "SW1",
+    "value": "H18",
+    "type": "input"
+  },
+  {
+    "name": "SW2",
+    "value": "G18",
+    "type": "input"
+  },
+  {
+    "name": "SW3",
+    "value": "M5",
+    "type": "input"
+  }
+]
