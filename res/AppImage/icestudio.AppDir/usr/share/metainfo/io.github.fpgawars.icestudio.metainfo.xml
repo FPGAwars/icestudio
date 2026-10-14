@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.fpgawars.icestudio</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+
+  <name>Icestudio</name>
+  <summary>Visual editor for open FPGA boards</summary>
+  <developer id="io.github.fpgawars">
+    <name>FPGAwars</name>
+  </developer>
+
+  <description>
+    <p>
+      Icestudio is a design tool for digital circuits on open source FPGA boards, focused on newcomers to the FPGA world.
+    </p>
+    <ol>
+      <li>Draw your circuit with blocks</li>
+      <li>Upload it to your open source FPGA board</li>
+    </ol>
+    <p>
+      Collections of blocks and examples are available for many boards, from turning on LEDs to complete CPUs.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">Icestudio.desktop</launchable>
+  <provides>
+    <binary>icestudio</binary>
+    <mediatype>text/x-icestudio</mediatype>
+  </provides>
+
+  <categories>
+    <category>Development</category>
+    <category>Electronics</category>
+  </categories>
+  <keywords>
+    <keyword>FPGA</keyword>
+    <keyword>Verilog</keyword>
+    <keyword>digital design</keyword>
+    <keyword>circuit</keyword>
+    <keyword>electronics</keyword>
+  </keywords>
+
+  <url type="homepage">https://icestudio.io/</url>
+  <url type="help">https://github.com/FPGAwars/icestudio/wiki</url>
+  <url type="bugtracker">https://github.com/FPGAwars/icestudio/issues</url>
+  <url type="vcs-browser">https://github.com/FPGAwars/icestudio</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Hello world example for the Alhambra II board</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-01-icek-Alhambra-II.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Hello world example for the iceBreaker board</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-02-icek-icebreaker.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Example from the IceMem collection</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-03-icemem.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>SPI controller for a 4-digit 7-segment display</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-03-1-spi-display-7seg.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>RISC-V CPU</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-04-RISC-V.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Z80 CPU</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-05-Z80.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Hack CPU from the Nand2tetris project</caption>
+      <image>https://raw.githubusercontent.com/FPGAwars/icestudio-wiki/main/Readme/screenshot-06-Hack-Nand2tetris.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1"/>
+
+</component>
