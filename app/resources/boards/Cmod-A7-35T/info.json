@@ -1,0 +1,20 @@
+{
+  "label": "Cmod A7-35T",
+  "mode": "apio",
+  "SysClkMhz": 12,
+  "arch": "xc7",
+  "fpga": "xc7a35tcpg236c-1",
+  "interface": "FDTI",
+  "datasheet": "https://digilent.com/reference/_media/reference/programmable-logic/cmod-a7/reference-manual",
+  "group": "xilinx",
+  "apio": {
+    "board": "cmod-a7-35t",
+  },
+  "FPGAResources": {
+    "ffs": 41600,
+    "luts": 20800,
+    "pios": 106,
+    "plbs": 5200,
+    "brams": 50
+  }
+}
