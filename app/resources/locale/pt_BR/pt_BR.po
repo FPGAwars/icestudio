@@ -1,0 +1,2933 @@
+# Brazilian Portuguese (pt_BR) translation for Icestudio
+msgid ""
+msgstr ""
+"Project-Id-Version: icestudio\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-10-15 21:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: Brazilian Portuguese\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: app/scripts/services/forms.js:1858
+msgid "\"Inout\" Left ports"
+msgstr "Portas \"Inout\" à esquerda"
+
+#: app/scripts/services/forms.js:1868
+msgid "\"Inout\" Right ports"
+msgstr "Portas \"Inout\" à direita"
+
+#: app/scripts/services/forms.js:1252 app/scripts/services/forms.js:1389
+msgid "\"Inout\" pin"
+msgstr "Pino \"Inout\""
+
+#: app/scripts/services/utils.js:1068
+msgid "\"{{name}}\" already exists. Do you want to replace it?"
+msgstr "\"{{name}}\" já existe. Deseja substituir?"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:429
+msgid ""
+"(mode \"apio\"). Mix freely (e.g. apio build + custom upload = combo). Per-"
+"OS columns override per operating system; if the three are equal it is "
+"stored as a single all-OS command. Use"
+msgstr ""
+"(modo \"apio\"). Combine livremente (ex.: apio build + upload personalizado "
+"= combinação). As colunas por SO substituem o comando em cada sistema "
+"operacional; se as três forem iguais, será armazenado como um único comando "
+"para todos os SOs. Use"
+
+#: app/resources/plugins/iceHub/js/install.js:507
+msgid "({{index}}/{{total}}) {{phase}}"
+msgstr "({{index}}/{{total}}) {{phase}}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:352
+#: app/resources/plugins/boardEditor/js/boardEditor.js:353
+msgid "+ Add"
+msgstr "+ Adicionar"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:324
+msgid "+ Add pin"
+msgstr "+ Adicionar pino"
+
+#: app/views/design.html:16
+msgid ""
+"<b>Read only</b><br>\n"
+"        Unlock to edit the block!"
+msgstr ""
+"<b>Somente leitura</b><br>\n"
+"        Desbloqueie para editar o bloco!"
+
+#: app/views/design.html:35
+msgid ""
+"<b>WARNING!</b><br>\n"
+"        The changes made here will also be applied to all the [\n"
+"        <b>{{ information.name }}</b>\n"
+"        ] blocks in the current design. If you DO NOT want them\n"
+"        to propagate, create a cloned block instead using<br>\n"
+"        <b>Edit → Clone</b>."
+msgstr ""
+"<b>ATENÇÃO!</b><br>\n"
+"        As alterações feitas aqui também serão aplicadas a todos os [\n"
+"        <b>{{ information.name }}</b>\n"
+"        ] blocos no projeto atual. Se você NÃO quiser que elas\n"
+"        se propaguem, crie um bloco clonado em vez disso usando<br>\n"
+"        <b>Editar → Clonar</b>."
+
+#: app/resources/plugins/iceHub/js/install.js:455
+msgid ""
+"<br><br><b>This collection is a git working copy</b>: its local repository "
+"(.git) and any local changes will be lost."
+msgstr ""
+"<br><br><b>Esta coleção é uma cópia de trabalho do git</b>: seu repositório "
+"local (.git) e quaisquer alterações locais serão perdidas."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:859
+msgid ""
+"A USB device was detected, but it does not look like your board. Continue "
+"only if you are sure it is connected."
+msgstr ""
+"Um dispositivo USB foi detectado, mas ele não parece ser sua placa. Continue "
+"somente se você tiver certeza de que ela está conectada."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1015
+msgid "A board with id \"{id}\" already exists"
+msgstr "Já existe uma placa com o id \"{id}\""
+
+#: app/scripts/services/graph.js:2304
+msgid ""
+"A different version of this block already existed in the design; your copy "
+"was kept as a separate clone."
+msgstr ""
+"Uma versão diferente deste bloco já existia no projeto; sua cópia foi "
+"mantida como um clone separado."
+
+#: app/views/menu.html:841
+msgid "About Icestudio"
+msgstr "Sobre o Icestudio"
+
+#: app/views/design.html:667
+msgid "Accept"
+msgstr "Aceitar"
+
+#: app/views/version.html:36
+msgid "Acknowledgment"
+msgstr "Agradecimentos"
+
+#: app/scripts/services/project.js:209
+msgid "Activate"
+msgstr "Ativar"
+
+#: app/scripts/services/project.js:218
+msgid ""
+"Activate it for this design only? Your configured {{name}} board will not "
+"change."
+msgstr ""
+"Ativar somente para este projeto? Sua placa {{name}} configurada não será "
+"alterada."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1325
+msgid "Add"
+msgstr "Adicionar"
+
+#: app/scripts/controllers/menu.js:1930
+msgid "Add a block to start"
+msgstr "Adicione um bloco para começar"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1329
+msgid "Add a collection from a file or URL"
+msgstr "Adicionar uma coleção a partir de um arquivo ou URL"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1008
+msgid ""
+"Add a collection from a local file <b>or</b> a URL (use one of the two):"
+msgstr ""
+"Adicione uma coleção a partir de um arquivo local <b>ou</b> de uma URL (use "
+"uma das duas):"
+
+#: app/views/menu.html:139
+msgid "Add as block"
+msgstr "Adicionar como bloco"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1043
+msgid "Add collection"
+msgstr "Adicionar coleção"
+
+#: app/resources/plugins/iceHub/js/install.js:967
+msgid "Add failed: {{error}}"
+msgstr "Falha ao adicionar: {{error}}"
+
+#: app/scripts/services/forms.js:2201
+msgid "Address format"
+msgstr "Formato de endereço"
+
+#: app/views/menu.html:389
+msgid "Advanced features"
+msgstr "Recursos avançados"
+
+#: app/views/design.html:630
+msgid "All"
+msgstr "Todos"
+
+#: app/resources/plugins/iceHub/js/install.js:534
+msgid "All catalog collections are already installed."
+msgstr "Todas as coleções do catálogo já estão instaladas."
+
+#: app/resources/plugins/iceHub/js/install.js:634
+msgid "All collections are up to date."
+msgstr "Todas as coleções estão atualizadas."
+
+#: app/scripts/services/tools.js:2775
+msgid "All collections removed"
+msgstr "Todas as coleções foram removidas"
+
+#: app/scripts/controllers/design.js:262
+msgid "All in the design"
+msgstr "Tudo no projeto"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1148
+msgid "All set!"
+msgstr "Tudo pronto!"
+
+#: app/scripts/controllers/menu.js:1970
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "Todas as coleções armazenadas serão perdidas. Deseja continuar?"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:277
+msgid "Allow editing distribution boards (developer)"
+msgstr "Permitir editar placas de distribuição (desenvolvedor)"
+
+#: app/views/advanced.html:27
+msgid "Allow tri-state connections"
+msgstr "Permitir conexões tri-state"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:295
+msgid "Apio board id"
+msgstr "ID da placa no Apio"
+
+#: app/scripts/services/tools.js:1694
+msgid "Apio channel"
+msgstr "Canal do Apio"
+
+#: app/scripts/services/tools.js:1706
+msgid "Apio channel set to {{ch}}"
+msgstr "Canal do Apio definido como {{ch}}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:296
+msgid "Arch"
+msgstr "Arquitetura"
+
+#: app/scripts/controllers/menu.js:353
+msgid "Are you sure you want to clear the recent projects list?"
+msgstr "Tem certeza de que deseja limpar a lista de projetos recentes?"
+
+#: app/resources/plugins/iceTutorial/js/main.js:973
+#: app/scripts/services/utils.js:728
+msgid "Author"
+msgstr "Autor"
+
+#: app/resources/plugins/iceTutorial/js/main.js:915
+#: app/resources/plugins/setupWizard/js/wizard.js:1210
+#: app/resources/plugins/setupWizard/js/wizard.js:1218
+#: app/resources/plugins/setupWizard/js/wizard.js:422
+msgid "Back"
+msgstr "Voltar"
+
+#: app/views/menu.html:708
+msgid "Basic"
+msgstr "Básico"
+
+#: app/views/design.html:304
+msgid "Basic Toolbox"
+msgstr "Caixa de ferramentas básica"
+
+#: app/views/languages.html:122
+msgid "Basque"
+msgstr "Basco"
+
+#: app/scripts/services/forms.js:2187
+msgid "Binary"
+msgstr "Binário"
+
+#: app/scripts/services/blockforms.js:1096
+#: app/scripts/services/blockforms.js:1213
+#: app/scripts/services/blockforms.js:1257
+#: app/scripts/services/blockforms.js:1304
+#: app/scripts/services/blockforms.js:1353
+#: app/scripts/services/blockforms.js:1515
+msgid "Block updated"
+msgstr "Bloco atualizado"
+
+#: app/scripts/services/project.js:690
+msgid "Block {{name}} imported"
+msgstr "Bloco {{name}} importado"
+
+#: app/views/menu.html:116
+msgid "Blocks"
+msgstr "Blocos"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1075
+msgid "Board \"{id}\" deleted"
+msgstr "Placa \"{id}\" excluída"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1046
+msgid "Board \"{id}\" saved"
+msgstr "Placa \"{id}\" salva"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1045
+msgid "Board \"{id}\" saved (distribution)"
+msgstr "Placa \"{id}\" salva (distribuição)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:289
+msgid "Board id (folder name)"
+msgstr "ID da placa (nome da pasta)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:985
+msgid "Board id is required"
+msgstr "O ID da placa é obrigatório"
+
+#: app/views/advanced.html:15 app/views/menu.html:471
+msgid "Board rules"
+msgstr "Regras da placa"
+
+#: app/scripts/controllers/menu.js:1279
+msgid "Board rules disabled"
+msgstr "Regras da placa desativadas"
+
+#: app/scripts/controllers/menu.js:1277
+msgid "Board rules enabled"
+msgstr "Regras da placa ativadas"
+
+#: app/scripts/services/tools.js:1069
+msgid "Board {{name}} disconnected"
+msgstr "Placa {{name}} desconectada"
+
+#: app/scripts/services/tools.js:1027 app/scripts/services/tools.js:1054
+msgid "Board {{name}} not available"
+msgstr "Placa {{name}} indisponível"
+
+#: app/scripts/services/tools.js:1005
+msgid "Board {{name}} not connected"
+msgstr "Placa {{name}} não conectada"
+
+#: app/scripts/controllers/menu.js:1776
+msgid "Board {{name}} selected"
+msgstr "Placa {{name}} selecionada"
+
+#: app/scripts/services/tools.js:1016 app/scripts/services/tools.js:1047
+msgid "Bootloader not active"
+msgstr "Bootloader inativo"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1021
+#: app/scripts/services/forms.js:2748
+msgid "Browse…"
+msgstr "Procurar…"
+
+#: app/scripts/controllers/menu.js:1819 app/scripts/controllers/menu.js:763
+#: app/views/design.html:557 app/views/menu.html:547
+msgid "Build"
+msgstr "Compilar"
+
+#: app/scripts/controllers/menu.js:1831
+msgid "Build done"
+msgstr "Compilação concluída"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:293
+msgid "Build mode (default per action)"
+msgstr "Modo de compilação (padrão por ação)"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:960
+msgid "Building the bitstream"
+msgstr "Compilando o bitstream"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:517
+msgid "CI (nightly)"
+msgstr "CI (nightly)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:404
+#: app/resources/plugins/setupWizard/js/wizard.js:1209
+#: app/resources/plugins/setupWizard/js/wizard.js:419 app/scripts/app.js:56
+#: app/scripts/controllers/design.js:266 app/scripts/controllers/menu.js:672
+#: app/scripts/controllers/menu.js:718 app/scripts/services/project.js:181
+#: app/scripts/services/project.js:199 app/scripts/services/project.js:310
+#: app/scripts/services/utils.js:1647 app/views/design.html:660
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: app/scripts/services/utils.js:1432
+msgid "Cannot paste from a different project format ({{version}})"
+msgstr "Não é possível colar de um formato de projeto diferente ({{version}})"
+
+#: app/views/design.html:56
+msgid "Case sensitive"
+msgstr "Diferenciar maiúsculas/minúsculas"
+
+#: app/views/languages.html:131
+msgid "Catalonian"
+msgstr "Catalão"
+
+#: app/views/design.html:292
+msgid "Change Color"
+msgstr "Alterar cor"
+
+#: app/scripts/services/utils.js:1625
+msgid "Changed Preferences: Allow tri-state connections"
+msgstr "Preferências alteradas: Permitir conexões tri-state"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:622
+msgid "Change…"
+msgstr "Alterar…"
+
+#: app/scripts/services/tools.js:1682 app/views/menu.html:632
+msgid "Channel"
+msgstr "Canal"
+
+#: app/scripts/services/tools.js:2238
+msgid "Check Internet connection..."
+msgstr "Verifique a conexão com a Internet..."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1311
+msgid "Check for new versions"
+msgstr "Verificar novas versões"
+
+#: app/resources/plugins/iceHub/js/install.js:641
+msgid "Checking ({{index}}/{{total}}) {{name}}…"
+msgstr "Verificando ({{index}}/{{total}}) {{name}}…"
+
+#: app/resources/plugins/iceHub/js/install.js:611
+msgid "Checking for updates…"
+msgstr "Verificando atualizações…"
+
+#: app/views/languages.html:140
+msgid "Chinese"
+msgstr "Chinês"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:500
+msgid "Choose a channel:"
+msgstr "Escolha um canal:"
+
+#: app/scripts/services/forms.js:1481
+msgid "Choose a color:"
+msgstr "Escolha uma cor:"
+
+#: app/scripts/services/tools.js:1667
+msgid "Choose the Apio toolchain channel to install/update from:"
+msgstr "Escolha o canal da toolchain do Apio para instalar/atualizar:"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:613
+msgid ""
+"Choose where the block <b>collections</b> you install from iceHub will be "
+"stored. The default is fine for most users."
+msgstr ""
+"Escolha onde as <b>coleções</b> de blocos que você instalar a partir do "
+"iceHub serão armazenadas. O padrão é adequado para a maioria dos usuários."
+
+#: app/views/design.html:579 app/views/menu.html:565
+msgid "Clean project"
+msgstr "Limpar projeto"
+
+#: app/scripts/controllers/menu.js:1898
+msgid "Cleaned:"
+msgstr "Limpeza:"
+
+#: app/views/console.html:21
+msgid "Clear"
+msgstr "Limpar"
+
+#: app/scripts/controllers/menu.js:352
+msgid "Clear recent projects"
+msgstr "Limpar projetos recentes"
+
+#: app/views/menu.html:107
+msgid "Clear recently opened"
+msgstr "Limpar lista de recentes"
+
+#: app/scripts/services/utils.js:1619
+msgid ""
+"Click \"Yes\" to allow tri-state and update Preferences:<br /"
+">&nbsp;&nbsp;&nbsp;<b>Advanced features → Allow tri-state connections</"
+"b><br /><br />Click \"This time\" to view tri-state for this design only."
+msgstr ""
+"Clique em \"Sim\" para permitir tri-state e atualizar as Preferências:<br /"
+">&nbsp;&nbsp;&nbsp;<b>Recursos avançados → Permitir conexões tri-state</"
+"b><br /><br />Clique em \"Desta vez\" para ver tri-state somente neste "
+"projeto."
+
+#: app/scripts/services/project.js:342
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "Clique aqui para <b>baixar uma versão mais nova</b> do Icestudio"
+
+#: app/scripts/services/tools.js:2448
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "Clique aqui para <b>instalar os drivers</b>"
+
+#: app/scripts/services/tools.js:2806 app/scripts/services/tools.js:2816
+#: app/scripts/services/tools.js:508
+msgid "Click here to install it"
+msgstr "Clique aqui para instalar"
+
+#: app/scripts/controllers/menu.js:1221
+msgid "Click here to view"
+msgstr "Clique aqui para visualizar"
+
+#: app/scripts/services/utils.js:1039
+msgid "Click to select folder..."
+msgstr "Clique para selecionar a pasta..."
+
+#: app/scripts/services/forms.js:1299
+msgid "Clock not allowed for data buses"
+msgstr "Clock não permitido para barramentos de dados"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:251
+#: app/views/menu.html:283
+msgid "Clone"
+msgstr "Clonar"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:252
+msgid "Clone the selected board"
+msgstr "Clonar a placa selecionada"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:965
+msgid "Cloned — set a new board id and Save"
+msgstr "Clonada — defina um novo ID de placa e Salve"
+
+#: app/resources/plugins/iceTutorial/js/main.js:920 app/views/console.html:28
+#: app/views/version.html:93
+msgid "Close"
+msgstr "Fechar"
+
+#: app/views/design.html:375 app/views/menu.html:746
+msgid "Code"
+msgstr "Código"
+
+#: app/resources/plugins/iceHub/js/install.js:947
+msgid ""
+"Collection <b>{{name}}</b> already exists. Overwrite it with the added one?"
+msgstr "A coleção <b>{{name}}</b> já existe. Substituí-la pela adicionada?"
+
+#: app/resources/plugins/iceHub/js/install.js:946
+msgid "Collection exists"
+msgstr "Coleção já existe"
+
+#: app/views/menu.html:479
+msgid "Collection info"
+msgstr "Informações da coleção"
+
+#: app/resources/plugins/iceHub/js/install.js:717
+msgid "Collection is not installed."
+msgstr "A coleção não está instalada."
+
+#: app/scripts/controllers/menu.js:1691
+msgid "Collection {{collection}} info not defined"
+msgstr "Informações da coleção {{collection}} não definidas"
+
+#: app/scripts/services/tools.js:2628
+msgid "Collection {{name}} added"
+msgstr "Coleção {{name}} adicionada"
+
+#: app/scripts/services/tools.js:2615
+msgid "Collection {{name}} not replaced"
+msgstr "Coleção {{name}} não substituída"
+
+#: app/scripts/services/tools.js:2766
+msgid "Collection {{name}} removed"
+msgstr "Coleção {{name}} removida"
+
+#: app/scripts/services/tools.js:2603
+msgid "Collection {{name}} replaced"
+msgstr "Coleção {{name}} substituída"
+
+#: app/scripts/controllers/menu.js:1723
+msgid "Collection {{name}} selected"
+msgstr "Coleção {{name}} selecionada"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1301
+msgid "Collections"
+msgstr "Coleções"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:610
+msgid "Collections folder"
+msgstr "Pasta de coleções"
+
+#: app/scripts/services/tools.js:244
+msgid "Command failed"
+msgstr "Falha no comando"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:286
+msgid "Commands"
+msgstr "Comandos"
+
+#: app/views/menu.html:831
+msgid "Community forum"
+msgstr "Fórum da comunidade"
+
+#: app/resources/plugins/iceTutorial/js/main.js:893
+msgid "Community · FPGA-Wars: exploring the free side"
+msgstr "Comunidade · FPGA-Wars: explorando o lado livre"
+
+#: app/scripts/services/tools.js:1091
+msgid "Configuration not completed"
+msgstr "Configuração não concluída"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:791
+msgid "Connect your board"
+msgstr "Conecte sua placa"
+
+#: app/views/design.html:358 app/views/menu.html:738
+msgid "Constant"
+msgstr "Constante"
+
+#: app/scripts/services/forms.js:2379
+msgid "Constant names"
+msgstr "Nomes das constantes"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:291
+#: app/resources/plugins/setupWizard/js/wizard.js:534
+msgid "Continue"
+msgstr "Continuar"
+
+#: app/scripts/services/project.js:180 app/scripts/services/project.js:210
+#: app/scripts/services/project.js:234
+msgid "Convert"
+msgstr "Converter"
+
+#: app/scripts/services/project.js:189
+msgid "Convert it to use the {{name}} board?"
+msgstr "Converter para usar a placa {{name}}?"
+
+#: app/scripts/controllers/menu.js:1659
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: app/views/design.html:520 app/views/menu.html:263
+msgid "Copy"
+msgstr "Copiar"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:881
+msgid "Copy examples"
+msgstr "Copiar exemplos"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:996
+msgid "Copy failed: {{error}}"
+msgstr "Falha ao copiar: {{error}}"
+
+#: app/scripts/services/forms.js:458 app/views/design.html:141
+msgid "Coral"
+msgstr "Coral"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1085
+msgid "Could not download the test example."
+msgstr "Não foi possível baixar o exemplo de teste."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1057
+msgid "Could not list the available examples."
+msgstr "Não foi possível listar os exemplos disponíveis."
+
+#: app/resources/plugins/iceTutorial/js/main.js:698
+msgid "Could not load the video catalog."
+msgstr "Não foi possível carregar o catálogo de vídeos."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1096
+msgid "Could not open a new window: {{error}}"
+msgstr "Não foi possível abrir uma nova janela: {{error}}"
+
+#: app/scripts/services/tools.js:2017
+msgid "Could not prepare the drivers command"
+msgstr "Não foi possível preparar o comando dos drivers"
+
+#: app/resources/plugins/iceHub/js/install.js:491
+msgid "Could not process: {{names}}"
+msgstr "Não foi possível processar: {{names}}"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1123
+msgid ""
+"Could not program the board. Make sure it is connected and powered (and the "
+"drivers are installed), then try again."
+msgstr ""
+"Não foi possível gravar a placa. Verifique se ela está conectada e "
+"energizada (e se os drivers estão instalados) e tente novamente."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1302
+msgid "Could not read apio board definitions: {error}"
+msgstr "Não foi possível ler as definições de placas do apio: {error}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:250
+msgid "Create a new board"
+msgstr "Criar uma nova placa"
+
+#: app/views/menu.html:253
+msgid "Cut"
+msgstr "Recortar"
+
+#: app/views/languages.html:86
+msgid "Czech"
+msgstr "Tcheco"
+
+#: app/views/uithemes.html:16
+msgid "Dark (default)"
+msgstr "Escuro (padrão)"
+
+#: app/scripts/services/forms.js:482 app/views/design.html:218
+msgid "Dark Green"
+msgstr "Verde escuro"
+
+#: app/scripts/services/forms.js:464 app/views/design.html:159
+msgid "Dark Orange"
+msgstr "Laranja escuro"
+
+#: app/views/menu.html:464
+msgid "Datasheet"
+msgstr "Datasheet"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:302
+msgid "Datasheet URL"
+msgstr "URL do datasheet"
+
+#: app/scripts/services/forms.js:2191
+msgid "Decimal"
+msgstr "Decimal"
+
+#: app/scripts/services/forms.js:452 app/views/design.html:127
+msgid "Deep Pink"
+msgstr "Rosa profundo"
+
+#: app/scripts/services/forms.js:497 app/views/design.html:263
+msgid "Deep Sky Blue"
+msgstr "Azul-céu profundo"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:190
+msgid "Default"
+msgstr "Padrão"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:255
+#: app/views/menu.html:303
+msgid "Delete"
+msgstr "Excluir"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:258
+msgid "Delete board (project boards only)"
+msgstr "Excluir placa (somente placas do projeto)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1068
+msgid "Delete failed: {error}"
+msgstr "Falha ao excluir: {error}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1059
+msgid "Delete project board \"{id}\"? This removes its folder."
+msgstr "Excluir a placa de projeto \"{id}\"? Isso removerá a pasta da placa."
+
+#: app/scripts/services/utils.js:727
+msgid "Description"
+msgstr "Descrição"
+
+#: app/scripts/services/forms.js:1922
+msgid ""
+"Design contains tri-state I/O. You need to update your Preferences:<br /"
+">&nbsp;&nbsp;&nbsp;<b>Advanced features → Allow tri-state connections</b>,"
+"<br />and reimport the block."
+msgstr ""
+"O projeto contém E/S tri-state. Você precisa atualizar suas Preferências:"
+"<br />&nbsp;&nbsp;&nbsp;<b>Recursos avançados → Permitir conexões tri-state</"
+"b>,<br />e reimportar o bloco."
+
+#: app/scripts/services/utils.js:1025
+msgid "Design name"
+msgstr "Nome do projeto"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:273
+msgid "Developer mode"
+msgstr "Modo desenvolvedor"
+
+#: app/views/menu.html:657
+msgid "Disable"
+msgstr "Desabilitar"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:635
+msgid "Distribution board (read-only unless developer mode)"
+msgstr "Placa de distribuição (somente leitura, exceto no modo desenvolvedor)"
+
+#: app/scripts/controllers/menu.js:812
+msgid "Do you want to close the application?"
+msgstr "Deseja fechar o aplicativo?"
+
+#: app/scripts/controllers/menu.js:1953
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "Deseja remover a coleção {{name}}?"
+
+#: app/scripts/services/tools.js:2596
+msgid "Do you want to replace it?"
+msgstr "Deseja substituir?"
+
+#: app/views/menu.html:806
+msgid "Documentation"
+msgstr "Documentação"
+
+#: app/scripts/controllers/menu.js:668
+msgid "Don’t Save"
+msgstr "Não salvar"
+
+#: app/views/version.html:83
+msgid "Don’t display"
+msgstr "Não exibir"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1141
+msgid "Don’t show this again"
+msgstr "Não mostrar novamente"
+
+#: app/resources/plugins/iceTutorial/js/main.js:279
+msgid "Downloaded"
+msgstr "Baixado"
+
+#: app/scripts/services/tools.js:2317
+msgid "Downloading Apio bundle..."
+msgstr "Baixando o pacote do Apio..."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:958
+msgid "Downloading the example"
+msgstr "Baixando o exemplo"
+
+#: app/resources/plugins/iceHub/js/install.js:356
+msgid "Downloading {{name}}…"
+msgstr "Baixando {{name}}…"
+
+#: app/resources/plugins/iceHub/js/install.js:875
+#: app/resources/plugins/iceTutorial/js/main.js:224
+msgid "Downloading…"
+msgstr "Baixando…"
+
+#: app/scripts/services/tools.js:1961
+msgid "Driver operation failed"
+msgstr "Falha na operação do driver"
+
+#: app/views/menu.html:645
+msgid "Drivers"
+msgstr "Drivers"
+
+#: app/views/menu.html:293
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: app/scripts/services/tools.js:1109
+msgid "Duplicate FPGA I/O ports"
+msgstr "Portas de E/S da FPGA duplicadas"
+
+#: app/scripts/services/forms.js:2105
+msgid "Duplicate port name: {{name}}"
+msgstr "Nome da porta duplicado: {{name}}"
+
+#: app/views/languages.html:59
+msgid "Dutch"
+msgstr "Holandês"
+
+#: app/views/menu.html:224
+msgid "Edit"
+msgstr "Editar"
+
+#: app/scripts/controllers/design.js:652
+msgid "Edit only this block, or all blocks of this type in the design?"
+msgstr "Editar somente este bloco ou todos os blocos deste tipo no projeto?"
+
+#: app/scripts/services/tools.js:2574
+msgid "Edit the collection name"
+msgstr "Editar o nome da coleção"
+
+#: app/views/menu.html:650
+msgid "Enable"
+msgstr "Habilitar"
+
+#: app/views/languages.html:14
+msgid "English"
+msgstr "Inglês"
+
+#: app/scripts/services/forms.js:2638
+msgid "Enter the external plugins path"
+msgstr "Informe o caminho dos plugins externos"
+
+#: app/scripts/services/forms.js:2596
+msgid "Enter the log filename"
+msgstr "Informe o nome do arquivo de log"
+
+#: app/scripts/services/forms.js:2687
+msgid "Enter the pip path"
+msgstr "Informe o caminho do pip"
+
+#: app/scripts/services/forms.js:2680
+msgid "Enter the python path"
+msgstr "Informe o caminho do python"
+
+#: app/scripts/controllers/menu.js:1266
+msgid "Enter the remote hostname user@host"
+msgstr "Informe o host remoto user@host"
+
+#: app/scripts/services/tools.js:991
+msgid "Error"
+msgstr "Erro"
+
+#: app/scripts/services/tools.js:1801
+msgid "Error checking for updates"
+msgstr "Erro ao verificar atualizações"
+
+#: app/scripts/services/forms.js:1936
+msgid "Error reading the file: {{error}}"
+msgstr "Erro ao ler o arquivo: {{error}}"
+
+#: app/scripts/services/utils.js:944
+msgid "Error: {{error}}"
+msgstr "Erro: {{error}}"
+
+#: app/scripts/services/tools.js:1223
+msgid "Errors detected in the design"
+msgstr "Erros detectados no projeto"
+
+#: app/views/design.html:62
+msgid "Exact match"
+msgstr "Correspondência exata"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1184
+msgid "Example saved to {{dest}} and opened in a new window."
+msgstr "Exemplo salvo em {{dest}} e aberto em uma nova janela."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1305 app/views/menu.html:125
+msgid "Examples"
+msgstr "Exemplos"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:992
+msgid "Examples copied to {{dest}}"
+msgstr "Exemplos copiados para {{dest}}"
+
+#: app/scripts/services/tools.js:546
+msgid "Execute remote {{label}} ..."
+msgstr "Executando {{label}} remotamente ..."
+
+#: app/views/menu.html:169
+msgid "Export"
+msgstr "Exportar"
+
+#: app/scripts/controllers/menu.js:465 app/scripts/controllers/menu.js:478
+msgid "Export submodule"
+msgstr "Exportar submódulo"
+
+#: app/views/menu.html:404
+msgid "External collections"
+msgstr "Coleções externas"
+
+#: app/scripts/controllers/menu.js:1203
+msgid "External collections updated"
+msgstr "Coleções externas atualizadas"
+
+#: app/views/advanced.html:39
+msgid "External plugins"
+msgstr "Plugins externos"
+
+#: app/scripts/controllers/menu.js:1025
+msgid "External plugins updated"
+msgstr "Plugins externos atualizados"
+
+#: app/resources/plugins/iceHub/js/install.js:364
+msgid "Extracting {{name}}…"
+msgstr "Extraindo {{name}}…"
+
+#: app/resources/plugins/iceHub/js/install.js:871
+#: app/resources/plugins/iceHub/js/install.js:878
+msgid "Extracting…"
+msgstr "Extraindo…"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:297
+msgid "FPGA (id/part)"
+msgstr "FPGA (id/modelo)"
+
+#: app/scripts/services/tools.js:1102
+msgid "FPGA I/O ports not defined"
+msgstr "Portas de E/S da FPGA não definidas"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:320
+msgid "FPGA Resources"
+msgstr "Recursos da FPGA"
+
+#: app/scripts/services/forms.js:1086
+msgid "FPGA pin"
+msgstr "Pino da FPGA"
+
+#: app/views/design.html:603 app/views/menu.html:503
+msgid "FPGA resources"
+msgstr "Recursos da FPGA"
+
+#: app/views/version.html:61
+msgid "FPGAwars GitHub project"
+msgstr "Projeto FPGAwars no GitHub"
+
+#: app/views/version.html:48
+msgid "FPGAwars community."
+msgstr "comunidade FPGAwars."
+
+#: app/views/menu.html:62
+msgid "File"
+msgstr "Arquivo"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1015
+msgid "File (.tgz / .zip)"
+msgstr "Arquivo (.tgz / .zip)"
+
+#: app/scripts/services/utils.js:1067
+msgid "File already exists"
+msgstr "O arquivo já existe"
+
+#: app/scripts/services/project.js:714
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr ""
+"O arquivo {{file}} já existe no caminho do projeto. Deseja substituí-lo?"
+
+#: app/scripts/services/tools.js:408
+msgid "File {{file}} does not exist"
+msgstr "O arquivo {{file}} não existe"
+
+#: app/scripts/services/project.js:753
+msgid "File {{file}} imported"
+msgstr "Arquivo {{file}} importado"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:280
+#: app/resources/plugins/boardEditor/js/boardEditor.js:403
+#: app/views/design.html:627
+msgid "Filter boards..."
+msgstr "Filtrar placas..."
+
+#: app/views/design.html:69
+msgid "Find"
+msgstr "Localizar"
+
+#: app/scripts/services/tools.js:2276
+msgid "Finding latest Apio release..."
+msgstr "Buscando a versão mais recente do Apio..."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1019
+#: app/resources/plugins/setupWizard/js/wizard.js:1041
+#: app/resources/plugins/setupWizard/js/wizard.js:1156
+#: app/resources/plugins/setupWizard/js/wizard.js:1184
+#: app/resources/plugins/setupWizard/js/wizard.js:983
+msgid "Finish"
+msgstr "Concluir"
+
+#: app/views/menu.html:324
+msgid "Fit content"
+msgstr "Ajustar conteúdo"
+
+#: app/scripts/controllers/design.js:616
+msgid "Fork the containing block first to be able to edit this one."
+msgstr "Clone primeiro o bloco que o contém para poder editar este bloco."
+
+#: app/resources/plugins/iceTutorial/js/main.js:916
+msgid "Forward"
+msgstr "Avançar"
+
+#: app/views/languages.html:32
+msgid "French"
+msgstr "Francês"
+
+#: app/scripts/services/forms.js:443 app/views/design.html:101
+#: app/views/design.html:182
+msgid "Fuchsia"
+msgstr "Fúcsia"
+
+#: app/views/languages.html:113
+msgid "Galician"
+msgstr "Galego"
+
+#: app/views/languages.html:50
+msgid "German"
+msgstr "Alemão"
+
+#: app/resources/plugins/iceHub/js/install.js:624
+msgid "GitHub rate limit reached. Try again later."
+msgstr "Limite de requisições do GitHub atingido. Tente novamente mais tarde."
+
+#: app/resources/plugins/iceTutorial/js/main.js:991
+msgid "Go"
+msgstr "Ir"
+
+#: app/resources/plugins/iceTutorial/js/main.js:918
+#: app/resources/plugins/iceTutorial/js/main.js:919
+msgid "Go back"
+msgstr "Voltar"
+
+#: app/scripts/services/forms.js:467 app/views/design.html:164
+msgid "Gold"
+msgstr "Dourado"
+
+#: app/views/languages.html:68
+msgid "Greek"
+msgstr "Grego"
+
+#: app/scripts/services/forms.js:476 app/views/design.html:200
+msgid "Green Yellow"
+msgstr "Verde-amarelo"
+
+#: app/views/menu.html:765
+msgid "Help"
+msgstr "Ajuda"
+
+#: app/scripts/services/forms.js:2195
+msgid "Hexadecimal"
+msgstr "Hexadecimal"
+
+#: app/views/version.html:56
+msgid "Icestudio is part of"
+msgstr "O Icestudio faz parte do"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:453
+msgid ""
+"Icestudio lets you design digital circuits for FPGAs <b>visually</b> — drag "
+"blocks, wire them up, and program real hardware, no command line required."
+msgstr ""
+"Com o Icestudio você cria circuitos digitais para FPGAs de forma <b>visual</"
+"b> — arraste blocos, conecte-os com fios e grave hardware de verdade, sem "
+"precisar de linha de comando."
+
+#: app/scripts/services/graph.js:2164
+msgid ""
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
+msgstr ""
+"Se você vir pinos IN/OUT em branco, é porque não existem pinos equivalentes "
+"nesta placa"
+
+#: app/scripts/services/utils.js:745
+msgid "Image"
+msgstr "Imagem"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:405
+msgid "Import"
+msgstr "Importar"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:260
+msgid "Import PCF/LPF"
+msgstr "Importar PCF/LPF"
+
+#: app/scripts/services/forms.js:1880
+msgid "Import Verilog code from file"
+msgstr "Importar código Verilog de um arquivo"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:263
+msgid "Import a PCF/LPF constraint file into the pinout"
+msgstr "Importar um arquivo de restrições PCF/LPF para o pinout"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:402
+msgid "Import board from apio"
+msgstr "Importar placa do apio"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:268
+msgid "Import board metadata from apio"
+msgstr "Importar metadados da placa do apio"
+
+#: app/scripts/services/forms.js:1890
+msgid "Import code"
+msgstr "Importar código"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1147
+msgid "Import failed: {error}"
+msgstr "Falha na importação: {error}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:265
+msgid "Import from apio"
+msgstr "Importar do apio"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1415
+msgid ""
+"Imported \"{id}\" from apio (no example pinout found) — add the pinout and "
+"Save"
+msgstr ""
+"\"{id}\" importada do apio (nenhum pinout de exemplo encontrado) — adicione "
+"o pinout e Salve"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1404
+msgid ""
+"Imported \"{id}\" with {n} pins from apio example ({file}) — may be partial, "
+"review and Save"
+msgstr ""
+"\"{id}\" importada com {n} pinos do exemplo do apio ({file}) — o pinout pode "
+"estar incompleto, revise e Salve"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1133
+msgid "Imported {n} pins from {file}"
+msgstr "{n} pinos importados de {file}"
+
+#: app/scripts/services/forms.js:446 app/views/design.html:113
+msgid "Indian Red"
+msgstr "Vermelho indiano"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:283
+msgid "Info"
+msgstr "Info"
+
+#: app/views/design.html:384 app/views/menu.html:750
+msgid "Information"
+msgstr "Informações"
+
+#: app/views/design.html:313 app/views/menu.html:716
+msgid "Input"
+msgstr "Entrada"
+
+#: app/views/design.html:331 app/views/menu.html:724
+msgid "Input label"
+msgstr "Rótulo da entrada"
+
+#: app/scripts/services/forms.js:1692
+msgid "Input labels"
+msgstr "Rótulos das entradas"
+
+#: app/scripts/services/forms.js:1839
+msgid "Input parameters"
+msgstr "Parâmetros de entrada"
+
+#: app/scripts/services/forms.js:1227
+msgid "Input port names"
+msgstr "Nomes das portas de entrada"
+
+#: app/scripts/services/forms.js:1825
+msgid "Input ports"
+msgstr "Portas de entrada"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:346
+msgid "Input rules"
+msgstr "Regras de entrada"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:901
+#: app/resources/plugins/setupWizard/js/wizard.js:527
+#: app/resources/plugins/setupWizard/js/wizard.js:535 app/views/menu.html:596
+msgid "Install"
+msgstr "Instalar"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1319
+msgid "Install all"
+msgstr "Instalar todas"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1323
+msgid "Install all available collections"
+msgstr "Instalar todas as coleções disponíveis"
+
+#: app/resources/plugins/iceHub/js/install.js:431
+msgid "Install failed: {{error}}"
+msgstr "Falha na instalação: {{error}}"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:492
+msgid "Install the toolchain"
+msgstr "Instalar a toolchain"
+
+#: app/scripts/services/tools.js:1853
+msgid "Install the toolchain ({{ch}}: {{version}}). Continue?"
+msgstr "Instalar a toolchain ({{ch}}: {{version}}). Continuar?"
+
+#: app/scripts/services/tools.js:2423
+msgid "Installation completed"
+msgstr "Instalação concluída"
+
+#: app/scripts/services/tools.js:2384
+msgid "Installation failed"
+msgstr "Falha na instalação"
+
+#: app/resources/plugins/iceHub/js/install.js:538
+msgid "Installing collections…"
+msgstr "Instalando coleções…"
+
+#: app/scripts/services/tools.js:2355
+msgid "Installing drivers..."
+msgstr "Instalando drivers..."
+
+#: app/scripts/services/tools.js:2345
+msgid "Installing packages..."
+msgstr "Instalando pacotes..."
+
+#: app/resources/plugins/iceHub/js/install.js:923
+msgid "Installing {{name}}…"
+msgstr "Instalando {{name}}…"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:565
+msgid "Installing…"
+msgstr "Instalando…"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:298
+msgid "Interface"
+msgstr "Interface"
+
+#: app/scripts/services/tools.js:2254
+msgid "Internet connection required"
+msgstr "Conexão com a Internet necessária"
+
+#: app/scripts/services/graph.js:321
+msgid "Invalid <i>Pull-up</i> connection:<br>Block already connected"
+msgstr "Conexão <i>Pull-up</i> inválida:<br>O bloco já está conectado"
+
+#: app/scripts/services/graph.js:345
+msgid "Invalid <i>Pull-up</i> connection:<br>Only <i>Input</i> blocks allowed"
+msgstr ""
+"Conexão <i>Pull-up</i> inválida:<br>Somente blocos de <i>Entrada</i> são "
+"permitidos"
+
+#: app/scripts/services/graph.js:333
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
+msgstr "Conexão de bloco inválida:<br><i>Pull-up</i> já está conectado"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:990
+msgid "Invalid board id (use letters, numbers, . _ -)"
+msgstr "ID de placa inválido (use letras, números, . _ -)"
+
+#: app/scripts/services/tools.js:2641
+msgid "Invalid collection {{name}}"
+msgstr "Coleção {{name}} inválida"
+
+#: app/scripts/services/graph.js:278 app/scripts/services/graph.js:285
+#: app/scripts/services/graph.js:292
+msgid "Invalid connection"
+msgstr "Conexão inválida"
+
+#: app/scripts/services/graph.js:397
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Conexão inválida: {{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:311
+msgid "Invalid multiple input connections"
+msgstr "Conexões múltiplas de entrada inválidas"
+
+#: app/scripts/controllers/menu.js:2495
+msgid "Invalid new name!"
+msgstr "Novo nome inválido!"
+
+#: app/scripts/services/project.js:700 app/scripts/services/project.js:96
+msgid "Invalid project format"
+msgstr "Formato de projeto inválido"
+
+#: app/scripts/controllers/menu.js:2382
+msgid "Invalid search name!"
+msgstr "Nome de busca inválido!"
+
+#: app/views/languages.html:41
+msgid "Italian"
+msgstr "Italiano"
+
+#: app/views/languages.html:167
+msgid "Japanese"
+msgstr "Japonês"
+
+#: app/views/languages.html:158
+msgid "Korean"
+msgstr "Coreano"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:290
+msgid "Label"
+msgstr "Rótulo"
+
+#: app/views/menu.html:332
+msgid "Label finder"
+msgstr "Localizador de rótulos"
+
+#: app/scripts/services/blockforms.js:1011
+msgid "Label updated"
+msgstr "Rótulo atualizado"
+
+#: app/views/menu.html:359
+msgid "Language"
+msgstr "Idioma"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:420
+msgid "Leave an action empty to use apio"
+msgstr "Deixe uma ação vazia para usar o apio"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:465
+msgid "Let's start"
+msgstr "Vamos começar"
+
+#: app/views/uithemes.html:27
+msgid "Light"
+msgstr "Claro"
+
+#: app/scripts/services/forms.js:506 app/views/design.html:286
+msgid "Light Gray"
+msgstr "Cinza claro"
+
+#: app/scripts/services/forms.js:488 app/views/design.html:236
+msgid "Light Sea Green"
+msgstr "Verde-mar claro"
+
+#: app/scripts/services/project.js:233
+msgid "Load"
+msgstr "Carregar"
+
+#: app/scripts/services/forms.js:2209 app/scripts/services/forms.js:2387
+msgid "Local parameter"
+msgstr "Parâmetro local"
+
+#: app/scripts/services/utils.js:1033
+msgid "Location"
+msgstr "Localização"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:892
+msgid "Lock"
+msgstr "Bloquear"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:671
+#: app/resources/plugins/iceHub/js/iceHub.js:824
+msgid "Locked"
+msgstr "Bloqueada"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:856
+msgid "Locked — unlock to remove"
+msgstr "Bloqueada — desbloqueie para remover"
+
+#: app/views/menu.html:411
+msgid "Logging enabled"
+msgstr "Log ativado"
+
+#: app/views/menu.html:422
+msgid "Logging file"
+msgstr "Arquivo de log"
+
+#: app/scripts/controllers/menu.js:972
+msgid "Logging file updated"
+msgstr "Arquivo de log atualizado"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1164
+msgid "Look at your FPGA!"
+msgstr "Olhe para sua FPGA!"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:956
+msgid "Looking for a test example"
+msgstr "Procurando um exemplo de teste"
+
+#: app/scripts/services/outputConsole.js:78 app/views/console.html:14
+msgid "Maximize"
+msgstr "Maximizar"
+
+#: app/scripts/services/utils.js:1150
+msgid "Maximum bus size: 96 bits"
+msgstr "Tamanho máximo do barramento: 96 bits"
+
+#: app/scripts/services/forms.js:455 app/views/design.html:136
+msgid "Medium Violet Red"
+msgstr "Vermelho-violeta médio"
+
+#: app/views/design.html:367 app/views/menu.html:742
+msgid "Memory"
+msgstr "Memória"
+
+#: app/scripts/services/forms.js:2176
+msgid "Memory block names"
+msgstr "Nomes dos blocos de memória"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:305
+msgid "Menu group (project boards)"
+msgstr "Grupo de menu (placas do projeto)"
+
+#: app/scripts/services/forms.js:1844
+msgid "Module Ports"
+msgstr "Portas do módulo"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:333
+#: app/scripts/services/utils.js:725
+msgid "Name"
+msgstr "Nome"
+
+#: app/scripts/services/forms.js:1746
+msgid "Names of the paired labels"
+msgstr "Nomes dos rótulos pareados"
+
+#: app/scripts/services/forms.js:503 app/views/design.html:277
+msgid "Navy"
+msgstr "Azul-marinho"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:249
+#: app/views/menu.html:73
+msgid "New"
+msgstr "Novo"
+
+#: app/views/design.html:90
+msgid "New Color:"
+msgstr "Nova cor:"
+
+#: app/views/design.html:83
+msgid "New Name:"
+msgstr "Novo nome:"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:938
+msgid "New board (will be saved into the project boards folder)"
+msgstr "Nova placa (será salva na pasta de placas do projeto)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:931
+msgid ""
+"New board — developer mode: will be saved as a DISTRIBUTION board and added "
+"to the boards menu"
+msgstr ""
+"Nova placa — modo desenvolvedor: será salva como placa de DISTRIBUIÇÃO e "
+"adicionada ao menu de placas"
+
+#: app/views/design.html:75
+msgid "Next"
+msgstr "Próximo"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1309
+msgid "No apio boards found"
+msgstr "Nenhuma placa do apio encontrada"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:866
+msgid "No board detected yet."
+msgstr "Nenhuma placa detectada ainda."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1047
+msgid "No board selected."
+msgstr "Nenhuma placa selecionada."
+
+#: app/views/design.html:653
+msgid "No boards found"
+msgstr "Nenhuma placa encontrada"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:713
+msgid "No boards match."
+msgstr "Nenhuma placa corresponde."
+
+#: app/resources/plugins/iceHub/js/install.js:607
+msgid "No catalog collections to check for updates."
+msgstr "Não há coleções do catálogo para verificar atualizações."
+
+#: app/scripts/controllers/menu.js:1980
+msgid "No collections stored"
+msgstr "Nenhuma coleção armazenada"
+
+#: app/scripts/controllers/menu.js:751
+msgid "No configuration options"
+msgstr "Sem opções de configuração"
+
+#: app/scripts/services/forms.js:2800
+msgid "No directory selected"
+msgstr "Nenhum diretório selecionado"
+
+#: app/resources/plugins/iceHub/js/install.js:201
+msgid "No downloadable zip in the latest release"
+msgstr "Nenhum arquivo zip para download na versão mais recente"
+
+#: app/resources/plugins/iceHub/js/install.js:330
+#: app/resources/plugins/iceHub/js/install.js:913
+msgid "No external collections folder is configured."
+msgstr "Nenhuma pasta de coleções externas está configurada."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1018
+msgid "No file selected"
+msgstr "Nenhum arquivo selecionado"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:729
+msgid "No items"
+msgstr "Nenhum item"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:374
+msgid "No languages match."
+msgstr "Nenhum idioma corresponde."
+
+#: app/resources/plugins/iceTutorial/js/main.js:932
+msgid "No resources match your search."
+msgstr "Nenhum recurso corresponde à sua busca."
+
+#: app/resources/plugins/iceHub/js/install.js:166
+msgid "No source defined"
+msgstr "Nenhuma fonte definida"
+
+#: app/scripts/controllers/menu.js:1644
+msgid "No synthesis data to copy"
+msgstr "Não há dados de síntese para copiar"
+
+#: app/scripts/services/tools.js:2052
+msgid "No terminal emulator found. Open a terminal and run:"
+msgstr "Nenhum emulador de terminal encontrado. Abra um terminal e execute:"
+
+#: app/resources/plugins/iceHub/js/install.js:677
+msgid "No updates available. Run Refresh first."
+msgstr "Nenhuma atualização disponível. Clique em Recarregar primeiro."
+
+#: app/resources/plugins/iceHub/js/install.js:372
+#: app/resources/plugins/iceHub/js/install.js:887
+msgid "No valid collection found in the archive"
+msgstr "Nenhuma coleção válida encontrada no arquivo"
+
+#: app/resources/plugins/iceTutorial/js/main.js:913
+msgid "No videos match your search."
+msgstr "Nenhum vídeo corresponde à sua busca."
+
+#: app/scripts/controllers/menu.js:1901
+msgid "Nothing to clean"
+msgstr "Nada para limpar"
+
+#: app/scripts/app.js:55 app/scripts/services/project.js:198
+#: app/scripts/services/project.js:309 app/scripts/services/utils.js:1646
+msgid "OK"
+msgstr "OK"
+
+#: app/scripts/services/forms.js:485 app/views/design.html:227
+msgid "Olive Drab"
+msgstr "Verde-oliva escuro"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:415
+msgid "One shell command per line."
+msgstr "Um comando shell por linha."
+
+#: app/scripts/controllers/design.js:258
+msgid "Only this block"
+msgstr "Somente este bloco"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:927 app/views/menu.html:83
+msgid "Open"
+msgstr "Abrir"
+
+#: app/scripts/services/outputConsole.js:37
+msgid "Open Preferences"
+msgstr "Abrir Preferências"
+
+#: app/scripts/services/utils.js:790
+msgid "Open SVG"
+msgstr "Abrir SVG"
+
+#: app/scripts/services/tools.js:2074
+msgid "Open a terminal and run:"
+msgstr "Abra um terminal e execute:"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1145
+#: app/scripts/controllers/menu.js:382
+msgid "Open example"
+msgstr "Abrir exemplo"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1191
+msgid "Open example failed: {{error}}"
+msgstr "Falha ao abrir o exemplo: {{error}}"
+
+#: app/resources/plugins/iceTutorial/js/main.js:280
+msgid "Open folder"
+msgstr "Abrir pasta"
+
+#: app/resources/plugins/iceTutorial/js/main.js:897
+msgid "Open in browser"
+msgstr "Abrir no navegador"
+
+#: app/views/menu.html:90
+msgid "Open recent"
+msgstr "Abrir recentes"
+
+#: app/scripts/services/forms.js:461 app/views/design.html:150
+msgid "Orange Red"
+msgstr "Vermelho-alaranjado"
+
+#: app/scripts/services/project.js:760
+msgid "Original file {{file}} does not exist"
+msgstr "O arquivo original {{file}} não existe"
+
+#: app/views/design.html:322 app/views/menu.html:720
+msgid "Output"
+msgstr "Saída"
+
+#: app/views/console.html:8 app/views/design.html:591 app/views/menu.html:486
+msgid "Output console"
+msgstr "Console de saída"
+
+#: app/views/design.html:340 app/views/menu.html:728
+msgid "Output label"
+msgstr "Rótulo da saída"
+
+#: app/scripts/services/forms.js:1619
+msgid "Output labels"
+msgstr "Rótulos das saídas"
+
+#: app/scripts/services/forms.js:1375
+msgid "Output port names"
+msgstr "Nomes das portas de saída"
+
+#: app/scripts/services/forms.js:1832
+msgid "Output ports"
+msgstr "Portas de saída"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:350
+msgid "Output rules"
+msgstr "Regras de saída"
+
+#: app/views/design.html:349 app/views/menu.html:733
+msgid "Paired labels"
+msgstr "Rótulos pareados"
+
+#: app/views/menu.html:273
+msgid "Paste"
+msgstr "Colar"
+
+#: app/scripts/controllers/menu.js:1033 app/scripts/controllers/menu.js:1099
+#: app/scripts/controllers/menu.js:979
+msgid "Path {{path}} does not exist"
+msgstr "O caminho {{path}} não existe"
+
+#: app/scripts/controllers/menu.js:1178
+msgid "Path {{path}} is not a valid directory"
+msgstr "O caminho {{path}} não é um diretório válido"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:688
+msgid "Pick the FPGA board you will be using."
+msgstr "Escolha a placa FPGA que você vai usar."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:284
+msgid "Pinout"
+msgstr "Pinout"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:380
+msgid "Placeholders:"
+msgstr "Variáveis disponíveis:"
+
+#: app/scripts/services/utils.js:1054
+msgid "Please enter a name and select a folder"
+msgstr "Informe um nome e selecione uma pasta"
+
+#: app/scripts/services/utils.js:1410
+msgid "Please run: {{cmd}}"
+msgstr "Execute: {{cmd}}"
+
+#: app/scripts/controllers/menu.js:1151
+msgid "Please select a directory for the external collections"
+msgstr "Selecione um diretório para as coleções externas"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:794
+msgid "Plug <b>{{board}}</b> into a USB port on your computer."
+msgstr "Conecte a <b>{{board}}</b> a uma porta USB do seu computador."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:869
+msgid ""
+"Plug the board in (and power it). You can continue anyway, but the test "
+"upload will fail without it."
+msgstr ""
+"Conecte a placa (e ligue-a). Você pode continuar mesmo assim, mas o envio de "
+"teste falhará sem ela."
+
+#: app/views/languages.html:176
+msgid "Portuguese"
+msgstr "Português"
+
+#: app/scripts/controllers/menu.js:789 app/views/menu.html:353
+#: app/views/menu.html:573
+msgid "Preferences"
+msgstr "Preferências"
+
+#: app/views/design.html:72
+msgid "Prev."
+msgstr "Anterior"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1168
+msgid "Programmed <b>{{device}}</b> — it should be blinking now. 🎉"
+msgstr "<b>{{device}}</b> gravada — ela já deve estar piscando. 🎉"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:638
+msgid "Project board"
+msgstr "Placa do projeto"
+
+#: app/views/menu.html:431
+msgid "Project information"
+msgstr "Informações do projeto"
+
+#: app/scripts/controllers/menu.js:1219 app/scripts/controllers/menu.js:1244
+msgid "Project information updated"
+msgstr "Informações do projeto atualizadas"
+
+#: app/scripts/services/project.js:278
+msgid "Project {{name}} loaded"
+msgstr "Projeto {{name}} carregado"
+
+#: app/scripts/services/project.js:526
+msgid "Project {{name}} saved"
+msgstr "Projeto {{name}} salvo"
+
+#: app/resources/plugins/iceHub/js/install.js:840
+msgid "Provide a .tgz/.zip file, or a .tgz/.zip/GitHub URL."
+msgstr "Forneça um arquivo .tgz/.zip ou uma URL .tgz/.zip/GitHub."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1051
+msgid "Provide a file or a URL."
+msgstr "Forneça um arquivo ou uma URL."
+
+#: app/views/advanced.html:45
+msgid "Python environment"
+msgstr "Ambiente Python"
+
+#: app/scripts/controllers/menu.js:1091
+msgid "Python environment updated"
+msgstr "Ambiente Python atualizado"
+
+#: app/views/menu.html:208
+msgid "Quit"
+msgstr "Sair"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:567
+msgid "Read-only"
+msgstr "Somente leitura"
+
+#: app/scripts/controllers/menu.js:359
+msgid "Recent projects cleared"
+msgstr "Lista de projetos recentes limpa"
+
+#: app/scripts/services/forms.js:449 app/views/design.html:118
+msgid "Red"
+msgstr "Vermelho"
+
+#: app/views/menu.html:240
+msgid "Redo"
+msgstr "Refazer"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1307
+#: app/resources/plugins/iceTutorial/js/main.js:917
+msgid "Refresh"
+msgstr "Recarregar"
+
+#: app/resources/plugins/iceHub/js/install.js:421
+#: app/resources/plugins/iceHub/js/install.js:496
+#: app/resources/plugins/iceHub/js/install.js:743
+#: app/resources/plugins/iceHub/js/install.js:934
+msgid "Reindexing…"
+msgstr "Reindexando…"
+
+#: app/scripts/controllers/menu.js:774
+msgid "Relax the real-to-integer conversion check (-Wno-REALCVT)"
+msgstr "Relaxar a verificação de conversão real para inteiro (-Wno-REALCVT)"
+
+#: app/scripts/controllers/menu.js:784
+msgid "Relax the FPGA I/O primitive checks (SB_IO: ASSIGNIN / COMBDLY)"
+msgstr ""
+"Relaxar as verificações das primitivas de E/S da FPGA (SB_IO: ASSIGNIN / "
+"COMBDLY)"
+
+#: app/scripts/services/outputConsole.js:70
+msgid ""
+"This error comes from the FPGA I/O primitives. It disappears if you enable "
+"\"Relax the FPGA I/O primitive checks\" under Tools → Preferences → Verify."
+msgstr ""
+"Este erro vem das primitivas de E/S da FPGA. Ele desaparece se você ativar "
+"\"Relaxar as verificações das primitivas de E/S da FPGA\" em Ferramentas → "
+"Preferências → Verificar."
+
+#: app/views/version.html:32
+msgid "Release History WIKI"
+msgstr "WIKI do histórico de versões"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:279
+msgid "Reload board list"
+msgstr "Recarregar lista de placas"
+
+#: app/scripts/services/tools.js:1294
+msgid "Remote host {{name}} not connected"
+msgstr "Host remoto {{name}} não conectado"
+
+#: app/views/advanced.html:51
+msgid "Remote hostname"
+msgstr "Nome do host remoto"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:859
+#: app/resources/plugins/iceHub/js/iceHub.js:867 app/views/menu.html:615
+msgid "Remove"
+msgstr "Remover"
+
+#: app/resources/plugins/iceHub/js/install.js:722
+msgid "Remove <b>{{name}}</b> and all its files?"
+msgstr "Remover <b>{{name}}</b> e todos os seus arquivos?"
+
+#: app/resources/plugins/iceHub/js/install.js:721
+msgid "Remove collection"
+msgstr "Remover coleção"
+
+#: app/resources/plugins/iceHub/js/install.js:752
+msgid "Remove failed: {{error}}"
+msgstr "Falha ao remover: {{error}}"
+
+#: app/scripts/controllers/menu.js:1875
+msgid ""
+"Removing the synthesis artifacts, testbenches, etc. may lose information if "
+"you customized apio.ini or hand-made files. Do you want to continue?"
+msgstr ""
+"A remoção dos artefatos de síntese, testbenches, etc. pode causar perda de "
+"informações se você personalizou o apio.ini ou criou arquivos manualmente. "
+"Deseja continuar?"
+
+#: app/resources/plugins/iceHub/js/install.js:728
+msgid "Removing {{name}}…"
+msgstr "Removendo {{name}}…"
+
+#: app/views/design.html:295
+msgid "Replace All"
+msgstr "Substituir tudo"
+
+#: app/views/design.html:87
+msgid "Replace One"
+msgstr "Substituir um"
+
+#: app/scripts/services/utils.js:800
+msgid "Reset SVG"
+msgstr "Redefinir SVG"
+
+#: app/resources/plugins/iceHub/js/install.js:352
+#: app/resources/plugins/iceHub/js/install.js:414
+msgid "Resolving {{name}}…"
+msgstr "Resolvendo {{name}}…"
+
+#: app/resources/plugins/iceHub/js/install.js:865
+msgid "Resolving…"
+msgstr "Resolvendo…"
+
+#: app/resources/plugins/iceTutorial/js/main.js:923
+msgid "Resources"
+msgstr "Recursos"
+
+#: app/scripts/services/outputConsole.js:77
+msgid "Restore"
+msgstr "Restaurar"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1040
+#: app/resources/plugins/setupWizard/js/wizard.js:1216
+msgid "Retry"
+msgstr "Tentar novamente"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:573
+msgid "Retry install"
+msgstr "Tentar instalar novamente"
+
+#: app/scripts/services/forms.js:500 app/views/design.html:272
+msgid "Royal Blue"
+msgstr "Azul royal"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:285
+msgid "Rules"
+msgstr "Regras"
+
+#: app/scripts/services/tools.js:2070
+msgid "Running  in a terminal..."
+msgstr "Executando  em um terminal..."
+
+#: app/views/languages.html:104
+msgid "Russian"
+msgstr "Russo"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:253
+#: app/scripts/controllers/menu.js:666 app/scripts/controllers/menu.js:716
+#: app/views/menu.html:149
+msgid "Save"
+msgstr "Salvar"
+
+#: app/scripts/services/utils.js:1045
+msgid "Save As"
+msgstr "Salvar como"
+
+#: app/scripts/services/utils.js:795
+msgid "Save SVG"
+msgstr "Salvar SVG"
+
+#: app/views/menu.html:157
+msgid "Save as"
+msgstr "Salvar como"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:254
+msgid "Save board"
+msgstr "Salvar placa"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1036
+msgid "Save failed: {error}"
+msgstr "Falha ao salvar: {error}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1005
+msgid "Save the project first to create project boards"
+msgstr "Salve o projeto primeiro para poder criar placas do projeto"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:807
+msgid "Scan again"
+msgstr "Procurar novamente"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:801
+#: app/resources/plugins/setupWizard/js/wizard.js:830
+msgid "Scanning for devices…"
+msgstr "Procurando dispositivos…"
+
+#: app/scripts/services/tools.js:2983
+msgid "Screen recording error. Review your permissions."
+msgstr "Erro na gravação de tela. Verifique suas permissões."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:692
+msgid "Search boards…"
+msgstr "Buscar placas…"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:353
+msgid "Search languages…"
+msgstr "Buscar idiomas…"
+
+#: app/resources/plugins/iceTutorial/js/main.js:928
+msgid "Search resources by title or description…"
+msgstr "Buscar recursos por título ou descrição…"
+
+#: app/resources/plugins/iceTutorial/js/main.js:902
+msgid "Search videos by title, description or tags…"
+msgstr "Buscar vídeos por título, descrição ou tags…"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1297
+msgid "Search…"
+msgstr "Buscar…"
+
+#: app/scripts/services/forms.js:2791
+msgid ""
+"Select a directory for your external collections. Icestudio will install "
+"collections in this folder and index any collection you place or create "
+"inside it, making its blocks and examples available in your designs. This "
+"folder is required and must exist."
+msgstr ""
+"Selecione um diretório para suas coleções externas. O Icestudio instalará "
+"coleções nesta pasta e indexará qualquer coleção que você colocar ou criar "
+"dentro dela, disponibilizando seus blocos e exemplos nos seus projetos. Esta "
+"pasta é obrigatória e deve existir."
+
+#: app/views/menu.html:313
+msgid "Select all"
+msgstr "Selecionar tudo"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1333
+#: app/resources/plugins/iceHub/js/iceHub.js:785
+msgid "Select an item"
+msgstr "Selecione um item"
+
+#: app/views/design.html:530 app/views/design.html:619
+msgid "Select board"
+msgstr "Selecionar placa"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:685
+#: app/scripts/services/forms.js:2554
+msgid "Select your board"
+msgstr "Selecione sua placa"
+
+#: app/views/menu.html:674
+msgid "Setup Wizard"
+msgstr "Assistente de configuração"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1179
+msgid "Setup is complete. Enjoy designing with Icestudio!"
+msgstr "A configuração está concluída. Divirta-se criando com o Icestudio!"
+
+#: app/scripts/services/forms.js:1241
+msgid "Show clock"
+msgstr "Mostrar clock"
+
+#: app/scripts/services/forms.js:473 app/views/design.html:191
+msgid "Slate Blue"
+msgstr "Azul-ardósia"
+
+#: app/scripts/services/tools.js:2912
+msgid "Snapshot saved: {{name}}"
+msgstr "Captura salva: {{name}}"
+
+#: app/resources/plugins/iceTutorial/js/main.js:907
+msgid ""
+"Some videos may be outdated or refer to old Icestudio versions, but the "
+"concepts still apply."
+msgstr ""
+"Alguns vídeos podem estar desatualizados ou se referir a versões antigas do "
+"Icestudio, mas os conceitos continuam válidos."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1027
+msgid "Something went wrong"
+msgstr "Algo deu errado"
+
+#: app/views/menu.html:817
+msgid "Source code"
+msgstr "Código-fonte"
+
+#: app/views/languages.html:23
+msgid "Spanish"
+msgstr "Espanhol"
+
+#: app/scripts/services/forms.js:479 app/views/design.html:209
+msgid "Spring Green"
+msgstr "Verde primavera"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:507
+msgid "Stable"
+msgstr "Estável"
+
+#: app/scripts/controllers/menu.js:1830
+msgid "Start build"
+msgstr "Iniciar compilação"
+
+#: app/scripts/controllers/menu.js:1859
+msgid "Start upload"
+msgstr "Iniciar envio"
+
+#: app/scripts/controllers/menu.js:1805
+msgid "Start verification"
+msgstr "Iniciar verificação"
+
+#: app/scripts/services/tools.js:2104 app/scripts/services/tools.js:2197
+msgid "Starting installation..."
+msgstr "Iniciando a instalação..."
+
+#: app/scripts/services/forms.js:494 app/views/design.html:254
+msgid "Steel Blue"
+msgstr "Azul-aço"
+
+#: app/scripts/services/tools.js:523
+msgid "Synchronize remote files ..."
+msgstr "Sincronizando arquivos remotos ..."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:299
+msgid "Sys Clk (MHz)"
+msgstr "Clk do sistema (MHz)"
+
+#: app/views/menu.html:493
+msgid "System info"
+msgstr "Informações do sistema"
+
+#: app/views/languages.html:149
+msgid "Taiwanese"
+msgstr "Taiwanês"
+
+#: app/views/menu.html:682
+msgid "Take PNG"
+msgstr "Capturar PNG"
+
+#: app/views/menu.html:690
+msgid "Take Video"
+msgstr "Capturar vídeo"
+
+#: app/views/menu.html:181
+msgid "Testbench"
+msgstr "Testbench"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:945
+msgid "Testing your board"
+msgstr "Testando sua placa"
+
+#: app/views/version.html:50
+msgid "Thank you very much all!"
+msgstr "Muito obrigado a todos!"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:495
+msgid ""
+"The <b>toolchain</b> (Apio) is the set of open-source tools that turn your "
+"design into a bitstream and upload it to the FPGA. Icestudio needs it to "
+"build and program boards."
+msgstr ""
+"A <b>toolchain</b> (Apio) é o conjunto de ferramentas de código aberto que "
+"transforma seu projeto em um bitstream e o envia para a FPGA. O Icestudio "
+"precisa dela para compilar e gravar nas placas."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:482
+msgid ""
+"The Apio toolchain is already installed{{version}}. You can manage or update "
+"it later from <b>Tools → Toolchain</b>."
+msgstr ""
+"A toolchain do Apio já está instalada{{version}}. Você pode gerenciá-la ou "
+"atualizá-la depois em <b>Ferramentas → Toolchain</b>."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1174
+msgid "The bitstream was uploaded — your board should be blinking now. 🎉"
+msgstr "O bitstream foi enviado — sua placa já deve estar piscando. 🎉"
+
+#: app/scripts/services/tools.js:2589
+msgid "The collection {{name}} already exists."
+msgstr "A coleção {{name}} já existe."
+
+#: app/scripts/controllers/menu.js:1752
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"the {{name}} board?"
+msgstr ""
+"A configuração atual de E/S da FPGA será perdida. Deseja mudar para a placa "
+"{{name}}?"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1093
+msgid "The downloaded example could not be found."
+msgstr "O exemplo baixado não foi encontrado."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:705
+msgid "The example database is based on your installed collections."
+msgstr "O banco de exemplos é baseado nas coleções instaladas."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1106
+msgid "The example failed to build."
+msgstr "Falha ao compilar o exemplo."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:509
+msgid "The latest stable release. Recommended for most users."
+msgstr ""
+"A versão estável mais recente. Recomendada para a maioria dos usuários."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:519
+msgid "The newest build with the latest features. May be less stable."
+msgstr ""
+"A versão mais nova com os recursos mais recentes. Pode ser menos estável."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:995
+msgid "The pinout cannot be empty"
+msgstr "O pinout não pode ficar vazio"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:1151
+msgid ""
+"The selected board has no built-in test example, so we will stop here. "
+"Icestudio is configured and ready to use."
+msgstr ""
+"A placa selecionada não tem um exemplo de teste integrado, então vamos parar "
+"por aqui. O Icestudio está configurado e pronto para uso."
+
+#: app/scripts/services/tools.js:1878
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "A toolchain será removida. Deseja continuar?"
+
+#: app/scripts/services/tools.js:2812
+msgid "There is a new nightly version available"
+msgstr "Há uma nova versão nightly disponível"
+
+#: app/scripts/services/tools.js:2802
+msgid "There is a new stable version available"
+msgstr "Há uma nova versão estável disponível"
+
+#: app/scripts/controllers/design.js:646
+msgid ""
+"This block belongs to a collection. Editing it will create a local copy so "
+"the collection block is not modified."
+msgstr ""
+"Este bloco pertence a uma coleção. Editá-lo criará uma cópia local para que "
+"o bloco da coleção não seja modificado."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:977
+msgid "This board is read-only. Enable developer mode or clone it."
+msgstr "Esta placa é somente leitura. Ative o modo desenvolvedor ou clone-a."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:973
+msgid "This collection has no examples folder."
+msgstr "Esta coleção não tem pasta de exemplos."
+
+#: app/scripts/services/project.js:213
+msgid "This design uses the {{name}} board, found in the project folder."
+msgstr "Este projeto usa a placa {{name}}, encontrada na pasta do projeto."
+
+#: app/scripts/services/project.js:184
+msgid ""
+"This design was made for the {{name}} board, which is not installed and is "
+"not in the project boards folder."
+msgstr ""
+"Este projeto foi feito para a placa {{name}}, que não está instalada e não "
+"está na pasta de placas do projeto."
+
+#: app/scripts/services/project.js:669
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"Esta operação de importação exige um caminho de projeto. Você precisa salvar "
+"o projeto atual. Deseja continuar?"
+
+#: app/scripts/controllers/menu.js:383
+msgid ""
+"This is a system example. You need to select a destination folder where the "
+"design will be saved."
+msgstr ""
+"Este é um exemplo do sistema. Você precisa selecionar uma pasta de destino "
+"onde o projeto será salvo."
+
+#: app/scripts/services/project.js:237
+msgid "This project is designed for the {{name}} board."
+msgstr "Este projeto foi feito para a placa {{name}}."
+
+#: app/resources/plugins/setupWizard/js/wizard.js:458
+msgid ""
+"This quick assistant will get you ready: install the toolchain, choose where "
+"your collections live, pick your board and run a small test on it. It only "
+"takes a minute."
+msgstr ""
+"Este assistente rápido vai preparar tudo: instalar a toolchain, escolher "
+"onde ficam suas coleções, selecionar sua placa e executar um pequeno teste "
+"nela. Leva apenas um minuto."
+
+#: app/views/version.html:40
+msgid ""
+"This release has been possible thanks to the great work done\n"
+"          by an active, growing, enthusiastic team, the"
+msgstr ""
+"Esta versão foi possível graças ao ótimo trabalho feito\n"
+"          por uma equipe ativa, crescente e entusiasmada, a"
+
+#: app/scripts/services/utils.js:1641
+msgid "This time"
+msgstr "Desta vez"
+
+#: app/scripts/services/outputConsole.js:34
+msgid ""
+"This warning disappears if you enable \"Relax the real-to-integer conversion "
+"check\" under Tools → Preferences → Verify."
+msgstr ""
+"Este aviso desaparece se você ativar \"Relaxar a verificação de conversão "
+"real para inteiro\" em Ferramentas → Preferências → Verificar."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1133
+msgid ""
+"To edit this example you must choose a folder where a copy will be saved. "
+"The copy opens in a new Icestudio window so the original example is never "
+"modified."
+msgstr ""
+"Para editar este exemplo, você deve escolher uma pasta onde uma cópia será "
+"salva. A cópia abre em uma nova janela do Icestudio para que o exemplo "
+"original nunca seja modificado."
+
+#: app/resources/plugins/iceHub/js/install.js:75
+msgid "Too many redirects"
+msgstr "Excesso de redirecionamentos"
+
+#: app/views/menu.html:342
+msgid "Toolbox"
+msgstr "Caixa de ferramentas"
+
+#: app/views/menu.html:586
+msgid "Toolchain"
+msgstr "Toolchain"
+
+#: app/scripts/services/tools.js:2433
+msgid "Toolchain installed"
+msgstr "Toolchain instalada"
+
+#: app/scripts/services/tools.js:1829
+msgid "Toolchain is up to date ({{ch}}: {{version}})"
+msgstr "A toolchain está atualizada ({{ch}}: {{version}})"
+
+#: app/scripts/services/tools.js:278 app/scripts/services/tools.js:453
+#: app/scripts/services/tools.js:490
+msgid "Toolchain not installed"
+msgstr "Toolchain não instalada"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:479
+msgid "Toolchain ready"
+msgstr "Toolchain pronta"
+
+#: app/scripts/services/tools.js:1895
+msgid "Toolchain removed"
+msgstr "Toolchain removida"
+
+#: app/scripts/services/forms.js:1877 app/views/menu.html:529
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: app/scripts/services/utils.js:1597
+msgid ""
+"Tri-state (aka high-Z, bidirectional, or inout) ports are not recommended in "
+"standard designs.<br /><br />You will be asked to update your Preferences "
+"(Advanced user setting) or you can just open this design on a preview basis."
+"<br /><br />Continue?"
+msgstr ""
+"Portas tri-state (também conhecidas como high-Z, bidirecionais ou inout) não "
+"são recomendadas em projetos padrão.<br /><br />Você deverá atualizar suas "
+"Preferências (configuração de usuário avançado) ou pode simplesmente abrir "
+"este projeto em modo de visualização.<br /><br />Continuar?"
+
+#: app/scripts/controllers/menu.js:1295
+msgid "Tri-state connections (inout ports) disabled"
+msgstr "Conexões tri-state (portas inout) desativadas"
+
+#: app/scripts/controllers/menu.js:1288
+msgid "Tri-state connections (inout ports) enabled"
+msgstr "Conexões tri-state (portas inout) ativadas"
+
+#: app/views/languages.html:77
+msgid "Turkish"
+msgstr "Turco"
+
+#: app/scripts/services/forms.js:491 app/views/design.html:245
+msgid "Turquoise"
+msgstr "Turquesa"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:339
+msgid "Type"
+msgstr "Tipo"
+
+#: app/scripts/controllers/menu.js:1334 app/views/menu.html:374
+msgid "UI theme"
+msgstr "Tema da interface"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1029
+msgid "URL (.tgz / .zip / GitHub)"
+msgstr "URL (.tgz / .zip / GitHub)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:301
+msgid "USB PID"
+msgstr "USB PID"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:300
+msgid "USB VID"
+msgstr "USB VID"
+
+#: app/views/languages.html:95
+msgid "Ukrainian"
+msgstr "Ucraniano"
+
+#: app/views/menu.html:232
+msgid "Undo"
+msgstr "Desfazer"
+
+#: app/scripts/services/tools.js:1035
+msgid "Unknown board"
+msgstr "Placa desconhecida"
+
+#: app/resources/plugins/iceHub/js/install.js:207
+msgid "Unknown source type: {{type}}"
+msgstr "Tipo de fonte desconhecido: {{type}}"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:891
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#: app/scripts/services/project.js:336
+msgid "Unsupported project format {{version}}"
+msgstr "Formato de projeto não suportado {{version}}"
+
+#: app/scripts/app.js:197
+msgid "Untitled"
+msgstr "Sem título"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:847 app/views/menu.html:603
+msgid "Update"
+msgstr "Atualizar"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1313
+#: app/resources/plugins/iceHub/js/install.js:682
+msgid "Update all"
+msgstr "Atualizar todas"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1317
+msgid "Update all updatable collections"
+msgstr "Atualizar todas as coleções atualizáveis"
+
+#: app/resources/plugins/iceHub/js/install.js:464
+msgid "Update collection"
+msgstr "Atualizar coleção"
+
+#: app/resources/plugins/iceHub/js/install.js:683
+msgid ""
+"Update {{count}} collection(s)? Each folder will be replaced with the "
+"downloaded release (git working copies will lose their .git and local "
+"changes)."
+msgstr ""
+"Atualizar {{count}} coleção(ões)? Cada pasta será substituída pela versão "
+"baixada (cópias de trabalho do git perderão o .git e as alterações locais)."
+
+#: app/resources/plugins/iceHub/js/install.js:465
+msgid ""
+"Updating <b>{{name}}</b> will replace its folder with the downloaded release."
+msgstr "Atualizar <b>{{name}}</b> substituirá a pasta pela versão baixada."
+
+#: app/resources/plugins/iceHub/js/install.js:692
+msgid "Updating collections…"
+msgstr "Atualizando coleções…"
+
+#: app/scripts/controllers/menu.js:1847 app/scripts/controllers/menu.js:766
+#: app/views/design.html:568 app/views/menu.html:555
+msgid "Upload"
+msgstr "Enviar"
+
+#: app/scripts/controllers/menu.js:1860
+msgid "Upload done"
+msgstr "Envio concluído"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:962
+msgid "Uploading to the board"
+msgstr "Enviando para a placa"
+
+#: app/scripts/services/utils.js:461
+msgid "Using external Apio: {{name}}"
+msgstr "Usando Apio externo: {{name}}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:336
+msgid "Value (pin)"
+msgstr "Valor (pino)"
+
+#: app/scripts/controllers/menu.js:1806
+msgid "Verification done"
+msgstr "Verificação concluída"
+
+#: app/scripts/controllers/menu.js:760 app/views/design.html:546
+#: app/views/menu.html:537
+msgid "Verify"
+msgstr "Verificar"
+
+#: app/scripts/services/utils.js:726 app/views/menu.html:792
+msgid "Version"
+msgstr "Versão"
+
+#: app/views/menu.html:785
+msgid "Version notes"
+msgstr "Notas da versão"
+
+#: app/scripts/services/tools.js:2965
+msgid "Video saved: {{name}}"
+msgstr "Vídeo salvo: {{name}}"
+
+#: app/resources/plugins/iceTutorial/js/main.js:890
+msgid "Videos"
+msgstr "Vídeos"
+
+#: app/views/menu.html:446
+msgid "View"
+msgstr "Exibir"
+
+#: app/views/menu.html:778
+msgid "View license"
+msgstr "Ver licença"
+
+#: app/scripts/services/utils.js:1634
+msgid "Viewing tri-state"
+msgstr "Visualizando tri-state"
+
+#: app/scripts/controllers/menu.js:1335
+msgid "Wait for <b></b> seconds"
+msgstr "Aguarde <b></b> segundos"
+
+#: app/scripts/services/tools.js:1229
+msgid "Warnings detected in the design"
+msgstr "Avisos detectados no projeto"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:450
+msgid "Welcome to Icestudio"
+msgstr "Bem-vindo ao Icestudio"
+
+#: app/views/version.html:22
+msgid "Welcome to Icestudio!"
+msgstr "Bem-vindo ao Icestudio!"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1335
+#: app/resources/plugins/iceHub/js/iceHub.js:143
+#: app/resources/plugins/iceHub/js/iceHub.js:837
+msgid "Working…"
+msgstr "Trabalhando…"
+
+#: app/scripts/services/blockforms.js:501
+msgid "Wrong block format: {{type}}"
+msgstr "Formato de bloco incorreto: {{type}}"
+
+#: app/scripts/services/forms.js:1141 app/scripts/services/forms.js:1538
+#: app/scripts/services/forms.js:1987 app/scripts/services/forms.js:2273
+#: app/scripts/services/forms.js:2446
+msgid "Wrong block name {{name}}"
+msgstr "Nome do bloco incorreto {{name}}"
+
+#: app/scripts/services/project.js:302
+msgid "Wrong project format: {{name}}"
+msgstr "Formato de projeto incorreto: {{name}}"
+
+#: app/scripts/services/tools.js:1287
+msgid "Wrong remote hostname {{name}}"
+msgstr "Nome do host remoto incorreto {{name}}"
+
+#: app/scripts/services/forms.js:470 app/views/design.html:173
+msgid "Yellow"
+msgstr "Amarelo"
+
+#: app/scripts/services/utils.js:1640
+msgid "Yes"
+msgstr "Sim"
+
+#: app/scripts/controllers/menu.js:479
+msgid ""
+"You are editing a submodule, so you will save just this submodule (\"Save "
+"as\" works like \"Export                 module\"). Do you want to continue?"
+msgstr ""
+"Você está editando um submódulo, então salvará apenas este submódulo "
+"(\"Salvar como\" funciona como \"Exportar                 módulo\"). Deseja "
+"continuar?"
+
+#: app/scripts/services/utils.js:1593
+msgid "You are importing a block that uses \"tri-state\"."
+msgstr "Você está importando um bloco que usa \"tri-state\"."
+
+#: app/scripts/services/utils.js:1590
+msgid "You are loading a design that uses \"tri-state\"."
+msgstr "Você está carregando um projeto que usa \"tri-state\"."
+
+#: app/scripts/controllers/menu.js:466
+msgid ""
+"You are navigating into the design: If you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\"."
+msgstr ""
+"Você está navegando para dentro do projeto: se quiser salvar o projeto "
+"inteiro, você precisa voltar                      ao nível superior. Se "
+"quiser exportar este módulo como um novo arquivo, desbloqueie o módulo e use "
+"\"Salvar como\"."
+
+#: app/scripts/services/project.js:242
+msgid "You can load it as it is or convert it to use the {{name}} board."
+msgstr ""
+"Você pode carregá-lo como está ou convertê-lo para usar a placa {{name}}."
+
+#: app/scripts/controllers/menu.js:1820
+msgid ""
+"You can only build at the top-level design. Inside submodules, you can "
+"<strong>Verify</strong>"
+msgstr ""
+"Você só pode compilar no nível superior do projeto. Dentro de submódulos, "
+"você pode <strong>Verificar</strong>"
+
+#: app/scripts/controllers/menu.js:1848
+msgid ""
+"You can only upload at the top-level design. Inside submodules, you can "
+"<strong>Verify</strong>"
+msgstr ""
+"Você só pode enviar no nível superior do projeto. Dentro de submódulos, você "
+"pode <strong>Verificar</strong>"
+
+#: app/views/version.html:25
+msgid "You can read the release notes on the"
+msgstr "Você pode ler as notas da versão na"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:701
+msgid ""
+"You can search by topic, functionality, a collection name, your FPGA board "
+"name…"
+msgstr ""
+"Você pode buscar por tópico, funcionalidade, nome de coleção, nome da sua "
+"placa FPGA…"
+
+#: app/scripts/controllers/menu.js:817
+msgid "Your changes will be lost if you don’t save them"
+msgstr "Suas alterações serão perdidas se você não salvá-las"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:309
+msgid "apio — actions without a command run via apio"
+msgstr "apio — ações sem comando são executadas via apio"
+
+#: app/views/design.html:23
+msgid "back"
+msgstr "voltar"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:366
+msgid "bit"
+msgstr "bit"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:314
+msgid "custom — no apio fallback"
+msgstr "custom — sem fallback para o apio"
+
+#: app/scripts/services/tools.js:1949
+msgid "drivers..."
+msgstr "drivers..."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1033
+msgid "https://github.com/owner/repo   or   https://….tgz"
+msgstr "https://github.com/owner/repo   ou   https://….tgz"
+
+#: app/views/menu.html:668
+msgid "iceHub"
+msgstr "iceHub"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:327
+msgid ""
+"name = signal label shown in the UI, value = FPGA pin, type = input/output/"
+"inout"
+msgstr ""
+"name = rótulo do sinal exibido na interface, value = pino da FPGA, type = "
+"input/output/inout"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:359
+#: app/resources/plugins/boardEditor/js/boardEditor.js:363
+msgid "pin"
+msgstr "pino"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:356
+msgid "port"
+msgstr "porta"
+
+#: app/scripts/services/tools.js:1676
+msgid "the latest nightly build (newest features, may be unstable)."
+msgstr ""
+"a versão nightly mais recente (recursos mais novos, pode ser instável)."
+
+#: app/scripts/services/tools.js:1673
+msgid "the latest stable release (recommended)."
+msgstr "a versão estável mais recente (recomendada)."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:438
+msgid "to run a toolchain tool through apio."
+msgstr "para executar uma ferramenta da toolchain através do apio."
+
+#: app/resources/plugins/iceHub/js/iceHub.js:675
+msgid "update"
+msgstr "atualizar"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:787
+msgid "your board"
+msgstr "sua placa"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:1361
+msgid "{shown} / {total} boards"
+msgstr "{shown} / {total} placas"
+
+#: app/scripts/services/utils.js:1384
+msgid "{{app}} is required."
+msgstr "{{app}} é necessário."
+
+#: app/scripts/controllers/menu.js:1414
+msgid "{{board}} datasheet not defined"
+msgstr "Datasheet da placa {{board}} não definido"
+
+#: app/resources/plugins/setupWizard/js/wizard.js:851
+msgid "{{board}} detected. You are ready to continue."
+msgstr "{{board}} detectada. Você está pronto para continuar."
+
+#: app/scripts/controllers/menu.js:1400
+msgid "{{board}} pinout not defined"
+msgstr "Pinout da placa {{board}} não definido"
+
+#: app/scripts/controllers/menu.js:1437
+msgid "{{board}} rules not defined"
+msgstr "Regras da placa {{board}} não definidas"
+
+#: app/scripts/services/tools.js:1844
+msgid "{{ch}} channel: {{from}} → {{to}}. Install it now?"
+msgstr "Canal {{ch}}: {{from}} → {{to}}. Instalar agora?"
+
+#: app/resources/plugins/iceHub/js/install.js:631
+msgid "{{count}} update(s) available."
+msgstr "{{count}} atualização(ões) disponível(is)."
+
+#: app/scripts/controllers/menu.js:577 app/scripts/controllers/menu.js:614
+msgid "{{name}} exported"
+msgstr "{{name}} exportado"
+
+#: app/resources/plugins/iceHub/js/install.js:318
+msgid "{{name}} is locked."
+msgstr "{{name}} está bloqueada."
+
+#: app/resources/plugins/iceHub/js/install.js:900
+msgid "{{name}} is locked. Unlock it first to overwrite."
+msgstr "{{name}} está bloqueada. Desbloqueie-a primeiro para sobrescrever."
+
+#: app/resources/plugins/iceHub/js/install.js:708
+msgid "{{name}} is locked. Unlock it first to remove."
+msgstr "{{name}} está bloqueada. Desbloqueie-a primeiro para remover."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:387
+msgid "— empty = apio build"
+msgstr "— vazio = apio build"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:398
+msgid "— empty = apio clean"
+msgstr "— vazio = apio clean"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:395
+msgid "— empty = apio lint"
+msgstr "— vazio = apio lint"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js:390
+msgid "— empty = apio upload"
+msgstr "— vazio = apio upload"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:1025
+msgid "— or —"
+msgstr "— ou —"
+
+#: app/resources/plugins/iceHub/js/iceHub.js:811
+msgid "→ {{version}} available"
+msgstr "→ {{version}} disponível"
+
+#: app/scripts/services/tools.js
+msgid "Do you want to install it?"
+msgstr "Deseja instalá-lo?"
+
+#: app/scripts/services/tools.js
+msgid "No"
+msgstr "Não"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Regenerate menu"
+msgstr "Regenerar menu"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Regenerate menu.json from the boards folder (developer)"
+msgstr "Regenerar o menu.json a partir da pasta de placas (desenvolvedor)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "menu.json regenerated ({n} boards)"
+msgstr "menu.json regenerado ({n} placas)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Could not regenerate menu.json: {error}"
+msgstr "Não foi possível regenerar o menu.json: {error}"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid ""
+"Board saved but not shown in the menu: set a supported Arch and FPGA family "
+"(Group)."
+msgstr ""
+"Placa salva, mas não exibida no menu: defina uma Arquitetura e uma família "
+"FPGA (Grupo) suportadas."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Reload the board list (regenerates menu.json in developer mode)"
+msgstr ""
+"Recarregar a lista de placas (regenera o menu.json no modo desenvolvedor)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Import constraints"
+msgstr "Importar restrições"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Import a constraint file (PCF/LPF/CST/XDC) into the pinout"
+msgstr "Importar um arquivo de restrições (PCF/LPF/CST/XDC) para o pinout"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "New board (will be saved into the user boards folder)"
+msgstr "Nova placa (será salva na pasta de placas de usuário)"
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "Delete user board \"{id}\"? This removes its folder."
+msgstr "Excluir a placa de usuário \"{id}\"? Isso removerá a pasta da placa."
+
+#: app/resources/plugins/boardEditor/js/boardEditor.js
+msgid "User board"
+msgstr "Placa de usuário"
+
+#: app/views/menu.html
+msgid "Custom boards"
+msgstr "Placas personalizadas"
+
+#: app/scripts/controllers/menu.js
+msgid "Custom boards updated"
+msgstr "Placas personalizadas atualizadas"
+
+#: app/scripts/controllers/menu.js
+msgid "Please select a directory for the custom boards"
+msgstr "Selecione um diretório para as placas personalizadas"
+
+#: app/scripts/controllers/menu.js
+msgid "Configure now"
+msgstr "Configurar agora"
+
+#: app/scripts/controllers/menu.js
+msgid "Later"
+msgstr "Mais tarde"
+
+#: app/scripts/controllers/menu.js
+msgid "New feature: custom boards"
+msgstr "Novo recurso: placas personalizadas"
+
+#: app/scripts/controllers/menu.js
+msgid ""
+"This version adds a custom boards folder: any board you place or create "
+"inside it (same format as the distribution boards) is always available in "
+"every board list, without copying it into each project."
+msgstr ""
+"Esta versão adiciona uma pasta de placas personalizadas: qualquer placa que "
+"você colocar ou criar dentro dela (mesmo formato das placas de distribuição) "
+"fica sempre disponível em todas as listas de placas, sem copiá-la para cada "
+"projeto."
+
+#: app/scripts/controllers/menu.js
+msgid ""
+"You can change the folder at any time in Edit > Preferences > Custom boards."
+msgstr ""
+"Você pode mudar a pasta a qualquer momento em Editar > Preferências > Placas "
+"personalizadas."
+
+#: app/scripts/services/forms.js
+msgid ""
+"Select a directory for your custom boards. Icestudio will always scan this "
+"folder and offer any board you place or create inside it (same format as the "
+"distribution boards) in every board list, without copying it into each "
+"project. This folder is required and must exist."
+msgstr ""
+"Selecione um diretório para suas placas personalizadas. O Icestudio sempre "
+"examinará esta pasta e oferecerá qualquer placa que você colocar ou criar "
+"dentro dela (mesmo formato das placas de distribuição) em todas as listas de "
+"placas, sem copiá-la para cada projeto. Esta pasta é obrigatória e deve "
+"existir."
+
+#: app/scripts/services/project.js
+msgid "Module {{name}} exported"
+msgstr "Módulo {{name}} exportado"
+
+#: app/scripts/controllers/menu.js
+msgid "Relax the FPGA I/O primitive checks (SB_IO / TRELLIS_IO)"
+msgstr ""
+"Relaxar as verificações das primitivas de E/S da FPGA (SB_IO / TRELLIS_IO)"
+
+#: app/scripts/controllers/menu.js
+msgid "Yosys options (synthesis)"
+msgstr "Opções do Yosys (síntese)"
+
+#: app/scripts/controllers/menu.js
+msgid "Nextpnr options (place & route)"
+msgstr "Opções do nextpnr (posicionamento e roteamento)"
+
+#: app/scripts/controllers/menu.js
+msgid "Extra flags for yosys, space- or line-separated (e.g. -abc9 -nowidelut)"
+msgstr ""
+"Flags extras para o yosys, separadas por espaço ou quebra de linha (ex.: "
+"-abc9 -nowidelut)"
+
+#: app/scripts/controllers/menu.js
+msgid ""
+"Extra flags for nextpnr, space- or line-separated (e.g. --seed 2 --timing-"
+"allow-fail)"
+msgstr ""
+"Flags extras para o nextpnr, separadas por espaço ou quebra de linha (ex.: --"
+"seed 2 --timing-allow-fail)"
+
+#: app/scripts/controllers/menu.js
+msgid "Cleaned: "
+msgstr "Limpeza: "
+
+#: app/scripts/services/tools.js
+msgid "Running {{cmd}} in a terminal..."
+msgstr "Executando {{cmd}} em um terminal..."
+
+#: app/scripts/controllers/menu.js
+msgid "Global"
+msgstr "Global"
+
+#: app/scripts/controllers/menu.js
+msgid "Project"
+msgstr "Projeto"
+
+#: app/scripts/controllers/menu.js
+msgid "Override globals"
+msgstr "Substituir globais"
+
+#: app/scripts/controllers/menu.js
+msgid "Allow combinational loops (verify + place & route)"
+msgstr ""
+"Permitir laços combinacionais (verificação + posicionamento e roteamento)"
+
+#: app/scripts/services/outputConsole.js
+msgid ""
+"This is a combinational (logic) loop. It disappears if you enable \"Allow "
+"combinational loops\" under Tools → Preferences → Verify."
+msgstr ""
+"Este é um laço combinacional (lógico). Ele desaparece se você ativar "
+"\"Permitir laços combinacionais\" em Ferramentas → Preferências → Verificar."
+
+#: app/scripts/controllers/menu.js
+msgid "Verilator options (verify)"
+msgstr "Opções do Verilator (verificação)"
+
+#: app/scripts/controllers/menu.js
+msgid ""
+"Extra flags for Verilator, space- or line-separated (e.g. -Wno-WIDTH -Wno-"
+"CASEINCOMPLETE)"
+msgstr ""
+"Flags extras para o Verilator, separadas por espaço ou quebra de linha (ex.: "
+"-Wno-WIDTH -Wno-CASEINCOMPLETE)"
+
+#: app/resources/plugins/apioShell/js/apioShell.js
+msgid "Download"
+msgstr "Baixar"
+
+#: app/resources/plugins/apioShell/js/apioShell.js
+msgid "Design graph"
+msgstr "Grafo do projeto"
+
+#: app/resources/plugins/apioShell/js/apioShell.js
+msgid "Zoom in"
+msgstr "Ampliar"
+
+#: app/resources/plugins/apioShell/js/apioShell.js
+msgid "Zoom out"
+msgstr "Reduzir"
+
+#: app/resources/plugins/apioShell/js/apioShell.js
+msgid "Fit to window"
+msgstr "Ajustar à janela"

@@ -174,6 +174,7 @@
     ja_JP: '日本語',
     ko_KR: '한국어',
     nl_NL: 'Nederlands',
+    pt_BR: 'Português (Brasil)',
     ru_RU: 'Русский',
     tr_TR: 'Türkçe',
     uk_UA: 'Українська',

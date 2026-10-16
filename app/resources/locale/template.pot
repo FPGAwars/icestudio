@@ -1660,6 +1660,10 @@ msgstr ""
 msgid "Plug the board in (and power it). You can continue anyway, but the test upload will fail without it."
 msgstr ""
 
+#: app/views/languages.html:176
+msgid "Portuguese"
+msgstr ""
+
 #: app/scripts/controllers/menu.js:789
 #: app/views/menu.html:353
 #: app/views/menu.html:573
