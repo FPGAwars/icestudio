@@ -135,7 +135,9 @@
     "type": "XILINX",
     "boards": [
       "basys3",
+      "Arty-S7-25",
       "cmod-a7-35t"
+
     ]
   }
 ]
