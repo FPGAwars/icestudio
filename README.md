@@ -33,6 +33,8 @@ Icestudio is a design tool focused on newcomers to the FPGA world
 
 - **Step 3**: Done! 😀️
 
+To work on Icestudio itself, read [CONTRIBUTING.md](CONTRIBUTING.md).
+
 # Screenshots
 
 ## Hello world examples from the iceK collection

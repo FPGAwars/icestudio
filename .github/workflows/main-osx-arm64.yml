@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Data check
+        uses: ./.github/actions/data-check
+
       - name: Setup Nodejs version
         uses: actions/setup-node@v5
         with:

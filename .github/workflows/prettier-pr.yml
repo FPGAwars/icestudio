@@ -27,11 +27,8 @@ jobs:
       # JSON syntax, the board and plugin contracts and the translations
       # (scripts/checkData.js). The hooks run it on commit and push, but only
       # here nobody can skip it.
-      - name: Check data files (JSON, boards, plugins, translations)
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq gettext
-          npm run checkData
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       # Formatting and linting are enforced at COMMIT TIME by the local
       # pre-commit hook (scripts/git/pre-commit: runs Prettier --write and then

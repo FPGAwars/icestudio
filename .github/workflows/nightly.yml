@@ -10,8 +10,8 @@
 #     `xattr -dr com.apple.quarantine` on first launch.
 #   - Nightly releases older than 15 days are deleted automatically.
 #
-# This does NOT change the per-PR behaviour: the "Code standardizer hook for
-# PRs" (prettier/jshint) still validates PRs and never builds binaries. The
+# This does NOT change the per-PR behaviour: "Checks for PRs" (data, prettier,
+# jshint) still validates PRs and never builds binaries. The
 # per-platform build workflows (main*.yml) are manual (workflow_dispatch) for
 # on-demand builds of any branch.
 
@@ -41,6 +41,10 @@ jobs:
         with:
           ref: develop
           fetch-depth: 0
+
+      # A data error stops the night here: every build job needs this one
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       - name: Decide whether to build (skip if no new commits)
         id: gate
@@ -82,6 +86,9 @@ jobs:
         with:
           ref: develop
           fetch-depth: 0
+
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       - uses: actions/setup-node@v5
         with:
@@ -175,6 +182,9 @@ jobs:
         with:
           ref: develop
 
+      - name: Data check
+        uses: ./.github/actions/data-check
+
       - uses: actions/setup-node@v5
         with:
           node-version: '23.3.0'
@@ -221,6 +231,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: develop
+
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       - uses: actions/setup-node@v5
         with:

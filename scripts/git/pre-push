@@ -5,6 +5,9 @@
 # being pushed, because a commit may have skipped pre-commit (--no-verify, a
 # merge). Installed by `grunt setupDevEnv`.
 
+# A graphical git client may not have node in its PATH
+. "$(git rev-parse --show-toplevel)/scripts/git/hookNode.sh"
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 YELLOW='\033[1;33m'

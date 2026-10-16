@@ -1,0 +1,31 @@
+name: 'Data check'
+description: >-
+  Checks the data files (JSON syntax, the board and plugin contracts, the
+  translations) with scripts/checkData.js. Runs after the checkout and before
+  anything is installed or built.
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version-file: '.nvmrc'
+
+    # msgfmt checks the translations, and `grunt dist` runs the same check
+    # again later in the job, so gettext stays installed for the build
+    - name: Install gettext (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y -qq gettext
+
+    - name: Install gettext (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: brew list gettext || brew install gettext
+
+    - name: Check data files (JSON, boards, plugins, translations)
+      shell: bash
+      run: node scripts/checkData.js

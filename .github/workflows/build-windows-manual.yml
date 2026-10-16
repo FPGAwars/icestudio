@@ -17,6 +17,9 @@ jobs:
         with:
           ref: develop
 
+      - name: Data check
+        uses: ./.github/actions/data-check
+
       - name: 🔍 Replace NW SDK version for normal before install npm packages
         run: |
           sed -i 's/\("nw": "[^"]*\)-sdk"/\1"/g' package.json

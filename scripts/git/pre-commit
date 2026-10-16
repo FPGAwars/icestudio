@@ -7,6 +7,9 @@
 # Pre-commit hook: Run Prettier & JSHint before committing
 # Compatible with Windows (Git Bash), Linux, and macOS
 
+# A graphical git client may not have node in its PATH
+. "$(git rev-parse --show-toplevel)/scripts/git/hookNode.sh"
+
 CYAN_BRIGHT='\033[1;36m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'

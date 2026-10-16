@@ -83,7 +83,7 @@
 let os = require('os');
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 os.tmpDir = os.tmpdir;
 
 //-- This is for debugging...
@@ -407,6 +407,7 @@ module.exports = function (grunt) {
   //-- Tasks to perform for the grunt dist task: Create the final packages
   //-- Task common to ALL Platforms
   let DIST_COMMON_TASKS = [
+    'checkData', //-- Check the data files (JSON, boards, plugins, translations)
     'jshint', //-- Check the js files
     'clean:dist', //-- Delete the DIST folder, with all the generated packages
     'nggettext_compile', //-- Extract English texts to the template file
@@ -631,6 +632,23 @@ module.exports = function (grunt) {
     'dist',
     DIST_TASKS //-- Tasks to perform
   );
+
+  //-- grunt checkData
+  //-- The data check of the hooks and the CI (scripts/checkData.js), so a
+  //-- local build does not package a broken board, plugin or translation
+  grunt.registerTask('checkData', 'Check the data files', function () {
+    const result = spawnSync(
+      process.execPath,
+      [path.join(__dirname, 'scripts', 'checkData.js')],
+      { cwd: __dirname, stdio: 'inherit' }
+    );
+    if (result.status !== 0) {
+      grunt.log.error(
+        'Data check failed: fix the files above and build again.'
+      );
+      return false;
+    }
+  });
 
   //------------------------------------------------------------
   //-- debugInfo task, called with npm run debugInfo

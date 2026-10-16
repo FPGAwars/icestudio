@@ -9,8 +9,21 @@ name: Stable Release
 on: [workflow_dispatch]
 
 jobs:
+  #-- Check the data files of master before building anything
+  checks:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout the master repo branch
+        uses: actions/checkout@v5
+        with:
+          ref: master
+
+      - name: Data check
+        uses: ./.github/actions/data-check
+
   #-- Build for Linux and windows
   build-LinWin:
+    needs: checks
     runs-on: ubuntu-22.04
     outputs:
       #-- URL to upload the binaries for
@@ -28,6 +41,9 @@ jobs:
         uses: actions/checkout@v5
         with:
           ref: master
+
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       # jq is bash command for reading properties from a json file
       - name: Install jq package
@@ -130,6 +146,9 @@ jobs:
         with:
           ref: master
 
+      - name: Data check
+        uses: ./.github/actions/data-check
+
       - name: Setup Nodejs version
         uses: actions/setup-node@v5
         with:
@@ -198,6 +217,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: master
+
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       - name: Setup Nodejs version
         uses: actions/setup-node@v5

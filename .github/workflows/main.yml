@@ -6,8 +6,8 @@ name: 'Icestudio for Linux'
 # in the "Use workflow from" selector and it builds THAT branch, uploading the
 # AppImage + zip as workflow artifacts (no release/tag is created).
 #
-# PRs are validated by "Code standardizer hook for PRs" (prettier/jshint) but
-# do NOT build binaries. Nightly releases of develop are built by nightly.yml.
+# PRs are validated by "Checks for PRs" (data, prettier, jshint) but do NOT
+# build binaries. Nightly releases of develop are built by nightly.yml.
 on:
   workflow_dispatch:
 
@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
+
+      - name: Data check
+        uses: ./.github/actions/data-check
 
       - name: Setup Nodejs version
         uses: actions/setup-node@v5
