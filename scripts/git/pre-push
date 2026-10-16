@@ -1,0 +1,47 @@
+#!/bin/bash
+# Icestudio data check before git push
+# ====================================
+# Checks every data file (JSON, boards, plugins, translations) of each commit
+# being pushed, because a commit may have skipped pre-commit (--no-verify, a
+# merge). Installed by `grunt setupDevEnv`.
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+ERROR_ICON="⛔"
+SUCCESS_ICON="✅"
+WARNING_ICON="⚠️"
+
+box_message() {
+    local color=$1
+    local icon=$2
+    local message=$3
+
+    local length=${#message}
+    local border=$(printf '%*s' $((length + 7)) '' | tr ' ' '-')
+
+    echo -e "${color}"
+    echo -e "+${border}+"
+    echo -e "|  ${icon} ${message}  |"
+    echo -e "+${border}+"
+    echo -e "${NC}"
+}
+
+# git passes one line per ref: <local ref> <local sha> <remote ref> <remote sha>.
+# A deleted ref has a local sha of zeros and nothing to check.
+checked=" "
+while read -r local_ref local_sha remote_ref remote_sha; do
+    if [[ "$local_sha" =~ ^0+$ || "$checked" == *" $local_sha "* ]]; then
+        continue
+    fi
+    checked="$checked$local_sha "
+
+    box_message "\n$YELLOW" "$WARNING_ICON" "Checking data files of $local_ref..."
+    if ! node scripts/checkData.js --rev "$local_sha" </dev/null; then
+        box_message "$RED" "$ERROR_ICON" "Data check failed! Fix the files above before pushing."
+        exit 1
+    fi
+    box_message "$GREEN" "$SUCCESS_ICON" "Data files are valid."
+done
+exit 0

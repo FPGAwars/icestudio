@@ -83,7 +83,7 @@
 let os = require('os');
 const fs = require('fs');
 const path = require('path');
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 os.tmpDir = os.tmpdir;
 
 //-- This is for debugging...
@@ -671,44 +671,46 @@ module.exports = function (grunt) {
   //------------------------------------------------------------
 
   grunt.registerTask('setupDevEnv', 'Set up Git hooks', function () {
-    const done = this.async();
+    const { MSGFMT_HELP, hasMsgfmt } = require('./scripts/checkData.js');
 
-    const srcHook = path.join(__dirname, 'scripts', 'git', 'pre-commit');
-    const destHook = path.join(__dirname, '.git', 'hooks', 'pre-commit');
-
-    // We check if git environment exists
-    if (!fs.existsSync(path.dirname(destHook))) {
-      grunt.log.error(
-        '❌ .git/hooks folder not found, check that you are in icestudio cloned repository'
+    //-- In a worktree .git is a file: ask git where the hooks folder is
+    let hooksDir;
+    try {
+      hooksDir = path.resolve(
+        __dirname,
+        execSync('git rev-parse --git-path hooks', { cwd: __dirname })
+          .toString()
+          .trim()
       );
-      return done(false);
+      fs.mkdirSync(hooksDir, { recursive: true });
+    } catch (err) {
+      grunt.log.error(
+        '❌ Git hooks folder not found, check that you are in icestudio cloned repository'
+      );
+      return false;
     }
 
-    // Copiar el archivo pre-commit
-    fs.copyFile(srcHook, destHook, (err) => {
-      if (err) {
-        grunt.log.error(`❌ Error copying the hook: ${err.message}`);
-        return done(false);
+    for (const hook of ['pre-commit', 'pre-merge-commit', 'pre-push']) {
+      const destHook = path.join(hooksDir, hook);
+      try {
+        fs.copyFileSync(path.join(__dirname, 'scripts', 'git', hook), destHook);
+        fs.chmodSync(destHook, 0o755);
+      } catch (err) {
+        grunt.log.error(`❌ Error installing the hook ${hook}: ${err.message}`);
+        return false;
       }
+      grunt.log.writeln(`✅ Hook ${hook} installed`);
+    }
 
-      grunt.log.writeln('✅ Hook pre-commit installed');
-
-      // Dar permisos de ejecución (para Linux/macOS)
-      if (process.platform !== 'win32') {
-        exec(`chmod +x "${destHook}"`, (chmodErr) => {
-          if (chmodErr) {
-            grunt.log.error(
-              `❌ Error setting permissions: ${chmodErr.message}`
-            );
-            return done(false);
-          }
-          grunt.log.writeln('✅ Execution permissions set');
-          done();
-        });
-      } else {
-        done();
-      }
-    });
+    //-- The hooks check the translations with msgfmt: warn now rather than
+    //-- at the first commit or push
+    if (!hasMsgfmt()) {
+      grunt.log.writeln(
+        '⚠️  msgfmt not found. Until gettext is installed, a commit with a ' +
+          '.po or .pot file and every push fail the data check.'
+      );
+      grunt.log.writeln(MSGFMT_HELP);
+    }
   });
 
   grunt.registerTask(

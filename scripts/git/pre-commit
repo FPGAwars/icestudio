@@ -62,6 +62,15 @@ spin() {
   done
 }
 
+# Data check: the staged JSON, boards, plugins and translations, read from the
+# index (scripts/checkData.js)
+box_message "\n$YELLOW" "$WARNING_ICON" "Checking staged data files..."
+if ! node scripts/checkData.js --staged; then
+    box_message "$RED" "$ERROR_ICON" "Data check failed! Fix the files above before committing."
+    exit 1
+fi
+box_message "$GREEN" "$SUCCESS_ICON" "Data files are valid."
+
 # Step 0: Clean and prepare commit. Some OSs include dependencies only for it and this
 #         could break the build for other OSs (only affects OSX)
 box_message "\n$YELLOW" "$WARNING_ICON" "Preparing package.json..."

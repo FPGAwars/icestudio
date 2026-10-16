@@ -27,6 +27,7 @@
     "prettier": "prettier --write .",
     "prettierBot": "prettier --write . 2>&1 | tee .git/tmp/prettier-modified.txt",
     "jshint": "grunt jshint",
+    "checkData": "node scripts/checkData.js",
     "setupDevEnv": "grunt setupDevEnv",
     "preparePackageJson": "grunt preparePackageJson",
     "clean": "grunt clean",

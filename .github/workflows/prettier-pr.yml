@@ -1,11 +1,11 @@
-name: Code standardizer hook for PRs
+name: Checks for PRs
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [develop]
+    branches: [develop, master]
   push:
-    branches: [develop]
+    branches: [develop, master]
 
 jobs:
   enforce-code-style:
@@ -23,6 +23,15 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci --legacy-peer-deps --ignore-scripts
+
+      # JSON syntax, the board and plugin contracts and the translations
+      # (scripts/checkData.js). The hooks run it on commit and push, but only
+      # here nobody can skip it.
+      - name: Check data files (JSON, boards, plugins, translations)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gettext
+          npm run checkData
 
       # Formatting and linting are enforced at COMMIT TIME by the local
       # pre-commit hook (scripts/git/pre-commit: runs Prettier --write and then
