@@ -4,11 +4,11 @@
   "SysClkMhz": 12,
   "arch": "xc7",
   "fpga": "xc7a35tcpg236c-1",
-  "interface": "FDTI",
+  "interface": "FTDI",
   "datasheet": "https://digilent.com/reference/_media/reference/programmable-logic/cmod-a7/reference-manual",
-  "group": "xilinx",
+  "group": "XILINX",
   "apio": {
-    "board": "cmod-a7-35t",
+    "board": "cmod-a7-35t"
   },
   "FPGAResources": {
     "ffs": 41600,
