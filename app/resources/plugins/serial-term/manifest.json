@@ -3,6 +3,10 @@
   "id": "serial-term",
   "name": "Serial Terminal",
   "icon": "img/terminal.png",
+  "launchAtStartup": false,
+  "gui": {
+    "type": "window"
+  },
   "width": 840,
   "height": 550
 }
