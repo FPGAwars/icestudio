@@ -1,0 +1,18 @@
+{
+  "label": "Soan-Papdi-Mini",
+  "SysClkMhz": 12,
+  "datasheet": "",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 24,
+    "plbs": 660,
+    "brams": 30
+  },
+  "arch": "ice40",
+  "group": "UP5K",
+  "apio": {
+    "board": "soan-papdi"
+  }
+}
