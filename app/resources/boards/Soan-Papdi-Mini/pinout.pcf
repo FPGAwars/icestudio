@@ -1,0 +1,46 @@
+# ---------------------------------------
+#- Soan-Papdi-Mini constraint file (.pcf)
+#- DIY-With-Hardik
+#- November - 2025
+#- GPL license
+# ---------------------------------------
+
+# ------------ System 12 MHz clock ------
+set_io --warn-no-port CLK 35  # input
+set_frequency CLK 12
+
+# ------------ RGB LED -------------------
+set_io --warn-no-port R 40 # input
+set_io --warn-no-port G 41 # input
+set_io --warn-no-port B 39 # input
+
+# ------------ GPIO ----------------------
+set_io --warn-no-port 31 31 
+set_io --warn-no-port 32 32 
+set_io --warn-no-port 34 34 
+set_io --warn-no-port 36 36 
+set_io --warn-no-port 37 37 
+set_io --warn-no-port 44 44 
+set_io --warn-no-port 45 45 
+set_io --warn-no-port 46 46 
+
+set_io --warn-no-port 47 47 
+set_io --warn-no-port 6 6  
+set_io --warn-no-port 4 4  
+set_io --warn-no-port 3 3  
+set_io --warn-no-port 48 48 
+set_io --warn-no-port 12 12 
+set_io --warn-no-port 11 11 
+set_io --warn-no-port 10 10 
+set_io --warn-no-port 9 9  
+
+set_io --warn-no-port 28 28
+set_io --warn-no-port 27 27
+set_io --warn-no-port 26 26
+set_io --warn-no-port 25 25
+set_io --warn-no-port 23 23
+set_io --warn-no-port 13 13
+set_io --warn-no-port 21 21
+set_io --warn-no-port 20 20
+set_io --warn-no-port 19 19
+set_io --warn-no-port 18 18

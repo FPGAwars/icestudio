@@ -69,6 +69,7 @@
       "OK-iCE40Pro",
       "pico-ice",
       "Soan-Papdi",
+      "Soan-Papdi-Mini",
       "upduino",
       "upduino2",
       "upduino21",
@@ -136,8 +137,7 @@
     "boards": [
       "basys3",
       "Arty-S7-25",
-      "cmod-a7-35t"
-
+      "Cmod-A7-35T"
     ]
   }
 ]
