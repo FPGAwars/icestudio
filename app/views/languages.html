@@ -171,3 +171,12 @@
     ></span>
   </a>
 </li>
+<li>
+  <a href ng-click="selectLanguage('pt_BR')">
+    {{ 'Portuguese' | translate }}&ensp;
+    <span
+      ng-show="profile.data.language == 'pt_BR'"
+      class="glyphicon glyphicon-ok-circle"
+    ></span>
+  </a>
+</li>

@@ -88,6 +88,7 @@ To work on Icestudio itself, read [CONTRIBUTING.md](CONTRIBUTING.md).
 |:------------------:|:------------------:|
 |    English (en)    | ![Progress](https://progress-bar.xyz/100) |
 |  Spanish (es_ES)   | ![Progress](https://progress-bar.xyz/100) |
+| Portuguese (pt_BR) | ![Progress](https://progress-bar.xyz/100) |
 | Ukrainian (uk_UA)  | ![Progress](https://progress-bar.xyz/94) |
 |   Czech (cs_CZ)    | ![Progress](https://progress-bar.xyz/80) |
 |   German (de_DE)   | ![Progress](https://progress-bar.xyz/70) |

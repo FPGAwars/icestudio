@@ -25,6 +25,7 @@ declare "languages_zh_CN=Chinese"
 declare "languages_zh_TW=Taiwanese"
 declare "languages_ko_KR=Korean"
 declare "languages_ja_JP=Japanese"
+declare "languages_pt_BR=Portuguese"
 
 #-- Examine the .po file of all the locale folders
 cd app/resources/locale
